@@ -1,0 +1,33 @@
+# The build context is COPYed into the image, so anything writable in the
+# checkout is pure weight — and two entries here are correctness, not size.
+#
+# `data/` and `.cache/` are the big ones: a full sync leaves ~1 GB of cached
+# responses and a ~215 MB database next to the source. Baking those into the
+# image would also be misleading, because the container writes to CARBON_HOME
+# (/data, a Docker volume) and would never read the copy at /app/data.
+
+.git
+.gitignore
+
+# --- what the program writes (see settings.USER_ROOT) ---------------------
+data/
+out/
+.cache/
+logs/
+seed/
+
+# --- what the Windows build produces --------------------------------------
+build/
+dist/
+*.spec.bak
+
+# --- local noise ----------------------------------------------------------
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+*.egg-info/
+.venv/
+venv/
+.vscode/
+.idea/

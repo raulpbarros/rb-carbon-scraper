@@ -1,0 +1,93 @@
+# Headless scraping, off the desktop. Read docker/README.md first.
+#
+# Every service is a JOB: it runs, it exits. Nothing here is a daemon, and
+# nothing is scheduled. On a laptop a scheduler inside a container stops when
+# Docker Desktop stops — which is whenever the lid closes — and misses runs
+# with no signal at all. `docker compose run --rm sync` when you want a
+# refresh; a sync is resumable, because every write is an idempotent upsert.
+#
+#   docker compose run --rm sync                 refresh every registry
+#   docker compose run --rm sync update -r gs    ... or just one
+#   docker compose run --rm status               what is in the database
+#   docker compose run --rm export               write the next _vN.xlsx to out/
+#   docker compose run --rm publish              copy the DB into the checkout
+#   docker compose run --rm discover             re-capture an S&P contract
+#
+# All services sit behind a profile so a stray `docker compose up` does
+# nothing. `run` enables the named service regardless.
+
+name: carbon-registry
+
+x-runtime: &runtime
+  build:
+    context: ..
+    dockerfile: docker/Dockerfile
+    target: runtime
+  image: carbon-registry-scraper:runtime
+  profiles: ["jobs"]
+  init: true
+
+volumes:
+  # NOT a bind mount from the Windows checkout. db.py opens SQLite with
+  # `PRAGMA journal_mode=WAL`, which needs POSIX advisory locks and a
+  # shared-memory `-shm` mapping; Docker Desktop's Windows bind mounts give
+  # neither reliably, and the failure mode is a corrupt file that still opens.
+  # A named volume lives on ext4 inside the Linux VM, where WAL behaves.
+  carbon-data:
+
+
+services:
+  # A refresh, not a delivery: sync -> Verra's exact totals -> derive, and
+  # deliberately no export. The window's `Update registry data` button draws
+  # exactly the same line, through the same pipeline.update_all().
+  sync:
+    <<: *runtime
+    command: ["update", "-r", "all"]
+    volumes:
+      - carbon-data:/data
+
+  status:
+    <<: *runtime
+    command: ["status"]
+    volumes:
+      - carbon-data:/data
+
+  # The one service that writes into the checkout, and the only one that can
+  # safely bind-mount: an .xlsx is a plain sequential write with no locking.
+  # It shares out/ with the Windows app on purpose — one version history, not
+  # two — and `_vN+1` still applies, so a delivery is never overwritten.
+  export:
+    <<: *runtime
+    command: ["export", "-r", "all"]
+    environment:
+      CARBON_OUT_DIR: /out
+    volumes:
+      - carbon-data:/data
+      - ../out:/out
+
+  # Hands the scraped database back to Windows, for `build.ps1` or the GUI.
+  # Not `cp`: a WAL database copied while anything holds it is a torn file
+  # that still opens. See docker/publish-db.py.
+  publish:
+    <<: *runtime
+    entrypoint: ["python", "/app/docker/publish-db.py"]
+    command: ["/publish/verra.db"]
+    volumes:
+      - carbon-data:/data
+      - ../data:/publish
+
+  # The diagnostic. Bind-mounts the checkout because a capture is the point:
+  # `discover` writes docs/<registry>-capture.* and tests/fixtures/*.json, and
+  # those belong in git, not in a volume.
+  discover:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      target: discovery
+    image: carbon-registry-scraper:discovery
+    profiles: ["jobs"]
+    init: true
+    command: ["discover", "-r", "verra"]
+    volumes:
+      - carbon-data:/data
+      - ..:/app

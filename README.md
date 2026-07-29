@@ -164,6 +164,10 @@ verra derive                  # fill the classified columns
 verra export                  # write the next out/carbon-projects_vN.xlsx
 ```
 
+The first three together are `verra update` — a refresh, with no spreadsheet
+written. Exporting stays a separate, deliberate act, because each export is a
+new version and versions are what the business was sent.
+
 One registry at a time, with `-r verra` or `-r gs`:
 
 ```bash
@@ -199,6 +203,23 @@ Trying it out first is a good idea — this stops after 50 records per dataset:
 ```bash
 verra sync --limit 50
 ```
+
+### Running the scrape in Docker
+
+A full sync is hours of headless HTTP with no window involved, so it can run in
+a container instead of tying up the desktop:
+
+```powershell
+cd docker
+docker compose run --rm sync        # sync + totals + derive, every registry
+docker compose run --rm publish     # hand the database back to data/verra.db
+```
+
+The database lives on a Docker volume rather than a bind mount — SQLite runs in
+WAL mode here and WAL does not survive a Windows bind mount cleanly. See
+[docker/README.md](docker/README.md), which is worth reading before the first
+build. It does not replace `build.ps1`: the Windows EXE and installer are still
+built on Windows.
 
 ## Why three separate commands
 

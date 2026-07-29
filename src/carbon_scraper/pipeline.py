@@ -369,6 +369,35 @@ def export(
     return path, count, previous
 
 
+def update_all(
+    registry: str | Sequence[str] = "all",
+    *,
+    limit: int | None = None,
+    skip_totals: bool = False,
+    sink: ProgressSink | None = None,
+    cancel: threading.Event | None = None,
+) -> int:
+    """sync + Verra's exact totals + derive. **Deliberately does not export.**
+
+    A refresh is not a delivery. If this exported, every update would burn a
+    version number and the business would receive `_v9` without anyone having
+    decided to send anything.
+
+    It lives here rather than in a front end because there are now three
+    callers — the GUI's Update button, `verra update`, and `run_all` — and the
+    one part that is easy to get wrong is the Verra guard. `totals` is a
+    per-project fan-out against Verra's API; running it after a
+    Gold-Standard-only sync is several thousand requests to a registry the
+    caller did not ask for.
+    """
+    sink = sink or NullSink()
+    sync(registry, limit=limit, sink=sink, cancel=cancel)
+    if not skip_totals and settings.VERRA in selected(registry):
+        # Without this Verra's credit columns undercount; see totals().
+        totals(sink=sink, cancel=cancel)
+    return derive_all(registry, sink=sink)
+
+
 def run_all(
     registry: str | Sequence[str] = "all",
     *,
@@ -380,9 +409,5 @@ def run_all(
 ) -> tuple[Path, int, Path | None]:
     """sync + totals + derive + export. The whole pipeline."""
     sink = sink or NullSink()
-    sync(registry, limit=limit, sink=sink, cancel=cancel)
-    if not skip_totals and settings.VERRA in selected(registry):
-        # Without this Verra's credit columns undercount; see totals().
-        totals(sink=sink, cancel=cancel)
-    derive_all(registry, sink=sink)
+    update_all(registry, limit=limit, skip_totals=skip_totals, sink=sink, cancel=cancel)
     return export(registry, out_dir=out_dir, sink=sink)

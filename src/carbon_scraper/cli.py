@@ -7,6 +7,7 @@
     verra totals                        EXACT per-project Verra retirement totals
     verra derive                        apply YAML rules; no network
     verra export                        write the next spreadsheet version; no network
+    verra update                        sync + totals + derive; writes NO spreadsheet
     verra run                           sync + totals + derive + export
     verra status                        what is in the database
     verra coverage                      per-column fill rate, to spot gaps
@@ -201,6 +202,31 @@ def export(
     with ConsoleSink() as sink:
         path, count, _ = pipeline.export(registry, sink=sink)
     console.print(f"[bold green]Wrote {count} rows to {path}[/bold green]")
+
+
+@app.command()
+def update(
+    registry: str = REGISTRY_OPTION,
+    limit: Optional[int] = typer.Option(None, help="Stop after N records per resource."),
+    skip_totals: bool = typer.Option(False, help="Skip the exact-totals pass."),
+    verbose: bool = typer.Option(False, "--verbose", "-v"),
+) -> None:
+    """sync + totals + derive. A refresh, NOT a delivery — no spreadsheet.
+
+    The same thing the window's `Update registry data` button does, and
+    separate from `run` for the same reason: an export burns a version number,
+    and versions are what the business was sent. Use `verra export` when you
+    have decided to send one.
+    """
+    _setup_logging(verbose)
+    with ConsoleSink() as sink:
+        written = pipeline.update_all(
+            registry, limit=limit, skip_totals=skip_totals, sink=sink
+        )
+    console.print(
+        f"[bold green]Data updated.[/bold green] {written:,} derived values. "
+        "Next: verra export"
+    )
 
 
 @app.command()

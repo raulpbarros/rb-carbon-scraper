@@ -460,6 +460,7 @@ verra sync                        # every registry (-r defaults to `all`)
 verra totals                      # EXACT per-project Verra retirement totals
 verra derive                      # apply YAML rules -> derived columns
 verra export                      # write the NEXT out/carbon-projects_vN.xlsx
+verra update                      # sync + totals + derive. Writes NO spreadsheet
 verra run                         # sync + totals + derive + export
 verra status                      # row counts per registry, last run, failures
 verra coverage -r gs              # per-column fill rate — where the gaps are
@@ -468,6 +469,9 @@ verra slim-db --force             # the 20.8 MB database the installer ships
 carbon-gui                        # the window the business team uses
 pytest                            # offline, no network
 .\build.ps1                       # tests + slim DB + EXE + portable ZIP + installer
+
+cd docker; docker compose run --rm sync      # the scrape, headless, off the desktop
+cd docker; docker compose run --rm publish   # the container's DB -> data/verra.db
 ```
 
 `-r` / `--registry` takes `verra`, `gs`, `cercarbono`, `planvivo` or `all`.
@@ -610,6 +614,11 @@ packaging/
   carbon-registry.iss          Inno Setup, per-user, keeps %LOCALAPPDATA% data
   LEIA-ME.txt                  pt-BR, ships INSIDE the ZIP; unblock is step 1
   release-notes-pt.md          pt-BR, the GitHub release body
+docker/
+  Dockerfile                   two targets: runtime (no browser), discovery
+  compose.yaml                 jobs, not daemons; volume-backed CARBON_HOME
+  publish-db.py                VACUUM INTO the checkout; refuses to overwrite
+  README.md                    the operator guide, and the WAL reasoning
 ```
 
 There is no browser-based scraping fallback: the direct API path works for
@@ -776,3 +785,48 @@ Three rules, each of which is a bug that would not have raised:
 
 The result is a **delivery artifact, not a working copy**: `verra sync` against
 an installed one fills the ledgers back in registry by registry.
+
+## Docker — the scrape, not the delivery
+
+Full operator guide in `docker/README.md`. Docker covers the **headless half**:
+a full sync is ~16,500 requests and four-plus hours with no window involved, so
+it runs in a container instead of tying up the desktop. It **does not replace
+`build.ps1`** — PyInstaller needs a Windows host, and SmartScreen, signing and
+antivirus are all about an EXE arriving on someone else's machine.
+
+Two targets in one `Dockerfile`: `runtime` (the scraper, no browser, same as
+the frozen build) and `discovery` (adds Playwright and one Chromium).
+
+Three things are load-bearing, each pinned by `tests/test_docker.py`:
+
+- **`CARBON_HOME=/data` is a named volume, never a Windows bind mount.**
+  `db.py` sets `PRAGMA journal_mode=WAL`, which needs POSIX advisory locks and
+  a shared-memory `-shm` mapping; Docker Desktop's Windows bind mounts
+  (virtiofs / gRPC-FUSE) provide neither reliably, and the failure is a
+  database that still opens. `export`, `publish` and `discover` may bind-mount
+  because none of them touches SQLite over the mount. Getting the database
+  back to Windows is `docker/publish-db.py` — **`VACUUM INTO`, not a file
+  copy**, because a WAL database's committed state is spread across three
+  files and copying the first alone yields a stale database that reports
+  itself as fine. It refuses to replace `data/verra.db` without `--force`.
+- **The install must stay `pip install -e`.** `settings.RESOURCE_ROOT` is
+  `Path(__file__).parents[2]`, and `assets/`, `config/` and `docs/` are not
+  package data — setuptools collects `src/` only. A plain `pip install .`
+  lands in site-packages where none of them exist; nothing raises, the
+  requested-field list simply comes back empty. Same class of failure as a
+  frozen build writing under `_MEIPASS`.
+- **The container refreshes; it never delivers.** `docker compose run --rm
+  sync` runs `verra update`, which is `pipeline.update_all()` — the same seam
+  the window's `Update registry data` button drives, Verra-only totals guard
+  included. There are now three callers of that chain (GUI, CLI, `run_all`),
+  which is why the guard lives in `pipeline` and not in a front end: `totals`
+  is a per-project fan-out against Verra, and running it after a
+  Gold-Standard-only sync is thousands of requests to a registry nobody asked
+  for. An export from a scheduled refresh would burn a version number nightly.
+
+Everything is a job that exits — no daemon, no in-container scheduler. On a
+laptop a container scheduler stops when Docker Desktop stops, which is whenever
+the lid closes, and misses runs with no signal. Politeness settings are
+unchanged, and the container NATs out through the host, so Cloudflare in front
+of Gold Standard and Cercarbono's `Origin` check see the same address they see
+today. Moving this to a cloud VM would change that.

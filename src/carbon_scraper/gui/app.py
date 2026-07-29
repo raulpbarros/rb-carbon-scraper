@@ -154,12 +154,10 @@ def build_update_task(names: list[str]) -> Any:
     """
 
     def task(sink: Any, cancel: Any) -> tuple[str, Any]:
-        pipeline.sync(names, sink=sink, cancel=cancel)
-        if settings.VERRA in names:
-            # Without this Verra's credit columns undercount: its retirements
-            # ledger cannot be paged completely. See pipeline.totals.
-            pipeline.totals(sink=sink, cancel=cancel)
-        written = pipeline.derive_all(names, sink=sink)
+        # The scrape/totals/derive chain — including the Verra-only guard on
+        # the exact-totals pass — belongs to pipeline, so this button and
+        # `verra update` cannot drift apart.
+        written = pipeline.update_all(names, sink=sink, cancel=cancel)
         return (
             f"Updated {registry_labels(names)}. {written:,} derived values. "
             f"Press Export Excel to write a new spreadsheet.",
