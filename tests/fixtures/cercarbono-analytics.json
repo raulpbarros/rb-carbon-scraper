@@ -1,0 +1,4853 @@
+{
+ "status": true,
+ "project": [
+  {
+   "id": 1,
+   "is_public": true,
+   "owner": "Agroporvanda S.A.S",
+   "owner_id": "ECOxC_1152578494_117",
+   "developer": "Forestry Consulting Group S.A.S.",
+   "developer_id": "ECOxC_1152578494_117",
+   "validator": "ICONTEC",
+   "verifier": "ICONTEC",
+   "credits_type": "Carbon offsets",
+   "name": "Carbono Agroporvanda",
+   "description": "",
+   "standard": "Carbono",
+   "sector": [
+    {
+     "id": 14,
+     "description": "Land use (AFOLU)"
+    }
+   ],
+   "evaluation_criteria": "PROTOCOL CVCC V1.1",
+   "quantification_method": "CDM - AR-ACM0003: Afforestation and reforestation of lands except wetlands",
+   "stage": "Certified",
+   "locations": [
+    {
+     "city": "Planeta Rica",
+     "country": "Colombia",
+     "region": "Cordoba",
+     "data_map": {
+      "latitude": 8.412918740997307,
+      "longitude": -75.58408635215012
+     }
+    }
+   ],
+   "serials": [
+    {
+     "verification": 1,
+     "serial": "CDC_1_1_1_321_14_1",
+     "issued_quantity": 62740,
+     "issuance_date": "2019-03-07T18:33:46.000Z",
+     "year": 2015,
+     "is_buffer": false,
+     "vintage_of_credits": "2010-01-01 / 2018-09-30",
+     "global_goals": [],
+     "elegible": [
+      {
+       "description": "Colombian Carbon Tax"
+      },
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 1,
+     "serial": "CDC_1_1_1_321_14_1_2008",
+     "issued_quantity": 1283,
+     "issuance_date": "2020-01-23T21:05:02.000Z",
+     "year": 2008,
+     "is_buffer": false,
+     "vintage_of_credits": "2008-01-16 / 2008-12-31",
+     "global_goals": [],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 1,
+     "serial": "CDC_1_1_1_321_14_1_2009",
+     "issued_quantity": 4971,
+     "issuance_date": "2020-01-23T21:06:15.000Z",
+     "year": 2009,
+     "is_buffer": false,
+     "vintage_of_credits": "2009-01-01 / 2009-12-31",
+     "global_goals": [],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 1,
+     "serial": "CDC_1_1_1_321_14_1_2008_BF",
+     "issued_quantity": 226,
+     "issuance_date": "2023-04-14T15:56:47.000Z",
+     "year": 2008,
+     "is_buffer": true,
+     "vintage_of_credits": "2008-01-16 / 2008-12-31",
+     "global_goals": [],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 1,
+     "serial": "CDC_1_1_1_321_14_1_2009_BF",
+     "issued_quantity": 877,
+     "issuance_date": "2023-04-14T15:56:48.000Z",
+     "year": 2009,
+     "is_buffer": true,
+     "vintage_of_credits": "2009-01-01 / 2009-12-31",
+     "global_goals": [],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 1,
+     "serial": "CDC_1_1_1_321_14_1_BF",
+     "issued_quantity": 11072,
+     "issuance_date": "2023-04-14T15:56:49.000Z",
+     "year": 2015,
+     "is_buffer": true,
+     "vintage_of_credits": "2010-01-01 / 2018-09-30",
+     "global_goals": [],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": 29,
+   "is_public": true,
+   "owner": "Forestry Consulting Group S.A.S.",
+   "owner_id": "ECOxC_1152578494_117",
+   "developer": "Forestry Consulting Group S.A.S.",
+   "developer_id": "ECOxC_1152578494_117",
+   "validator": "Verifit",
+   "verifier": "ICONTEC",
+   "credits_type": "Carbon offsets",
+   "name": "PROYECTO ASOCIATIVO PROGRAMÁTICO ZONA ANDINA Y COSTA ATLÁNTICA - FCG",
+   "description": "An Associative project combines multiple instances or phases (project areas) of project activity into a single combined initiative over a defined period of time. Through grouping, it allows the linking of actors of all types of scale (mainly medium and small) since it allows validation of all areas of the project in different phases or instances, later inclusion with the same eligibility and additionality criteria defined from the begining of the project for new instances. This allows projects to expand over time in the initially defined geographical area and thus reduce transaction costs, becoming an inclusive mechanism for small and medium-sized reforesters.",
+   "standard": "Carbono",
+   "sector": [
+    {
+     "id": 14,
+     "description": "Land use (AFOLU)"
+    },
+    {
+     "id": 14,
+     "description": "Land use (AFOLU)"
+    },
+    {
+     "id": 14,
+     "description": "Land use (AFOLU)"
+    },
+    {
+     "id": 14,
+     "description": "Land use (AFOLU)"
+    },
+    {
+     "id": 14,
+     "description": "Land use (AFOLU)"
+    }
+   ],
+   "evaluation_criteria": "ES-I-CC-002",
+   "quantification_method": "CDM - AR-ACM0003: Afforestation and reforestation of lands except wetlands",
+   "stage": "Certified",
+   "locations": [
+    {
+     "city": "Abejorral",
+     "country": "Colombia",
+     "region": "Antioquia",
+     "data_map": {
+      "latitude": 5.791510371414807,
+      "longitude": -75.42694873498345
+     }
+    },
+    {
+     "city": "Riosucio",
+     "country": "Colombia",
+     "region": "Caldas",
+     "data_map": {
+      "latitude": 5.791510371414807,
+      "longitude": -75.42694873498345
+     }
+    },
+    {
+     "city": "Urrao",
+     "country": "Colombia",
+     "region": "Antioquia",
+     "data_map": {
+      "latitude": 5.791510371414807,
+      "longitude": -75.42694873498345
+     }
+    },
+    {
+     "city": "Montería",
+     "country": "Colombia",
+     "region": "Cordoba",
+     "data_map": {
+      "latitude": 5.791510371414807,
+      "longitude": -75.42694873498345
+     }
+    },
+    {
+     "city": "Santa Rosa de Osos",
+     "country": "Colombia",
+     "region": "Antioquia",
+     "data_map": {
+      "latitude": 6.642717145212765,
+      "longitude": -75.46080854386969
+     }
+    },
+    {
+     "city": "Worldwide",
+     "country": "Colombia",
+     "region": "Worldwide",
+     "data_map": {
+      "latitude": 6.642717145212765,
+      "longitude": -75.46080854386969
+     }
+    },
+    {
+     "city": "Worldwide",
+     "country": "Colombia",
+     "region": "Worldwide",
+     "data_map": {
+      "latitude": 6.3159930474541905,
+      "longitude": -76.13428949356172
+     }
+    },
+    {
+     "city": "Worldwide",
+     "country": "Colombia",
+     "region": "Worldwide",
+     "data_map": {
+      "latitude": 6.3159930474541905,
+      "longitude": -76.13428949356172
+     }
+    },
+    {
+     "city": "Worldwide",
+     "country": "Colombia",
+     "region": "Worldwide",
+     "data_map": {
+      "latitude": 8.749938455347266,
+      "longitude": -75.88329362013135
+     }
+    },
+    {
+     "city": "Worldwide",
+     "country": "Colombia",
+     "region": "Worldwide",
+     "data_map": {
+      "latitude": 8.740551313845032,
+      "longitude": -75.88639413915728
+     }
+    },
+    {
+     "city": "Worldwide",
+     "country": "Colombia",
+     "region": "Worldwide",
+     "data_map": {
+      "latitude": 8.760128838572909,
+      "longitude": -75.9204770399927
+     }
+    },
+    {
+     "city": "Worldwide",
+     "country": "Colombia",
+     "region": "Worldwide",
+     "data_map": {
+      "latitude": 8.738440201783007,
+      "longitude": -75.93420995014895
+     }
+    },
+    {
+     "city": "Worldwide",
+     "country": "Colombia",
+     "region": "Worldwide",
+     "data_map": {
+      "latitude": 8.760128838572909,
+      "longitude": -75.9204770399927
+     }
+    },
+    {
+     "city": "Worldwide",
+     "country": "Colombia",
+     "region": "Worldwide",
+     "data_map": {
+      "latitude": 8.738440201783007,
+      "longitude": -75.93420995014895
+     }
+    },
+    {
+     "city": "Worldwide",
+     "country": "Colombia",
+     "region": "Worldwide",
+     "data_map": {
+      "latitude": 6.646808507400879,
+      "longitude": -75.47013151477482
+     }
+    },
+    {
+     "city": "Worldwide",
+     "country": "Colombia",
+     "region": "Worldwide",
+     "data_map": {
+      "latitude": 6.64775376642479,
+      "longitude": -75.48657171746464
+     }
+    },
+    {
+     "city": "Worldwide",
+     "country": "Colombia",
+     "region": "Worldwide",
+     "data_map": {
+      "latitude": 6.648968434050015,
+      "longitude": -75.47603505113477
+     }
+    },
+    {
+     "city": "Worldwide",
+     "country": "Colombia",
+     "region": "Worldwide",
+     "data_map": {
+      "latitude": 6.649650460824063,
+      "longitude": -75.46985524156446
+     }
+    },
+    {
+     "city": "Worldwide",
+     "country": "Colombia",
+     "region": "Worldwide",
+     "data_map": {
+      "latitude": 6.646845865532868,
+      "longitude": -75.46037038299772
+     }
+    },
+    {
+     "city": "Worldwide",
+     "country": "Colombia",
+     "region": "Worldwide",
+     "data_map": {
+      "latitude": 6.645850555246716,
+      "longitude": -75.4667427348153
+     }
+    },
+    {
+     "city": "Worldwide",
+     "country": "Colombia",
+     "region": "Worldwide",
+     "data_map": {
+      "latitude": 6.646186242546786,
+      "longitude": -75.47292254438561
+     }
+    }
+   ],
+   "serials": [
+    {
+     "verification": 1,
+     "serial": "CDC_29_7_1_327_14_CO_1_1_2011",
+     "issued_quantity": 0,
+     "issuance_date": "2021-06-08T16:51:47.000Z",
+     "year": 2011,
+     "is_buffer": false,
+     "vintage_of_credits": "2011-03-13 / 2011-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 1,
+     "serial": "CDC_29_7_1_327_14_CO_1_1_2012",
+     "issued_quantity": 475,
+     "issuance_date": "2021-06-08T16:51:47.000Z",
+     "year": 2012,
+     "is_buffer": false,
+     "vintage_of_credits": "2012-01-01 / 2012-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 1,
+     "serial": "CDC_29_7_1_327_14_CO_1_1_2013",
+     "issued_quantity": 5707,
+     "issuance_date": "2021-06-08T16:51:47.000Z",
+     "year": 2013,
+     "is_buffer": false,
+     "vintage_of_credits": "2013-01-01 / 2013-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 1,
+     "serial": "CDC_29_7_1_327_14_CO_1_1_2014",
+     "issued_quantity": 11184,
+     "issuance_date": "2021-06-08T16:51:47.000Z",
+     "year": 2014,
+     "is_buffer": false,
+     "vintage_of_credits": "2014-01-01 / 2014-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 1,
+     "serial": "CDC_29_7_1_327_14_CO_1_1_2015",
+     "issued_quantity": 20430,
+     "issuance_date": "2021-06-08T16:51:47.000Z",
+     "year": 2015,
+     "is_buffer": false,
+     "vintage_of_credits": "2015-01-01 / 2015-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 1,
+     "serial": "CDC_29_7_1_327_14_CO_1_1_2016",
+     "issued_quantity": 32619,
+     "issuance_date": "2021-06-08T16:51:47.000Z",
+     "year": 2016,
+     "is_buffer": false,
+     "vintage_of_credits": "2016-01-01 / 2016-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Colombian Carbon Tax"
+      },
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 1,
+     "serial": "CDC_29_7_1_327_14_CO_1_1_2017",
+     "issued_quantity": 42098,
+     "issuance_date": "2021-06-08T16:51:47.000Z",
+     "year": 2017,
+     "is_buffer": false,
+     "vintage_of_credits": "2017-01-01 / 2017-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Colombian Carbon Tax"
+      },
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 1,
+     "serial": "CDC_29_7_1_327_14_CO_1_1_2018",
+     "issued_quantity": 46212,
+     "issuance_date": "2021-06-08T16:51:47.000Z",
+     "year": 2018,
+     "is_buffer": false,
+     "vintage_of_credits": "2018-01-01 / 2018-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Colombian Carbon Tax"
+      },
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 1,
+     "serial": "CDC_29_7_1_327_14_CO_1_1_2019",
+     "issued_quantity": 47052,
+     "issuance_date": "2021-06-08T16:51:47.000Z",
+     "year": 2019,
+     "is_buffer": false,
+     "vintage_of_credits": "2019-01-01 / 2019-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Colombian Carbon Tax"
+      },
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 1,
+     "serial": "CDC_29_7_1_327_14_CO_1_1_2020",
+     "issued_quantity": 45436,
+     "issuance_date": "2021-06-08T16:51:47.000Z",
+     "year": 2020,
+     "is_buffer": false,
+     "vintage_of_credits": "2020-01-01 / 2020-11-28",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Colombian Carbon Tax"
+      },
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 2,
+     "serial": "CDC_29_7_1_321_14_CO_1_2_2011",
+     "issued_quantity": 0,
+     "issuance_date": "2021-09-14T16:55:44.000Z",
+     "year": 2011,
+     "is_buffer": false,
+     "vintage_of_credits": "2011-03-13 / 2011-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 2,
+     "serial": "CDC_29_7_1_321_14_CO_1_2_2012",
+     "issued_quantity": 269,
+     "issuance_date": "2021-09-14T16:55:44.000Z",
+     "year": 2012,
+     "is_buffer": false,
+     "vintage_of_credits": "2012-01-01 / 2012-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 2,
+     "serial": "CDC_29_7_1_321_14_CO_1_2_2013",
+     "issued_quantity": 5280,
+     "issuance_date": "2021-09-14T16:55:44.000Z",
+     "year": 2013,
+     "is_buffer": false,
+     "vintage_of_credits": "2013-01-01 / 2013-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 2,
+     "serial": "CDC_29_7_1_321_14_CO_1_2_2014",
+     "issued_quantity": 15192,
+     "issuance_date": "2021-09-14T16:55:44.000Z",
+     "year": 2014,
+     "is_buffer": false,
+     "vintage_of_credits": "2014-01-01 / 2014-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 2,
+     "serial": "CDC_29_7_1_321_14_CO_1_2_2015",
+     "issued_quantity": 30087,
+     "issuance_date": "2021-09-14T16:55:44.000Z",
+     "year": 2015,
+     "is_buffer": false,
+     "vintage_of_credits": "2015-01-01 / 2015-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 2,
+     "serial": "CDC_29_7_1_321_14_CO_1_2_2016",
+     "issued_quantity": 44280,
+     "issuance_date": "2021-09-14T16:55:44.000Z",
+     "year": 2016,
+     "is_buffer": false,
+     "vintage_of_credits": "2016-01-01 / 2016-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Colombian Carbon Tax"
+      },
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 2,
+     "serial": "CDC_29_7_1_321_14_CO_1_2_2017",
+     "issued_quantity": 50163,
+     "issuance_date": "2021-09-14T16:55:44.000Z",
+     "year": 2017,
+     "is_buffer": false,
+     "vintage_of_credits": "2017-01-01 / 2017-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Colombian Carbon Tax"
+      },
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 2,
+     "serial": "CDC_29_7_1_321_14_CO_1_2_2018",
+     "issued_quantity": 52554,
+     "issuance_date": "2021-09-14T16:55:44.000Z",
+     "year": 2018,
+     "is_buffer": false,
+     "vintage_of_credits": "2018-01-01 / 2018-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Colombian Carbon Tax"
+      },
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 2,
+     "serial": "CDC_29_7_1_321_14_CO_1_2_2019",
+     "issued_quantity": 51505,
+     "issuance_date": "2021-09-14T16:55:44.000Z",
+     "year": 2019,
+     "is_buffer": false,
+     "vintage_of_credits": "2019-01-01 / 2019-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Colombian Carbon Tax"
+      },
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 2,
+     "serial": "CDC_29_7_1_321_14_CO_1_2_2020",
+     "issued_quantity": 47251,
+     "issuance_date": "2021-09-14T16:55:44.000Z",
+     "year": 2020,
+     "is_buffer": false,
+     "vintage_of_credits": "2020-01-01 / 2020-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Colombian Carbon Tax"
+      },
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 2,
+     "serial": "CDC_29_7_1_321_14_CO_1_2_2021",
+     "issued_quantity": 42686,
+     "issuance_date": "2021-09-14T16:55:44.000Z",
+     "year": 2021,
+     "is_buffer": false,
+     "vintage_of_credits": "2021-01-01 / 2021-05-10",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Colombian Carbon Tax"
+      },
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 3,
+     "serial": "CDC_29_7_1_321_14_CO_1_3_2011",
+     "issued_quantity": 0,
+     "issuance_date": "2022-05-12T15:49:39.000Z",
+     "year": 2011,
+     "is_buffer": false,
+     "vintage_of_credits": "2011-03-13 / 2011-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 3,
+     "serial": "CDC_29_7_1_321_14_CO_1_3_2012",
+     "issued_quantity": 0,
+     "issuance_date": "2022-05-12T15:49:39.000Z",
+     "year": 2012,
+     "is_buffer": false,
+     "vintage_of_credits": "2012-01-01 / 2012-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 3,
+     "serial": "CDC_29_7_1_321_14_CO_1_3_2013",
+     "issued_quantity": 149,
+     "issuance_date": "2022-05-12T15:49:39.000Z",
+     "year": 2013,
+     "is_buffer": false,
+     "vintage_of_credits": "2013-01-01 / 2013-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 3,
+     "serial": "CDC_29_7_1_321_14_CO_1_3_2014",
+     "issued_quantity": 2499,
+     "issuance_date": "2022-05-12T15:49:39.000Z",
+     "year": 2014,
+     "is_buffer": false,
+     "vintage_of_credits": "2014-01-01 / 2014-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 3,
+     "serial": "CDC_29_7_1_321_14_CO_1_3_2015",
+     "issued_quantity": 5678,
+     "issuance_date": "2022-05-12T15:49:39.000Z",
+     "year": 2015,
+     "is_buffer": false,
+     "vintage_of_credits": "2015-01-01 / 2015-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 3,
+     "serial": "CDC_29_7_1_321_14_CO_1_3_2016",
+     "issued_quantity": 10614,
+     "issuance_date": "2022-05-12T15:49:39.000Z",
+     "year": 2016,
+     "is_buffer": false,
+     "vintage_of_credits": "2016-01-01 / 2016-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 3,
+     "serial": "CDC_29_7_1_321_14_CO_1_3_2017",
+     "issued_quantity": 16500,
+     "issuance_date": "2022-05-12T15:49:39.000Z",
+     "year": 2017,
+     "is_buffer": false,
+     "vintage_of_credits": "2017-01-01 / 2017-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Colombian Carbon Tax"
+      },
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 3,
+     "serial": "CDC_29_7_1_321_14_CO_1_3_2018",
+     "issued_quantity": 22368,
+     "issuance_date": "2022-05-12T15:49:39.000Z",
+     "year": 2018,
+     "is_buffer": false,
+     "vintage_of_credits": "2018-01-01 / 2018-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Colombian Carbon Tax"
+      },
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 3,
+     "serial": "CDC_29_7_1_321_14_CO_1_3_2019",
+     "issued_quantity": 27919,
+     "issuance_date": "2022-05-12T15:49:39.000Z",
+     "year": 2019,
+     "is_buffer": false,
+     "vintage_of_credits": "2019-01-01 / 2019-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Colombian Carbon Tax"
+      },
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 3,
+     "serial": "CDC_29_7_1_321_14_CO_1_3_2020",
+     "issued_quantity": 27970,
+     "issuance_date": "2022-05-12T15:49:39.000Z",
+     "year": 2020,
+     "is_buffer": false,
+     "vintage_of_credits": "2020-01-01 / 2020-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Colombian Carbon Tax"
+      },
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 3,
+     "serial": "CDC_29_7_1_321_14_CO_1_3_2021",
+     "issued_quantity": 27611,
+     "issuance_date": "2022-05-12T15:49:39.000Z",
+     "year": 2021,
+     "is_buffer": false,
+     "vintage_of_credits": "2021-01-01 / 2021-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Colombian Carbon Tax"
+      },
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 3,
+     "serial": "CDC_29_7_1_321_14_CO_1_3_2022",
+     "issued_quantity": 20248,
+     "issuance_date": "2022-05-12T15:49:39.000Z",
+     "year": 2022,
+     "is_buffer": false,
+     "vintage_of_credits": "2022-01-01 / 2022-02-11",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Colombian Carbon Tax"
+      },
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 1,
+     "serial": "CDC_29_7_1_327_14_CO_1_1_2011_BF",
+     "issued_quantity": 0,
+     "issuance_date": "2023-04-14T16:05:46.000Z",
+     "year": 2011,
+     "is_buffer": true,
+     "vintage_of_credits": "2011-03-13 / 2011-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 1,
+     "serial": "CDC_29_7_1_327_14_CO_1_1_2012_BF",
+     "issued_quantity": 82,
+     "issuance_date": "2023-04-14T16:05:47.000Z",
+     "year": 2012,
+     "is_buffer": true,
+     "vintage_of_credits": "2012-01-01 / 2012-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 1,
+     "serial": "CDC_29_7_1_327_14_CO_1_1_2013_BF",
+     "issued_quantity": 1007,
+     "issuance_date": "2023-04-14T16:05:48.000Z",
+     "year": 2013,
+     "is_buffer": true,
+     "vintage_of_credits": "2013-01-01 / 2013-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 1,
+     "serial": "CDC_29_7_1_327_14_CO_1_1_2014_BF",
+     "issued_quantity": 1976,
+     "issuance_date": "2023-04-14T16:05:49.000Z",
+     "year": 2014,
+     "is_buffer": true,
+     "vintage_of_credits": "2014-01-01 / 2014-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 1,
+     "serial": "CDC_29_7_1_327_14_CO_1_1_2015_BF",
+     "issued_quantity": 3598,
+     "issuance_date": "2023-04-14T16:05:50.000Z",
+     "year": 2015,
+     "is_buffer": true,
+     "vintage_of_credits": "2015-01-01 / 2015-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 1,
+     "serial": "CDC_29_7_1_327_14_CO_1_1_2016_BF",
+     "issued_quantity": 5757,
+     "issuance_date": "2023-04-14T16:05:51.000Z",
+     "year": 2016,
+     "is_buffer": true,
+     "vintage_of_credits": "2016-01-01 / 2016-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 1,
+     "serial": "CDC_29_7_1_327_14_CO_1_1_2017_BF",
+     "issued_quantity": 7433,
+     "issuance_date": "2023-04-14T16:05:51.000Z",
+     "year": 2017,
+     "is_buffer": true,
+     "vintage_of_credits": "2017-01-01 / 2017-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 1,
+     "serial": "CDC_29_7_1_327_14_CO_1_1_2018_BF",
+     "issued_quantity": 8154,
+     "issuance_date": "2023-04-14T16:05:52.000Z",
+     "year": 2018,
+     "is_buffer": true,
+     "vintage_of_credits": "2018-01-01 / 2018-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 1,
+     "serial": "CDC_29_7_1_327_14_CO_1_1_2019_BF",
+     "issued_quantity": 8302,
+     "issuance_date": "2023-04-14T16:05:53.000Z",
+     "year": 2019,
+     "is_buffer": true,
+     "vintage_of_credits": "2019-01-01 / 2019-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 1,
+     "serial": "CDC_29_7_1_327_14_CO_1_1_2020_BF",
+     "issued_quantity": 8019,
+     "issuance_date": "2023-04-14T16:05:54.000Z",
+     "year": 2020,
+     "is_buffer": true,
+     "vintage_of_credits": "2020-01-01 / 2020-11-28",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 2,
+     "serial": "CDC_29_7_1_321_14_CO_1_2_2012_BF",
+     "issued_quantity": 46,
+     "issuance_date": "2023-04-14T16:05:55.000Z",
+     "year": 2012,
+     "is_buffer": true,
+     "vintage_of_credits": "2012-01-01 / 2012-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 2,
+     "serial": "CDC_29_7_1_321_14_CO_1_2_2013_BF",
+     "issued_quantity": 926,
+     "issuance_date": "2023-04-14T16:05:56.000Z",
+     "year": 2013,
+     "is_buffer": true,
+     "vintage_of_credits": "2013-01-01 / 2013-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 2,
+     "serial": "CDC_29_7_1_321_14_CO_1_2_2014_BF",
+     "issued_quantity": 2680,
+     "issuance_date": "2023-04-14T16:05:57.000Z",
+     "year": 2014,
+     "is_buffer": true,
+     "vintage_of_credits": "2014-01-01 / 2014-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 2,
+     "serial": "CDC_29_7_1_321_14_CO_1_2_2015_BF",
+     "issued_quantity": 5309,
+     "issuance_date": "2023-04-14T16:05:58.000Z",
+     "year": 2015,
+     "is_buffer": true,
+     "vintage_of_credits": "2015-01-01 / 2015-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 2,
+     "serial": "CDC_29_7_1_321_14_CO_1_2_2016_BF",
+     "issued_quantity": 7816,
+     "issuance_date": "2023-04-14T16:05:59.000Z",
+     "year": 2016,
+     "is_buffer": true,
+     "vintage_of_credits": "2016-01-01 / 2016-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 2,
+     "serial": "CDC_29_7_1_321_14_CO_1_2_2017_BF",
+     "issued_quantity": 8841,
+     "issuance_date": "2023-04-14T16:06:00.000Z",
+     "year": 2017,
+     "is_buffer": true,
+     "vintage_of_credits": "2017-01-01 / 2017-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 2,
+     "serial": "CDC_29_7_1_321_14_CO_1_2_2018_BF",
+     "issued_quantity": 9286,
+     "issuance_date": "2023-04-14T16:06:01.000Z",
+     "year": 2018,
+     "is_buffer": true,
+     "vintage_of_credits": "2018-01-01 / 2018-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 2,
+     "serial": "CDC_29_7_1_321_14_CO_1_2_2019_BF",
+     "issued_quantity": 9087,
+     "issuance_date": "2023-04-14T16:06:02.000Z",
+     "year": 2019,
+     "is_buffer": true,
+     "vintage_of_credits": "2019-01-01 / 2019-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 2,
+     "serial": "CDC_29_7_1_321_14_CO_1_2_2020_BF",
+     "issued_quantity": 8336,
+     "issuance_date": "2023-04-14T16:06:03.000Z",
+     "year": 2020,
+     "is_buffer": true,
+     "vintage_of_credits": "2020-01-01 / 2020-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 2,
+     "serial": "CDC_29_7_1_321_14_CO_1_2_2021_BF",
+     "issued_quantity": 7536,
+     "issuance_date": "2023-04-14T16:06:04.000Z",
+     "year": 2021,
+     "is_buffer": true,
+     "vintage_of_credits": "2021-01-01 / 2021-05-10",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 3,
+     "serial": "CDC_29_7_1_321_14_CO_1_3_2011_BF",
+     "issued_quantity": 0,
+     "issuance_date": "2023-04-14T16:06:05.000Z",
+     "year": 2011,
+     "is_buffer": true,
+     "vintage_of_credits": "2011-03-13 / 2011-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 3,
+     "serial": "CDC_29_7_1_321_14_CO_1_3_2012_BF",
+     "issued_quantity": 0,
+     "issuance_date": "2023-04-14T16:06:06.000Z",
+     "year": 2012,
+     "is_buffer": true,
+     "vintage_of_credits": "2012-01-01 / 2012-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 3,
+     "serial": "CDC_29_7_1_321_14_CO_1_3_2013_BF",
+     "issued_quantity": 27,
+     "issuance_date": "2023-04-14T16:06:07.000Z",
+     "year": 2013,
+     "is_buffer": true,
+     "vintage_of_credits": "2013-01-01 / 2013-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 3,
+     "serial": "CDC_29_7_1_321_14_CO_1_3_2014_BF",
+     "issued_quantity": 441,
+     "issuance_date": "2023-04-14T16:06:07.000Z",
+     "year": 2014,
+     "is_buffer": true,
+     "vintage_of_credits": "2014-01-01 / 2014-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 3,
+     "serial": "CDC_29_7_1_321_14_CO_1_3_2015_BF",
+     "issued_quantity": 1002,
+     "issuance_date": "2023-04-14T16:06:08.000Z",
+     "year": 2015,
+     "is_buffer": true,
+     "vintage_of_credits": "2015-01-01 / 2015-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 3,
+     "serial": "CDC_29_7_1_321_14_CO_1_3_2016_BF",
+     "issued_quantity": 1872,
+     "issuance_date": "2023-04-14T16:06:09.000Z",
+     "year": 2016,
+     "is_buffer": true,
+     "vintage_of_credits": "2016-01-01 / 2016-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 3,
+     "serial": "CDC_29_7_1_321_14_CO_1_3_2017_BF",
+     "issued_quantity": 2908,
+     "issuance_date": "2023-04-14T16:06:10.000Z",
+     "year": 2017,
+     "is_buffer": true,
+     "vintage_of_credits": "2017-01-01 / 2017-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 3,
+     "serial": "CDC_29_7_1_321_14_CO_1_3_2018_BF",
+     "issued_quantity": 3947,
+     "issuance_date": "2023-04-14T16:06:11.000Z",
+     "year": 2018,
+     "is_buffer": true,
+     "vintage_of_credits": "2018-01-01 / 2018-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 3,
+     "serial": "CDC_29_7_1_321_14_CO_1_3_2019_BF",
+     "issued_quantity": 4928,
+     "issuance_date": "2023-04-14T16:06:12.000Z",
+     "year": 2019,
+     "is_buffer": true,
+     "vintage_of_credits": "2019-01-01 / 2019-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 3,
+     "serial": "CDC_29_7_1_321_14_CO_1_3_2020_BF",
+     "issued_quantity": 4936,
+     "issuance_date": "2023-04-14T16:06:13.000Z",
+     "year": 2020,
+     "is_buffer": true,
+     "vintage_of_credits": "2020-01-01 / 2020-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 3,
+     "serial": "CDC_29_7_1_321_14_CO_1_3_2021_BF",
+     "issued_quantity": 4870,
+     "issuance_date": "2023-04-14T16:06:14.000Z",
+     "year": 2021,
+     "is_buffer": true,
+     "vintage_of_credits": "2021-01-01 / 2021-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 3,
+     "serial": "CDC_29_7_1_321_14_CO_1_3_2022_BF",
+     "issued_quantity": 3578,
+     "issuance_date": "2023-04-14T16:06:15.000Z",
+     "year": 2022,
+     "is_buffer": true,
+     "vintage_of_credits": "2022-01-01 / 2022-02-11",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 4,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_4_2013",
+     "issued_quantity": 399,
+     "issuance_date": "2023-05-09T12:23:32.000Z",
+     "year": 2013,
+     "is_buffer": false,
+     "vintage_of_credits": "2013-01-01 / 2013-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 4,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_4_2014",
+     "issued_quantity": 4067,
+     "issuance_date": "2023-05-09T12:23:32.000Z",
+     "year": 2014,
+     "is_buffer": false,
+     "vintage_of_credits": "2014-01-01 / 2014-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 4,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_4_2015",
+     "issued_quantity": 10568,
+     "issuance_date": "2023-05-09T12:23:32.000Z",
+     "year": 2015,
+     "is_buffer": false,
+     "vintage_of_credits": "2015-01-01 / 2015-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 4,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_4_2016",
+     "issued_quantity": 15381,
+     "issuance_date": "2023-05-09T12:23:32.000Z",
+     "year": 2016,
+     "is_buffer": false,
+     "vintage_of_credits": "2016-01-01 / 2016-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 4,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_4_2017",
+     "issued_quantity": 18621,
+     "issuance_date": "2023-05-09T12:23:32.000Z",
+     "year": 2017,
+     "is_buffer": false,
+     "vintage_of_credits": "2017-01-01 / 2017-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 4,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_4_2018",
+     "issued_quantity": 21359,
+     "issuance_date": "2023-05-09T12:23:32.000Z",
+     "year": 2018,
+     "is_buffer": false,
+     "vintage_of_credits": "2018-01-01 / 2018-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Colombian Carbon Tax"
+      },
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 4,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_4_2019",
+     "issued_quantity": 22822,
+     "issuance_date": "2023-05-09T12:23:32.000Z",
+     "year": 2019,
+     "is_buffer": false,
+     "vintage_of_credits": "2019-01-01 / 2019-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Colombian Carbon Tax"
+      },
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 4,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_4_2020",
+     "issued_quantity": 32416,
+     "issuance_date": "2023-05-09T12:23:32.000Z",
+     "year": 2020,
+     "is_buffer": false,
+     "vintage_of_credits": "2020-01-01 / 2020-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Colombian Carbon Tax"
+      },
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 4,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_4_2021",
+     "issued_quantity": 146428,
+     "issuance_date": "2023-05-09T12:23:32.000Z",
+     "year": 2021,
+     "is_buffer": false,
+     "vintage_of_credits": "2021-01-01 / 2021-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Colombian Carbon Tax"
+      },
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 4,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_4_2022",
+     "issued_quantity": 169497,
+     "issuance_date": "2023-05-09T12:23:32.000Z",
+     "year": 2022,
+     "is_buffer": false,
+     "vintage_of_credits": "2022-01-01 / 2022-03-11",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Colombian Carbon Tax"
+      },
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 4,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_4_BFC_2013",
+     "issued_quantity": 65,
+     "issuance_date": "2023-05-09T12:23:32.000Z",
+     "year": 2013,
+     "is_buffer": true,
+     "vintage_of_credits": "2013-01-01 / 2013-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 4,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_4_BFC_2014",
+     "issued_quantity": 716,
+     "issuance_date": "2023-05-09T12:23:32.000Z",
+     "year": 2014,
+     "is_buffer": true,
+     "vintage_of_credits": "2014-01-01 / 2014-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 4,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_4_BFC_2015",
+     "issued_quantity": 1864,
+     "issuance_date": "2023-05-09T12:23:32.000Z",
+     "year": 2015,
+     "is_buffer": true,
+     "vintage_of_credits": "2015-01-01 / 2015-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 4,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_4_BFC_2016",
+     "issued_quantity": 2716,
+     "issuance_date": "2023-05-09T12:23:32.000Z",
+     "year": 2016,
+     "is_buffer": true,
+     "vintage_of_credits": "2016-01-01 / 2016-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 4,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_4_BFC_2017",
+     "issued_quantity": 3286,
+     "issuance_date": "2023-05-09T12:23:32.000Z",
+     "year": 2017,
+     "is_buffer": true,
+     "vintage_of_credits": "2017-01-01 / 2017-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 4,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_4_BFC_2018",
+     "issued_quantity": 3772,
+     "issuance_date": "2023-05-09T12:23:32.000Z",
+     "year": 2018,
+     "is_buffer": true,
+     "vintage_of_credits": "2018-01-01 / 2018-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 4,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_4_BFC_2019",
+     "issued_quantity": 4025,
+     "issuance_date": "2023-05-09T12:23:32.000Z",
+     "year": 2019,
+     "is_buffer": true,
+     "vintage_of_credits": "2019-01-01 / 2019-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 4,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_4_BFC_2020",
+     "issued_quantity": 5722,
+     "issuance_date": "2023-05-09T12:23:32.000Z",
+     "year": 2020,
+     "is_buffer": true,
+     "vintage_of_credits": "2020-01-01 / 2020-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 4,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_4_BFC_2021",
+     "issued_quantity": 25843,
+     "issuance_date": "2023-05-09T12:23:32.000Z",
+     "year": 2021,
+     "is_buffer": true,
+     "vintage_of_credits": "2021-01-01 / 2021-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 4,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_4_BFC_2022",
+     "issued_quantity": 29912,
+     "issuance_date": "2023-05-09T12:23:32.000Z",
+     "year": 2022,
+     "is_buffer": true,
+     "vintage_of_credits": "2022-01-01 / 2022-03-11",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 5,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_5_2021",
+     "issued_quantity": 24760,
+     "issuance_date": "2024-06-20T11:15:58.000Z",
+     "year": 2021,
+     "is_buffer": false,
+     "vintage_of_credits": "2021-05-11 / 2021-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Colombian Carbon Tax"
+      },
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 5,
+     "serial": "CDC_29_7_29_321_14_XX_XX_CO_1_5_2022",
+     "issued_quantity": 38451,
+     "issuance_date": "2024-06-20T11:15:58.000Z",
+     "year": 2022,
+     "is_buffer": false,
+     "vintage_of_credits": "2022-01-01 / 2022-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Colombian Carbon Tax"
+      },
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 5,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_5_2023",
+     "issued_quantity": 32342,
+     "issuance_date": "2024-06-20T11:15:58.000Z",
+     "year": 2023,
+     "is_buffer": false,
+     "vintage_of_credits": "2023-01-01 / 2023-11-03",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Colombian Carbon Tax"
+      },
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 5,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_5_BFC_2021",
+     "issued_quantity": 4369,
+     "issuance_date": "2024-06-20T11:15:58.000Z",
+     "year": 2021,
+     "is_buffer": true,
+     "vintage_of_credits": "2021-05-11 / 2021-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 5,
+     "serial": "CDC_29_7_29_321_14_XX_XX_CO_1_5_BFC_2022",
+     "issued_quantity": 6786,
+     "issuance_date": "2024-06-20T11:15:58.000Z",
+     "year": 2022,
+     "is_buffer": true,
+     "vintage_of_credits": "2022-01-01 / 2022-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 5,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_5_BFC_2023",
+     "issued_quantity": 5708,
+     "issuance_date": "2024-06-20T11:15:58.000Z",
+     "year": 2023,
+     "is_buffer": true,
+     "vintage_of_credits": "2023-01-01 / 2023-11-03",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 6,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_6_2018",
+     "issued_quantity": 19,
+     "issuance_date": "2025-03-31T08:42:55.000Z",
+     "year": 2018,
+     "is_buffer": false,
+     "vintage_of_credits": "2018-03-13 / 2018-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 6,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_6_2019",
+     "issued_quantity": 44,
+     "issuance_date": "2025-03-31T08:42:55.000Z",
+     "year": 2019,
+     "is_buffer": false,
+     "vintage_of_credits": "2019-01-01 / 2019-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 6,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_6_2020",
+     "issued_quantity": 852,
+     "issuance_date": "2025-03-31T08:42:55.000Z",
+     "year": 2020,
+     "is_buffer": false,
+     "vintage_of_credits": "2020-01-01 / 2020-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Colombian Carbon Tax"
+      },
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 6,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_6_2021",
+     "issued_quantity": 1429,
+     "issuance_date": "2025-03-31T08:42:55.000Z",
+     "year": 2021,
+     "is_buffer": false,
+     "vintage_of_credits": "2021-01-01 / 2021-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Colombian Carbon Tax"
+      },
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 6,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_6_2022",
+     "issued_quantity": 32529,
+     "issuance_date": "2025-03-31T08:42:55.000Z",
+     "year": 2022,
+     "is_buffer": false,
+     "vintage_of_credits": "2022-01-01 / 2022-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Colombian Carbon Tax"
+      },
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 6,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_6_2023",
+     "issued_quantity": 36574,
+     "issuance_date": "2025-03-31T08:42:55.000Z",
+     "year": 2023,
+     "is_buffer": false,
+     "vintage_of_credits": "2023-01-01 / 2023-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Colombian Carbon Tax"
+      },
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 6,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_6_2024",
+     "issued_quantity": 17343,
+     "issuance_date": "2025-03-31T08:42:55.000Z",
+     "year": 2024,
+     "is_buffer": false,
+     "vintage_of_credits": "2024-01-01 / 2024-06-15",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Colombian Carbon Tax"
+      },
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 6,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_6_BFC_2018",
+     "issued_quantity": 3,
+     "issuance_date": "2025-03-31T08:42:55.000Z",
+     "year": 2018,
+     "is_buffer": true,
+     "vintage_of_credits": "2018-03-13 / 2018-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 6,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_6_BFC_2019",
+     "issued_quantity": 8,
+     "issuance_date": "2025-03-31T08:42:55.000Z",
+     "year": 2019,
+     "is_buffer": true,
+     "vintage_of_credits": "2019-01-01 / 2019-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 6,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_6_BFC_2020",
+     "issued_quantity": 150,
+     "issuance_date": "2025-03-31T08:42:55.000Z",
+     "year": 2020,
+     "is_buffer": true,
+     "vintage_of_credits": "2020-01-01 / 2020-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 6,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_6_BFC_2021",
+     "issued_quantity": 252,
+     "issuance_date": "2025-03-31T08:42:55.000Z",
+     "year": 2021,
+     "is_buffer": true,
+     "vintage_of_credits": "2021-01-01 / 2021-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 6,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_6_BFC_2022",
+     "issued_quantity": 5740,
+     "issuance_date": "2025-03-31T08:42:55.000Z",
+     "year": 2022,
+     "is_buffer": true,
+     "vintage_of_credits": "2022-01-01 / 2022-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 6,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_6_BFC_2023",
+     "issued_quantity": 6454,
+     "issuance_date": "2025-03-31T08:42:55.000Z",
+     "year": 2023,
+     "is_buffer": true,
+     "vintage_of_credits": "2023-01-01 / 2023-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 6,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_6_BFC_2024",
+     "issued_quantity": 3060,
+     "issuance_date": "2025-03-31T08:42:55.000Z",
+     "year": 2024,
+     "is_buffer": true,
+     "vintage_of_credits": "2024-01-01 / 2024-06-15",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 7,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_7_2017",
+     "issued_quantity": 0,
+     "issuance_date": "2025-11-06T13:51:13.000Z",
+     "year": 2017,
+     "is_buffer": false,
+     "vintage_of_credits": "2017-03-13 / 2017-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 7,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_7_2018",
+     "issued_quantity": 281,
+     "issuance_date": "2025-11-06T13:51:13.000Z",
+     "year": 2018,
+     "is_buffer": false,
+     "vintage_of_credits": "2018-01-01 / 2018-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 7,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_7_2019",
+     "issued_quantity": 286,
+     "issuance_date": "2025-11-06T13:51:13.000Z",
+     "year": 2019,
+     "is_buffer": false,
+     "vintage_of_credits": "2019-01-01 / 2019-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 7,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_7_2020",
+     "issued_quantity": 3035,
+     "issuance_date": "2025-11-06T13:51:13.000Z",
+     "year": 2020,
+     "is_buffer": false,
+     "vintage_of_credits": "2020-01-01 / 2020-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Colombian Carbon Tax"
+      },
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 7,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_7_2021",
+     "issued_quantity": 8850,
+     "issuance_date": "2025-11-06T13:51:13.000Z",
+     "year": 2021,
+     "is_buffer": false,
+     "vintage_of_credits": "2021-01-01 / 2021-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Colombian Carbon Tax"
+      },
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 7,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_7_2022",
+     "issued_quantity": 26047,
+     "issuance_date": "2025-11-06T13:51:14.000Z",
+     "year": 2022,
+     "is_buffer": false,
+     "vintage_of_credits": "2022-01-01 / 2022-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Colombian Carbon Tax"
+      },
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 7,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_7_2023",
+     "issued_quantity": 92016,
+     "issuance_date": "2025-11-06T13:51:14.000Z",
+     "year": 2023,
+     "is_buffer": false,
+     "vintage_of_credits": "2023-01-01 / 2023-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Colombian Carbon Tax"
+      },
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 7,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_7_2024",
+     "issued_quantity": 93080,
+     "issuance_date": "2025-11-06T13:51:14.000Z",
+     "year": 2024,
+     "is_buffer": false,
+     "vintage_of_credits": "2024-01-01 / 2024-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Colombian Carbon Tax"
+      },
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 7,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_7_2025",
+     "issued_quantity": 49304,
+     "issuance_date": "2025-11-06T13:51:14.000Z",
+     "year": 2025,
+     "is_buffer": false,
+     "vintage_of_credits": "2025-01-01 / 2025-06-04",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Colombian Carbon Tax"
+      },
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 7,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_7_BFC_2018",
+     "issued_quantity": 49,
+     "issuance_date": "2025-11-06T13:51:14.000Z",
+     "year": 2018,
+     "is_buffer": true,
+     "vintage_of_credits": "2018-01-01 / 2018-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 7,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_7_BFC_2019",
+     "issued_quantity": 50,
+     "issuance_date": "2025-11-06T13:51:14.000Z",
+     "year": 2019,
+     "is_buffer": true,
+     "vintage_of_credits": "2019-01-01 / 2019-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 7,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_7_BFC_2020",
+     "issued_quantity": 535,
+     "issuance_date": "2025-11-06T13:51:14.000Z",
+     "year": 2020,
+     "is_buffer": true,
+     "vintage_of_credits": "2020-01-01 / 2020-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 7,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_7_BFC_2021",
+     "issued_quantity": 1561,
+     "issuance_date": "2025-11-06T13:51:14.000Z",
+     "year": 2021,
+     "is_buffer": true,
+     "vintage_of_credits": "2021-01-01 / 2021-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 7,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_7_BFC_2022",
+     "issued_quantity": 4597,
+     "issuance_date": "2025-11-06T13:51:14.000Z",
+     "year": 2022,
+     "is_buffer": true,
+     "vintage_of_credits": "2022-01-01 / 2022-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 7,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_7_BFC_2023",
+     "issued_quantity": 16237,
+     "issuance_date": "2025-11-06T13:51:14.000Z",
+     "year": 2023,
+     "is_buffer": true,
+     "vintage_of_credits": "2023-01-01 / 2023-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 7,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_7_BFC_2024",
+     "issued_quantity": 16425,
+     "issuance_date": "2025-11-06T13:51:14.000Z",
+     "year": 2024,
+     "is_buffer": true,
+     "vintage_of_credits": "2024-01-01 / 2024-12-31",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    },
+    {
+     "verification": 7,
+     "serial": "CDC_29_7_29_321_14_R1_XX_CO_1_7_BFC_2025",
+     "issued_quantity": 8701,
+     "issuance_date": "2025-11-06T13:51:14.000Z",
+     "year": 2025,
+     "is_buffer": true,
+     "vintage_of_credits": "2025-01-01 / 2025-06-04",
+     "global_goals": [
+      {
+       "description": "No poverty"
+      },
+      {
+       "description": "Education"
+      },
+      {
+       "description": "Gender equality"
+      },
+      {
+       "description": "Economic growth"
+      },
+      {
+       "description": "Climate action"
+      },
+      {
+       "description": "Life on land"
+      }
+     ],
+     "elegible": [
+      {
+       "description": "Voluntary compensation"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": 85,
+   "is_public": true,
+   "owner": "CELSIA COLOMBIA S.A. E.S.P.",
+   "owner_id": "ECOxC_2000859744_162",
+   "developer": "CELSIA COLOMBIA S.A. E.S.P.",
+   "developer_id": "ECOxC_2000859744_162",
+   "validator": "ICONTEC",
+   "verifier": "ICONTEC",
+   "credits_type": "Carbon offsets",
+   "name": "Celsia Solar Agrupado Colombia 2021",
+   "description": "Solar grouped project located in several provinces in Colombia",
+   "standard": "Carbono",
+   "sector": [
+    {
+     "id": 1,
+     "description": "Energy industries"
+    }
+   ],
+   "evaluation_criteria": "PROTOCOL CVCC V2.1",
+   "quantification_method": "CDM - ACM0002: Grid-connected electricity generation from renewable sources",
+   "stage": "Verification",
+   "locations": [
+    {
+     "city": "Zarzal",
+     "country": "Colombia",
+     "region": "Valle del Cauca",
+     "data_map": {
+      "latitude": 4.39436843613921,
+      "longitude": -76.07200122755896
+     }
+    },
+    {
+     "city": "La Victoria",
+     "country": "Colombia",
+     "region": "Valle del Cauca",
+     "data_map": {
+      "latitude": 4.39436843613921,
+      "longitude": -76.07200122755896
+     }
+    },
+    {
+     "city": "Ginebra",
+     "country": "Colombia",
+     "region": "Valle del Cauca",
+     "data_map": {
+      "latitude": 4.39436843613921,
+      "longitude": -76.07200122755896
+     }
+    },
+    {
+     "city": "Andalucía",
+     "country": "Colombia",
+     "region": "Valle del Cauca",
+     "data_map": {
+      "latitude": 4.39436843613921,
+      "longitude": -76.07200122755896
+     }
+    },
+    {
+     "city": "Tuluá",
+     "country": "Colombia",
+     "region": "Valle del Cauca",
+     "data_map": {
+      "latitude": 4.39436843613921,
+      "longitude": -76.07200122755896
+     }
+    },
+    {
+     "city": "Melgar",
+     "country": "Colombia",
+     "region": "Tolima",
+     "data_map": {
+      "latitude": 4.39436843613921,
+      "longitude": -76.07200122755896
+     }
+    },
+    {
+     "city": "Sincé",
+     "country": "Colombia",
+     "region": "Sucre",
+     "data_map": {
+      "latitude": 4.39436843613921,
+      "longitude": -76.07200122755896
+     }
+    },
+    {
+     "city": "Buga",
+     "country": "Colombia",
+     "region": "Valle del Cauca",
+     "data_map": {
+      "latitude": 4.39436843613921,
+      "longitude": -76.07200122755896
+     }
+    },
+    {
+     "city": "Ibagué",
+     "country": "Colombia",
+     "region": "Tolima",
+     "data_map": {
+      "latitude": 4.39436843613921,
+      "longitude": -76.07200122755896
+     }
+    },
+    {
+     "city": "Guayabal",
+     "country": "Colombia",
+     "region": "Tolima",
+     "data_map": {
+      "latitude": 4.39436843613921,
+      "longitude": -76.07200122755896
+     }
+    },
+    {
+     "city": "Flandes",
+     "country": "Colombia",
+     "region": "Tolima",
+     "data_map": {
+      "latitude": 4.39436843613921,
+      "longitude": -76.07200122755896
+     }
+    },
+    {
+     "city": "Flandes",
+     "country": "Colombia",
+     "region": "Tolima",
+     "data_map": {
+      "latitude": 4.39436843613921,
+      "longitude": -76.07200122755896
+     }
+    },
+    {
+     "city": "Flandes",
+     "country": "Colombia",
+     "region": "Tolima",
+     "data_map": {
+      "latitude": 4.39436843613921,
+      "longitude": -76.07200122755896
+     }
+    },
+    {
+     "city": "Palmira",
+     "country": "Colombia",
+     "region": "Valle del Cauca",
+     "data_map": {
+      "latitude": 4.39436843613921,
+      "longitude": -76.07200122755896
+     }
+    },
+    {
+     "city": "Candelaria",
+     "country": "Colombia",
+     "region": "Valle del Cauca",
+     "data_map": {
+      "latitude": 4.39436843613921,
+      "longitude": -76.07200122755896
+     }
+    }
+   ],
+   "serials": []
+  },
+  {
+   "id": 209,
+   "is_public": true,
+   "owner": "Guardian Plug & Abandonment, LLC",
+   "owner_id": "ECOxC_1381215415_523",
+   "developer": "Guardian Plug & Abandonment, LLC",
+   "developer_id": "ECOxC_1381215415_523",
+   "validator": "Ecotec Solution",
+   "verifier": "No definido",
+   "credits_type": "Carbon offsets",
+   "name": "MYERS-TINDLE UNIT 12C",
+   "description": "The Myers-Tindle Unit 12C is a gas well that was drilled into the Barnett Shale formation in 2005. The well pad is located on the northern side of the growing and increasingly urban and suburban Dallas-Fort Worth metroplex. While this wells' best producing days are long gone, there was still a signifant quantity of gas that it could have produced for years to come. However, instead of continuing to produce this well, we have permanently plugged this well to avoid commingling with the urban growth and to make room for new land use opportunities. Because of our permanent plugging procedure, those hydrocarbons will never be produced and combusted nor released into the atmosphere.",
+   "standard": "CarbonPath",
+   "sector": [
+    {
+     "id": 21,
+     "description": "Energy"
+    }
+   ],
+   "evaluation_criteria": "Early Retirement",
+   "quantification_method": "Early Retirement",
+   "stage": "Verification",
+   "locations": [
+    {
+     "city": "Worldwide",
+     "country": "United States",
+     "region": "Worldwide",
+     "data_map": {
+      "latitude": 33.23105542168071,
+      "longitude": -97.3034925120447
+     }
+    }
+   ],
+   "serials": []
+  },
+  {
+   "id": 274,
+   "is_public": true,
+   "owner": "Ammonite Environmental (Pty) Ltd",
+   "owner_id": "ECOxC_1557710363_762",
+   "developer": "Ammonite Environmental (Pty) Ltd",
+   "developer_id": "ECOxC_1557710363_762",
+   "validator": "Carbon Check ",
+   "verifier": "Carbon Check ",
+   "credits_type": "Carbon offsets",
+   "name": "Vinaqua WWTP Carbon Project",
+   "description": "The project treats high-strength distillery and brewery wastewater from Heineken Beverages and Brenn-O-Kem using anaerobic digestion to capture methane-rich biogas.",
+   "standard": "Carbono",
+   "sector": [
+    {
+     "id": 13,
+     "description": "Waste handling and disposal"
+    }
+   ],
+   "evaluation_criteria": "PROTOCOL CVCC 4.5",
+   "quantification_method": "CDM - AMS-III.H.: Methane recovery in wastewater treatment",
+   "stage": "Verification",
+   "locations": [
+    {
+     "city": "Worldwide",
+     "country": "South Africa",
+     "region": "Worldwide",
+     "data_map": {
+      "latitude": -33.63768717918787,
+      "longitude": 19.469733038340514
+     }
+    }
+   ],
+   "serials": []
+  }
+ ]
+}

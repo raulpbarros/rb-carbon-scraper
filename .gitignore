@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+
+# Scraper output — regenerable, never commit.
+# The database is ~225 MB and its backups are ~113 MB: both are well over
+# GitHub's 100 MB per-file limit, and both are rebuilt by `verra sync`.
+data/*.db
+data/*.db.*
+data/*.db-*
+data/*.sqlite*
+out/*.xlsx
+out/*.csv
+.cache/
+logs/
+
+# Local env
+.env
+
+# Per-machine tool state, not project code
+.claude/settings.local.json
+
+# OS
+Thumbs.db
+.DS_Store

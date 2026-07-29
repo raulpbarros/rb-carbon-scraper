@@ -1,0 +1,203 @@
+{
+ "status": 1,
+ "projectNotesActive": 0,
+ "locations": [
+  {
+   "id": 1317,
+   "locationName": "Monochoa",
+   "countryId": 47,
+   "countryDescription": "Colombia",
+   "regionId": 783,
+   "regionCode": "47783",
+   "regionDescription": "Caqueta",
+   "cityId": 12897,
+   "cityCode": "4778312897",
+   "cityDescription": "Solano",
+   "area": "353.583",
+   "verificationNumber": 1,
+   "active": false,
+   "dataMap": {
+    "latitude": 0.6994528330221078,
+    "longitude": -75.25537891575507
+   },
+   "checked": true
+  }
+ ],
+ "certificatedVerification": [
+  {
+   "total": 79450,
+   "verificationNumber": 1
+  }
+ ],
+ "URLApplication": "https://www.ecoregistry.io/",
+ "monitoringReport": true,
+ "formulation": false,
+ "validator": false,
+ "validCertifier": false,
+ "verifier": false,
+ "certifier": false,
+ "isAdminCertifier": false,
+ "previousCertifications": [
+  {
+   "units": 79450,
+   "periodInit": "2019-01-01",
+   "periodEnd": "2019-12-31",
+   "validationNumber": 1,
+   "verificationNumber": 1
+  }
+ ],
+ "project": {
+  "hasPublicCartography": false,
+  "isKml": 0,
+  "isFormulated": 1,
+  "isValidated": 1,
+  "isVerified": 1,
+  "isAsigned": false,
+  "webSite": "https://biocarbonregistry.com/en/project/?id=24",
+  "date": "2022-06-04",
+  "id": 106,
+  "code": "CDC-106",
+  "hashId": "eb15f1",
+  "name": "Aire\tde Vida\t“FIIVO JAAGAVA KOMUYA JAG+Y+”Monochoa REDD+\t",
+  "accreditationPeriod": "2018-01-17 / 2021-06-30",
+  "descriptionProject": "El Monochoa REDD+ es un proyecto de  reducción de emisiones por deforestación y degradación (REDD+) basado en incentivos económicos por captura de carbono.  El área de proyecto corresponde a 353.583 ha de bosque en el territorio del Resguardo  Indígena  Monochoa  (RI  Monochoa), en  el  Municipio  de  Solano,  en  el Departamento del Caquetá. En este resguardo se encuentran la comunidad de Tiribita, la comunidad de Caño Negro y el asentamiento Sainí. Aproximadamente el área está habitada por 33 familias sin embargo más del 50% de la población ha emigrado en búsqueda de oportunidades económicas\nLos objetivos específicos se enfocan en a) Desarrollar sistemas productivos compatibles con la conservación de la naturaleza y el bienestar comunitario, contribuyendo a garantizar la seguridad alimentaria. b) Contribuir a mejorar las condiciones de vida de las comunidades que habitan en el resguardo indígena. c) Fortalecer la identidad cultural y la gobernanza territorial y d) Fortalecer el seguimiento y la conservación de la biodiversidad presente en el área del resguardo indígena.\nEl proyecto tiene una fecha de inicio de 17 de enero de 2018 y una fecha de finalización prevista para  16 de enero de 2048; 30 años, en los cuales pretende evitar la emisión de cerca de 13,9 millones de Créditos  de  Carbono  Verificados  (CCV)  durante  el  periodo  de  acreditación  de  30  años (13.841.631 tCO2e  por  deforestación  evitada  y  81.751  tCO2e  por  degradación  evitada),  con  un promedio anual de 464.024 tCO2e. ",
+  "descriptionProjectIng": "Monochoa REDD+ is a project to reduce emissions from deforestation and degradation (REDD+) based on economic incentives for carbon sequestration.  The project area corresponds to 353,583 ha of forest in the territory of the Monochoa Indigenous Reserve (RI Monochoa), in the Municipality of Solano, in the Department of Caquetá. The Tiribita community, the Caño Negro community, and the Sainí settlement are located in this resguardo. Approximately 33 families live in the area; however, more than 50% of the population has emigrated in search of economic opportunities.\nThe specific objectives are focused on a) Developing productive systems compatible with nature conservation and community welfare, helping to ensure food security. b) Contributing to improving the living conditions of the communities living in the indigenous reserve. c) Strengthening cultural identity and territorial governance, and d) Strengthening the monitoring and conservation of biodiversity in the indigenous reserve area.\nThe project has a start date of January 17, 2018 and an expected completion date of January 16, 2048; 30 years, in which it aims to avoid the emission of about 13.9 million Verified Carbon Credits (VCCs) during the 30-year crediting period (13,841,631 tCO2e from avoided deforestation and 81,751 tCO2e from avoided degradation), with an annual average of 464,024 tCO2e.",
+  "projectStageId": 4,
+  "projectStageOrder": 5,
+  "projectsStage": "Certified",
+  "projectsStagePreapproval": false,
+  "projectsStageInactive": false,
+  "verifier": "AENOR CONFIA, S.A.U",
+  "verifierIsCredit": 0,
+  "verifierUrlImage": "https://ecoregistry-documents-public.s3.amazonaws.com/verifiers-prod/1727129923295_aenor.jpg",
+  "validator": "AENOR CONFIA, S.A.U",
+  "validatorIsCredit": 0,
+  "validatorUrlImage": "https://ecoregistry-documents-public.s3.amazonaws.com/validators-prod/1727129318298_aenor.jpg",
+  "sectors": [],
+  "protocols": [],
+  "sectorsMethodologies": [],
+  "process": 2,
+  "validations": [
+   {
+    "validationNumber": 1,
+    "verifications": [
+     {
+      "verificationNumber": 1
+     }
+    ]
+   }
+  ],
+  "validatorId": true,
+  "verifierId": true,
+  "standardId": 1,
+  "standarDescription": "Carbono",
+  "standardCode": "SxCDC",
+  "standarUrlImage": "https://ecoregistry-documents-public.s3.amazonaws.com/ecoregistry/images/standards/1782317021301_logo-duo_tone-2000px.png",
+  "standardMetaData": {
+   "colorDark": "#086A41",
+   "colorLight": "#E9F3ED",
+   "imgDesktop": {
+    "name": "Benner-Cercarbono-web.webp",
+    "time": 1767627687905,
+    "route": "standards",
+    "path": "https://ecoregistry-documents-public.s3.amazonaws.com/ecoregistry/images/standards/1767627687905_Benner-Cercarbono-web.webp"
+   },
+   "imgMobile": {
+    "name": "Benner-Cercarbono-web.webp",
+    "time": 1767627695272,
+    "route": "standards",
+    "path": "https://ecoregistry-documents-public.s3.amazonaws.com/ecoregistry/images/standards/1767627695272_Benner-Cercarbono-web.webp"
+   }
+  },
+  "creditUnit": "tCO2e",
+  "acceptsDmrv": true,
+  "isConvertedFrom": true,
+  "isCreditConversion": true,
+  "convertedFromId": 10,
+  "convertedFromLink": "https://biocarbonregistry.com/en/project/?id=24",
+  "convertedFromDescription": "BioCarbon",
+  "isPublic": true,
+  "projectsGlobalGoal": [],
+  "periodInit": "2018-01-17",
+  "periodEnd": "2021-06-30",
+  "periodInitVerifier": "2018-01-17",
+  "periodEndVerifier": "2021-06-30",
+  "verificationNumber": 1,
+  "validationNumber": 1,
+  "projectsFirms": [
+   {
+    "firm": "certifier",
+    "dateSignature": "2022-06-08 8:35:15"
+   }
+  ],
+  "publicConsultationInit": null,
+  "publicConsultationEnd": null,
+  "projectsApprovedFirm": null,
+  "typeProjectId": 2,
+  "developerId": 112,
+  "ownerId": 97,
+  "activities": [
+   {
+    "id": 1,
+    "description": "NA"
+   }
+  ],
+  "typeMaterial": [],
+  "specificMaterial": [],
+  "projectsCreditingPeriod": [
+   {
+    "verificationNumber": 1,
+    "periodInit": "2018-01-17",
+    "periodEnd": "2021-06-30"
+   }
+  ],
+  "isDmrv": 0,
+  "DMRV": [],
+  "beZero": null,
+  "isRated": 0
+ },
+ "projectsCorrectionHistory": 0,
+ "projectsCommentPending": 0,
+ "projectsStage": [
+  {
+   "id": 9,
+   "description": "Registration",
+   "order": 0
+  },
+  {
+   "id": 10,
+   "description": "Credit Conversion",
+   "order": 1
+  },
+  {
+   "id": 5,
+   "description": "Certified credit conversion",
+   "order": 2
+  }
+ ],
+ "projectsMedia": [
+  {
+   "typeMediaId": 1,
+   "defaultImage": 0,
+   "urlImage": "https://ecoregistry-projects-data.s3.us-east-1.amazonaws.com/projects/projectId%3D106/1654327568240_Solano.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAWVH64BL3WMSHI4SQ%2F20260729%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260729T000525Z&X-Amz-Expires=60&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEKj%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJHMEUCIQCRBSDfP%2FVubpjMWw5v5zWFVFEQOK9VU66DyBehgqrL8QIgcM1dmR0j1Wm3G%2BNw2oKSVv7StQGmKYjAonDSUQNh%2BDsq9wMIcBACGgw0NTc5NDg1MzE0NDciDD25fDptvnExD955HirUA3sMfdI37GYtDNEUnGBPKaM0NwLl0uUEVfe698Sf06NeDvWsSQI9sU%2F49TPZ8lx5xUEacTbp2Qrvk%2BK23Eua5pSMzXSqaOumSX1suO%2BDwa2%2B5GDvPKO2mIJLFnrjqwmm0uG4ZZkuPtjXjlR5nExTvTYaQ00fT8FuQkFsFSEVTJ1MAFs%2FjtWjBZbJk3%2F05t1NlNgLD0kIQkihyV%2BX127O1eAST%2BxKQz92uqsb%2Fmn05xzSN0u3a7fdQH2Q5qNDSlHBC%2Bq%2BEZfN6EJp8BqSqZIO2zqN%2FmqVI4zK2wo3vIqq8%2Frnmim5hYHmVEp56JDX8y49JTRsU%2Fpj4bkKud%2FgUGR4%2BFpZHiWkQtdHM4JMUyUqQ%2FUFBx0e9owz1xIvEun4dhFku4dUCHQ60XpBPMaaJpCzVeUWygejkQsJEPVqjouG%2Bfpp7xKCEwAYFpPk6LWfYyQH0LnYvc555p6k0nndsX0u4%2FQLearEAMuYdB8kGowzb%2FYHIHYBjgtdZ387YBwE0MEGfiFLZEXWjD9SZ7%2FIbN%2BEH0OBksz%2Br0UiqKwz9c%2FO2CZXAj%2BbJJ%2FPDGJW8t%2BxEbne8CQQtm11kRPxCHRzg1jvAyDmGYenZ%2FZATLYncgh6mafte44ECTCB7KTTBjqlAeQQPfyFDo0LQ4RbbTdCbuXyWZ1%2FthTUeB%2BlMcJIM6PeJtJGOptWgTuBrqLEdn7M9A3KqgbzmJ70ne7V%2BcuxYQR%2BiO9lcbRmEWQ4WgZW%2Bwa6dPBtwnudcDVJM2ovcuEy6W1qGdsZ8KrayO8kfvM0lQuBv%2Fr%2Fo47FGu9yvFXEI1X3Qs3BUWth125Z458Ygfr%2Fzlo%2BqXzTFvwS2RLv%2BpxKInguyVcEGA%3D%3D&X-Amz-Signature=d53f524e11ecca43401612937b23f9b5bd7f5b4da3c67ea315c0b7b923e35fcb&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject",
+   "urlVideo": ""
+  }
+ ],
+ "keyMapGoogle": "",
+ "projectRatings": [
+  {
+   "verificationNumber": null,
+   "ratings": [
+    {
+     "id": 2,
+     "projectRatingId": null,
+     "company": "MSCI",
+     "name": "MSCI Carbon Project Rating",
+     "rate": null,
+     "isPublic": null,
+     "updated": null
+    }
+   ]
+  }
+ ]
+}

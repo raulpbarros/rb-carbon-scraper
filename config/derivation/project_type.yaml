@@ -1,0 +1,263 @@
+# Tipo Micro de Projeto
+#
+# "Tipo Macro" is NOT here — it is Verra's own `sectoralScope` field, copied
+# straight through. This file only classifies the finer-grained type.
+#
+# Inputs available on each row (project table column names):
+#   sectoral_scope, methodologies, afolu_names, project_name,
+#   country_name, region_name, state_province, city, project_size
+#
+# AFOLU codes come from Verra's own `afoluNames` field, so those rules are
+# reliable. The sectoral-scope fallbacks below are a first pass — review them.
+#
+# First matching rule wins. No match = blank cell.
+
+column: "Tipo Micro de Projeto"
+
+rules:
+  # --- AFOLU: driven by Verra's own sub-type codes -----------------------
+  - name: afolu-arr
+    match: [{ field: afolu_names, any_of: [ARR] }]
+    value: "Florestamento, Reflorestamento e Revegetação (ARR)"
+
+  - name: afolu-redd
+    match: [{ field: afolu_names, any_of: [REDD] }]
+    value: "Desmatamento e Degradação Evitados (REDD)"
+
+  - name: afolu-ifm
+    match: [{ field: afolu_names, any_of: [IFM] }]
+    value: "Manejo Florestal Melhorado (IFM)"
+
+  - name: afolu-alm
+    match: [{ field: afolu_names, any_of: [ALM] }]
+    value: "Manejo Agrícola de Terras (ALM)"
+
+  - name: afolu-wrc
+    match: [{ field: afolu_names, any_of: [WRC] }]
+    value: "Restauração e Conservação de Áreas Úmidas (WRC)"
+
+  - name: afolu-acogs
+    match: [{ field: afolu_names, any_of: [ACoGS] }]
+    value: "Conservação de Pastagens e Campos (ACoGS)"
+
+  # --- Land-use methodologies, for registries with no AFOLU sub-type code -
+  # Cercarbono states no equivalent of Verra's `afoluNames`, so the rules
+  # above never fire for its rows. Its methodology strings do name the
+  # activity, though, and they are the closest thing it publishes to a
+  # sub-type. These sit above the energy rules below because a land-use
+  # methodology is the more specific reading; they cannot mis-fire on Verra
+  # rows, where the same codes mean the same thing.
+  #
+  # `AR-ACM0003` is spelled out rather than matched as `ACM0003`: the bare
+  # code is a cement-manufacture methodology, and the two are unrelated.
+  - name: methodology-afforestation
+    match:
+      - field: methodologies
+        regex: "AR-ACM0003|AR-AMS0003|M/UT/F-A01|Reforestation|Afforestation|Forest Restoration"
+    value: "Florestamento, Reflorestamento e Revegetação (ARR)"
+
+  - name: methodology-redd
+    match: [{ field: methodologies, regex: "REDD" }]
+    value: "Desmatamento e Degradação Evitados (REDD)"
+
+  - name: methodology-forest-wetland-modular
+    match: [{ field: methodologies, regex: "M/LU/F-W01" }]
+    value: "Manejo Florestal Melhorado (IFM)"
+
+  - name: methodology-land-use-generic
+    match: [{ field: methodologies, regex: "NTC 6208|land use" }]
+    value: "AFOLU (subtipo não informado)"
+
+  # --- Methodology-specific, where the scope alone is too coarse ---------
+  - name: methodology-cookstoves
+    match: [{ field: methodologies, regex: "AMS-II\\.G|VMR0006|VMR0013" }]
+    value: "Fogões Eficientes"
+
+  - name: methodology-water-purification
+    match: [{ field: methodologies, regex: "AMS-III\\.AV" }]
+    value: "Purificação de Água"
+
+  - name: methodology-landfill-gas
+    match: [{ field: methodologies, regex: "ACM0001|AMS-III\\.G" }]
+    value: "Gás de Aterro Sanitário"
+
+  - name: methodology-composting
+    match: [{ field: methodologies, regex: "AMS-III\\.F|ACM0022" }]
+    value: "Compostagem e Tratamento de Resíduos"
+
+  - name: methodology-recycling
+    match:
+      - field: methodologies
+        regex: "AMS-III\\.AJ|M/CE-R01|CM-WM-ELV-01|Recycling"
+    value: "Reciclagem e Recuperação de Materiais"
+
+  - name: methodology-wastewater
+    match: [{ field: methodologies, regex: "AMS-III\\.H|ACM0014" }]
+    value: "Tratamento de Efluentes"
+
+  - name: methodology-biochar
+    match: [{ field: methodologies, regex: "VM0044" }]
+    value: "Biochar"
+
+  - name: methodology-wind
+    match: [{ field: methodologies, regex: "ACM0002" }]
+    value: "Energia Renovável Conectada à Rede"
+
+  - name: methodology-small-scale-renewable
+    match: [{ field: methodologies, regex: "AMS-I\\." }]
+    value: "Energia Renovável de Pequena Escala"
+
+  # --- Gold Standard project types --------------------------------------
+  # Gold Standard states a `type` instead of a sectoral scope, from a closed
+  # list of 20 values (all of them enumerated below, from a full sync on
+  # 2026-07-28). These use `equals` against that vocabulary, so they can never
+  # match a Verra row — Verra's scopes are long descriptive strings.
+  #
+  # They sit ABOVE the Verra fallbacks on purpose: "Energy Efficiency -
+  # Transport Sector" would otherwise be caught by the broad `contains:
+  # Transport` rule and lose the efficiency reading.
+  #
+  # `Other` (350 projects) is deliberately absent — no rule, blank cell.
+  - name: gs-afforestation
+    match: [{ field: sectoral_scope, equals: "A/R" }]
+    value: "Florestamento, Reflorestamento e Revegetação (ARR)"
+
+  - name: gs-ee-domestic
+    match: [{ field: sectoral_scope, equals: "Energy Efficiency - Domestic" }]
+    value: "Eficiência Energética Doméstica"
+
+  - name: gs-ee-industrial
+    match: [{ field: sectoral_scope, equals: "Energy Efficiency - Industrial" }]
+    value: "Eficiência Energética Industrial"
+
+  - name: gs-ee-transport
+    match: [{ field: sectoral_scope, equals: "Energy Efficiency - Transport Sector" }]
+    value: "Eficiência Energética no Transporte"
+
+  - name: gs-ee-other-sectors
+    match:
+      - field: sectoral_scope
+        in:
+          - "Energy Efficiency - Commercial Sector"
+          - "Energy Efficiency - Public Sector"
+          - "Energy Efficiency - Agriculture Sector"
+    value: "Eficiência Energética"
+
+  - name: gs-wind
+    match: [{ field: sectoral_scope, equals: "Wind" }]
+    value: "Energia Eólica"
+
+  - name: gs-solar-pv
+    match: [{ field: sectoral_scope, equals: "PV" }]
+    value: "Energia Solar Fotovoltaica"
+
+  - name: gs-solar-thermal
+    match:
+      - field: sectoral_scope
+        in: ["Solar Thermal - Electricity", "Solar Thermal - Heat"]
+    value: "Energia Solar Térmica"
+
+  - name: gs-hydro
+    match: [{ field: sectoral_scope, equals: "Small, Low - Impact Hydro" }]
+    value: "Pequenas Centrais Hidrelétricas"
+
+  - name: gs-geothermal
+    match: [{ field: sectoral_scope, equals: "Geothermal" }]
+    value: "Energia Geotérmica"
+
+  - name: gs-biogas
+    match:
+      - field: sectoral_scope
+        in: ["Biogas - Heat", "Biogas - Electricity", "Biogas - Cogeneration"]
+    value: "Biogás"
+
+  - name: gs-biomass
+    match:
+      - field: sectoral_scope
+        in:
+          - "Biomass, or Liquid Biofuel - Heat"
+          - "Biomass, or Liquid Biofuel - Electricity"
+          - "Biomass, or Liquid Biofuel - Cogeneration"
+    value: "Biomassa e Biocombustíveis"
+
+  # --- Plan Vivo project types ------------------------------------------
+  # Plan Vivo leaves `sectoralScope` null and states a `projectType` instead,
+  # which the adapter carries into `sectoral_scope` untranslated. Every project
+  # in the registry today reads "Afforestation / Reforestation" (2 of 2 on
+  # 2026-07-28), so this vocabulary is one value deep and will grow. An
+  # unrecognised future value leaves the cell blank, which is the correct
+  # failure — do not add a catch-all here.
+  #
+  # `equals` rather than `contains`: it cannot reach a Verra or Cercarbono row,
+  # whose scopes are long descriptive strings.
+  - name: pv-afforestation
+    match: [{ field: sectoral_scope, equals: "Afforestation / Reforestation" }]
+    value: "Florestamento, Reflorestamento e Revegetação (ARR)"
+
+  # --- Sectoral-scope fallbacks -----------------------------------------
+  - name: scope-energy-industries
+    match: [{ field: sectoral_scope, contains: "Energy industries" }]
+    value: "Energia Renovável"
+
+  - name: scope-energy-demand
+    match: [{ field: sectoral_scope, contains: "Energy demand" }]
+    value: "Eficiência Energética"
+
+  - name: scope-energy-distribution
+    match: [{ field: sectoral_scope, contains: "Energy distribution" }]
+    value: "Distribuição de Energia"
+
+  - name: scope-waste
+    match: [{ field: sectoral_scope, contains: "Waste handling" }]
+    value: "Resíduos"
+
+  - name: scope-livestock
+    match: [{ field: sectoral_scope, contains: "Livestock" }]
+    value: "Pecuária e Manejo de Dejetos"
+
+  - name: scope-transport
+    match: [{ field: sectoral_scope, contains: "Transport" }]
+    value: "Transporte"
+
+  - name: scope-manufacturing
+    match: [{ field: sectoral_scope, contains: "Manufacturing" }]
+    value: "Indústria de Transformação"
+
+  - name: scope-fugitive
+    match: [{ field: sectoral_scope, contains: "Fugitive" }]
+    value: "Emissões Fugitivas"
+
+  - name: scope-chemical
+    match: [{ field: sectoral_scope, contains: "Chemical" }]
+    value: "Indústria Química"
+
+  - name: scope-mining
+    match: [{ field: sectoral_scope, regex: "Mining|Mineral" }]
+    value: "Mineração"
+
+  - name: scope-metal
+    match: [{ field: sectoral_scope, contains: "Metal" }]
+    value: "Metalurgia"
+
+  - name: scope-construction
+    match: [{ field: sectoral_scope, contains: "Construction" }]
+    value: "Construção"
+
+  - name: scope-ccs
+    match: [{ field: sectoral_scope, regex: "Carbon capture|CCS" }]
+    value: "Captura e Armazenamento de Carbono"
+
+  - name: scope-afolu-generic
+    # Verra says "Agriculture Forestry and Other Land Use"; Cercarbono says
+    # "Land use (AFOLU)". Same sector, two vocabularies, both carried through
+    # untranslated in Tipo Macro — so the rule has to recognise both.
+    match: [{ field: sectoral_scope, regex: "Agriculture Forestry|Land use \\(AFOLU\\)" }]
+    value: "AFOLU (subtipo não informado)"
+
+  - name: scope-ecosystem-conservation
+    match: [{ field: sectoral_scope, contains: "Ecosystem conservation" }]
+    value: "Conservação de Ecossistemas"
+
+  - name: scope-technological-cycle
+    match: [{ field: sectoral_scope, contains: "Technological cycle" }]
+    value: "Economia Circular"

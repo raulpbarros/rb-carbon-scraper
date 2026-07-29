@@ -1,0 +1,134 @@
+# Durabilidade
+#
+# How long the climate benefit is expected to last, and how reversible it is.
+# Verra publishes no durability field, so this is inferred from the project's
+# sectoral scope, AFOLU sub-type and methodology.
+#
+# The distinction that matters commercially:
+#   - REMOÇÃO (removal)  — carbon taken out of the atmosphere and stored.
+#     Durability depends on how stable that store is.
+#   - REDUÇÃO / EVITADA  — emissions that never happened. There is no carbon
+#     store to reverse, so "durability" does not really apply; the value says
+#     so rather than pretending otherwise.
+#
+# Review the bands with the business before trusting them.
+
+column: "Durabilidade"
+
+rules:
+  # --- Long-lived / engineered storage -----------------------------------
+  - name: geological-storage
+    match: [{ field: sectoral_scope, regex: "Carbon capture|CCS" }]
+    value: "Longa (>1000 anos) — armazenamento geológico"
+
+  - name: biochar
+    match: [{ field: methodologies, regex: "VM0044" }]
+    value: "Longa (100-1000 anos) — biochar"
+
+  # --- Biological storage: real removal, but reversible -------------------
+  - name: afolu-arr-removal
+    match: [{ field: afolu_names, any_of: [ARR] }]
+    value: "Média (25-100 anos) — estoque biológico, reversível"
+
+  - name: afolu-wrc-removal
+    match: [{ field: afolu_names, any_of: [WRC] }]
+    value: "Média (25-100 anos) — estoque biológico, reversível"
+
+  - name: afolu-ifm
+    match: [{ field: afolu_names, any_of: [IFM] }]
+    value: "Média (25-100 anos) — estoque florestal, reversível"
+
+  - name: afolu-soil
+    match: [{ field: afolu_names, any_of: [ALM, ACoGS] }]
+    value: "Curta (10-40 anos) — carbono no solo, reversível"
+
+  # --- Avoided loss: no new storage, high reversal risk --------------------
+  - name: afolu-redd
+    match: [{ field: afolu_names, any_of: [REDD] }]
+    value: "Curta/Média — desmatamento evitado, alto risco de reversão"
+
+  # --- Land-use methodologies, where no AFOLU sub-type code is published --
+  # Cercarbono states no `afoluNames`, so the rules above cannot fire for its
+  # rows. Its methodology strings carry the same distinction, and it is the
+  # commercially important one: a reforestation project builds a reversible
+  # carbon store, a REDD+ project avoids a loss and builds none.
+  - name: methodology-afforestation-removal
+    match:
+      - field: methodologies
+        regex: "AR-ACM0003|AR-AMS0003|M/UT/F-A01|Reforestation|Afforestation|Forest Restoration"
+    value: "Média (25-100 anos) — estoque biológico, reversível"
+
+  - name: methodology-redd-avoided
+    match: [{ field: methodologies, regex: "REDD" }]
+    value: "Curta/Média — desmatamento evitado, alto risco de reversão"
+
+  - name: methodology-forest-wetland-modular
+    match: [{ field: methodologies, regex: "M/LU/F-W01" }]
+    value: "Média (25-100 anos) — estoque florestal, reversível"
+
+  - name: afolu-generic
+    # Verra's wording and Cercarbono's, both carried through untranslated.
+    match: [{ field: sectoral_scope, regex: "Agriculture Forestry|Land use \\(AFOLU\\)" }]
+    value: "Média — uso da terra, reversível"
+
+  - name: ecosystem-conservation
+    match: [{ field: sectoral_scope, contains: "Ecosystem conservation" }]
+    value: "Média — uso da terra, reversível"
+
+  # --- Plan Vivo project types --------------------------------------------
+  # Plan Vivo states a `projectType` and no methodology at all, so both the
+  # AFOLU-code and methodology rules above are silent on its rows. Its one
+  # published type builds a reversible biological store, same as Verra's ARR
+  # and Gold Standard's A/R, and is given the same band.
+  - name: pv-afforestation-removal
+    match: [{ field: sectoral_scope, equals: "Afforestation / Reforestation" }]
+    value: "Média (25-100 anos) — estoque biológico, reversível"
+
+  # --- Gold Standard project types ----------------------------------------
+  # Gold Standard has no AFOLU sub-type codes, so its rows are read from the
+  # `type` vocabulary instead. `equals` / `in` against that closed list cannot
+  # match a Verra row. A/R is the only Gold Standard type that stores carbon;
+  # everything else on the list is an emission reduction.
+  - name: gs-afforestation-removal
+    match: [{ field: sectoral_scope, equals: "A/R" }]
+    value: "Média (25-100 anos) — estoque biológico, reversível"
+
+  - name: gs-emission-reduction
+    match:
+      - field: sectoral_scope
+        in:
+          - "Energy Efficiency - Domestic"
+          - "Energy Efficiency - Industrial"
+          - "Energy Efficiency - Transport Sector"
+          - "Energy Efficiency - Commercial Sector"
+          - "Energy Efficiency - Public Sector"
+          - "Energy Efficiency - Agriculture Sector"
+          - "Wind"
+          - "PV"
+          - "Solar Thermal - Electricity"
+          - "Solar Thermal - Heat"
+          - "Small, Low - Impact Hydro"
+          - "Geothermal"
+          - "Biogas - Heat"
+          - "Biogas - Electricity"
+          - "Biogas - Cogeneration"
+          - "Biomass, or Liquid Biofuel - Heat"
+          - "Biomass, or Liquid Biofuel - Electricity"
+          - "Biomass, or Liquid Biofuel - Cogeneration"
+    value: "Permanente — redução de emissões (sem estoque reversível)"
+
+  # --- Emission reductions: no carbon store to reverse --------------------
+  - name: energy-and-industry
+    match:
+      - field: sectoral_scope
+        regex: "Energy|Manufacturing|Chemical|Metal|Mining|Construction|Transport|Fugitive"
+    value: "Permanente — redução de emissões (sem estoque reversível)"
+
+  - name: waste-and-livestock
+    match: [{ field: sectoral_scope, regex: "Waste handling|Livestock" }]
+    value: "Permanente — redução de emissões (sem estoque reversível)"
+
+  - name: technological-cycle
+    # Cercarbono's own wording for circular-economy activity.
+    match: [{ field: sectoral_scope, regex: "Technological cycle|Treatment and Disposal" }]
+    value: "Permanente — redução de emissões (sem estoque reversível)"

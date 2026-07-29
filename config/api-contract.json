@@ -1,0 +1,4213 @@
+{
+  "captured_at": "2026-07-27T19:46:25.040660+00:00",
+  "api_host": "prod-us.api.platts.com",
+  "calls": [
+    {
+      "method": "GET",
+      "url": "https://prod-us.api.platts.com/ci-raas-prod/cms-resources/resource/getContent/translation/en",
+      "role": "other",
+      "request_headers": {
+        "language": "en",
+        "x-request-id": "e1ab39cd-e199-44b4-abe8-63a4a4ee6221",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "x-xsrf-token": "t20",
+        "referer": "https://registry.verra.org/",
+        "standardid": "150000000000001",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "tenant": "SPG",
+        "sec-ch-ua-mobile": "?0",
+        "standardacronym": "VERRA",
+        "registry": "VERRA",
+        "application": "Markit",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.7827.55 Safari/537.36",
+        "accept": "application/json",
+        "appkey": "wOKHFGuxKApQaujPSKgF"
+      },
+      "request_body": null,
+      "status": 200,
+      "response_is_json": true,
+      "total_hint": null,
+      "item_count": 67,
+      "response_sample": {
+        "siteId": 1,
+        "program": "VERRA",
+        "enUpdate": null,
+        "enReference": null,
+        "cmsWebpageList": null,
+        "cmsWebpageElementList": null,
+        "cmsContentList": null,
+        "contentResponse": {
+          "LANDING": {
+            "registryLandingPage": {
+              "contentList": [
+                {
+                  "value": "Welcome to the Verra Registry",
+                  "contentType": "TEXT",
+                  "name": "welcomeText"
+                },
+                {
+                  "value": "The central platform for managing and tracking information about projects and credits in Verra's standards programs.",
+                  "contentType": "TEXT",
+                  "name": "registryTagLine"
+                }
+              ]
+            }
+          },
+          "SURVEY": {
+            "labels": {
+              "contentList": [
+                {
+                  "value": "Yes",
+                  "contentType": "TEXT",
+                  "name": "YES"
+                },
+                {
+                  "value": "No",
+                  "contentType": "TEXT",
+                  "name": "NO"
+                }
+              ]
+            }
+          },
+          "DASHBOARD": {
+            "dashboardList": {
+              "contentList": [
+                {
+                  "value": "View More Projects",
+                  "contentType": "TEXT",
+                  "name": "dashViewMoreStandaloneProject"
+                },
+                {
+                  "value": "On Hold",
+                  "contentType": "TEXT",
+                  "name": "onHold"
+                }
+              ]
+            }
+          },
+          "ACTION_BAR": {
+            "actionDropdownList": {
+              "contentList": [
+                {
+                  "value": "Confirm Certification/Labels",
+                  "contentType": "TEXT",
+                  "name": "CONFIRM_CERTIFICATION_LABEL"
+                },
+                {
+                  "value": "Pending Payment",
+                  "contentType": "TEXT",
+                  "name": "UNIT_PENDING_PAYMENT"
+                }
+              ]
+            },
+            "actionLabelList": {
+              "contentList": [
+                {
+                  "value": "Submit for Pipeline Listing - Under Development",
+                  "contentType": "TEXT",
+                  "name": "action_submit_under_dev"
+                },
+                {
+                  "value": "Submit for Pipeline Listing - Under Validation and Verification",
+                  "contentType": "TEXT",
+                  "name": "action_submit_under_val_ver"
+                }
+              ]
+            }
+          },
+          "REGISTRATION": {
+            "docsUpload": {
+              "contentList": [
+                {
+                  "value": "Select File",
+                  "contentType": "TEXT",
+                  "name": "selectFile"
+                }
+              ]
+            },
+            "applicationSuccess": {
+              "contentList": [
+                {
+                  "value": "Thank you for submitting your application to the Verra Registry. You will receive a confirmation email containing a secure link to upload your KYC documents. Once we receive your documents, we will review your account and notify you of any updates or additional information required throughout the review process.",
+                  "contentType": "TEXT",
+                  "name": "applicationSuccessMsg"
+                }
+              ]
+            },
+            "regList": {
+              "contentList": [
+                {
+                  "value": "Organization Name",
+                  "contentType": "TEXT",
+                  "name": "regName"
+                },
+                {
+                  "value": "Email",
+                  "contentType": "TEXT",
+                  "name": "email"
+                }
+              ]
+            },
+            "docUploads": {
+              "contentList": [
+                {
+                  "value": "Back",
+                  "contentType": "TEXT",
+                  "name": "back"
+                },
+                {
+                  "value": "Next",
+                  "contentType": "TEXT",
+                  "name": "next"
+                }
+              ]
+            }
+          },
+          "ACCOUNT": {
+            "accountConfirmationStatus": {
+              "contentList": [
+                {
+                  "value": "Account Draft Discarded",
+                  "contentType": "TEXT",
+                  "name": "masterDiscardDraft"
+                },
+                {
+                  "value": "Sub-account Draft Discarded",
+                  "contentType": "TEXT",
+                  "name": "subsidiarysub-accountDiscardDraft"
+                }
+              ]
+            },
+            "accountOptions": {
+              "contentList": [
+                {
+                  "value": "Primary Account",
+                  "contentType": "TEXT",
+                  "name": "primaryAccount"
+                },
+                {
+                  "value": "Subsidiary Sub-Account",
+                  "contentType": "TEXT",
+                  "name": "subSidiarySubAccount"
+                }
+              ]
+            },
+            "accountSummary": {
+              "contentList": [
+                {
+                  "value": "XConnect Account ID",
+                  "contentType": "TEXT",
+                  "name": "xconnectAccountId"
+                },
+                {
+                  "value": "Organization Name",
+                  "contentType": "TEXT",
+                  "name": "registeredName"
+                }
+              ]
+            },
+            "accountValidationError": {
+              "contentList": [
+                {
+                  "value": "Please enter a valid email",
+                  "contentType": "TEXT",
+                  "name": "emailValidationError"
+                }
+              ]
+            }
+          },
+          "SUB_ACCOUNTS": {
+            "subAccountsList": {
+              "contentList": [
+                {
+                  "value": "Sub-Accounts",
+                  "contentType": "TEXT",
+                  "name": "title"
+                },
+                {
+                  "value": "Registered Name",
+                  "contentType": "TEXT",
+                  "name": "registeredName"
+                }
+              ]
+            }
+          },
+          "REGISTRY_REPORTS_ACCOUNTS": {
+            "regReportsAccountsList": {
+              "contentList": [
+                {
+                  "value": "Account ID",
+                  "contentType": "TEXT",
+                  "name": "accountId"
+                },
+                {
+                  "value": "State/Province",
+                  "contentType": "TEXT",
+                  "name": "stateProvince"
+                }
+              ]
+            }
+          },
+          "REGISTRY_REPORTS_ISSUANCES": {
+            "regIssList": {
+              "contentList": [
+                {
+                  "value": "Project ID",
+                  "contentType": "TEXT",
+                  "name": "projectId"
+                },
+                {
+                  "value": "Account ID",
+                  "contentType": "TEXT",
+                  "name": "accountId"
+                }
+              ]
+            }
+          },
+          "REPORTS": {
+            "headers": {
+              "contentList": [
+                {
+                  "value": "Projects",
+                  "contentType": "TEXT",
+                  "name": "PROJECTS"
+                },
+                {
+                  "value": "VCS Projects",
+                  "contentType": "TEXT",
+                  "name": "VCS_PROJECTS"
+                }
+              ]
+            }
+          },
+          "ADMIN_REPORTS_PROJECTS": {
+            "adminReportsProjectsList": {
+              "contentList": [
+                {
+                  "value": "Sectoral Scope",
+                  "contentType": "TEXT",
+                  "name": "projectType"
+                },
+                {
+                  "value": "Project Category",
+                  "contentType": "TEXT",
+                  "name": "projectCategory"
+                }
+              ]
+            }
+          },
+          "PUBLIC_REPORTS_ISSUANCES": {
+            "publicReportIssuancesList": {
+              "contentList": [
+                {
+                  "value": "Program",
+                  "contentType": "TEXT",
+                  "name": "program"
+                },
+                {
+                  "value": "Issuance Requested Date",
+                  "contentType": "TEXT",
+                  "name": "issuanceReqDate"
+                }
+              ]
+            }
+          },
+          "PUBLIC_REPORTS_CANCELLATION": {
+            "publicReportCancellationList": {
+              "contentList": [
+                {
+                  "value": "Program",
+                  "contentType": "TEXT",
+                  "name": "program"
+                },
+                {
+                  "value": "Issuance Requested Date",
+                  "contentType": "TEXT",
+                  "name": "issuanceReqDate"
+                }
+              ]
+            }
+          },
+          "PUBLIC_REPORTS_PROJECTS": {
+            "pubReportsProjectsList": {
+              "contentList": [
+                {
+                  "value": "Project Type",
+                  "contentType": "TEXT",
+                  "name": "projectType"
+                },
+                {
+                  "value": "Project ID",
+                  "contentType": "TEXT",
+                  "name": "projectId"
+                }
+              ]
+            }
+          },
+          "PUBLIC_VIEW_LANDING": {
+            "publicProjectPage": {
+              "contentList": [
+                {
+                  "value": "Sectoral Scope",
+                  "contentType": "TEXT",
+                  "name": "sectoralScope"
+                },
+                {
+                  "value": "Validator",
+                  "contentType": "TEXT",
+                  "name": "validatorName"
+                }
+              ]
+            }
+          },
+          "PUBLIC_VIEW_REPORTS_PROJECTS": {
+            "pubReportsProjectsList": {
+              "contentList": [
+                {
+                  "value": "Projects",
+                  "contentType": "TEXT",
+                  "name": "title"
+                },
+                {
+                  "value": "Sectoral Scope",
+                  "contentType": "TEXT",
+                  "name": "sectoralScope"
+                }
+              ]
+            }
+          },
+          "PUBLIC_VIEW_REPORTS_HOLDINGS": {
+            "regHoldingsList": {
+              "contentList": [
+                {
+                  "value": "Holdings",
+                  "contentType": "TEXT",
+                  "name": "title"
+                },
+                {
+                  "value": "Account Name",
+                  "contentType": "TEXT",
+                  "name": "accountName"
+                }
+              ]
+            }
+          },
+          "PUBLIC_REPORTS_RETIREMENTS": {
+            "publicReportRetirementsList": {
+              "contentList": [
+                {
+                  "value": "Program",
+                  "contentType": "TEXT",
+                  "name": "program"
+                },
+                {
+                  "value": "Project ID",
+                  "contentType": "TEXT",
+                  "name": "projectId"
+                }
+              ]
+            }
+          },
+          "PUBLIC_REPORTS_HOLDINGS": {
+            "regHoldingsList": {
+              "contentList": [
+                {
+                  "value": "Program",
+                  "contentType": "TEXT",
+                  "name": "program"
+                },
+                {
+                  "value": "Issuance Date",
+                  "contentType": "TEXT",
+                  "name": "issuanceDate"
+                }
+              ]
+            }
+          },
+          "REGISTRY_REPORTS_PROJECTS": {
+            "regProjList": {
+              "contentList": [
+                {
+                  "value": "Sectoral Scope",
+                  "contentType": "TEXT",
+                  "name": "projectType"
+                },
+                {
+                  "value": "Project Category",
+                  "contentType": "TEXT",
+                  "name": "projectCategory"
+                }
+              ]
+            }
+          },
+          "REGISTRY_REPORTS_ALL_TRANSFERS": {
+            "regAllTransfersList": {
+              "contentList": [
+                {
+                  "value": "Transfer Type",
+                  "contentType": "TEXT",
+                  "name": "transferType"
+                },
+                {
+                  "value": "Transaction ID",
+                  "contentType": "TEXT",
+                  "name": "transactionId"
+                }
+              ]
+            }
+          },
+          "REGISTRY_REPORTS_RETIREMENTS": {
+            "regReportsRetirementList": {
+              "contentList": [
+                {
+                  "value": "Account ID",
+                  "contentType": "TEXT",
+                  "name": "accountId"
+                },
+                {
+                  "value": "Project ID",
+                  "contentType": "TEXT",
+                  "name": "projectId"
+                }
+              ]
+            }
+          },
+          "REGISTRY_REPORTS_CANCELLATIONS": {
+            "regCancellationsList": {
+              "contentList": [
+                {
+                  "value": "Account ID",
+                  "contentType": "TEXT",
+                  "name": "accountId"
+                },
+                {
+                  "value": "Project ID",
+                  "contentType": "TEXT",
+                  "name": "projectId"
+                }
+              ]
+            }
+          },
+          "REGISTRY_REPORTS_BUFFERS": {
+            "regBuffersList": {
+              "contentList": [
+                {
+                  "value": "Account ID",
+                  "contentType": "TEXT",
+                  "name": "accountId"
+                },
+                {
+                  "value": "Account Name",
+                  "contentType": "TEXT",
+                  "name": "accountName"
+                }
+              ]
+            }
+          },
+          "PUBLIC_REPORTS_BUFFERS": {
+            "regBuffersList": {
+              "contentList": [
+                {
+                  "value": "Buffers",
+                  "contentType": "TEXT",
+                  "name": "title"
+                },
+                {
+                  "value": "Project ID",
+                  "contentType": "TEXT",
+                  "name": "projectId"
+                }
+              ]
+            }
+          },
+          "ADMIN_REPORTS_BUFFERS": {
+            "regBuffersList": {
+              "contentList": [
+                {
+                  "value": "Account ID",
+                  "contentType": "TEXT",
+                  "name": "accountId"
+                },
+                {
+                  "value": "Account Name",
+                  "contentType": "TEXT",
+                  "name": "accountName"
+                }
+              ]
+            }
+          },
+          "REGISTRY_REPORTS_UNITS_SUMMARY": {
+            "regUnitList": {
+              "contentList": [
+                {
+                  "value": "Account ID",
+                  "contentType": "TEXT",
+                  "name": "accountId"
+                },
+                {
+                  "value": "Project ID",
+                  "contentType": "TEXT",
+                  "name": "projectId"
+                }
+              ]
+            }
+          },
+          "REGISTRY_REPORTS_CURRENTHOLDINGS": {
+            "regCurrHoldingList": {
+              "contentList": [
+                {
+                  "value": "Account ID",
+                  "contentType": "TEXT",
+                  "name": "accountId"
+                },
+                {
+                  "value": "Project ID",
+                  "contentType": "TEXT",
+                  "name": "projectId"
+                }
+              ]
+            }
+          },
+          "FOOTER": {
+            "links": {
+              "contentList": [
+                {
+                  "value": "https://verra.org/privacy-policy/",
+                  "contentType": "TEXT",
+                  "name": "privacyPolicy"
+                },
+                {
+                  "value": "https://verra.org/documents/verra-registry-terms-of-use/",
+                  "contentType": "TEXT",
+                  "name": "termsOfUse"
+                }
+              ]
+            }
+          },
+          "BILLING": {
+            "breadcrumbs": {
+              "contentList": [
+                {
+                  "value": "Billing",
+                  "contentType": "TEXT",
+                  "name": "billing"
+                },
+                {
+                  "value": "Fees",
+                  "contentType": "TEXT",
+                  "name": "FEES"
+                }
+              ]
+            },
+            "flatFeesList": {
+              "contentList": [
+                {
+                  "value": "Program",
+                  "contentType": "TEXT",
+                  "name": "standard"
+                },
+                {
+                  "value": "Fee Name",
+                  "contentType": "TEXT",
+                  "name": "feeName"
+                }
+              ]
+            },
+            "billableEventsList": {
+              "contentList": [
+                {
+                  "value": "Fee Name",
+                  "contentType": "TEXT",
+                  "name": "feeName"
+                },
+                {
+                  "value": "Billable Amount",
+                  "contentType": "TEXT",
+                  "name": "billableAmount"
+                }
+              ]
+            },
+            "invoicesList": {
+              "contentList": [
+                {
+                  "value": "Invoice Date",
+                  "contentType": "TEXT",
+                  "name": "invoiceDate"
+                },
+                {
+                  "value": "Invoice Amount",
+                  "contentType": "TEXT",
+                  "name": "invoiceAmount"
+                }
+              ]
+            },
+            "invoiceDetailsList": {
+              "contentList": [
+                {
+                  "value": "Invoice Details",
+                  "contentType": "TEXT",
+                  "name": "invoiceDetails"
+                },
+                {
+                  "value": "Invoice Items",
+                  "contentType": "TEXT",
+                  "name": "invoiceItems"
+                }
+              ]
+            },
+            "manageBillableEventsOptions": {
+              "contentList": [
+                {
+                  "value": "Number of Credit Notes Refreshed",
+                  "contentType": "TEXT",
+                  "name": "noOfCreditNotesRefreshed"
+                },
+                {
+                  "value": "Number of Invoices Refreshed",
+                  "contentType": "TEXT",
+                  "name": "noOfInvoicesRefreshed"
+                }
+              ]
+            },
+            "managePaymentsList": {
+              "contentList": [
+                {
+                  "value": "Apply To Invoice",
+                  "contentType": "TEXT",
+                  "name": "applyToInvoice"
+                },
+                {
+                  "value": "Apply a payment to invoice(s)",
+                  "contentType": "TEXT",
+                  "name": "applyToInvoiceDesc"
+                }
+              ]
+            },
+            "commonList": {
+              "contentList": [
+                {
+                  "value": "Back",
+                  "contentType": "TEXT",
+                  "name": "back"
+                },
+                {
+                  "value": "Next",
+                  "contentType": "TEXT",
+                  "name": "next"
+                }
+              ]
+            },
+            "accountOverviewList": {
+              "contentList": [
+                {
+                  "value": "Account Overview",
+                  "contentType": "TEXT",
+                  "name": "title"
+                },
+                {
+                  "value": "Balance Details",
+                  "contentType": "TEXT",
+                  "name": "balanceDetails"
+                }
+              ]
+            },
+            "accountHolderSubAccountsList": {
+              "contentList": [
+                {
+                  "value": "Account Name",
+                  "contentType": "TEXT",
+                  "name": "accountName"
+                },
+                {
+                  "value": "Account ID",
+                  "contentType": "TEXT",
+                  "name": "accountId"
+                }
+              ]
+            },
+            "billableAccountHoldersList": {
+              "contentList": [
+                {
+                  "value": "Billable Accounts",
+                  "contentType": "TEXT",
+                  "name": "title"
+                },
+                {
+                  "value": "Account Name",
+                  "contentType": "TEXT",
+                  "name": "accountName"
+                }
+              ]
+            },
+            "billableEventFeeList": {
+              "contentList": [
+                {
+                  "value": "Vintage Start Date",
+                  "contentType": "TEXT",
+                  "name": "vintageStartDate"
+                },
+                {
+                  "value": "Vintage End Date",
+                  "contentType": "TEXT",
+                  "name": "vintageEndDate"
+                }
+              ]
+            },
+            "applyInvoiceBalance": {
+              "contentList": [
+                {
+                  "value": "Apply Balance to Invoices",
+                  "contentType": "TEXT",
+                  "name": "applyBalanceBtn"
+                },
+                {
+                  "value": "Available Balance",
+                  "contentType": "TEXT",
+                  "name": "availableBalanceLabel"
+                }
+              ]
+            },
+            "statusList": {
+              "contentList": [
+                {
+                  "value": "Pending",
+                  "contentType": "TEXT",
+                  "name": "PENDING"
+                },
+                {
+                  "value": "Processing Failed",
+                  "contentType": "TEXT",
+                  "name": "PROCESSING_FAILED"
+                }
+              ]
+            }
+          },
+          "BILLING_REPORTS": {
+            "reportList": {
+              "contentList": [
+                {
+                  "value": "Billing",
+                  "contentType": "TEXT",
+                  "name": "billingTitle"
+                },
+                {
+                  "value": "Reports",
+                  "contentType": "TEXT",
+                  "name": "billingReports"
+                }
+              ]
+            },
+            "creditNotesReportList": {
+              "contentList": [
+                {
+                  "value": "CreditNotes",
+                  "contentType": "TEXT",
+                  "name": "title"
+                },
+                {
+                  "value": "Credit Date",
+                  "contentType": "TEXT",
+                  "name": "creditNoteDate"
+                }
+              ]
+            },
+            "reservedBalReportList": {
+              "contentList": [
+                {
+                  "value": "Reserved Balance",
+                  "contentType": "TEXT",
+                  "name": "title"
+                },
+                {
+                  "value": "Subscription Number",
+                  "contentType": "TEXT",
+                  "name": "subscriptionNumber"
+                }
+              ]
+            }
+          },
+          "BILLING_INVOICES_BALANCE": {
+            "invoicesList": {
+              "contentList": [
+                {
+                  "value": "Invoice Date",
+                  "contentType": "TEXT",
+                  "name": "invoiceDate"
+                },
+                {
+                  "value": "Invoice Amount",
+                  "contentType": "TEXT",
+                  "name": "invoiceAmount"
+                }
+              ]
+            },
+            "allocationList": {
+              "contentList": [
+                {
+                  "value": "Invoice Date",
+                  "contentType": "TEXT",
+                  "name": "invoiceDate"
+                },
+                {
+                  "value": "Invoice Amount",
+                  "contentType": "TEXT",
+                  "name": "invoiceAmount"
+                }
+              ]
+            }
+          },
+          "BILLING_INVOICE_GENERATION": {
+            "breadcrumbs": {
+              "contentList": [
+                {
+                  "value": "Billing",
+                  "contentType": "TEXT",
+                  "name": "billing"
+                },
+                {
+                  "value": "Billable Events",
+                  "contentType": "TEXT",
+                  "name": "billableEvents"
+                }
+              ]
+            },
+            "manageBillableEvents": {
+              "contentList": [
+                {
+                  "value": "Invoice Generation",
+                  "contentType": "TEXT",
+                  "name": "invoiceGeneration"
+                },
+                {
+                  "value": "Invoice Generation Completed",
+                  "contentType": "TEXT",
+                  "name": "invoiceGenCompleted"
+                }
+              ]
+            },
+            "invoiceGenerationList": {
+              "contentList": [
+                {
+                  "value": "Event Date",
+                  "contentType": "TEXT",
+                  "name": "date"
+                },
+                {
+                  "value": "Event ID",
+                  "contentType": "TEXT",
+                  "name": "eventId"
+                }
+              ]
+            },
+            "invoiceGenerationSummary": {
+              "contentList": [
+                {
+                  "value": "Event Date",
+                  "contentType": "TEXT",
+                  "name": "eventDate"
+                },
+                {
+                  "value": "Event ID",
+                  "contentType": "TEXT",
+                  "name": "eventID"
+                }
+              ]
+            }
+          },
+          "BILLING_EVENT_CANCELLATION": {
+            "eventCancellationList": {
+              "contentList": [
+                {
+                  "value": "Event Date",
+                  "contentType": "TEXT",
+                  "name": "date"
+                },
+                {
+                  "value": "Event ID",
+                  "contentType": "TEXT",
+                  "name": "eventId"
+                }
+              ]
+            }
+          },
+          "VIEW_ALL_PAYMENTS": {
+            "allPaymentsList": {
+              "contentList": [
+                {
+                  "value": "All Payments",
+                  "contentType": "TEXT",
+                  "name": "title"
+                },
+                {
+                  "value": "Payment Date",
+                  "contentType": "TEXT",
+                  "name": "paymentDate"
+                }
+              ]
+            }
+          },
+          "VIEW_UNAPPLIED_PAYMENTS": {
+            "unAppliedPaymentsList": {
+              "contentList": [
+                {
+                  "value": "Unapplied Payments",
+                  "contentType": "TEXT",
+                  "name": "title"
+                },
+                {
+                  "value": "Payment Date",
+                  "contentType": "TEXT",
+                  "name": "paymentDate"
+                }
+              ]
+            }
+          },
+          "PAYMENT_ALLOCATION_DETAILS": {
+            "allocationList": {
+              "contentList": [
+                {
+                  "value": "Allocation Details",
+                  "contentType": "TEXT",
+                  "name": "allocationDetailsTitle"
+                },
+                {
+                  "value": "Invoice Date",
+                  "contentType": "TEXT",
+                  "name": "invoiceDate"
+                }
+              ]
+            }
+          },
+          "PAYMENT_SELECT_INVOICES": {
+            "invoicesList": {
+              "contentList": [
+                {
+                  "value": "Select Invoices",
+                  "contentType": "TEXT",
+                  "name": "title"
+                },
+                {
+                  "value": "Invoice Date",
+                  "contentType": "TEXT",
+                  "name": "invoiceDate"
+                }
+              ]
+            }
+          },
+          "INVOICE_BALANCE_ALLOCATION_DETAILS": {
+            "allocationList": {
+              "contentList": [
+                {
+                  "value": "Allocation Request Submitted Successfully",
+                  "contentType": "TEXT",
+                  "name": "allocationSuccess"
+                },
+                {
+                  "value": "Allocation Details",
+                  "contentType": "TEXT",
+                  "name": "allocationDetails"
+                }
+              ]
+            }
+          },
+          "menuItems": {
+            "subMenu": {
+              "contentList": [
+                {
+                  "value": "Fees",
+                  "contentType": "TEXT",
+                  "name": "billingFees"
+                },
+                {
+                  "value": "Billable Events",
+                  "contentType": "TEXT",
+                  "name": "billingBillableEvents"
+                }
+              ]
+            }
+          },
+          "COMMON": {
+            "messages": {
+              "contentList": [
+                {
+                  "value": "Accept Terms of Use",
+                  "contentType": "TEXT",
+                  "name": "confirmTnCTitle"
+                },
+                {
+                  "value": "\u00a9 {copyrightYear} Verra All Rights Reserved",
+                  "contentType": "TEXT",
+                  "name": "copyright"
+                }
+              ]
+            }
+          },
+          "PROJECTS": {
+            "newProjectBtnOptions": {
+              "contentList": [
+                {
+                  "value": "New VCS Project",
+                  "contentType": "TEXT",
+                  "name": "newVCSProject"
+                },
+                {
+                  "value": "New JNR Program",
+                  "contentType": "TEXT",
+                  "name": "newJNRProject"
+                }
+              ]
+            },
+            "projectList": {
+              "contentList": [
+                {
+                  "value": "Project Type",
+                  "contentType": "TEXT",
+                  "name": "projectType"
+                },
+                {
+                  "value": "Project ID",
+                  "contentType": "TEXT",
+                  "name": "projectId"
+                }
+              ]
+            },
+            "newProjectOptions": {
+              "contentList": [
+                {
+                  "value": "New Project",
+                  "contentType": "TEXT",
+                  "name": "newProject"
+                },
+                {
+                  "value": "New VCS Project",
+                  "contentType": "TEXT",
+                  "name": "NEW_VCS_PROJECT"
+                }
+              ]
+            },
+            "breadcrumbs": {
+              "contentList": [
+                {
+                  "value": "New Project",
+                  "contentType": "TEXT",
+                  "name": "newProject"
+                }
+              ]
+            },
+            "projectDetails": {
+              "contentList": [
+                {
+                  "value": "This is a required field to submit for Under Validation",
+                  "contentType": "TEXT",
+                  "name": "validatorTooltip"
+                },
+                {
+                  "value": "One or more inactive methodology is present",
+                  "contentType": "TEXT",
+                  "name": "invalidMethodology"
+                }
+              ]
+            },
+            "projectConstant": {
+              "contentList": [
+                {
+                  "value": "Jurisdictional and Nested REDD+ Framework",
+                  "contentType": "TEXT",
+                  "name": "jnrProjectName"
+                }
+              ]
+            }
+          },
+          "COMMENT_CONFIRM_MODAL": {
+            "modalHeader": {
+              "contentList": [
+                {
+                  "value": "Are you sure you want to submit this project for Pipeline listing - under development?",
+                  "contentType": "TEXT",
+                  "name": "Project_SUBMIT_UNDER_DEV"
+                },
+                {
+                  "value": "Are you sure you want to submit this project for Pipeline Listing - Under Validation?",
+                  "contentType": "TEXT",
+                  "name": "Project_SUBMIT_UNDER_VAL"
+                }
+              ]
+            },
+            "modalBody": {
+              "contentList": [
+                {
+                  "value": "This is a required field.",
+                  "contentType": "TEXT",
+                  "name": "required"
+                },
+                {
+                  "value": "Write here...",
+                  "contentType": "TEXT",
+                  "name": "placeholder"
+                }
+              ]
+            },
+            "modalFooter": {
+              "contentList": [
+                {
+                  "value": "Accept",
+                  "contentType": "TEXT",
+                  "name": "accept"
+                }
+              ]
+            }
+          },
+          "BILLING_PAYMENT": {
+            "paymentsList": {
+              "contentList": [
+                {
+                  "value": "Payment Allocated Successfully",
+                  "contentType": "TEXT",
+                  "name": "paymentSuccess"
+                },
+                {
+                  "value": "Payment Details",
+                  "contentType": "TEXT",
+                  "name": "paymentDetails"
+                }
+              ]
+            }
+          },
+          "VOLUME_BASED_FEES": {
+            "volumeBasedFeesList": {
+              "contentList": [
+                {
+                  "value": "Volume-Based Fees",
+                  "contentType": "TEXT",
+                  "name": "title"
+                },
+                {
+                  "value": "Program",
+                  "contentType": "TEXT",
+                  "name": "standard"
+                }
+              ]
+            }
+          },
+          "VIEW_TIERED_FEES": {
+            "tieredFeesList": {
+              "contentList": [
+                {
+                  "value": "Tiered Fees",
+                  "contentType": "TEXT",
+                  "name": "title"
+                },
+                {
+                  "value": "Program",
+                  "contentType": "TEXT",
+                  "name": "standard"
+                }
+              ]
+            }
+          },
+          "ISSUANCES": {
+            "issuancesList": {
+              "contentList": [
+                {
+                  "value": "Project ID",
+                  "contentType": "TEXT",
+                  "name": "projectID"
+                },
+                {
+                  "value": "Account ID",
+                  "contentType": "TEXT",
+                  "name": "accountID"
+                }
+              ]
+            },
+            "newIssueBtnOptions": {
+              "contentList": [
+                {
+                  "value": "New VCS Issuance",
+                  "contentType": "TEXT",
+                  "name": "newVCSIssue"
+                },
+                {
+                  "value": "New JNR Issuance",
+                  "contentType": "TEXT",
+                  "name": "newJNRIssue"
+                }
+              ]
+            }
+          },
+          "NESTED_ADD_ISSUANCES": {
+            "nestedAddIssuancesList": {
+              "contentList": [
+                {
+                  "value": "Requested Buffer Quantity must accept only whole, positive numbers",
+                  "contentType": "TEXT",
+                  "name": "bufferQuantityErrorStatus"
+                },
+                {
+                  "value": "Requested Project Quantity must accept only positive whole numbers greater than zero",
+                  "contentType": "TEXT",
+                  "name": "holding_quantityErrorStatus"
+                }
+              ]
+            }
+          },
+          "ADMIN_REPORTS": {
+            "ACCOUNTS": {
+              "contentList": [
+                {
+                  "value": "Account ID",
+                  "contentType": "TEXT",
+                  "name": "accountID"
+                },
+                {
+                  "value": "Primary Account ID",
+                  "contentType": "TEXT",
+                  "name": "primaryAccountId"
+                }
+              ]
+            },
+            "HOLDINGS": {
+              "contentList": [
+                {
+                  "value": "Account ID",
+                  "contentType": "TEXT",
+                  "name": "accountId"
+                },
+                {
+                  "value": "Sub-Account ID",
+                  "contentType": "TEXT",
+                  "name": "subAccountId"
+                }
+              ]
+            },
+            "ISSUANCES": {
+              "contentList": [
+                {
+                  "value": "Account ID",
+                  "contentType": "TEXT",
+                  "name": "accountId"
+                },
+                {
+                  "value": "Project ID",
+                  "contentType": "TEXT",
+                  "name": "projectId"
+                }
+              ]
+            },
+            "RETIREMENTS": {
+              "contentList": [
+                {
+                  "value": "Account ID",
+                  "contentType": "TEXT",
+                  "name": "accountId"
+                },
+                {
+                  "value": "Sub-Account ID",
+                  "contentType": "TEXT",
+                  "name": "subAccountId"
+                }
+              ]
+            },
+            "TRANSFERS": {
+              "contentList": [
+                {
+                  "value": "Transfer Type",
+                  "contentType": "TEXT",
+                  "name": "transferType"
+                },
+                {
+                  "value": "Transaction ID",
+                  "contentType": "TEXT",
+                  "name": "transactionId"
+                }
+              ]
+            },
+            "USERS": {
+              "contentList": [
+                {
+                  "value": "Notification Email",
+                  "contentType": "TEXT",
+                  "name": "email"
+                },
+                {
+                  "value": "Account ID",
+                  "contentType": "TEXT",
+                  "name": "accountID"
+                }
+              ]
+            },
+            "CANCELLATION": {
+              "contentList": [
+                {
+                  "value": "Account ID",
+                  "contentType": "TEXT",
+                  "name": "accountId"
+                },
+                {
+                  "value": "Project ID",
+                  "contentType": "TEXT",
+                  "name": "projectId"
+                }
+              ]
+            }
+          },
+          "VERIFICATIONS": {
+            "breadcrumbs": {
+              "contentList": [
+                {
+                  "value": "Verifications",
+                  "contentType": "TEXT",
+                  "name": "verifications"
+                }
+              ]
+            },
+            "verificationsList": {
+              "contentList": [
+                {
+                  "value": "Project ID",
+                  "contentType": "TEXT",
+                  "name": "projectId"
+                },
+                {
+                  "value": "Account ID",
+                  "contentType": "TEXT",
+                  "name": "accountId"
+                }
+              ]
+            },
+            "verificationsDetailsList": {
+              "contentList": [
+                {
+                  "value": "New",
+                  "contentType": "TEXT",
+                  "name": "new"
+                },
+                {
+                  "value": "Verification Details",
+                  "contentType": "TEXT",
+                  "name": "verificationDetails"
+                }
+              ]
+            },
+            "addVerificationsList": {
+              "contentList": [
+                {
+                  "value": "Verification Start Date",
+                  "contentType": "TEXT",
+                  "name": "verificationStartDate"
+                },
+                {
+                  "value": "Verification End Date",
+                  "contentType": "TEXT",
+                  "name": "verificationEndDate"
+                }
+              ]
+            },
+            "nestedAddVerificationsList": {
+              "contentList": [
+                {
+                  "value": "Active",
+                  "contentType": "TEXT",
+                  "name": "ACTIVE"
+                },
+                {
+                  "value": "Inactive",
+                  "contentType": "TEXT",
+                  "name": "INACTIVE"
+                }
+              ]
+            }
+          },
+          "USERS": {
+            "userList": {
+              "contentList": [
+                {
+                  "value": "Job Title",
+                  "contentType": "TEXT",
+                  "name": "contactJobTitle"
+                },
+                {
+                  "value": "Job Title",
+                  "contentType": "TEXT",
+                  "name": "contactJobTitlePH"
+                }
+              ]
+            },
+            "accountAccessGrid": {
+              "contentList": [
+                {
+                  "value": "Add Primary Account",
+                  "contentType": "TEXT",
+                  "name": "addPrimaryAccount"
+                },
+                {
+                  "value": "Search and select a primary account to grant access",
+                  "contentType": "TEXT",
+                  "name": "addPrimaryAccountSub"
+                }
+              ]
+            }
+          },
+          "ACCOUNT_TAC": {
+            "accountTAC": {
+              "contentList": [
+                {
+                  "value": "Terms of Use",
+                  "contentType": "TEXT",
+                  "name": "title"
+                }
+              ]
+            }
+          },
+          "MY_UNITS": {
+            "myunitsList": {
+              "contentList": [
+                {
+                  "value": "Confirm Certification/Labels",
+                  "contentType": "TEXT",
+                  "name": "confirmCertificationLabelsTitle"
+                },
+                {
+                  "value": "Units Retroactive Labeling applied successfully",
+                  "contentType": "TEXT",
+                  "name": "confirm_certification_label_success_msg"
+                }
+              ]
+            },
+            "unitsTransfer": {
+              "contentList": [
+                {
+                  "value": "Transfer Quantity and Pricing",
+                  "contentType": "TEXT",
+                  "name": "intraTransferDetailsDescription"
+                },
+                {
+                  "value": "Units Submitted Successfully",
+                  "contentType": "TEXT",
+                  "name": "transferSuccessfully"
+                }
+              ]
+            },
+            "unitsTransferTypeModal": {
+              "contentList": [
+                {
+                  "value": "Intra-Transfer (Holding)",
+                  "contentType": "TEXT",
+                  "name": "intraTransferHoldingLabel"
+                },
+                {
+                  "value": "Transfer holdings between my primary account, subsidiary sub-account and holding sub-account.",
+                  "contentType": "TEXT",
+                  "name": "intraTransferHoldingDescription"
+                }
+              ]
+            },
+            "manageUnitsOptions": {
+              "contentList": [
+                {
+                  "value": "Hold",
+                  "contentType": "TEXT",
+                  "name": "holdUnits"
+                },
+                {
+                  "value": "Units available to Hold",
+                  "contentType": "TEXT",
+                  "name": "holdUnitsDesc"
+                }
+              ]
+            },
+            "breadcrumbs": {
+              "contentList": [
+                {
+                  "value": "Units",
+                  "contentType": "TEXT",
+                  "name": "units"
+                },
+                {
+                  "value": "Hold Units",
+                  "contentType": "TEXT",
+                  "name": "holdUnits"
+                }
+              ]
+            }
+          },
+          "REGISTRY_UNITS": {
+            "registryUnitsList": {
+              "contentList": [
+                {
+                  "value": "Account ID",
+                  "contentType": "TEXT",
+                  "name": "accountID"
+                },
+                {
+                  "value": "Sub-Account ID",
+                  "contentType": "TEXT",
+                  "name": "subAccountID"
+                }
+              ]
+            }
+          },
+          "UNITS_PENDING_TRANSFERS": {
+            "unitsPendingTransfersList": {
+              "contentList": [
+                {
+                  "value": "My Transaction ID",
+                  "contentType": "TEXT",
+                  "name": "transactionId"
+                },
+                {
+                  "value": "Source Account ID",
+                  "contentType": "TEXT",
+                  "name": "sourceAccountId"
+                }
+              ]
+            }
+          },
+          "MY_BUFFERS": {
+            "myBuffersList": {
+              "contentList": [
+                {
+                  "value": "My Buffers",
+                  "contentType": "TEXT",
+                  "name": "title"
+                },
+                {
+                  "value": "Program",
+                  "contentType": "TEXT",
+                  "name": "standard"
+                }
+              ]
+            },
+            "manageBuffers": {
+              "contentList": [
+                {
+                  "value": "Manage Buffers",
+                  "contentType": "TEXT",
+                  "name": "manageBuffers"
+                },
+                {
+                  "value": "Select Buffers",
+                  "contentType": "TEXT",
+                  "name": "seletBuferTitle"
+                }
+              ]
+            },
+            "breadcrumbs": {
+              "contentList": [
+                {
+                  "value": "Buffers",
+                  "contentType": "TEXT",
+                  "name": "title"
+                },
+                {
+                  "value": "Buffer Details",
+                  "contentType": "TEXT",
+                  "name": "bufferDetails"
+                }
+              ]
+            }
+          },
+          "REGISTRY_BUFFERS": {
+            "myBuffersList": {
+              "contentList": [
+                {
+                  "value": "Registry Buffers",
+                  "contentType": "TEXT",
+                  "name": "title"
+                },
+                {
+                  "value": "Program",
+                  "contentType": "TEXT",
+                  "name": "standard"
+                }
+              ]
+            }
+          },
+          "BUFFERS_TABS": {
+            "buffertabs": {
+              "contentList": [
+                {
+                  "value": "My Buffers",
+                  "contentType": "TEXT",
+                  "name": "myBuffersTab"
+                },
+                {
+                  "value": "Registry Buffers",
+                  "contentType": "TEXT",
+                  "name": "registryBufferTab"
+                }
+              ]
+            }
+          },
+          "DOCUMENT": {
+            "kycDocument": {
+              "contentList": [
+                {
+                  "value": "KYC Documents",
+                  "contentType": "TEXT",
+                  "name": "docsUpload"
+                },
+                {
+                  "value": "Upload max {maxFileCout} files. System supports only {fileExtensions}",
+                  "contentType": "TEXT",
+                  "name": "uploadMaxFiles"
+                }
+              ]
+            },
+            "documentList": {
+              "contentList": [
+                {
+                  "value": "Document",
+                  "contentType": "TEXT",
+                  "name": "publicDocumentName"
+                },
+                {
+                  "value": "Document Tag",
+                  "contentType": "TEXT",
+                  "name": "documentTypeId"
+                }
+              ]
+            }
+          },
+          "USER_ACCOUNT_ACCESS": {
+            "userAccountAccesList": {
+              "contentList": [
+                {
+                  "value": "Account Type",
+                  "contentType": "TEXT",
+                  "name": "primarySubAcc"
+                }
+              ]
+            }
+          },
+          "SETTINGS": {
+            "unitsSummary": {
+              "contentList": [
+                {
+                  "value": "On Hold",
+                  "contentType": "TEXT",
+                  "name": "onHold"
+                }
+              ]
+            }
+          },
+          "HELP": {
+            "helpPage": {
+              "contentList": [
+                {
+                  "value": "Terms of Use",
+                  "contentType": "TEXT",
+                  "name": "terms&Condition"
+                },
+                {
+                  "value": "1802 Vernon Street NW\nSuite 1105\nWashington, DC 20009\nUnited States of America",
+                  "contentType": "TEXT",
+                  "name": "contactAddress"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "url": "https://prod-us.api.platts.com/ci-raas-prod/cms-resources/resource/getContent/schema/public_links_statistics",
+      "role": "other",
+      "request_headers": {
+        "language": "en",
+        "x-request-id": "b80d57d3-34bf-4968-9212-11569542f21a",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "x-xsrf-token": "t20",
+        "referer": "https://registry.verra.org/",
+        "standardid": "150000000000001",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "tenant": "SPG",
+        "sec-ch-ua-mobile": "?0",
+        "standardacronym": "VERRA",
+        "registry": "VERRA",
+        "application": "Markit",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.7827.55 Safari/537.36",
+        "accept": "application/json",
+        "appkey": "wOKHFGuxKApQaujPSKgF"
+      },
+      "request_body": null,
+      "status": 200,
+      "response_is_json": true,
+      "total_hint": null,
+      "item_count": null,
+      "response_sample": {
+        "VCS": {
+          "links": [
+            "projects",
+            "issuances_listings"
+          ],
+          "statistics": [
+            "Issued",
+            "Retired"
+          ],
+          "publicViewMetrics": [
+            "projects",
+            "issueUnits"
+          ]
+        },
+        "JNR": {
+          "links": [
+            "programs",
+            "issuances_listings"
+          ],
+          "statistics": [
+            "Issued",
+            "Retired"
+          ],
+          "publicViewMetrics": [
+            "projects",
+            "issueUnits"
+          ]
+        },
+        "SDVISTA": {
+          "links": [
+            "projects",
+            "issuances_listings"
+          ],
+          "statistics": [
+            "totalValidatedProjects",
+            "totalVerifiedProjects"
+          ],
+          "publicViewMetrics": [
+            "projects",
+            "issueUnits"
+          ]
+        },
+        "CCBS": {
+          "links": [
+            "projects"
+          ],
+          "statistics": [
+            "totalValidatedProjects",
+            "totalVerifiedProjects"
+          ],
+          "publicViewMetrics": [
+            "projects"
+          ]
+        },
+        "PWRS": {
+          "links": [
+            "projects",
+            "issuances_listings"
+          ],
+          "statistics": [
+            "totalProjectListed",
+            "totalRegisteredProjects"
+          ],
+          "publicViewMetrics": [
+            "projects",
+            "issueUnits"
+          ]
+        },
+        "S3S": {
+          "links": [
+            "interventions"
+          ],
+          "statistics": [
+            "totalProjectListed"
+          ],
+          "publicViewMetrics": [
+            "projects"
+          ]
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "url": "https://prod-us.api.platts.com/ci-raas-prod/cms-resources/public/standardsByRegistry/VERRA",
+      "role": "other",
+      "request_headers": {
+        "language": "en",
+        "x-request-id": "3f3410aa-5a47-4fa9-acc9-e9b948003e1f",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "x-xsrf-token": "t20",
+        "referer": "https://registry.verra.org/",
+        "standardid": "150000000000001",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "sec-ch-ua-mobile": "?0",
+        "standardacronym": "VCS",
+        "registry": "VERRA",
+        "application": "Markit",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.7827.55 Safari/537.36",
+        "accept": "application/json",
+        "appkey": "wOKHFGuxKApQaujPSKgF"
+      },
+      "request_body": null,
+      "status": 200,
+      "response_is_json": true,
+      "total_hint": null,
+      "item_count": 6,
+      "response_sample": [
+        {
+          "id": "150000000000001",
+          "name": "Verified Carbon Standard",
+          "entityName": null,
+          "metaData": "VCS",
+          "publicReportExport": {
+            "ACCOUNTS": false,
+            "PROJECTS": true,
+            "ISSUANCES_LISTINGS": true,
+            "HOLDINGS": true,
+            "RETIREMENTS": true,
+            "ASSIGNMENTS": false,
+            "CANCELLATIONS": true,
+            "NOT_DELIVERED": false,
+            "BUFFERS": true
+          }
+        },
+        {
+          "id": "150000000000002",
+          "name": "Jurisdictional and Nested REDD+ Framework",
+          "entityName": null,
+          "metaData": "JNR",
+          "publicReportExport": {
+            "ACCOUNTS": false,
+            "PROJECTS": true,
+            "ISSUANCES_LISTINGS": true,
+            "HOLDINGS": true,
+            "RETIREMENTS": true,
+            "ASSIGNMENTS": false,
+            "CANCELLATIONS": true,
+            "NOT_DELIVERED": false,
+            "BUFFERS": true
+          }
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "url": "https://prod-us.api.platts.com/ci-raas-prod/cms-resources/resource/getContent/schema/theme",
+      "role": "other",
+      "request_headers": {
+        "language": "en",
+        "x-request-id": "4f55cf9b-fe4a-464b-975d-4d5b599eac58",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "x-xsrf-token": "t20",
+        "referer": "https://registry.verra.org/",
+        "standardid": "150000000000001",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "tenant": "SPG",
+        "sec-ch-ua-mobile": "?0",
+        "standardacronym": "VCS",
+        "registry": "VERRA",
+        "application": "Markit",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.7827.55 Safari/537.36",
+        "accept": "application/json",
+        "appkey": "wOKHFGuxKApQaujPSKgF"
+      },
+      "request_body": null,
+      "status": 200,
+      "response_is_json": true,
+      "total_hint": null,
+      "item_count": null,
+      "response_sample": {
+        "fontFace": "Akkurat Pro, Akkurat, Arial, sans-serif",
+        "bodyProperties": {
+          "button-primary-bg": "#0E2B64",
+          "button-primary-hover-bg": "#122c76",
+          "button-secondary-bg": "#057299",
+          "button-secondary-hover-bg": "#00AEC6",
+          "button-font-weight-700": "700",
+          "button-default-outline": "#0E2B64",
+          "button-default-hover-outline": "#122c76",
+          "button-default-hover-color": "#122c76",
+          "button-default-color": "#0E2B64",
+          "cookie-button-color": "#000000",
+          "cookie-button-hover-bg": "#f0f0f0",
+          "cookie-button-hover-color": "#000000",
+          "footer-bg": "#000000",
+          "footer-typography": "#FFFFFF",
+          "footer-separator": "#FFFFFF",
+          "login-logo-height": "160px",
+          "login-logo-width": "618px",
+          "ant-tabs-ink-bar": "#0E2B64",
+          "ant-menu-tab-accent-color": "#0E2B64",
+          "website-font-family": "quasimoda, sans-serif",
+          "website-font-family-heavy": "quasimoda-2, sans-serif",
+          "website-font-family-1": "Quasimoda",
+          "website-font-family-2": "Zilla Slab",
+          "icon-font-family": "\"Font Awesome 6 Pro\""
+        },
+        "agGridTheme": {
+          "theme": "quartz",
+          "fontFamily": "Akkurat Pro, Akkurat, Arial, sans-serif",
+          "accentColor": "#0E2B64",
+          "browserColorScheme": "light"
+        },
+        "antd": {
+          "token": {
+            "fontFamily": "Akkurat Pro, Akkurat, Arial, sans-serif",
+            "fontSize": 14,
+            "lineWidth": 1,
+            "borderRadius": 6,
+            "sizeUnit": 4,
+            "sizePopupArrow": 16,
+            "controlHeight": 28,
+            "opacityImage": 1,
+            "sizeStep": 4,
+            "sizeXXL": 48,
+            "sizeXL": 32,
+            "sizeLG": 24,
+            "sizeMD": 20,
+            "sizeMS": 16,
+            "size": 16,
+            "sizeSM": 12,
+            "sizeXS": 8,
+            "sizeXXS": 2,
+            "controlHeightSM": 24,
+            "controlHeightXS": 16,
+            "controlHeightLG": 40,
+            "borderRadiusXS": 2,
+            "borderRadiusSM": 4,
+            "borderRadiusLG": 8,
+            "borderRadiusOuter": 4,
+            "stepsDotSize": 8,
+            "stepsCurrentDotSize": 10,
+            "rateStarSize": 20,
+            "size28": 28,
+            "sizeXXXL": 64,
+            "fontSizeSM": 13,
+            "fontSizeLG": 16,
+            "fontSizeXL": 20,
+            "fontSizeIcon": 12,
+            "fontSizeHeading1": 38,
+            "fontSizeHeading2": 30,
+            "fontSizeHeading3": 24,
+            "fontSizeHeading4": 20,
+            "fontSizeHeading5": 16,
+            "fontWeightNormal": "Regular",
+            "fontWeightStrong": "Bold",
+            "controlLineWidth": 1,
+            "controlOutlineWidth": 2,
+            "controlInteractiveSize": 16,
+            "opacityLoading": 0,
+            "padding": 16,
+            "paddingMD": 20,
+            "paddingSM": 12,
+            "paddingXS": 8,
+            "paddingXXS": 2,
+            "paddingLG": 24,
+            "paddingXL": 32,
+            "paddingXXL": 48,
+            "margin": 16,
+            "marginSM": 12,
+            "marginXS": 8,
+            "marginXXS": 2,
+            "marginLG": 24,
+            "marginXL": 48,
+            "controlPaddingHorizontal": 12,
+            "controlPaddingHorizontalSM": 8,
+            "fontWeightItalic": "Italic",
+            "paddingContentHorizontalLG": 24,
+            "paddingContentVerticalLG": 16,
+            "paddingContentHorizontal": 16,
+            "paddingContentVertical": 12,
+            "paddingContentHorizontalSM": 8,
+            "paddingContentVerticalSM": 8,
+            "focusPrimary": "0px 0px 0px 2px #e6f4ff",
+            "focusError": "0px 0px 0px 2px #fff1f0",
+            "focusWarning": "0px 0px 0px 2px #fffbe6",
+            "boxShadowButtonSolid": "0px {controlOutlineWidth}px 0px 0px {controlTmpOutline}",
+            "footerActionBgBlur": "0px -5px 16px 0px rgba(0,0,0,0.35)",
+            "colorTextBase": "#000",
+            "colorTextLightSolid": "#ffffff",
+            "colorBgBase": "#ffffff",
+            "colorPrimary": "#0A84FF",
+            "colorError": "#ff4d4f",
+            "colorWarning": "#faad14",
+            "colorSuccess": "#52c41a",
+            "colorInfo": "#0A84FF",
+            "colorText": "rgba(0, 0, 0, 0.88)",
+            "colorTextSecondary": "#6C6C70",
+            "colorTextTertiary": "rgba(0, 0, 0, 0.45)",
+            "colorTextQuaternary": "rgba(0, 0, 0, 0.25)",
+            "colorFill": "rgba(0, 0, 0, 0.15)",
+            "colorFillSecondary": "rgba(0, 0, 0, 0.06)",
+            "colorFillTertiary": "rgba(0, 0, 0, 0.04)",
+            "colorBgContainer": "#ffffff",
+            "colorFillQuaternary": "rgba(0, 0, 0, 0.02)",
+            "colorBgLayout": "#f5f5f5",
+            "colorBgElevated": "#ffffff",
+            "colorBgSpotlight": "rgba(0, 0, 0, 0.85)",
+            "colorBorder": "rgba(0, 0, 0, 0.15)",
+            "colorBorderSecondary": "rgba(0, 0, 0, 0.06)",
+            "colorSplit": "rgba(0, 0, 0, 0.06)",
+            "colorPrimaryBg": "#e6f4ff",
+            "colorPrimaryBgHover": "#bae0ff",
+            "colorPrimaryBorder": "#91caff",
+            "colorPrimaryBorderHover": "#69b1ff",
+            "colorPrimaryHover": "#4096ff",
+            "colorPrimaryBase": "#0A84FF",
+            "colorPrimaryActive": "#0958d9",
+            "colorPrimaryTextHover": "#003eb3",
+            "colorPrimaryText": "#002c8c",
+            "colorPrimaryTextActive": "#001d66",
+            "colorSuccessBg": "#f6ffed",
+            "colorSuccessBgHover": "#d9f7be",
+            "colorSuccessBorder": "#b7eb8f",
+            "colorSuccessBorderHover": "#95de64",
+            "colorSuccessHover": "#73d13d",
+            "colorSuccessBase": "#52c41a",
+            "colorSuccessActive": "#389e0d",
+            "colorSuccessTextHover": "#237804",
+            "colorSuccessText": "#135200",
+            "colorSuccessTextActive": "#092b00",
+            "colorWarningBg": "#fffbe6",
+            "colorWarningBgHover": "#fff1b8",
+            "colorWarningBorder": "#ffe58f",
+            "colorWarningBorderHover": "#ffd666",
+            "colorWarningHover": "#ffc53d",
+            "colorWarningBase": "#faad14",
+            "colorWarningActive": "#d48806",
+            "colorWarningTextHover": "#ad6800",
+            "colorWarningText": "#874d00",
+            "colorWarningTextActive": "#613400",
+            "colorErrorBg": "#fff1f0",
+            "colorErrorBgHover": "#ffccc7",
+            "colorErrorBorder": "#ffa39e",
+            "colorErrorBorderHover": "#ff7875",
+            "colorErrorHover": "#ff7875",
+            "colorErrorBase": "#ff4d4f",
+            "colorErrorActive": "#cf1322",
+            "colorErrorTextHover": "#a8071a",
+            "colorErrorText": "#820014",
+            "colorErrorTextActive": "#5c0011",
+            "colorInfoBg": "#e6f4ff",
+            "colorInfoBgHover": "#bae0ff",
+            "colorInfoBorder": "#91caff",
+            "colorInfoBorderHover": "#69b1ff",
+            "colorInfoHover": "#4096ff",
+            "colorInfoBase": "#0A84FF",
+            "colorInfoActive": "#0958d9",
+            "colorInfoTextHover": "#003eb3",
+            "colorInfoText": "#002c8c",
+            "colorInfoTextActive": "#001d66",
+            "colorBgMask": "rgba(0, 0, 0, 0.45)",
+            "colorFillContent": "rgba(0, 0, 0, 0.06)",
+            "colorFillContentHover": "rgba(0, 0, 0, 0.15)",
+            "colorFillAlter": "rgba(0, 0, 0, 0.02)",
+            "colorBgContainerDisabled": "rgba(0, 0, 0, 0.04)",
+            "colorBorderBg": "#ffffff",
+            "colorTextPlaceholder": "rgba(0, 0, 0, 0.25)",
+            "colorTextDisabled": "rgba(0, 0, 0, 0.25)",
+            "colorTextHeading": "rgba(0, 0, 0, 0.88)",
+            "colorTextLabel": "#6C6C70",
+            "colorTextDescription": "rgba(0, 0, 0, 0.45)",
+            "colorBgTextHover": "rgba(0, 0, 0, 0.06)",
+            "colorBgTextActive": "rgba(0, 0, 0, 0.15)",
+            "colorIcon": "rgba(0, 0, 0, 0.45)",
+            "colorIconHover": "rgba(0, 0, 0, 0.88)",
+            "colorLink": "#0A84FF",
+            "colorLinkHover": "#4096ff",
+            "colorLinkActive": "#0958d9",
+            "colorHighlight": "#ff7875",
+            "controlOutline": "#e6f4ff",
+            "colorWarningOutline": "#fffbe6",
+            "colorErrorOutline": "#fff1f0",
+            "controlItemBgHover": "rgba(0, 0, 0, 0.04)",
+            "controlItemBgActive": "#e6f4ff",
+            "controlItemBgActiveHover": "#bae0ff",
+            "controlItemBgActiveDisabled": "rgba(0, 0, 0, 0.15)",
+            "controlTmpOutline": "rgba(0, 0, 0, 0.02)",
+            "colorItemText": "rgba(255, 255, 255, 0.65)",
+            "colorItemTextDisabled": "rgba(255, 255, 255, 0.25)",
+            "tooltipBg": "rgba(0, 0, 0, 0.88)",
+            "segmentedBgColorSelected": "#ffffff",
+            "segmentedGroupBg": "rgba(0, 0, 0, 0.04)",
+            "colorMenuDarkBg": "#001529",
+            "colorMenuSubItemBg": "#000c17",
+            "Noble Black": "#1D2024",
+            "Black Grey": "23272C",
+            "boxShadow": "0px 1px 2px 0px rgba(0,0,0,0.03),0px 1px 6px -1px rgba(0,0,0,0.02),0px 2px 4px 0px rgba(0,0,0,0.02)",
+            "boxShadowSecondary": "0px 6px 16px 0px rgba(0,0,0,0.08),0px 3px 6px -4px rgba(0,0,0,0.12),0px 9px 28px 8px rgba(0,0,0,0.05)",
+            "boxShadowTertiary": "0px 1px 2px -2px rgba(0,0,0,0.16),0px 3px 6px 0px rgba(0,0,0,0.12),0px 5px 12px 4px rgba(0,0,0,0.09)"
+          },
+          "components": {
+            "Tabs": {
+              "colorPrimary": "#262626",
+              "inkBarColor": "#0E2B64",
+              "itemColor": "#525252",
+              "fontSize": 14,
+              "colorPrimaryHover": "rgba(0,0,0,0.6)",
+              "colorLinkHover": "rgba(0,0,0,0.6)",
+              "controlHeight": 22,
+              "controlHeightLG": 32,
+              "horizontalItemGutter": 2,
+              "lineHeight": 1,
+              "margin": 0,
+              "colorBorderSecondary": "#d4d4d4",
+              "borderRadiusLG": 6,
+              "colorBorderBg": "#d4d4d4",
+              "colorBgContainer": "#f5f5f5",
+              "colorFillAlter": "#e4e4e7",
+              "cardGutter": 1
+            },
+            "List": {
+              "controlHeight": 56,
+              "controlHeightLG": 56,
+              "paddingSM": 0,
+              "lineHeight": 2,
+              "lineHeightLG": 2,
+              "paddingContentHorizontal": 0,
+              "paddingContentHorizontalLG": 0,
+              "paddingContentVertical": 0,
+              "paddingContentVerticalLG": 0,
+              "paddingContentVerticalSM": 0,
+              "paddingLG": 0,
+              "borderRadiusXS": 0,
+              "borderRadiusSM": 0,
+              "borderRadiusLG": 0
+            },
+            "Radio": {
+              "buttonColor": "rgba(0, 0, 0, 0.88)"
+            },
+            "Tooltip": {
+              "borderRadius": 6,
+              "fontSize": 12
+            },
+            "Tree": {
+              "paddingXS": 2,
+              "fontSize": 11,
+              "controlHeightSM": 20
+            },
+            "Spin": {
+              "colorPrimary": "#262626"
+            },
+            "Dropdown": {
+              "colorPrimary": "#262626"
+            },
+            "Menu": {
+              "horizontalItemHoverColor": "#0E2B64",
+              "horizontalItemSelectedColor": "#0E2B64",
+              "itemBorderRadius": 0,
+              "subMenuItemBorderRadius": 0,
+              "subMenuItemBg": "#FFFFFF",
+              "itemActiveBg": "#F3F4F6CC",
+              "itemSelectedBg": "#F3F4F6CC",
+              "itemSelectedColor": "#000000e0",
+              "itemPaddingInline": 12,
+              "itemMarginInline": 0,
+              "itemMarginBlock": 0,
+              "padding": 12,
+              "itemHeight": 48
+            }
+          }
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "url": "https://prod-us.api.platts.com/ci-raas-prod/cms-resources/resource/getContent/schema/status_color",
+      "role": "other",
+      "request_headers": {
+        "language": "en",
+        "x-request-id": "3ccc6c90-8694-4ccf-8e17-e664571db94a",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "x-xsrf-token": "t20",
+        "referer": "https://registry.verra.org/",
+        "standardid": "150000000000001",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "tenant": "SPG",
+        "sec-ch-ua-mobile": "?0",
+        "standardacronym": "VCS",
+        "registry": "VERRA",
+        "application": "Markit",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.7827.55 Safari/537.36",
+        "accept": "application/json",
+        "appkey": "wOKHFGuxKApQaujPSKgF"
+      },
+      "request_body": null,
+      "status": 200,
+      "response_is_json": true,
+      "total_hint": null,
+      "item_count": null,
+      "response_sample": {
+        "NEW": "#fa8c16",
+        "PENDING_KYC_DOC": "#fadb14",
+        "PENDING_REVIEW_ACTOR2": "#fadb14",
+        "PENDING_REVIEW_ACTOR3": "#fadb14",
+        "PENDING_CLIENT_FOLLOW_UP_ACTOR2": "#fadb14",
+        "PENDING_CLIENT_FOLLOW_UP_ACTOR3": "#fadb14",
+        "PENDING_CLIENT_FOLLOW_UP": "#fadb14",
+        "PENDING_PAYMENT": "#fadb14",
+        "ABANDONED": "#f5222d",
+        "SUSPENDED": "#f5222d",
+        "CLOSED": "#f5222d",
+        "DRAFT": "#fa8c16",
+        "REJECTED": "#f5222d",
+        "OVERDUE": "#f5222d",
+        "INACTIVE": "#f5222d",
+        "ACTIVE": "#52c41a",
+        "ACTIVATED": "#52c41a",
+        "INACTIVATED": "#f5222d",
+        "PENDING_FOLLOW_UP": "#fadb14",
+        "PENDING_REVIEW": "#fadb14",
+        "PAID": "#52c41a",
+        "CANCELLED": "gray",
+        "PARTIALLY_PAID": "#fadb14",
+        "RE_INVOICED": "#fa8c16",
+        "PENDING": "#fadb14",
+        "CREDIT_PERIOD_RENEWAL_DENIED": "#fadb14",
+        "CREDIT_PERIOD_RENEWAL_REQUESTED": "#fadb14",
+        "CREDIT_PERIOD_RENEWAL_VERIFICATION_APP_REQUESTED": "#fadb14",
+        "CREDIT_PERIOD_RENEWAL_VERIFICATION_REQUESTED": "#fadb14",
+        "CREDIT_PERIOD_RENEWAL_VERIFICATION_APPROVAL_DENIED": "#fadb14",
+        "CREDITING_RENEWAL_VERIFICATION_APP_COMMENT_REQ": "#fadb14",
+        "CREDITING_PERIOD_RENEWAL_PCP": "#fadb14",
+        "DEVELOPMENT": "#fadb14",
+        "LATE_TO_VERIFY": "#fadb14",
+        "LISTING_DENIED": "#fadb14",
+        "LISTING_REQUESTED": "#fadb14",
+        "LISTING_PUBLIC_COMMENT_PERIOD_OPEN": "#fadb14",
+        "LISTING_PUBLIC_COMMENT_PERIOD_CLOSED": "#fadb14",
+        "ON_HOLD": "#fadb14",
+        "PIPELINE_LISTING_UNDER_DEVELOPMENT": "#fadb14",
+        "PIPELINE_LISTING_UNDER_DEVELOPMENT_APPROVED": "#fadb14",
+        "PIPELINE_LISTING_UNDER_VALIDATION": "#fadb14",
+        "PIPELINE_LISTING_UNDER_VALIDATION_VERIFICATION": "#fadb14",
+        "REGISTERED": "#52c41a",
+        "REGISTRATION_REQUESTED": "#fadb14",
+        "REGISTRATION_REQ_DENIED": "#fadb14",
+        "REGISTRATION_VERIFICATION_APPROVAL_REQ": "#fadb14",
+        "REGISTRATION_VERIFICATION_REQ_DENIED": "#fadb14",
+        "REQUANTIFICATION_REQUESTED": "#fadb14",
+        "UNDER_VAL_AND_VER_COMMENT_CLOSED": "#fadb14",
+        "UNDER_VAL_AND_VER_COMMENT_PERIOD_ON": "#fadb14",
+        "UNDER_VAL_COMMENT_CLOSED": "#fadb14",
+        "UNDER_VAL_COMMENT_PERIOD_ON": "#fadb14",
+        "UNDER_VERIFICATION_COMMENT_PERIOD_ON": "#fadb14",
+        "UNDER_VERIFICATION_COMMENT_CLOSED": "#fadb14",
+        "UNDER_CREDIT_RENEW_COMMENT_OPEN": "#fadb14",
+        "UNDER_CREDIT_RENEW_COMMENT_CLOSED": "#fadb14",
+        "VALIDATED": "#52c41a",
+        "VALIDATION_APPROVED": "#52c41a",
+        "VALIDATION_PUBLIC_COMMENT_PERIOD_REQUESTED": "#fadb14",
+        "VALIDATION_APPROVAL_REQUESTED": "#fadb14",
+        "VAL_AND_VER_APPROVAL_REQUESTED": "#fadb14",
+        "VER_VAL_PUBLIC_COMMENT_PERIOD_REQUESTED": "#fadb14",
+        "VERIFICATION_APPROVAL_REQUESTED": "#fadb14",
+        "VERIFICATION_APPROVED": "#52c41a",
+        "VERIFICATION_APPROVAL_REQUEST_DENIED": "#f5222d",
+        "VERIFICATION_PUBLIC_COMMENT_PERIOD_REQUESTED": "#fadb14",
+        "VERIFICATION_COMMENT_REQUESTED": "#fadb14",
+        "VERIFIED": "#52c41a",
+        "WITHDRAWN": "#f5222d",
+        "VERIFICATION_EXPIRED": "#f5222d",
+        "VALIDATION_EXPIRED": "#f5222d",
+        "VALIDATION_APPROVAL_REQUEST_DENIED": "#f5222d",
+        "VALIDATION_AND_VERIFICATION_APPROVAL_REQUEST_DENIED": "#fadb14",
+        "VALIDATION_PUBLIC_COMMENT_PERIOD_EXPIRED": "#f5222d",
+        "VAL_VER_PUBLIC_COMMENT_PERIOD_EXPIRED": "#fadb14",
+        "VERIFICATION_PUBLIC_COMMENT_PERIOD_EXPIRED": "#f5222d",
+        "VAL_AND_VER_APPROVAL_REQUEST_DENIED": "#fadb14",
+        "UNIT_ON_HOLD": "#fa8c16",
+        "UNIT_CANCELLED": "gray",
+        "RETIRED": "#f5222d",
+        "PENDING_REVIEW_ACTOR4": "#fadb14",
+        "DISCARDED": "#f5222d",
+        "REJECTED_BY_ADMIN": "#f5222d",
+        "BUFFER_CANCELLED": "gray",
+        "BUFFER_DEPOSITED": "#52c41a",
+        "BUFFER_ON_HOLD": "#fa8c16",
+        "BUFFER_RELEASED": "#f5222d",
+        "BUFFER_PENDING_PAYMENT": "#fadb14",
+        "VER_EXPIRED": "#fadb14",
+        "VAL_VER_APPROVAL_REQUEST_DENIED": "#fadb14",
+        "LIST_EXPIRATION": "#fadb14",
+        "UNDER_CREDIT_RENEW_VERIFICATION_COMMENT_OPEN": "#fadb14",
+        "UNDER_CREDIT_RENEW_VERIFICATION_COMMENT_CLOSED": "#fadb14",
+        "CREDIT_RENEWAL_VERIFICATION_REQUEST_DENIED": "#fadb14",
+        "PROCESSING_FAILED": "#f5222d",
+        "INVOICED": "#52c41a",
+        "UNIT_PENDING_PAYMENT": "#fadb14"
+      }
+    },
+    {
+      "method": "GET",
+      "url": "https://prod-us.api.platts.com/ci-raas-prod/cms-resources/resource/download/image/public-vcs.jpg",
+      "role": "export",
+      "request_headers": {
+        "language": "en",
+        "x-request-id": "b651a876-c37d-415d-a78d-7d52e95b1656",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "x-xsrf-token": "t20",
+        "referer": "https://registry.verra.org/",
+        "standardid": "150000000000001",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "tenant": "SPG",
+        "sec-ch-ua-mobile": "?0",
+        "standardacronym": "VCS",
+        "registry": "VERRA",
+        "application": "Markit",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.7827.55 Safari/537.36",
+        "accept": "application/json",
+        "appkey": "wOKHFGuxKApQaujPSKgF"
+      },
+      "request_body": null,
+      "status": 200,
+      "response_is_json": false,
+      "total_hint": null,
+      "item_count": null,
+      "response_sample": "<non-JSON application/octet-stream>"
+    },
+    {
+      "method": "GET",
+      "url": "https://prod-us.api.platts.com/ci-raas-prod/cms-resources/resource/getContent/schema/public_report_details",
+      "role": "export",
+      "request_headers": {
+        "language": "en",
+        "x-request-id": "137d76bc-1acc-4aec-a469-fa91902f73e9",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "x-xsrf-token": "t20",
+        "referer": "https://registry.verra.org/",
+        "standardid": "150000000000001",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "tenant": "SPG",
+        "sec-ch-ua-mobile": "?0",
+        "standardacronym": "VCS",
+        "registry": "VERRA",
+        "application": "Markit",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.7827.55 Safari/537.36",
+        "accept": "application/json",
+        "appkey": "wOKHFGuxKApQaujPSKgF"
+      },
+      "request_body": null,
+      "status": 200,
+      "response_is_json": true,
+      "total_hint": null,
+      "item_count": 6,
+      "response_sample": {
+        "reportDetails": {
+          "segment": "Public",
+          "permission": "MENU_REPORTS",
+          "tabs": [
+            {
+              "name": "PROJECTS",
+              "permission": "REPORT_PUBLIC_PROJECTS",
+              "tableConfig": "PUBLIC_VIEW_REPORTS_PROJECTS",
+              "defaultSort": "projectName.keyword"
+            },
+            {
+              "name": "ISSUANCES_LISTINGS",
+              "permission": "REGISTRY_REPORTS_ISSUANCES",
+              "tableConfig": "PUBLIC_REPORTS_ISSUANCES",
+              "defaultSort": "modifiedDate",
+              "defaultDir": "DESC"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "url": "https://prod-us.api.platts.com/ci-raas-prod/raas-report-api/es/public/project/publicProjectsSum",
+      "role": "project_search",
+      "request_headers": {
+        "language": "en",
+        "x-request-id": "23436b62-aa26-45af-a5c7-4fca371dfad9",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "x-xsrf-token": "t20",
+        "referer": "https://registry.verra.org/",
+        "standardid": "150000000000001",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "sec-ch-ua-mobile": "?0",
+        "standardacronym": "VCS",
+        "registry": "VERRA",
+        "application": "Markit",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.7827.55 Safari/537.36",
+        "accept": "application/json",
+        "appkey": "wOKHFGuxKApQaujPSKgF",
+        "content-type": "application/json"
+      },
+      "request_body": {
+        "searchFilter": {
+          "pagination": {},
+          "filterModel": {},
+          "groupKeys": []
+        }
+      },
+      "status": 200,
+      "response_is_json": true,
+      "total_hint": 5245,
+      "item_count": null,
+      "response_sample": {
+        "average": 0,
+        "sum": 0,
+        "total": 5245,
+        "additionalTotals": null
+      }
+    },
+    {
+      "method": "POST",
+      "url": "https://prod-us.api.platts.com/ci-raas-prod/raas-report-api/es/public/issuances/aggregateResultBySearchFilter",
+      "role": "units_search",
+      "request_headers": {
+        "language": "en",
+        "x-request-id": "81e65422-4a21-4312-92d7-55ff1bf6a22c",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "x-xsrf-token": "t20",
+        "referer": "https://registry.verra.org/",
+        "standardid": "150000000000001",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "sec-ch-ua-mobile": "?0",
+        "standardacronym": "VCS",
+        "registry": "VERRA",
+        "application": "Markit",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.7827.55 Safari/537.36",
+        "accept": "application/json",
+        "appkey": "wOKHFGuxKApQaujPSKgF",
+        "content-type": "application/json"
+      },
+      "request_body": {
+        "searchFilter": {
+          "pagination": {},
+          "filterModel": {},
+          "groupKeys": [],
+          "statsSumByField": "holdingQuantity"
+        }
+      },
+      "status": 200,
+      "response_is_json": true,
+      "total_hint": 0,
+      "item_count": null,
+      "response_sample": {
+        "average": 0,
+        "sum": 1430149137,
+        "total": 0,
+        "additionalTotals": null
+      }
+    },
+    {
+      "method": "POST",
+      "url": "https://prod-us.api.platts.com/ci-raas-prod/raas-report-api/es/public/holdings/aggregateResultBySearchFilter",
+      "role": "export",
+      "request_headers": {
+        "language": "en",
+        "x-request-id": "f607908e-3e89-4c94-b691-738f5b443441",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "x-xsrf-token": "t20",
+        "referer": "https://registry.verra.org/",
+        "standardid": "150000000000001",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "sec-ch-ua-mobile": "?0",
+        "standardacronym": "VCS",
+        "registry": "VERRA",
+        "application": "Markit",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.7827.55 Safari/537.36",
+        "accept": "application/json",
+        "appkey": "wOKHFGuxKApQaujPSKgF",
+        "content-type": "application/json"
+      },
+      "request_body": {
+        "searchFilter": {
+          "pagination": {},
+          "filterModel": {
+            "isBuffer": {
+              "columnFilters": [
+                {
+                  "filterType": "Boolean",
+                  "type": "equals",
+                  "filter": "false"
+                }
+              ]
+            },
+            "status": {
+              "columnFilters": [
+                {
+                  "filterType": "Text",
+                  "type": "in",
+                  "strList": [
+                    "Active",
+                    "Listed"
+                  ]
+                }
+              ]
+            }
+          },
+          "groupKeys": [],
+          "statsSumByField": "holdingQuantity"
+        }
+      },
+      "status": 200,
+      "response_is_json": true,
+      "total_hint": 0,
+      "item_count": null,
+      "response_sample": {
+        "average": 0,
+        "sum": 479759086,
+        "total": 0,
+        "additionalTotals": null
+      }
+    },
+    {
+      "method": "POST",
+      "url": "https://prod-us.api.platts.com/ci-raas-prod/raas-report-api/es/public/retirements/aggregateResultBySearchFilter",
+      "role": "units_search",
+      "request_headers": {
+        "language": "en",
+        "x-request-id": "7a2f6690-7914-449a-b54a-6c88e68bf3f6",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "x-xsrf-token": "t20",
+        "referer": "https://registry.verra.org/",
+        "standardid": "150000000000001",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "sec-ch-ua-mobile": "?0",
+        "standardacronym": "VCS",
+        "registry": "VERRA",
+        "application": "Markit",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.7827.55 Safari/537.36",
+        "accept": "application/json",
+        "appkey": "wOKHFGuxKApQaujPSKgF",
+        "content-type": "application/json"
+      },
+      "request_body": {
+        "searchFilter": {
+          "pagination": {},
+          "filterModel": {},
+          "groupKeys": [],
+          "statsSumByField": "holdingQuantity"
+        }
+      },
+      "status": 200,
+      "response_is_json": true,
+      "total_hint": 0,
+      "item_count": null,
+      "response_sample": {
+        "average": 0,
+        "sum": 920282487,
+        "total": 0,
+        "additionalTotals": null
+      }
+    },
+    {
+      "method": "GET",
+      "url": "https://prod-us.api.platts.com/ci-raas-prod/cms-resources/resource/getContent/table/PUBLIC_VIEW_REPORTS_PROJECTS",
+      "role": "export",
+      "request_headers": {
+        "language": "en",
+        "x-request-id": "4d9946e4-b9a8-45c5-b0a3-480cede1cf02",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "x-xsrf-token": "t20",
+        "referer": "https://registry.verra.org/",
+        "standardid": "150000000000001",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "tenant": "SPG",
+        "sec-ch-ua-mobile": "?0",
+        "standardacronym": "VCS",
+        "registry": "VERRA",
+        "application": "Markit",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.7827.55 Safari/537.36",
+        "accept": "application/json",
+        "appkey": "wOKHFGuxKApQaujPSKgF"
+      },
+      "request_body": null,
+      "status": 200,
+      "response_is_json": true,
+      "total_hint": null,
+      "item_count": 26,
+      "response_sample": {
+        "tableViewName": "PUBLIC_VIEW_REPORTS_PROJECTS",
+        "translationPrefix": "PUBLIC_VIEW_REPORTS_PROJECTS.pubReportsProjectsList",
+        "paginator": true,
+        "rowsPerPage": 15,
+        "className": null,
+        "fileName": "title",
+        "uri": "/raas-report-api/es/public/project/publicReportPageSearch",
+        "clazz": "com.markit.reg.dataObjects.PublicView",
+        "entityClazz": null,
+        "standardId": null,
+        "adminOnly": false,
+        "columns": [
+          {
+            "translationPrefix": "",
+            "translate": false,
+            "field": "standardName",
+            "fieldType": "String",
+            "width": "auto",
+            "header": "standard",
+            "sortField": "standardName.keyword",
+            "columnOrder": 1,
+            "format": null,
+            "link": null,
+            "fileName": null,
+            "nestedField": null,
+            "createNewRow": false,
+            "columnGroup": null,
+            "repeateColumn": null,
+            "numeric": null,
+            "rowNumber": null,
+            "colspan": null,
+            "permissionName": null,
+            "newRowField": null,
+            "editRowField": null,
+            "forExport": true,
+            "forUi": true,
+            "displayBlankForNumeric": false,
+            "filterContextName": "standard",
+            "readOnly": true,
+            "suppressSelectAll": true,
+            "hide": true
+          },
+          {
+            "translationPrefix": "",
+            "translate": false,
+            "field": "projectId",
+            "fieldType": "Numeric",
+            "width": "auto",
+            "header": "projectId",
+            "sortField": "projectId",
+            "numberSearchField": "projectId",
+            "columnOrder": 2,
+            "format": null,
+            "link": null,
+            "fileName": null,
+            "nestedField": null,
+            "createNewRow": false,
+            "columnGroup": null,
+            "repeateColumn": null,
+            "numeric": null,
+            "rowNumber": null,
+            "colspan": null,
+            "permissionName": null,
+            "newRowField": null,
+            "editRowField": null,
+            "forExport": true,
+            "forUi": true,
+            "displayBlankForNumeric": false
+          }
+        ]
+      }
+    },
+    {
+      "method": "GET",
+      "url": "https://prod-us.api.platts.com/ci-raas-prod/cms-resources/resource/getContent/tableConfigOverrides/PUBLIC_VIEW_REPORTS_PROJECTS",
+      "role": "export",
+      "request_headers": {
+        "language": "en",
+        "x-request-id": "b6037db5-462c-4ab9-bdc1-b3b90e22a1e4",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "x-xsrf-token": "t20",
+        "referer": "https://registry.verra.org/",
+        "standardid": "150000000000001",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "tenant": "SPG",
+        "sec-ch-ua-mobile": "?0",
+        "standardacronym": "VCS",
+        "registry": "VERRA",
+        "application": "Markit",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.7827.55 Safari/537.36",
+        "accept": "application/json",
+        "appkey": "wOKHFGuxKApQaujPSKgF"
+      },
+      "request_body": null,
+      "status": 200,
+      "response_is_json": true,
+      "total_hint": null,
+      "item_count": null,
+      "response_sample": {
+        "afoluNames": {
+          "visibleFor": [
+            "VCS",
+            "S3S"
+          ]
+        },
+        "ccbStandardTypeName": {
+          "visibleFor": [
+            "CCBS"
+          ]
+        },
+        "avgAnnualVolVcu": {
+          "visibleFor": [
+            "VCS",
+            "PWRS"
+          ]
+        },
+        "additionalGoalInfo": {
+          "visibleFor": [
+            "VCS",
+            "SDVISTA"
+          ]
+        },
+        "creditPeriodStartDate": {
+          "hiddenFor": [
+            "CCBS",
+            "SDVISTA"
+          ]
+        },
+        "creditPeriodEndDate": {
+          "hiddenFor": [
+            "CCBS",
+            "SDVISTA"
+          ]
+        },
+        "verraProjectRegistrationDate": {
+          "hiddenFor": [
+            "CCBS",
+            "SDVISTA"
+          ]
+        },
+        "creditPeriodTerm": {
+          "hiddenFor": [
+            "CCBS",
+            "SDVISTA"
+          ]
+        },
+        "periodOfValidityStart": {
+          "hiddenFor": [
+            "CCBS"
+          ]
+        },
+        "projectMaterialTypes": {
+          "visibleFor": [
+            "PWRS"
+          ]
+        },
+        "projectEndOfLifeSelections": {
+          "visibleFor": [
+            "PWRS"
+          ]
+        },
+        "jnrScenario": {
+          "visibleFor": [
+            "JNR"
+          ]
+        },
+        "authorizedRepresentative": {
+          "hiddenFor": [
+            "S3S"
+          ]
+        },
+        "estimatedEmissionsAnnualReduction": {
+          "visibleFor": [
+            "S3S"
+          ]
+        },
+        "estimatedAnnualCarbonDioxideRemovals": {
+          "visibleFor": [
+            "S3S"
+          ]
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "url": "https://prod-us.api.platts.com/ci-raas-prod/raas-report-api/es/public/project/publicReportPageSearch",
+      "role": "project_search",
+      "request_headers": {
+        "language": "en",
+        "x-request-id": "0acdef72-f743-4955-83b2-376a5ed50bd9",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "x-xsrf-token": "t20",
+        "referer": "https://registry.verra.org/",
+        "standardid": "150000000000001",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "sec-ch-ua-mobile": "?0",
+        "standardacronym": "VCS",
+        "registry": "VERRA",
+        "application": "Markit",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.7827.55 Safari/537.36",
+        "accept": "application/json",
+        "appkey": "wOKHFGuxKApQaujPSKgF",
+        "content-type": "application/json"
+      },
+      "request_body": {
+        "searchFilter": {
+          "pagination": {
+            "start": 0,
+            "limit": 50,
+            "sortOptions": [
+              {
+                "sort": "projectName.keyword",
+                "dir": "ASC"
+              }
+            ]
+          },
+          "filterModel": {}
+        }
+      },
+      "status": 200,
+      "response_is_json": true,
+      "total_hint": 5245,
+      "item_count": 50,
+      "response_sample": {
+        "entities": [
+          {
+            "id": "110200000671481",
+            "entityId": 110200000671481,
+            "esUpdatedOn": "2026-07-24T19:26:16.59652267",
+            "standardId": 150000000000001,
+            "standardName": "Verified Carbon Standard",
+            "accountId": null,
+            "accountName": "Southern Power Company",
+            "modifiedDate": "2020-04-06T19:37:23",
+            "auxiliaries": null,
+            "status": "Withdrawn",
+            "publicStateNameEn": "Withdrawn",
+            "projectId": 2240,
+            "projectName": "",
+            "projectDescription": "",
+            "environmentalCategory": "Carbon",
+            "piusListed": "No",
+            "projectStartDate": null,
+            "projectActivationDate": null,
+            "projectPublicVisibility": true,
+            "statePublicVisibility": true,
+            "projectSubmittedDate": null,
+            "projectRegistrationDate": null,
+            "projectEndDate": null,
+            "masterProjectId": null,
+            "masterProjectName": null,
+            "projectType": null,
+            "vcsProjectId": "2240",
+            "validatorName": null,
+            "validatorId": null,
+            "ragRating": null,
+            "stateCode": "WITHDRAWN",
+            "units": false,
+            "countryId": "100000000000001",
+            "countryName": "United States of America",
+            "city": "",
+            "stateProvince": "AL",
+            "gridReference": null,
+            "latitude": 0.0,
+            "longitude": 0.0,
+            "accountExternalIdentifier": 1681,
+            "certification": null,
+            "additionalCertification": null,
+            "additionalGoalInfo": null,
+            "complianceEligibility": null,
+            "projectSubmissionId": "2240",
+            "submissionDate": "2020-01-01T00:00:00",
+            "startDate": "2020-01-01T00:00:00",
+            "latitudeLongitude": "0.000000/0.000000",
+            "sectoralScope": "Energy industries (renewable/non-renewable sources)",
+            "unitsIssuedInPermanenceBufferAccount": null,
+            "unitsIssuedInCorrespondingAdjustmentReserveAccount": null,
+            "unitsIssuedInCountrySopReserveAccount": null,
+            "electricityGenerated": null,
+            "plasticCredits": null,
+            "exanteQuantity": null,
+            "unitsGhgEmissionReduction": null,
+            "unitsIssued": null,
+            "unitsInOmgeAccount": null,
+            "unitsInAppFundAccount": null,
+            "hcloaName": null,
+            "corrAdjustmentName": null,
+            "projectCategory": null,
+            "projectActivityType": null,
+            "considerAccountPrivate": false,
+            "authorizedRepresentative": "",
+            "methodologies": "ACM0002 (Version NA)",
+            "ccbStandardTypeId": null,
+            "ccbStandardTypeName": null,
+            "periodOfValidityStart": "2020-01-01T00:00:00",
+            "verraProjectRegistrationDate": null,
+            "regionId": null,
+            "regionName": null,
+            "area": null,
+            "website": "",
+            "proponents": "Southern Power Company (PP)",
+            "afoluNames": null,
+            "avgAnnualVolVcu": 0,
+            "otherGhgProgramName": null,
+            "otherGhgProgramId": null,
+            "registeredOtherGhgProgram": false,
+            "jnrProgramProjectName": null,
+            "creditPeriodStartDate": null,
+            "creditPeriodEndDate": null,
+            "sdContributions": null,
+            "projectSize": "> 1,000,000 tCO2-e per year",
+            "projectSizeId": "150000000000063",
+            "creditPeriodTerm": "",
+            "creditPeriod": null,
+            "jurisdictionalStatus": null,
+            "jurisdictionalStatusId": null,
+            "jnrScenario": null,
+            "jnrScenarioId": null,
+            "dateOfInactivity": null,
+            "linkedVcsProjectId": null,
+            "registeredInVcs": false,
+            "estimatedAnnualCarbonDioxideRemovals": null,
+            "estimatedEmissionsAnnualReduction": null,
+            "projectMaterialTypes": null,
+            "projectEndOfLifeSelections": null
+          },
+          {
+            "id": "110200000677500",
+            "entityId": 110200000677500,
+            "esUpdatedOn": "2026-07-24T19:27:30.334947397",
+            "standardId": 150000000000001,
+            "standardName": "Verified Carbon Standard",
+            "accountId": null,
+            "accountName": "Dodhia Synthetics Limited",
+            "modifiedDate": "2022-01-19T21:15:58",
+            "auxiliaries": null,
+            "status": "Late to Verify",
+            "publicStateNameEn": "Late to Verify",
+            "projectId": 397,
+            "projectName": "0.6 MW Wind Power Generation project of Dodhia Synthetics Limited",
+            "projectDescription": "Dodhia Synthetics Limited initiated the project activity based on renewable energy to partially displace the GHG emission that would have taken place had an equivalent quantity of power as generated in the project activity been met out of combustion of fossil fuels. The project activity consists of a renewable energy based power generation facility at Sangli district in the state of Maharashtra in\u2026",
+            "environmentalCategory": "Carbon",
+            "piusListed": "No",
+            "projectStartDate": "2006-09-30T00:00:00",
+            "projectActivationDate": null,
+            "projectPublicVisibility": true,
+            "statePublicVisibility": true,
+            "projectSubmittedDate": null,
+            "projectRegistrationDate": null,
+            "projectEndDate": "2016-09-29T00:00:00",
+            "masterProjectId": null,
+            "masterProjectName": null,
+            "projectType": null,
+            "vcsProjectId": "397",
+            "validatorName": "Perry Johnson Registrars Carbon Emissions Services, Inc. (PJRCES)",
+            "validatorId": 110100000042817,
+            "ragRating": null,
+            "stateCode": "LATE_TO_VERIFY",
+            "units": false,
+            "countryId": "100000000000013",
+            "countryName": "India",
+            "city": "Shelkewadi",
+            "stateProvince": "Maharashtra",
+            "gridReference": null,
+            "latitude": 17.112222,
+            "longitude": 74.8995,
+            "accountExternalIdentifier": 583,
+            "certification": null,
+            "additionalCertification": null,
+            "additionalGoalInfo": null,
+            "complianceEligibility": null,
+            "projectSubmissionId": "397",
+            "submissionDate": "2006-09-30T00:00:00",
+            "startDate": "2006-09-30T00:00:00",
+            "latitudeLongitude": "17.112222/74.899500",
+            "sectoralScope": "Energy industries (renewable/non-renewable sources)",
+            "unitsIssuedInPermanenceBufferAccount": null,
+            "unitsIssuedInCorrespondingAdjustmentReserveAccount": null,
+            "unitsIssuedInCountrySopReserveAccount": null,
+            "electricityGenerated": null,
+            "plasticCredits": null,
+            "exanteQuantity": null,
+            "unitsGhgEmissionReduction": null,
+            "unitsIssued": null,
+            "unitsInOmgeAccount": null,
+            "unitsInAppFundAccount": null,
+            "hcloaName": null,
+            "corrAdjustmentName": null,
+            "projectCategory": null,
+            "projectActivityType": null,
+            "considerAccountPrivate": false,
+            "authorizedRepresentative": "",
+            "methodologies": "AMS-I.D. (Version NA)",
+            "ccbStandardTypeId": null,
+            "ccbStandardTypeName": null,
+            "periodOfValidityStart": "2006-09-30T00:00:00",
+            "verraProjectRegistrationDate": "2010-04-23T00:00:00",
+            "regionId": "150000000000043",
+            "regionName": "Asia",
+            "area": null,
+            "website": "",
+            "proponents": "Dodhia Synthetics Limited (PP)",
+            "afoluNames": null,
+            "avgAnnualVolVcu": 906,
+            "otherGhgProgramName": null,
+            "otherGhgProgramId": null,
+            "registeredOtherGhgProgram": false,
+            "jnrProgramProjectName": null,
+            "creditPeriodStartDate": "2006-09-30T00:00:00",
+            "creditPeriodEndDate": "2016-09-29T00:00:00",
+            "sdContributions": null,
+            "projectSize": "< 5,000 tCO2-e per year",
+            "projectSizeId": "150000000000061",
+            "creditPeriodTerm": "1",
+            "creditPeriod": null,
+            "jurisdictionalStatus": null,
+            "jurisdictionalStatusId": null,
+            "jnrScenario": null,
+            "jnrScenarioId": null,
+            "dateOfInactivity": null,
+            "linkedVcsProjectId": null,
+            "registeredInVcs": false,
+            "estimatedAnnualCarbonDioxideRemovals": null,
+            "estimatedEmissionsAnnualReduction": null,
+            "projectMaterialTypes": null,
+            "projectEndOfLifeSelections": null
+          }
+        ],
+        "totalPages": 105,
+        "totalEntities": 5245,
+        "start": 0,
+        "limit": 50,
+        "numberOfElements": 50,
+        "first": false,
+        "last": false,
+        "pageStats": null,
+        "searchAfter": null,
+        "pitId": null
+      }
+    },
+    {
+      "method": "GET",
+      "url": "https://prod-us.api.platts.com/ci-raas-prod/cms-resources/resource/getContent/table/PUBLIC_REPORTS_ISSUANCES",
+      "role": "units_search",
+      "request_headers": {
+        "language": "en",
+        "x-request-id": "141c0d96-22d8-4b08-974c-9a148f2b544a",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "x-xsrf-token": "t20",
+        "referer": "https://registry.verra.org/",
+        "standardid": "150000000000001",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "tenant": "SPG",
+        "sec-ch-ua-mobile": "?0",
+        "standardacronym": "VCS",
+        "registry": "VERRA",
+        "application": "Markit",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.7827.55 Safari/537.36",
+        "accept": "application/json",
+        "appkey": "wOKHFGuxKApQaujPSKgF"
+      },
+      "request_body": null,
+      "status": 200,
+      "response_is_json": true,
+      "total_hint": null,
+      "item_count": 19,
+      "response_sample": {
+        "tableViewName": "PUBLIC_REPORTS_ISSUANCES",
+        "translationPrefix": "PUBLIC_REPORTS_ISSUANCES.publicReportIssuancesList",
+        "paginator": true,
+        "rowsPerPage": 15,
+        "className": null,
+        "fileName": "title",
+        "uri": "/raas-report-api/es/public/issuances/publicReportPageSearch",
+        "clazz": "com.markit.reg.dataObjects.PublicView",
+        "entityClazz": null,
+        "standardId": null,
+        "adminOnly": false,
+        "columns": [
+          {
+            "translationPrefix": "",
+            "translate": false,
+            "field": "standardName",
+            "textSearchField": null,
+            "fieldType": "String",
+            "width": "auto",
+            "header": "program",
+            "sortField": "standardName.keyword",
+            "columnOrder": 1,
+            "format": null,
+            "link": null,
+            "fileName": null,
+            "nestedField": null,
+            "createNewRow": false,
+            "columnGroup": null,
+            "repeateColumn": null,
+            "numeric": null,
+            "rowNumber": null,
+            "colspan": null,
+            "permissionName": null,
+            "newRowField": null,
+            "editRowField": null,
+            "forExport": true,
+            "forUi": true,
+            "displayBlankForNumeric": false,
+            "hide": true
+          },
+          {
+            "translationPrefix": "",
+            "translate": false,
+            "field": "issueDate",
+            "fieldType": "Date",
+            "width": "auto",
+            "header": "issuanceDate",
+            "sortField": "issueDate",
+            "dateSearchField": "issueDate",
+            "columnOrder": 2,
+            "format": "DD MMM YYYY",
+            "link": null,
+            "fileName": null,
+            "nestedField": null,
+            "createNewRow": false,
+            "columnGroup": null,
+            "repeateColumn": null,
+            "numeric": null,
+            "rowNumber": null,
+            "colspan": null,
+            "permissionName": null,
+            "newRowField": null,
+            "editRowField": null,
+            "forExport": true,
+            "forUi": true,
+            "displayBlankForNumeric": false
+          }
+        ],
+        "filters": []
+      }
+    },
+    {
+      "method": "GET",
+      "url": "https://prod-us.api.platts.com/ci-raas-prod/cms-resources/resource/getContent/tableConfigOverrides/PUBLIC_REPORTS_ISSUANCES",
+      "role": "units_search",
+      "request_headers": {
+        "language": "en",
+        "x-request-id": "458ac8e6-fca7-46e5-90f6-0fc14cb93e8f",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "x-xsrf-token": "t20",
+        "referer": "https://registry.verra.org/",
+        "standardid": "150000000000001",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "tenant": "SPG",
+        "sec-ch-ua-mobile": "?0",
+        "standardacronym": "VCS",
+        "registry": "VERRA",
+        "application": "Markit",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.7827.55 Safari/537.36",
+        "accept": "application/json",
+        "appkey": "wOKHFGuxKApQaujPSKgF"
+      },
+      "request_body": null,
+      "status": 200,
+      "response_is_json": true,
+      "total_hint": null,
+      "item_count": null,
+      "response_sample": {
+        "methodologies": {
+          "visibleFor": [
+            "VCS",
+            "PWRS"
+          ]
+        },
+        "projectMaterialTypes": {
+          "visibleFor": [
+            "PWRS"
+          ]
+        },
+        "projectEndOfLifeSelections": {
+          "visibleFor": [
+            "PWRS"
+          ]
+        },
+        "additionalCertification": {
+          "visibleFor": [
+            "VCS",
+            "PWRS"
+          ]
+        },
+        "jnrScenarioName": {
+          "visibleFor": [
+            "JNR"
+          ]
+        },
+        "goals": {
+          "visibleFor": [
+            "SDVISTA",
+            "VCS"
+          ]
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "url": "https://prod-us.api.platts.com/ci-raas-prod/raas-report-api/es/public/issuances/publicReportPageSearch",
+      "role": "units_search",
+      "request_headers": {
+        "language": "en",
+        "x-request-id": "ef2fb8b6-958d-44af-97dc-d31a86707bd1",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "x-xsrf-token": "t20",
+        "referer": "https://registry.verra.org/",
+        "standardid": "150000000000001",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "sec-ch-ua-mobile": "?0",
+        "standardacronym": "VCS",
+        "registry": "VERRA",
+        "application": "Markit",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.7827.55 Safari/537.36",
+        "accept": "application/json",
+        "appkey": "wOKHFGuxKApQaujPSKgF",
+        "content-type": "application/json"
+      },
+      "request_body": {
+        "searchFilter": {
+          "pagination": {
+            "start": 0,
+            "limit": 50,
+            "sortOptions": [
+              {
+                "sort": "modifiedDate",
+                "dir": "DESC"
+              }
+            ]
+          },
+          "filterModel": {}
+        }
+      },
+      "status": 200,
+      "response_is_json": true,
+      "total_hint": 19521,
+      "item_count": 50,
+      "response_sample": {
+        "entities": [
+          {
+            "id": "110200001032597",
+            "entityId": 110200001032597,
+            "esUpdatedOn": "2026-07-27T19:40:54.636568775",
+            "standardId": 150000000000001,
+            "standardName": "Verified Carbon Standard",
+            "accountId": null,
+            "accountName": "ecobee Technologies ULC",
+            "modifiedDate": "2026-07-27T19:36:48",
+            "auxiliaries": null,
+            "projectId": 3352,
+            "vcsProjectId": "3352",
+            "projectName": "Improving Energy Efficiency in Homes Through Smart Thermostat Optimization",
+            "publicProjectId": 3352,
+            "publicProjectName": "Improving Energy Efficiency in Homes Through Smart Thermostat Optimization",
+            "projectType": null,
+            "externalAccountId": 7450,
+            "vintage": "2024",
+            "holdingQuantity": 235604.0,
+            "serialNo": "19902-1139690318-1139925921-VCS-VCU-500-VER-US-3352-01012024-31122024-0",
+            "unitType": "VCU",
+            "unitClass": "Unit",
+            "issuanceRequestedDate": "2026-07-27T19:36:44",
+            "unitMeasurementName": "tCO2e",
+            "issueDate": "2026-07-27T19:40:39",
+            "publicVisibility": true,
+            "validatorId": 110100000042028,
+            "issuancePublicVisibility": false,
+            "projectSubmissionId": "3352",
+            "additionalCertification": null,
+            "unitsIssuedInPermanenceBufferAccount": 0,
+            "unitsIssuedInCorrespondingAdjustmentReserveAccount": 0,
+            "unitsIssuedInCountrySopReserveAccount": 0,
+            "exanteQuantity": null,
+            "omgeQuantity": 0,
+            "adaptationFundQuantity": 0,
+            "location": "United States of America, TX",
+            "complianceEligibility": null,
+            "additionalGoalInfo": null,
+            "hcloaName": null,
+            "corrAdjustmentName": null,
+            "periodStartDate": "2023-03-03T00:00:00",
+            "periodEndDate": "2025-03-02T00:00:00",
+            "verifierName": "ERM Certification and Verification Services Limited",
+            "holdingQuantityAcc": null,
+            "holdingQuantityArec": null,
+            "projectCategory": null,
+            "projectActivityType": null,
+            "considerAccountPrivate": false,
+            "regionId": "150000000000047",
+            "regionName": "North America",
+            "countryId": "100000000000001",
+            "countryName": "United States of America",
+            "stateProvince": "TX",
+            "city": "USA",
+            "sectoralScope": "Energy demand",
+            "methodologies": "VM0008 (Version 1.1)",
+            "stateCode": "ISSUED",
+            "stateName": "Issued",
+            "goalId": null,
+            "goals": null,
+            "jnrScenarioId": null,
+            "jnrScenarioName": null,
+            "jurisdictionalStatusId": null,
+            "jurisdictionalStatusName": null,
+            "creditingPeriodDuration": "03 Mar 2023 - 02 Mar 2025",
+            "creditingPeriodTerm": "1",
+            "projectMaterialTypes": null,
+            "projectEndOfLifeSelections": null,
+            "creditingPeriodDurationStartDate": "2021-03-03T00:00:00",
+            "creditingPeriodDurationEndDate": "2028-03-02T00:00:00"
+          },
+          {
+            "id": "110200001032598",
+            "entityId": 110200001032598,
+            "esUpdatedOn": "2026-07-27T19:41:00.066521322",
+            "standardId": 150000000000001,
+            "standardName": "Verified Carbon Standard",
+            "accountId": null,
+            "accountName": "ecobee Technologies ULC",
+            "modifiedDate": "2026-07-27T19:36:48",
+            "auxiliaries": null,
+            "projectId": 3352,
+            "vcsProjectId": "3352",
+            "projectName": "Improving Energy Efficiency in Homes Through Smart Thermostat Optimization",
+            "publicProjectId": 3352,
+            "publicProjectName": "Improving Energy Efficiency in Homes Through Smart Thermostat Optimization",
+            "projectType": null,
+            "externalAccountId": 7450,
+            "vintage": "2023",
+            "holdingQuantity": 180410.0,
+            "serialNo": "19903-1139925922-1140106331-VCS-VCU-500-VER-US-3352-03032023-31122023-0",
+            "unitType": "VCU",
+            "unitClass": "Unit",
+            "issuanceRequestedDate": "2026-07-27T19:36:44",
+            "unitMeasurementName": "tCO2e",
+            "issueDate": "2026-07-27T19:40:39",
+            "publicVisibility": true,
+            "validatorId": 110100000042028,
+            "issuancePublicVisibility": false,
+            "projectSubmissionId": "3352",
+            "additionalCertification": null,
+            "unitsIssuedInPermanenceBufferAccount": 0,
+            "unitsIssuedInCorrespondingAdjustmentReserveAccount": 0,
+            "unitsIssuedInCountrySopReserveAccount": 0,
+            "exanteQuantity": null,
+            "omgeQuantity": 0,
+            "adaptationFundQuantity": 0,
+            "location": "United States of America, TX",
+            "complianceEligibility": null,
+            "additionalGoalInfo": null,
+            "hcloaName": null,
+            "corrAdjustmentName": null,
+            "periodStartDate": "2023-03-03T00:00:00",
+            "periodEndDate": "2025-03-02T00:00:00",
+            "verifierName": "ERM Certification and Verification Services Limited",
+            "holdingQuantityAcc": null,
+            "holdingQuantityArec": null,
+            "projectCategory": null,
+            "projectActivityType": null,
+            "considerAccountPrivate": false,
+            "regionId": "150000000000047",
+            "regionName": "North America",
+            "countryId": "100000000000001",
+            "countryName": "United States of America",
+            "stateProvince": "TX",
+            "city": "USA",
+            "sectoralScope": "Energy demand",
+            "methodologies": "VM0008 (Version 1.1)",
+            "stateCode": "ISSUED",
+            "stateName": "Issued",
+            "goalId": null,
+            "goals": null,
+            "jnrScenarioId": null,
+            "jnrScenarioName": null,
+            "jurisdictionalStatusId": null,
+            "jurisdictionalStatusName": null,
+            "creditingPeriodDuration": "03 Mar 2023 - 02 Mar 2025",
+            "creditingPeriodTerm": "1",
+            "projectMaterialTypes": null,
+            "projectEndOfLifeSelections": null,
+            "creditingPeriodDurationStartDate": "2021-03-03T00:00:00",
+            "creditingPeriodDurationEndDate": "2028-03-02T00:00:00"
+          }
+        ],
+        "totalPages": 391,
+        "totalEntities": 19521,
+        "start": 0,
+        "limit": 50,
+        "numberOfElements": 50,
+        "first": false,
+        "last": false,
+        "pageStats": null,
+        "searchAfter": null,
+        "pitId": null
+      }
+    },
+    {
+      "method": "GET",
+      "url": "https://prod-us.api.platts.com/ci-raas-prod/cms-resources/resource/getContent/table/PUBLIC_REPORTS_RETIREMENTS",
+      "role": "units_search",
+      "request_headers": {
+        "language": "en",
+        "x-request-id": "6424740d-20b7-4fda-a5f0-b1c3ff512163",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "x-xsrf-token": "t20",
+        "referer": "https://registry.verra.org/",
+        "standardid": "150000000000001",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "tenant": "SPG",
+        "sec-ch-ua-mobile": "?0",
+        "standardacronym": "VCS",
+        "registry": "VERRA",
+        "application": "Markit",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.7827.55 Safari/537.36",
+        "accept": "application/json",
+        "appkey": "wOKHFGuxKApQaujPSKgF"
+      },
+      "request_body": null,
+      "status": 200,
+      "response_is_json": true,
+      "total_hint": null,
+      "item_count": 21,
+      "response_sample": {
+        "tableViewName": "PUBLIC_REPORTS_RETIREMENTS",
+        "translationPrefix": "PUBLIC_REPORTS_RETIREMENTS.publicReportRetirementsList",
+        "paginator": true,
+        "rowsPerPage": 15,
+        "className": null,
+        "fileName": "title",
+        "uri": "/raas-report-api/es/public/retirements/publicReportPageSearch",
+        "clazz": "com.markit.reg.dataObjects.PublicView",
+        "entityClazz": null,
+        "standardId": null,
+        "adminOnly": false,
+        "columns": [
+          {
+            "translationPrefix": "",
+            "translate": false,
+            "field": "standardName",
+            "textSearchField": null,
+            "fieldType": "String",
+            "width": "auto",
+            "header": "program",
+            "sortField": "standardName.keyword",
+            "columnOrder": 1,
+            "format": null,
+            "link": null,
+            "fileName": null,
+            "nestedField": null,
+            "createNewRow": false,
+            "columnGroup": null,
+            "repeateColumn": null,
+            "numeric": null,
+            "rowNumber": null,
+            "colspan": null,
+            "permissionName": null,
+            "newRowField": null,
+            "editRowField": null,
+            "forExport": true,
+            "forUi": true,
+            "displayBlankForNumeric": false,
+            "hide": true
+          },
+          {
+            "translationPrefix": "",
+            "translate": false,
+            "field": "retiredDate",
+            "fieldType": "Date",
+            "width": "auto",
+            "header": "retirementDate",
+            "sortField": "retiredDate",
+            "dateSearchField": "retiredDate",
+            "columnOrder": 2,
+            "format": "DD MMM YYYY",
+            "link": null,
+            "fileName": null,
+            "nestedField": null,
+            "createNewRow": false,
+            "columnGroup": null,
+            "repeateColumn": null,
+            "numeric": null,
+            "rowNumber": null,
+            "colspan": null,
+            "permissionName": null,
+            "newRowField": null,
+            "editRowField": null,
+            "forExport": true,
+            "forUi": true,
+            "displayBlankForNumeric": false
+          }
+        ],
+        "filters": []
+      }
+    },
+    {
+      "method": "GET",
+      "url": "https://prod-us.api.platts.com/ci-raas-prod/cms-resources/resource/getContent/tableConfigOverrides/PUBLIC_REPORTS_RETIREMENTS",
+      "role": "units_search",
+      "request_headers": {
+        "language": "en",
+        "x-request-id": "c8a1e60c-6f90-495b-80a4-9e5681102c58",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "x-xsrf-token": "t20",
+        "referer": "https://registry.verra.org/",
+        "standardid": "150000000000001",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "tenant": "SPG",
+        "sec-ch-ua-mobile": "?0",
+        "standardacronym": "VCS",
+        "registry": "VERRA",
+        "application": "Markit",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.7827.55 Safari/537.36",
+        "accept": "application/json",
+        "appkey": "wOKHFGuxKApQaujPSKgF"
+      },
+      "request_body": null,
+      "status": 200,
+      "response_is_json": true,
+      "total_hint": null,
+      "item_count": null,
+      "response_sample": {
+        "goals": {
+          "visibleFor": [
+            "VCS",
+            "SDVISTA"
+          ]
+        },
+        "projectMaterialTypes": {
+          "visibleFor": [
+            "PWRS"
+          ]
+        },
+        "projectEndOfLifeSelections": {
+          "visibleFor": [
+            "PWRS"
+          ]
+        },
+        "jnrScenarioName": {
+          "visibleFor": [
+            "JNR"
+          ]
+        },
+        "methodologies": {
+          "hiddenFor": [
+            "SDVISTA"
+          ]
+        },
+        "additionalCertification": {
+          "hiddenFor": [
+            "SDVISTA"
+          ]
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "url": "https://prod-us.api.platts.com/ci-raas-prod/raas-report-api/es/public/retirements/publicReportPageSearch",
+      "role": "units_search",
+      "request_headers": {
+        "language": "en",
+        "x-request-id": "435efc38-19fe-45dd-a79a-a10a2785bce5",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "x-xsrf-token": "t20",
+        "referer": "https://registry.verra.org/",
+        "standardid": "150000000000001",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "sec-ch-ua-mobile": "?0",
+        "standardacronym": "VCS",
+        "registry": "VERRA",
+        "application": "Markit",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.7827.55 Safari/537.36",
+        "accept": "application/json",
+        "appkey": "wOKHFGuxKApQaujPSKgF",
+        "content-type": "application/json"
+      },
+      "request_body": {
+        "searchFilter": {
+          "pagination": {
+            "start": 0,
+            "limit": 50,
+            "sortOptions": [
+              {
+                "sort": "retiredDate",
+                "dir": "DESC"
+              }
+            ]
+          },
+          "filterModel": {}
+        }
+      },
+      "status": 200,
+      "response_is_json": true,
+      "total_hint": 305145,
+      "item_count": 50,
+      "response_sample": {
+        "entities": [
+          {
+            "id": "110200000720514",
+            "entityId": 110200000720514,
+            "esUpdatedOn": "2026-07-27T19:27:28.702021424",
+            "standardId": 150000000000001,
+            "standardName": "Verified Carbon Standard",
+            "accountId": null,
+            "accountName": "South Pole AG - 4",
+            "modifiedDate": "2026-07-27T19:27:26.947",
+            "auxiliaries": null,
+            "accountPublicVisibility": false,
+            "accountStatePublicVisibility": true,
+            "accountStateCode": "ACTIVE",
+            "publicVisibility": true,
+            "unitType": "VCU",
+            "holdingQuantity": 171.0,
+            "holdingQuantityAcc": null,
+            "holdingQuantityArec": null,
+            "monitoringPeriodStart": null,
+            "monitoringPeriodEnd": null,
+            "projectId": 1857,
+            "projectName": "Grouped OFF-GRID Renewable Energy Project in India",
+            "publicProjectId": 1857,
+            "publicProjectName": "Grouped OFF-GRID Renewable Energy Project in India",
+            "additionalCertification": null,
+            "vintage": "2021",
+            "serialNo": "19734-962412547-962412717-VCS-VCU-842-VER-IN-1-1857-01092021-31122021-0",
+            "unitMeasurementName": null,
+            "retiredDate": "2026-07-27T19:27:26",
+            "beneficialOwner": null,
+            "beneficiaryLocation": null,
+            "retirementRemarks": null,
+            "className": null,
+            "classCode": null,
+            "additionalInfo": null,
+            "vcsProjectId": "1857",
+            "projectSubmissionId": null,
+            "projectType": null,
+            "verifierName": "KBS Certification Services Limited",
+            "location": null,
+            "complianceEligibility": null,
+            "additionalGoalInfo": null,
+            "hcloaName": null,
+            "corrAdjustmentName": null,
+            "actionPurpose": null,
+            "projectCategory": null,
+            "projectActivityType": null,
+            "considerAccountPrivate": null,
+            "subAccountId": null,
+            "subAccountName": null,
+            "externalAccountId": 1329,
+            "externalSubAccountId": null,
+            "regionId": "150000000000043",
+            "regionName": "Asia",
+            "countryId": "100000000000013",
+            "countryName": "India",
+            "stateProvince": "Saran",
+            "city": "Jharkhand, Uttar Pradesh and Bihar",
+            "sectoralScope": "Energy industries (renewable/non-renewable sources)",
+            "methodologies": "AMS-I.F. (Version NA)",
+            "periodStartDate": null,
+            "periodEndDate": null,
+            "creditPeriodTerm": "1",
+            "stateCode": "RETIRED",
+            "stateNameEn": "Retired",
+            "goalId": null,
+            "goals": null,
+            "jnrScenarioId": null,
+            "jnrScenarioName": null,
+            "jurisdictionalStatusId": null,
+            "jurisdictionalStatusName": null,
+            "projectMaterialTypes": null,
+            "projectEndOfLifeSelections": null,
+            "makeBeneficialOwnerPublic": false,
+            "retirementReason": null,
+            "makeRetirementReasonPublic": false,
+            "retirementReasonDetails": null,
+            "makeRetirementReasonDetailsPublic": false,
+            "emailNotification": "a.paredes@southpole.com",
+            "statePublicVisibility": true,
+            "creditingPeriodDurationStartDate": "2017-04-01T00:00:00",
+            "creditingPeriodDurationEndDate": "2027-03-31T00:00:00"
+          },
+          {
+            "id": "110200001032584",
+            "entityId": 110200001032584,
+            "esUpdatedOn": "2026-07-27T17:36:56.79481066",
+            "standardId": 150000000000001,
+            "standardName": "Verified Carbon Standard",
+            "accountId": null,
+            "accountName": "CarbonCure Technologies Inc.",
+            "modifiedDate": "2026-07-27T17:36:55.11",
+            "auxiliaries": null,
+            "accountPublicVisibility": false,
+            "accountStatePublicVisibility": true,
+            "accountStateCode": "ACTIVE",
+            "publicVisibility": true,
+            "unitType": "VCU",
+            "holdingQuantity": 100.0,
+            "holdingQuantityAcc": null,
+            "holdingQuantityArec": null,
+            "monitoringPeriodStart": null,
+            "monitoringPeriodEnd": null,
+            "projectId": 4020,
+            "projectName": "CO2 Utilization in Concrete \u2013 Removals & Reductions \u2013 CarbonCure \u2013 U.S & Canada Project #1",
+            "publicProjectId": 4020,
+            "publicProjectName": "CO2 Utilization in Concrete \u2013 Removals & Reductions \u2013 CarbonCure \u2013 U.S & Canada Project #1",
+            "additionalCertification": null,
+            "vintage": "2023",
+            "serialNo": "18160-876228377-876228476-VCS-VCU-466-VER-BO-4-4020-01012023-31122023-0",
+            "unitMeasurementName": null,
+            "retiredDate": "2026-07-27T17:36:54",
+            "beneficialOwner": "STANTEC CONSULTING LTD",
+            "beneficiaryLocation": null,
+            "retirementRemarks": null,
+            "className": null,
+            "classCode": null,
+            "additionalInfo": null,
+            "vcsProjectId": "4020",
+            "projectSubmissionId": null,
+            "projectType": null,
+            "verifierName": "VCS Validation/Verification Body",
+            "location": null,
+            "complianceEligibility": null,
+            "additionalGoalInfo": null,
+            "hcloaName": null,
+            "corrAdjustmentName": null,
+            "actionPurpose": null,
+            "projectCategory": null,
+            "projectActivityType": null,
+            "considerAccountPrivate": null,
+            "subAccountId": null,
+            "subAccountName": null,
+            "externalAccountId": 4567,
+            "externalSubAccountId": null,
+            "regionId": "150000000000045",
+            "regionName": "Latin America",
+            "countryId": "100000000000048",
+            "countryName": "Bolivia (Plurinational State of)",
+            "stateProvince": "",
+            "city": "Santa Cruz de la Sierra",
+            "sectoralScope": "Construction, Manufacturing industries",
+            "methodologies": "VM0043 (Version NA)",
+            "periodStartDate": null,
+            "periodEndDate": null,
+            "creditPeriodTerm": "1",
+            "stateCode": "RETIRED",
+            "stateNameEn": "Retired",
+            "goalId": null,
+            "goals": null,
+            "jnrScenarioId": null,
+            "jnrScenarioName": null,
+            "jurisdictionalStatusId": null,
+            "jurisdictionalStatusName": null,
+            "projectMaterialTypes": null,
+            "projectEndOfLifeSelections": null,
+            "makeBeneficialOwnerPublic": true,
+            "retirementReason": "Retirement for Person or Organization",
+            "makeRetirementReasonPublic": true,
+            "retirementReasonDetails": null,
+            "makeRetirementReasonDetailsPublic": true,
+            "emailNotification": null,
+            "statePublicVisibility": true,
+            "creditingPeriodDurationStartDate": "2022-01-04T00:00:00",
+            "creditingPeriodDurationEndDate": "2029-01-03T00:00:00"
+          }
+        ],
+        "totalPages": 6103,
+        "totalEntities": 305145,
+        "start": 0,
+        "limit": 50,
+        "numberOfElements": 50,
+        "first": false,
+        "last": false,
+        "pageStats": null,
+        "searchAfter": null,
+        "pitId": null
+      }
+    },
+    {
+      "method": "GET",
+      "url": "https://prod-us.api.platts.com/ci-raas-prod/cms-resources/resource/getContent/table/PUBLIC_REPORTS_CANCELLATION",
+      "role": "export",
+      "request_headers": {
+        "language": "en",
+        "x-request-id": "0847151c-6184-4955-b56f-81f6b416b44b",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "x-xsrf-token": "t20",
+        "referer": "https://registry.verra.org/",
+        "standardid": "150000000000001",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "tenant": "SPG",
+        "sec-ch-ua-mobile": "?0",
+        "standardacronym": "VCS",
+        "registry": "VERRA",
+        "application": "Markit",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.7827.55 Safari/537.36",
+        "accept": "application/json",
+        "appkey": "wOKHFGuxKApQaujPSKgF"
+      },
+      "request_body": null,
+      "status": 200,
+      "response_is_json": true,
+      "total_hint": null,
+      "item_count": 20,
+      "response_sample": {
+        "tableViewName": "PUBLIC_REPORTS_CANCELLATION",
+        "translationPrefix": "PUBLIC_REPORTS_CANCELLATION.publicReportCancellationList",
+        "paginator": true,
+        "rowsPerPage": 15,
+        "className": null,
+        "fileName": "title",
+        "uri": "/raas-report-api/es/public/cancellations/publicReportPageSearch",
+        "clazz": "com.markit.reg.dataObjects.PublicView",
+        "entityClazz": null,
+        "standardId": null,
+        "adminOnly": false,
+        "columns": [
+          {
+            "translationPrefix": "",
+            "translate": false,
+            "field": "standardName",
+            "textSearchField": null,
+            "fieldType": "String",
+            "width": "auto",
+            "header": "program",
+            "sortField": "standardName.keyword",
+            "columnOrder": 1,
+            "format": null,
+            "link": null,
+            "fileName": null,
+            "nestedField": null,
+            "createNewRow": false,
+            "columnGroup": null,
+            "repeateColumn": null,
+            "numeric": null,
+            "rowNumber": null,
+            "colspan": null,
+            "permissionName": null,
+            "newRowField": null,
+            "editRowField": null,
+            "forExport": true,
+            "forUi": true,
+            "displayBlankForNumeric": false,
+            "hide": true
+          },
+          {
+            "translationPrefix": "",
+            "translate": false,
+            "field": "cancellation_date",
+            "fieldType": "Date",
+            "width": "auto",
+            "header": "cancelDate",
+            "sortField": "cancellation_date",
+            "dateSearchField": "cancellation_date",
+            "columnOrder": 2,
+            "format": "DD MMM YYYY",
+            "link": null,
+            "fileName": null,
+            "nestedField": null,
+            "createNewRow": false,
+            "columnGroup": null,
+            "repeateColumn": null,
+            "numeric": null,
+            "rowNumber": null,
+            "colspan": null,
+            "permissionName": null,
+            "newRowField": null,
+            "editRowField": null,
+            "forExport": true,
+            "forUi": true,
+            "displayBlankForNumeric": false
+          }
+        ],
+        "filters": []
+      }
+    },
+    {
+      "method": "GET",
+      "url": "https://prod-us.api.platts.com/ci-raas-prod/cms-resources/resource/getContent/tableConfigOverrides/PUBLIC_REPORTS_CANCELLATION",
+      "role": "export",
+      "request_headers": {
+        "language": "en",
+        "x-request-id": "d094550e-5b5f-4012-b274-7584e2ef0aaa",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "x-xsrf-token": "t20",
+        "referer": "https://registry.verra.org/",
+        "standardid": "150000000000001",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "tenant": "SPG",
+        "sec-ch-ua-mobile": "?0",
+        "standardacronym": "VCS",
+        "registry": "VERRA",
+        "application": "Markit",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.7827.55 Safari/537.36",
+        "accept": "application/json",
+        "appkey": "wOKHFGuxKApQaujPSKgF"
+      },
+      "request_body": null,
+      "status": 200,
+      "response_is_json": true,
+      "total_hint": null,
+      "item_count": null,
+      "response_sample": {
+        "methodologies": {
+          "visibleFor": [
+            "VCS",
+            "PWRS"
+          ]
+        },
+        "additional_certification": {
+          "visibleFor": [
+            "VCS",
+            "PWRS"
+          ]
+        },
+        "projectMaterialTypes": {
+          "visibleFor": [
+            "PWRS"
+          ]
+        },
+        "projectEndOfLifeSelections": {
+          "visibleFor": [
+            "PWRS"
+          ]
+        },
+        "sdContributions": {
+          "visibleFor": [
+            "SDVISTA",
+            "VCS"
+          ]
+        },
+        "jnrScenarioName": {
+          "visibleFor": [
+            "JNR"
+          ]
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "url": "https://prod-us.api.platts.com/ci-raas-prod/raas-report-api/es/public/cancellations/publicReportPageSearch",
+      "role": "export",
+      "request_headers": {
+        "language": "en",
+        "x-request-id": "b8b522bd-4c8a-47e5-acb9-e95862d67496",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "x-xsrf-token": "t20",
+        "referer": "https://registry.verra.org/",
+        "standardid": "150000000000001",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "sec-ch-ua-mobile": "?0",
+        "standardacronym": "VCS",
+        "registry": "VERRA",
+        "application": "Markit",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.7827.55 Safari/537.36",
+        "accept": "application/json",
+        "appkey": "wOKHFGuxKApQaujPSKgF",
+        "content-type": "application/json"
+      },
+      "request_body": {
+        "searchFilter": {
+          "pagination": {
+            "start": 0,
+            "limit": 50,
+            "sortOptions": [
+              {
+                "sort": "cancellation_date",
+                "dir": "DESC"
+              }
+            ]
+          },
+          "filterModel": {}
+        }
+      },
+      "status": 200,
+      "response_is_json": true,
+      "total_hint": 1778,
+      "item_count": 50,
+      "response_sample": {
+        "entities": [
+          {
+            "id": "110200000726538",
+            "entityId": 110200000726538,
+            "esUpdatedOn": "2026-07-24T20:30:03.928032627",
+            "standardId": 150000000000001,
+            "standardName": "Verified Carbon Standard",
+            "accountId": null,
+            "accountName": "The Nature Conservancy",
+            "modifiedDate": "2026-06-02T21:31:37",
+            "auxiliaries": null,
+            "accountPublicVisibility": false,
+            "accountStatePublicVisibility": false,
+            "accountStateCode": "INACTIVATED",
+            "publicVisibility": true,
+            "unitType": "VCU",
+            "holdingQuantity": 18962.0,
+            "holdingQuantityAcc": null,
+            "holdingQuantityArec": null,
+            "monitoringPeriodStart": null,
+            "monitoringPeriodEnd": null,
+            "projectId": 1175,
+            "projectName": "AVOIDING PLANNED DEFORESTATION AND DEGRADATION IN THE VALDIVIAN COASTAL RESERVE, CHILE",
+            "publicProjectId": 1175,
+            "publicProjectName": "AVOIDING PLANNED DEFORESTATION AND DEGRADATION IN THE VALDIVIAN COASTAL RESERVE, CHILE",
+            "trading_name": "Cancel/Export - 8294",
+            "vcsProjectId": "1175",
+            "project_name": null,
+            "additional_certification": "CCBS-Gold",
+            "vintage": "2003 - 2004",
+            "serial_no": "19627-957450860-957469821-VCS-VCU-352-VER-CL-14-1175-04112003-03112004-1",
+            "unit_measurement_name": "tCO2e",
+            "retired_date": "2026-06-02T00:00:00",
+            "retirement_remarks": null,
+            "block_start": 957450860,
+            "block_end": 957469821,
+            "unit_class_name": "Unit",
+            "unit_class_code": "VCU",
+            "location": "Chile, Region XIV",
+            "project_type_name": null,
+            "verifier_account_name": "Aster Global Environmental Solutions Inc.",
+            "additional_goal_info": null,
+            "corresponding_adjustment_status": null,
+            "cancellation_purpose": null,
+            "cancelling_country": null,
+            "aquiring_country": null,
+            "countryId": "100000000000061",
+            "countryName": "Chile",
+            "cancellation_date": "2026-06-02T00:00:00",
+            "cancellation_remarks": null,
+            "project_submission_id": "1175",
+            "monitoring_period_start": "2003-11-04T00:00:00",
+            "monitoring_period_end": "2011-11-03T00:00:00",
+            "applied_methodology": null,
+            "letter_of_auth_hcloa": null,
+            "market_eligibility": null,
+            "projectCategory": null,
+            "projectActivityType": null,
+            "considerAccountPrivate": false,
+            "subAccountId": 110100000057099,
+            "subAccountName": "Cancel/Export - 8294",
+            "externalAccountId": 2405,
+            "externalSubAccountId": 8294,
+            "sectoralScope": "Agriculture Forestry and Other Land Use",
+            "regionId": "150000000000045",
+            "regionName": "Latin America",
+            "stateProvince": "Region XIV",
+            "city": "Chile\u2019s southern coastline",
+            "methodologies": "VM0007 (Version 1.3)",
+            "creditingPeriodTerm": "1",
+            "status": "Cancelled",
+            "cancellationReasonDetails": null,
+            "makeCancellationReasonDetailsPublic": false,
+            "makeCancellationReasonPublic": false,
+            "cancellationReason": null,
+            "projectMaterialTypes": null,
+            "projectEndOfLifeSelections": null,
+            "sdContributions": null,
+            "jnrScenarioId": null,
+            "jnrScenarioName": null,
+            "jurisdictionalStatusId": null,
+            "jurisdictionalStatusName": null,
+            "statePublicVisibility": true,
+            "creditingPeriodDurationStartDate": "2003-11-04T00:00:00",
+            "creditingPeriodDurationEndDate": "2023-11-03T00:00:00"
+          },
+          {
+            "id": "110200000726663",
+            "entityId": 110200000726663,
+            "esUpdatedOn": "2026-07-24T20:30:03.937323907",
+            "standardId": 150000000000001,
+            "standardName": "Verified Carbon Standard",
+            "accountId": null,
+            "accountName": "ReNew Power Synergy Private Limited",
+            "modifiedDate": "2026-05-21T21:58:57",
+            "auxiliaries": null,
+            "accountPublicVisibility": false,
+            "accountStatePublicVisibility": false,
+            "accountStateCode": "INACTIVATED",
+            "publicVisibility": true,
+            "unitType": "VCU",
+            "holdingQuantity": 2857.0,
+            "holdingQuantityAcc": null,
+            "holdingQuantityArec": null,
+            "monitoringPeriodStart": null,
+            "monitoringPeriodEnd": null,
+            "projectId": 1404,
+            "projectName": "Vaspet-II and Vaspet-III Wind Power Project, Maharashtra",
+            "publicProjectId": 1404,
+            "publicProjectName": "Vaspet-II and Vaspet-III Wind Power Project, Maharashtra",
+            "trading_name": "Cancel/Export - 22249",
+            "vcsProjectId": "1404",
+            "project_name": null,
+            "additional_certification": null,
+            "vintage": "2023",
+            "serial_no": "17879-862508514-862511370-VCS-VCU-279-VER-IN-1-1404-01012023-02042023-0",
+            "unit_measurement_name": "tCO2e",
+            "retired_date": "2026-05-21T00:00:00",
+            "retirement_remarks": null,
+            "block_start": 862508514,
+            "block_end": 862511370,
+            "unit_class_name": "Unit",
+            "unit_class_code": "VCU",
+            "location": "India, Maharashtra",
+            "project_type_name": null,
+            "verifier_account_name": "Bureau Veritas India Private Limited",
+            "additional_goal_info": null,
+            "corresponding_adjustment_status": null,
+            "cancellation_purpose": null,
+            "cancelling_country": null,
+            "aquiring_country": null,
+            "countryId": "100000000000013",
+            "countryName": "India",
+            "cancellation_date": "2026-05-21T00:00:00",
+            "cancellation_remarks": null,
+            "project_submission_id": "1404",
+            "monitoring_period_start": "2023-01-01T00:00:00",
+            "monitoring_period_end": "2023-04-02T00:00:00",
+            "applied_methodology": null,
+            "letter_of_auth_hcloa": null,
+            "market_eligibility": null,
+            "projectCategory": null,
+            "projectActivityType": null,
+            "considerAccountPrivate": false,
+            "subAccountId": 110100000064989,
+            "subAccountName": "Cancel/Export - 22249",
+            "externalAccountId": 6118,
+            "externalSubAccountId": 22249,
+            "sectoralScope": "Energy industries (renewable/non-renewable sources)",
+            "regionId": "150000000000043",
+            "regionName": "Asia",
+            "stateProvince": "Maharashtra",
+            "city": "Shedyal, Salekeri and Valsang village",
+            "methodologies": "ACM0002 (Version 21)",
+            "creditingPeriodTerm": "2",
+            "status": "Cancelled",
+            "cancellationReasonDetails": null,
+            "makeCancellationReasonDetailsPublic": false,
+            "makeCancellationReasonPublic": false,
+            "cancellationReason": null,
+            "projectMaterialTypes": null,
+            "projectEndOfLifeSelections": null,
+            "sdContributions": null,
+            "jnrScenarioId": null,
+            "jnrScenarioName": null,
+            "jurisdictionalStatusId": null,
+            "jurisdictionalStatusName": null,
+            "statePublicVisibility": true,
+            "creditingPeriodDurationStartDate": "2023-04-03T00:00:00",
+            "creditingPeriodDurationEndDate": "2033-04-02T00:00:00"
+          }
+        ],
+        "totalPages": 36,
+        "totalEntities": 1778,
+        "start": 0,
+        "limit": 50,
+        "numberOfElements": 50,
+        "first": false,
+        "last": false,
+        "pageStats": null,
+        "searchAfter": null,
+        "pitId": null
+      }
+    },
+    {
+      "method": "GET",
+      "url": "https://prod-us.api.platts.com/ci-raas-prod/br-reg/rest/property-manager/public/getValueByName/email.group.registrySupport",
+      "role": "other",
+      "request_headers": {
+        "language": "en",
+        "x-request-id": "1e6c35b6-bf17-4027-bace-55861df4cf81",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "x-xsrf-token": "t20",
+        "referer": "https://registry.verra.org/",
+        "standardid": "150000000000001",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "sec-ch-ua-mobile": "?0",
+        "standardacronym": "VCS",
+        "registry": "VERRA",
+        "application": "Markit",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.7827.55 Safari/537.36",
+        "accept": "application/json",
+        "appkey": "wOKHFGuxKApQaujPSKgF"
+      },
+      "request_body": null,
+      "status": 200,
+      "response_is_json": true,
+      "total_hint": null,
+      "item_count": null,
+      "response_sample": {
+        "newRecord": false,
+        "id": null,
+        "name": "email.group.registrySupport",
+        "value": "EnvironmentalRegistry@spglobal.com",
+        "domain": null,
+        "description": null
+      }
+    }
+  ]
+}

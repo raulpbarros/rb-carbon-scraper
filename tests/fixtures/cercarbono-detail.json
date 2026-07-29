@@ -1,0 +1,238 @@
+{
+ "status": 1,
+ "projectNotesActive": 0,
+ "locations": [
+  {
+   "id": 1,
+   "locationName": "Previo",
+   "countryId": 47,
+   "countryDescription": "Colombia",
+   "regionId": 788,
+   "regionCode": "47788",
+   "regionDescription": "Cordoba",
+   "cityId": 13030,
+   "cityCode": "4778813030",
+   "cityDescription": "Planeta Rica",
+   "area": "251",
+   "verificationNumber": 1,
+   "active": false,
+   "dataMap": {
+    "latitude": 8.412918740997307,
+    "longitude": -75.58408635215012
+   },
+   "checked": true
+  }
+ ],
+ "certificatedVerification": [
+  {
+   "total": 81169,
+   "verificationNumber": 1
+  }
+ ],
+ "URLApplication": "https://www.ecoregistry.io/",
+ "monitoringReport": true,
+ "formulation": false,
+ "validator": false,
+ "validCertifier": false,
+ "verifier": false,
+ "certifier": false,
+ "isAdminCertifier": false,
+ "previousCertifications": [
+  {
+   "units": 81169,
+   "periodInit": "2008-01-16",
+   "periodEnd": "2018-09-30",
+   "validationNumber": 1,
+   "verificationNumber": 1
+  }
+ ],
+ "project": {
+  "hasPublicCartography": false,
+  "isKml": 0,
+  "isFormulated": 1,
+  "isValidated": 1,
+  "isVerified": 1,
+  "isAsigned": false,
+  "webSite": "",
+  "date": "2019-04-12",
+  "id": 1,
+  "code": "CDC-1",
+  "hashId": "eb",
+  "name": "Carbono Agroporvanda",
+  "accreditationPeriod": "2008-01-16 / 2032-01-15",
+  "descriptionProject": "Establecer 251.38 hectáreas de plantaciones forestales comerciales con Eucalyptus sp, Tectona grandes, Pachira quinata y Gmelina arborea en los municipios de Planeta Rica y Buenavista (Córdoba).",
+  "descriptionProjectIng": "",
+  "projectStageId": 4,
+  "projectStageOrder": 5,
+  "projectsStage": "Certified",
+  "projectsStagePreapproval": false,
+  "projectsStageInactive": false,
+  "verifier": "ICONTEC",
+  "verifierIsCredit": 0,
+  "verifierUrlImage": "https://ecoregistry-documents-public.s3.amazonaws.com/verifiers-prod/1727129909879_ICONTEC-LOGO.png",
+  "validator": "ICONTEC",
+  "validatorIsCredit": 0,
+  "validatorUrlImage": "https://ecoregistry-documents-public.s3.amazonaws.com/validators-prod/1727129294480_ICONTEC-LOGO.png",
+  "sectors": [
+   {
+    "sectorId": 14,
+    "multZonesActive": 1,
+    "isBuffer": 1,
+    "description": "Land use (AFOLU)"
+   }
+  ],
+  "protocols": [
+   {
+    "id": 2,
+    "description": "PROTOCOL CVCC V1.1"
+   }
+  ],
+  "sectorsMethodologies": [
+   {
+    "id": 14,
+    "description": "Land use (AFOLU)",
+    "methodologies": [
+     {
+      "id": 1,
+      "description": "CDM - AR-ACM0003: Afforestation and reforestation of lands except wetlands",
+      "isMethodologyDeviation": false,
+      "documents": []
+     }
+    ]
+   }
+  ],
+  "process": 6,
+  "validations": [
+   {
+    "validationNumber": 1,
+    "verifications": [
+     {
+      "verificationNumber": 1
+     }
+    ]
+   }
+  ],
+  "validatorId": true,
+  "verifierId": true,
+  "standardId": 1,
+  "standarDescription": "Carbono",
+  "standardCode": "SxCDC",
+  "standarUrlImage": "https://ecoregistry-documents-public.s3.amazonaws.com/ecoregistry/images/standards/1782317021301_logo-duo_tone-2000px.png",
+  "standardMetaData": {
+   "colorDark": "#086A41",
+   "colorLight": "#E9F3ED",
+   "imgDesktop": {
+    "name": "Benner-Cercarbono-web.webp",
+    "time": 1767627687905,
+    "route": "standards",
+    "path": "https://ecoregistry-documents-public.s3.amazonaws.com/ecoregistry/images/standards/1767627687905_Benner-Cercarbono-web.webp"
+   },
+   "imgMobile": {
+    "name": "Benner-Cercarbono-web.webp",
+    "time": 1767627695272,
+    "route": "standards",
+    "path": "https://ecoregistry-documents-public.s3.amazonaws.com/ecoregistry/images/standards/1767627695272_Benner-Cercarbono-web.webp"
+   }
+  },
+  "creditUnit": "tCO2e",
+  "acceptsDmrv": true,
+  "isConvertedFrom": false,
+  "isCreditConversion": false,
+  "convertedFromId": null,
+  "convertedFromLink": null,
+  "convertedFromDescription": "",
+  "isPublic": true,
+  "projectsGlobalGoal": [],
+  "periodInit": "2008-01-16",
+  "periodEnd": "2032-01-15",
+  "periodInitVerifier": "2008-01-16",
+  "periodEndVerifier": "2032-01-15",
+  "verificationNumber": 1,
+  "validationNumber": 1,
+  "projectsFirms": [
+   {
+    "firm": "certifier",
+    "dateSignature": "2019-04-12 10:51:48"
+   }
+  ],
+  "publicConsultationInit": null,
+  "publicConsultationEnd": null,
+  "projectsApprovedFirm": null,
+  "typeProjectId": 2,
+  "developerId": 117,
+  "ownerId": 116,
+  "activities": [],
+  "typeMaterial": [],
+  "specificMaterial": [],
+  "projectsCreditingPeriod": [
+   {
+    "verificationNumber": 1,
+    "periodInit": "2008-01-16",
+    "periodEnd": "2032-01-15"
+   }
+  ],
+  "isDmrv": 0,
+  "DMRV": [],
+  "beZero": null,
+  "isRated": 0
+ },
+ "projectsCorrectionHistory": 1,
+ "projectsCommentPending": 0,
+ "projectsStage": [
+  {
+   "id": 9,
+   "description": "Registration",
+   "order": 0
+  },
+  {
+   "id": 1,
+   "description": "Formulation",
+   "order": 1
+  },
+  {
+   "id": 11,
+   "description": "Public comments",
+   "order": 2
+  },
+  {
+   "id": 2,
+   "description": "Validation",
+   "order": 3
+  },
+  {
+   "id": 3,
+   "description": "Verification",
+   "order": 4
+  },
+  {
+   "id": 4,
+   "description": "Certified",
+   "order": 5
+  }
+ ],
+ "projectsMedia": [
+  {
+   "typeMediaId": 1,
+   "defaultImage": 0,
+   "urlImage": "https://ecoregistry-projects-data.s3.us-east-1.amazonaws.com/projects/projectId%3D1/1555081609778_Imagen%20proyecto%20agroporvanda.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAWVH64BL3WMSHI4SQ%2F20260729%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260729T001023Z&X-Amz-Expires=60&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEKj%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJHMEUCIQCRBSDfP%2FVubpjMWw5v5zWFVFEQOK9VU66DyBehgqrL8QIgcM1dmR0j1Wm3G%2BNw2oKSVv7StQGmKYjAonDSUQNh%2BDsq9wMIcBACGgw0NTc5NDg1MzE0NDciDD25fDptvnExD955HirUA3sMfdI37GYtDNEUnGBPKaM0NwLl0uUEVfe698Sf06NeDvWsSQI9sU%2F49TPZ8lx5xUEacTbp2Qrvk%2BK23Eua5pSMzXSqaOumSX1suO%2BDwa2%2B5GDvPKO2mIJLFnrjqwmm0uG4ZZkuPtjXjlR5nExTvTYaQ00fT8FuQkFsFSEVTJ1MAFs%2FjtWjBZbJk3%2F05t1NlNgLD0kIQkihyV%2BX127O1eAST%2BxKQz92uqsb%2Fmn05xzSN0u3a7fdQH2Q5qNDSlHBC%2Bq%2BEZfN6EJp8BqSqZIO2zqN%2FmqVI4zK2wo3vIqq8%2Frnmim5hYHmVEp56JDX8y49JTRsU%2Fpj4bkKud%2FgUGR4%2BFpZHiWkQtdHM4JMUyUqQ%2FUFBx0e9owz1xIvEun4dhFku4dUCHQ60XpBPMaaJpCzVeUWygejkQsJEPVqjouG%2Bfpp7xKCEwAYFpPk6LWfYyQH0LnYvc555p6k0nndsX0u4%2FQLearEAMuYdB8kGowzb%2FYHIHYBjgtdZ387YBwE0MEGfiFLZEXWjD9SZ7%2FIbN%2BEH0OBksz%2Br0UiqKwz9c%2FO2CZXAj%2BbJJ%2FPDGJW8t%2BxEbne8CQQtm11kRPxCHRzg1jvAyDmGYenZ%2FZATLYncgh6mafte44ECTCB7KTTBjqlAeQQPfyFDo0LQ4RbbTdCbuXyWZ1%2FthTUeB%2BlMcJIM6PeJtJGOptWgTuBrqLEdn7M9A3KqgbzmJ70ne7V%2BcuxYQR%2BiO9lcbRmEWQ4WgZW%2Bwa6dPBtwnudcDVJM2ovcuEy6W1qGdsZ8KrayO8kfvM0lQuBv%2Fr%2Fo47FGu9yvFXEI1X3Qs3BUWth125Z458Ygfr%2Fzlo%2BqXzTFvwS2RLv%2BpxKInguyVcEGA%3D%3D&X-Amz-Signature=d3bbd15cf3734810b383502f695a818657de7510210b79474df478a7ed646329&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject",
+   "urlVideo": ""
+  }
+ ],
+ "keyMapGoogle": "",
+ "projectRatings": [
+  {
+   "verificationNumber": 0,
+   "ratings": [
+    {
+     "id": 2,
+     "projectRatingId": null,
+     "company": "MSCI",
+     "name": "MSCI Carbon Project Rating",
+     "rate": "XXX",
+     "isPublic": 0,
+     "updated": null
+    }
+   ]
+  }
+ ]
+}

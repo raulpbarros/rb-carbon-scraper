@@ -1,0 +1,183 @@
+# Bioma
+#
+# Verra does not publish a biome. This infers one from location, and it is the
+# weakest ruleset in the project — treat every value as a starting point.
+#
+# Two known limitations, stated plainly:
+#   1. A state/province usually spans SEVERAL biomes. These rules assign the
+#      dominant one only. A project in western Bahia sits in Cerrado, not
+#      Caatinga, but the state-level rule cannot see that.
+#   2. Outside Brazil the rules fall back to continent-level bands, which is
+#      very coarse.
+#   3. The continent-level bands read `region_name`, which only Verra
+#      publishes. Gold Standard rows therefore reach the country-name rules
+#      and stop there — outside the countries named below they stay blank
+#      rather than being placed in a biome on a guess.
+#
+# Biome is only meaningful for land-use projects, so this ruleset is limited to
+# AFOLU. Everything else stays blank on purpose.
+
+column: "Bioma"
+
+applies_when:
+  # FOUR vocabularies for the same sector, all carried through untranslated in
+  # Tipo Macro: Verra's "Agriculture Forestry and Other Land Use", Gold
+  # Standard's single type "A/R", Cercarbono's "Land use (AFOLU)", Plan Vivo's
+  # "Afforestation / Reforestation". Anything else stays blank.
+  #
+  # This gate is load-bearing and fails silently: one unrecognised wording
+  # means NO biome for any row of that registry, with nothing in the log to
+  # say so. A new registry's wording belongs here before anything else.
+  - field: sectoral_scope
+    regex: "Agriculture Forestry|^A/R$|Land use \\(AFOLU\\)|Afforestation / Reforestation"
+
+rules:
+  # --- Brazil, by state (dominant biome) --------------------------------
+  - name: br-amazonia
+    match:
+      - { field: country_name, contains: "Brazil" }
+      - { field: state_province, regex: "Acre|Amap|Amazonas|Pará|^PA$|Rondônia|Roraima|Tocantins" }
+    value: "Amazônia"
+
+  - name: br-pantanal
+    match:
+      - { field: country_name, contains: "Brazil" }
+      - { field: state_province, regex: "Mato Grosso do Sul|Pantanal" }
+    value: "Pantanal"
+
+  - name: br-cerrado
+    match:
+      - { field: country_name, contains: "Brazil" }
+      - { field: state_province, regex: "Goiás|Distrito Federal|Mato Grosso|Piauí|Maranhão|Minas Gerais" }
+    value: "Cerrado"
+
+  - name: br-caatinga
+    match:
+      - { field: country_name, contains: "Brazil" }
+      - { field: state_province, regex: "Ceará|Rio Grande do Norte|Paraíba|Pernambuco|Alagoas|Sergipe|Bahia" }
+    value: "Caatinga"
+
+  - name: br-pampa
+    match:
+      - { field: country_name, contains: "Brazil" }
+      - { field: state_province, regex: "Rio Grande do Sul" }
+    value: "Pampa"
+
+  - name: br-mata-atlantica
+    match:
+      - { field: country_name, contains: "Brazil" }
+      - { field: state_province, regex: "São Paulo|Rio de Janeiro|Espírito Santo|Paraná|Santa Catarina" }
+    value: "Mata Atlântica"
+
+  - name: br-unknown-state
+    match:
+      - { field: country_name, contains: "Brazil" }
+    value: "Brasil (bioma não determinado)"
+
+  # --- Colombia, by department (dominant biome) --------------------------
+  # Cercarbono is overwhelmingly Colombian — 140 of its 231 CO2 projects — and
+  # it publishes the department. Without these rules every one of them would
+  # fall through to the Amazon-basin band below, which is wrong for most of
+  # the country: the Andes and the Caribbean coast are not the Amazon.
+  #
+  # Department names arrive unaccented from EcoRegistry ("Narino", "Cordoba"),
+  # so the patterns stop before the accented vowel and match either spelling.
+  - name: co-amazonia
+    match:
+      - { field: country_name, contains: "Colombia" }
+      - { field: state_province, regex: "Amazonas|Caquet|Putumayo|Guain|Guaviare|Vaup" }
+    value: "Amazônia (bacia amazônica)"
+
+  - name: co-orinoquia
+    match:
+      - { field: country_name, contains: "Colombia" }
+      - { field: state_province, regex: "Meta|Vichada|Arauca|Casanare" }
+    value: "Orinoquía (savana de várzea)"
+
+  - name: co-pacifico
+    match:
+      - { field: country_name, contains: "Colombia" }
+      - { field: state_province, regex: "Choc" }
+    value: "Floresta Úmida do Pacífico (Chocó)"
+
+  - name: co-caribe
+    match:
+      - { field: country_name, contains: "Colombia" }
+      - { field: state_province, regex: "Atl.ntico|Bol.var|Cesar|C.rdoba|Guajira|Magdalena|Sucre" }
+    value: "Caribe Colombiano (bosque seco)"
+
+  - name: co-andes
+    match:
+      - { field: country_name, contains: "Colombia" }
+      - { field: state_province, regex: "Antioquia|Boyac|Caldas|Cauca|Cundinamarca|Huila|Nari.o|Norte de Santander|Quind|Risaralda|Santander|Tolima|Valle del Cauca|Bogot" }
+    value: "Andes Colombianos"
+
+  - name: co-unknown-department
+    # The department is blank for most Cercarbono projects: EcoRegistry stores
+    # the placeholder "Worldwide" where one was never entered, and the adapter
+    # drops it rather than writing it into Estado. Say so, rather than placing
+    # the project in a biome on the strength of the country alone.
+    match:
+      - { field: country_name, contains: "Colombia" }
+    value: "Colômbia (bioma não determinado)"
+
+  # --- Rest of the world, continental bands -----------------------------
+  - name: amazon-basin-neighbours
+    # Colombia is handled by department above and is deliberately absent here.
+    match:
+      - { field: country_name, regex: "Peru|Ecuador|Bolivia|Guyana|Suriname|Venezuela" }
+    value: "Amazônia (bacia amazônica)"
+
+  - name: congo-basin
+    match:
+      - { field: country_name, regex: "Congo|Cameroon|Gabon|Central African" }
+    value: "Floresta Tropical do Congo"
+
+  - name: southeast-asia-tropical
+    match:
+      - { field: country_name, regex: "Indonesia|Malaysia|Papua|Philippines|Viet Nam|Cambodia|Lao|Myanmar|Thailand" }
+    value: "Floresta Tropical do Sudeste Asiático"
+
+  - name: miombo-woodland
+    # The dominant biome across south-central Africa's dry woodland belt, and
+    # what Plan Vivo's Mozambican project names explicitly. Added because
+    # `region_name` — which the continental bands below read — is published by
+    # Verra alone, so a Plan Vivo or Cercarbono row never reaches them.
+    match:
+      - { field: country_name, regex: "Mozambique|Zambia|Zimbabwe|Malawi|Tanzania|Angola" }
+    value: "Miombo (savana arborizada africana)"
+
+  - name: mesoamerica-tropical
+    match:
+      - { field: country_name, regex: "Guatemala|Belize|Honduras|Nicaragua|Costa Rica|Panama|El Salvador" }
+    value: "Floresta Tropical Mesoamericana"
+
+  - name: africa-savanna
+    match:
+      - { field: region_name, contains: "Africa" }
+    value: "Savana / Floresta Africana"
+
+  - name: latam-tropical
+    match:
+      - { field: region_name, regex: "South America|Central America|Latin" }
+    value: "Floresta Tropical Latino-Americana"
+
+  - name: asia-generic
+    match:
+      - { field: region_name, contains: "Asia" }
+    value: "Ásia (bioma não determinado)"
+
+  - name: north-america-temperate
+    match:
+      - { field: region_name, contains: "North America" }
+    value: "Floresta Temperada Norte-Americana"
+
+  - name: europe-temperate
+    match:
+      - { field: region_name, contains: "Europe" }
+    value: "Floresta Temperada Europeia"
+
+  - name: oceania
+    match:
+      - { field: region_name, regex: "Oceania|Australia" }
+    value: "Oceania (bioma não determinado)"

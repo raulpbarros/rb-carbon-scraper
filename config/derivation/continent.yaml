@@ -1,0 +1,120 @@
+# Continent
+#
+# A reference table, not a guess: ISO 3166-1 alpha-2 country code -> continent.
+# It exists because Gold Standard publishes a country but no region, so its
+# rows would otherwise have no Continent at all.
+#
+# Verra DOES publish a region (`regionName`) and the exporter uses that value
+# directly; these rules only fill rows where the registry stated no region.
+# Verra's regions are a market vocabulary ("Latin America") rather than strict
+# continents, so the column can hold both readings. That is visible, not
+# hidden — flag it to the business rather than silently rewriting Verra's own
+# field.
+#
+# `country_code` is only populated for registries that publish one. Cercarbono
+# publishes none at all, so a second table further down matches on the country
+# NAME instead; it sits below the code rules so that a registry stating a code
+# is always read from the code. Nothing is inferred from the project name.
+#
+# Codes are quoted deliberately: YAML 1.1 reads a bare NO (Norway) as the
+# boolean false, which would silently drop Norway from this table.
+#
+# Gold Standard uses the non-ISO code `XZ` / "International" for multi-country
+# projects (21 of them). There is no single continent for those, so they are
+# left blank on purpose rather than assigned one.
+
+column: "Continent"
+
+rules:
+  - name: cc-africa
+    match:
+      - field: country_code
+        in: ["DZ", "AO", "BJ", "BW", "BF", "BI", "CM", "CV", "CF", "TD", "KM", "CG", "CD", "CI", "DJ", "EG", "GQ", "ER", "SZ", "ET", "GA", "GM", "GH", "GN", "GW", "KE", "LS", "LR", "LY", "MG", "MW", "ML", "MR", "MU", "MA", "MZ", "NA", "NE", "NG", "RW", "ST", "SN", "SC", "SL", "SO", "ZA", "SS", "SD", "TZ", "TG", "TN", "UG", "ZM", "ZW", "EH", "YT", "RE", "SH"]
+    value: "Africa"
+
+  - name: cc-europe
+    match:
+      - field: country_code
+        in: ["AL", "AD", "AT", "BY", "BE", "BA", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IS", "IE", "IT", "XK", "LV", "LI", "LT", "LU", "MT", "MD", "MC", "ME", "NL", "MK", "NO", "PL", "PT", "RO", "RU", "SM", "RS", "SK", "SI", "ES", "SE", "CH", "UA", "GB", "VA", "FO", "GI", "GG", "JE", "IM", "AX", "SJ"]
+    value: "Europe"
+
+  - name: cc-asia
+    match:
+      - field: country_code
+        in: ["AF", "AM", "AZ", "BH", "BD", "BT", "BN", "KH", "CN", "GE", "HK", "IN", "ID", "IR", "IQ", "IL", "JP", "JO", "KZ", "KW", "KG", "LA", "LB", "MO", "MY", "MV", "MN", "MM", "NP", "KP", "OM", "PK", "PS", "PH", "QA", "SA", "SG", "KR", "LK", "SY", "TW", "TJ", "TH", "TL", "TR", "TM", "AE", "UZ", "VN", "YE"]
+    value: "Asia"
+
+  - name: cc-north-america
+    match:
+      - field: country_code
+        in: ["AG", "BS", "BB", "BZ", "CA", "CR", "CU", "DM", "DO", "SV", "GD", "GT", "HT", "HN", "JM", "MX", "NI", "PA", "KN", "LC", "VC", "TT", "US", "AI", "AW", "BM", "VG", "KY", "CW", "GL", "GP", "MQ", "MS", "PR", "BL", "MF", "PM", "SX", "TC", "VI", "BQ"]
+    value: "North America"
+
+  - name: cc-south-america
+    match:
+      - field: country_code
+        in: ["AR", "BO", "BR", "CL", "CO", "EC", "FK", "GF", "GY", "PY", "PE", "SR", "UY", "VE"]
+    value: "South America"
+
+  - name: cc-oceania
+    match:
+      - field: country_code
+        in: ["AU", "FJ", "KI", "MH", "FM", "NR", "NZ", "PW", "PG", "WS", "SB", "TO", "TV", "VU", "AS", "CK", "PF", "GU", "NC", "NU", "NF", "MP", "PN", "TK", "WF"]
+    value: "Oceania"
+
+  - name: cc-antarctica
+    match:
+      - field: country_code
+        in: ["AQ"]
+    value: "Antarctica"
+
+  # --- By country NAME, for registries that publish no ISO code ----------
+  #
+  # Cercarbono states a country name and nothing else: no ISO code appears
+  # anywhere in its API, so the rules above cannot fire for its rows and they
+  # would otherwise have no Continent at all.
+  #
+  # These sit BELOW the code rules deliberately. First match wins, so any
+  # registry that does publish a code is still read from the code — the
+  # authoritative field — and only rows without one reach this far.
+  #
+  # The list covers every country Cercarbono currently publishes plus the
+  # countries the other registries operate in. It is not the whole world: a
+  # country that is not named here leaves the cell blank, which is the
+  # intended behaviour. Extending it is a YAML edit, not a code change.
+  - name: name-africa
+    match:
+      - field: country_name
+        in: ["Algeria", "Angola", "Benin", "Botswana", "Burkina Faso", "Burundi", "Cameroon", "Cape Verde", "Central African Republic", "Chad", "Congo", "Democratic Republic of the Congo", "Ivory Coast", "Côte d'Ivoire", "Djibouti", "Egypt", "Equatorial Guinea", "Eritrea", "Eswatini", "Ethiopia", "Gabon", "Gambia", "Ghana", "Guinea", "Guinea-Bissau", "Kenya", "Lesotho", "Liberia", "Libya", "Madagascar", "Malawi", "Mali", "Mauritania", "Mauritius", "Morocco", "Mozambique", "Namibia", "Niger", "Nigeria", "Rwanda", "Senegal", "Seychelles", "Sierra Leone", "Somalia", "South Africa", "South Sudan", "Sudan", "Tanzania", "Togo", "Tunisia", "Uganda", "Zambia", "Zimbabwe"]
+    value: "Africa"
+
+  - name: name-europe
+    match:
+      - field: country_name
+        in: ["Albania", "Andorra", "Austria", "Belarus", "Belgium", "Bosnia and Herzegovina", "Bulgaria", "Croatia", "Cyprus", "Czech Republic", "Czechia", "Denmark", "Estonia", "Finland", "France", "Germany", "Greece", "Hungary", "Iceland", "Ireland", "Italy", "Kosovo", "Latvia", "Liechtenstein", "Lithuania", "Luxembourg", "Malta", "Moldova", "Monaco", "Montenegro", "Netherlands", "North Macedonia", "Norway", "Poland", "Portugal", "Romania", "Russia", "San Marino", "Serbia", "Slovakia", "Slovenia", "Spain", "Sweden", "Switzerland", "Ukraine", "United Kingdom", "Vatican City"]
+    value: "Europe"
+
+  - name: name-asia
+    match:
+      - field: country_name
+        in: ["Afghanistan", "Armenia", "Azerbaijan", "Bahrain", "Bangladesh", "Bhutan", "Brunei", "Cambodia", "China", "Georgia", "Hong Kong", "India", "Indonesia", "Iran", "Iraq", "Israel", "Japan", "Jordan", "Kazakhstan", "Kuwait", "Kyrgyzstan", "Laos", "Lebanon", "Malaysia", "Maldives", "Mongolia", "Myanmar", "Nepal", "North Korea", "Oman", "Pakistan", "Palestine", "Philippines", "Qatar", "Saudi Arabia", "Singapore", "South Korea", "Sri Lanka", "Syria", "Taiwan", "Tajikistan", "Thailand", "Timor-Leste", "Turkey", "Turkmenistan", "United Arab Emirates", "Uzbekistan", "Viet Nam", "Vietnam", "Yemen"]
+    value: "Asia"
+
+  - name: name-north-america
+    match:
+      - field: country_name
+        in: ["Antigua and Barbuda", "Bahamas", "Barbados", "Belize", "Canada", "Costa Rica", "Cuba", "Dominica", "Dominican Republic", "El Salvador", "Grenada", "Guatemala", "Haiti", "Honduras", "Jamaica", "Mexico", "Nicaragua", "Panama", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Trinidad and Tobago", "United States", "United States of America"]
+    value: "North America"
+
+  - name: name-south-america
+    match:
+      - field: country_name
+        in: ["Argentina", "Bolivia", "Brazil", "Chile", "Colombia", "Ecuador", "Guyana", "Paraguay", "Peru", "Suriname", "Uruguay", "Venezuela", "French Guiana", "Falkland Islands"]
+    value: "South America"
+
+  - name: name-oceania
+    match:
+      - field: country_name
+        in: ["Australia", "Fiji", "Kiribati", "Marshall Islands", "Micronesia", "Nauru", "New Zealand", "Palau", "Papua New Guinea", "Papua new Guinea", "Samoa", "Solomon Islands", "Tonga", "Tuvalu", "Vanuatu", "New Caledonia", "French Polynesia"]
+    value: "Oceania"
+

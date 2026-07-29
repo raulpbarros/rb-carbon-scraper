@@ -1,0 +1,29 @@
+# How the Units ledger becomes the four credit columns.
+#
+# Verra's Units section is fetched as four separate ledgers, then aggregated
+# per project locally (the API refuses server-side grouping).
+
+# --- Total Credits Sold ----------------------------------------------------
+# The business decided that retired VCUs are treated as sold.
+#
+# Consequence, stated plainly: with `sold_equals_retired: true`, the
+# "Total Credits Sold" and "Total Credits Retired" columns hold the SAME
+# number. That is the agreed reading, not a bug.
+#
+# Set this to false to use the narrower interpretation instead: only
+# retirements naming a third-party beneficiary count as sold, on the basis
+# that a proponent retiring its own credits has not sold anything. The
+# beneficiary is stored on every retirement row, so flipping this needs only
+# `verra derive && verra export` — no re-scrape.
+sold_equals_retired: true
+
+# --- Which ledger feeds which column ---------------------------------------
+totals:
+  "Total Credits Issued": issuances
+  "Total Credits Retired": retirements
+  "Total Credits Cancelled": cancellations
+
+# Currently-active (unretired) units. Not one of the requested columns, but
+# kept available in the database for balance checks:
+#   issued - retired - cancelled  should be close to holdings.
+active_ledger: holdings

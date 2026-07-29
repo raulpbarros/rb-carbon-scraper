@@ -1,0 +1,297 @@
+{
+ "status": 1,
+ "standardName": "Carbono",
+ "standardId": 1,
+ "standardMetaData": {
+  "colorDark": "#086A41",
+  "colorLight": "#E9F3ED",
+  "imgDesktop": {
+   "name": "Benner-Cercarbono-web.webp",
+   "time": 1767627687905,
+   "route": "standards",
+   "path": "https://ecoregistry-documents-public.s3.amazonaws.com/ecoregistry/images/standards/1767627687905_Benner-Cercarbono-web.webp"
+  },
+  "imgMobile": {
+   "name": "Benner-Cercarbono-web.webp",
+   "time": 1767627695272,
+   "route": "standards",
+   "path": "https://ecoregistry-documents-public.s3.amazonaws.com/ecoregistry/images/standards/1767627695272_Benner-Cercarbono-web.webp"
+  }
+ },
+ "creditUnit": "tCO2e",
+ "acceptsDmrv": true,
+ "projects": [
+  {
+   "id": 274,
+   "name": "Vinaqua WWTP Carbon Project",
+   "code": "CDC-271",
+   "projectStage": "Verification",
+   "projectStageId": 3,
+   "standard": "Carbono",
+   "verifier": "Carbon Check",
+   "vintage": [],
+   "sectorsText": "Waste handling and disposal",
+   "protocols": [
+    {
+     "description": "CVCC 4.5"
+    }
+   ],
+   "methodology": [
+    {
+     "methodologyId": 88,
+     "description": "CDM - AMS-III.H.: Methane recovery in wastewater treatment - Version: 2",
+     "type_avoidance_removals": "Avoidance",
+     "type_mechanism": ""
+    }
+   ],
+   "sectors": [
+    {
+     "shortName": "CR",
+     "description": "Waste handling and disposal"
+    }
+   ],
+   "location": [
+    "South Africa"
+   ],
+   "locationText": "South Africa",
+   "developer": "Ammonite Environmental (Pty) Ltd",
+   "convertedFromLink": null,
+   "projectsGlobalGoal": [],
+   "projectImage": "https://ecoregistry-projects-data.s3.us-east-1.amazonaws.com/projects/projectId%3D274/1774949004205_Defaultimage.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAWVH64BL3WMSHI4SQ%2F20260729%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260729T000408Z&X-Amz-Expires=60&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEKj%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJHMEUCIQCRBSDfP%2FVubpjMWw5v5zWFVFEQOK9VU66DyBehgqrL8QIgcM1dmR0j1Wm3G%2BNw2oKSVv7StQGmKYjAonDSUQNh%2BDsq9wMIcBACGgw0NTc5NDg1MzE0NDciDD25fDptvnExD955HirUA3sMfdI37GYtDNEUnGBPKaM0NwLl0uUEVfe698Sf06NeDvWsSQI9sU%2F49TPZ8lx5xUEacTbp2Qrvk%2BK23Eua5pSMzXSqaOumSX1suO%2BDwa2%2B5GDvPKO2mIJLFnrjqwmm0uG4ZZkuPtjXjlR5nExTvTYaQ00fT8FuQkFsFSEVTJ1MAFs%2FjtWjBZbJk3%2F05t1NlNgLD0kIQkihyV%2BX127O1eAST%2BxKQz92uqsb%2Fmn05xzSN0u3a7fdQH2Q5qNDSlHBC%2Bq%2BEZfN6EJp8BqSqZIO2zqN%2FmqVI4zK2wo3vIqq8%2Frnmim5hYHmVEp56JDX8y49JTRsU%2Fpj4bkKud%2FgUGR4%2BFpZHiWkQtdHM4JMUyUqQ%2FUFBx0e9owz1xIvEun4dhFku4dUCHQ60XpBPMaaJpCzVeUWygejkQsJEPVqjouG%2Bfpp7xKCEwAYFpPk6LWfYyQH0LnYvc555p6k0nndsX0u4%2FQLearEAMuYdB8kGowzb%2FYHIHYBjgtdZ387YBwE0MEGfiFLZEXWjD9SZ7%2FIbN%2BEH0OBksz%2Br0UiqKwz9c%2FO2CZXAj%2BbJJ%2FPDGJW8t%2BxEbne8CQQtm11kRPxCHRzg1jvAyDmGYenZ%2FZATLYncgh6mafte44ECTCB7KTTBjqlAeQQPfyFDo0LQ4RbbTdCbuXyWZ1%2FthTUeB%2BlMcJIM6PeJtJGOptWgTuBrqLEdn7M9A3KqgbzmJ70ne7V%2BcuxYQR%2BiO9lcbRmEWQ4WgZW%2Bwa6dPBtwnudcDVJM2ovcuEy6W1qGdsZ8KrayO8kfvM0lQuBv%2Fr%2Fo47FGu9yvFXEI1X3Qs3BUWth125Z458Ygfr%2Fzlo%2BqXzTFvwS2RLv%2BpxKInguyVcEGA%3D%3D&X-Amz-Signature=74039453ae0ac8ad25a4c071a85d87f5752cae04e685d572d6467deba92aa835&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject",
+   "serials": "",
+   "eligibles": [],
+   "ratedBy": [],
+   "insurances": [],
+   "tonAvailable": false,
+   "dmrv": []
+  },
+  {
+   "id": 106,
+   "name": "Aire\tde Vida\t“FIIVO JAAGAVA KOMUYA JAG+Y+”Monochoa REDD+\t",
+   "code": "CDC-106",
+   "projectStage": "Certified",
+   "projectStageId": 4,
+   "standard": "Carbono",
+   "verifier": "AENOR CONFIA, S.A.U",
+   "vintage": [],
+   "sectorsText": "",
+   "protocols": [],
+   "methodology": [],
+   "sectors": [],
+   "location": [
+    "Colombia"
+   ],
+   "locationText": "Colombia",
+   "developer": "TERRA COMMODITIES",
+   "convertedFromLink": "https://biocarbonregistry.com/en/project/?id=24",
+   "projectsGlobalGoal": [],
+   "projectImage": "https://ecoregistry-projects-data.s3.us-east-1.amazonaws.com/projects/projectId%3D106/1654327568240_Solano.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAWVH64BL3WMSHI4SQ%2F20260729%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260729T000408Z&X-Amz-Expires=60&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEKj%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJHMEUCIQCRBSDfP%2FVubpjMWw5v5zWFVFEQOK9VU66DyBehgqrL8QIgcM1dmR0j1Wm3G%2BNw2oKSVv7StQGmKYjAonDSUQNh%2BDsq9wMIcBACGgw0NTc5NDg1MzE0NDciDD25fDptvnExD955HirUA3sMfdI37GYtDNEUnGBPKaM0NwLl0uUEVfe698Sf06NeDvWsSQI9sU%2F49TPZ8lx5xUEacTbp2Qrvk%2BK23Eua5pSMzXSqaOumSX1suO%2BDwa2%2B5GDvPKO2mIJLFnrjqwmm0uG4ZZkuPtjXjlR5nExTvTYaQ00fT8FuQkFsFSEVTJ1MAFs%2FjtWjBZbJk3%2F05t1NlNgLD0kIQkihyV%2BX127O1eAST%2BxKQz92uqsb%2Fmn05xzSN0u3a7fdQH2Q5qNDSlHBC%2Bq%2BEZfN6EJp8BqSqZIO2zqN%2FmqVI4zK2wo3vIqq8%2Frnmim5hYHmVEp56JDX8y49JTRsU%2Fpj4bkKud%2FgUGR4%2BFpZHiWkQtdHM4JMUyUqQ%2FUFBx0e9owz1xIvEun4dhFku4dUCHQ60XpBPMaaJpCzVeUWygejkQsJEPVqjouG%2Bfpp7xKCEwAYFpPk6LWfYyQH0LnYvc555p6k0nndsX0u4%2FQLearEAMuYdB8kGowzb%2FYHIHYBjgtdZ387YBwE0MEGfiFLZEXWjD9SZ7%2FIbN%2BEH0OBksz%2Br0UiqKwz9c%2FO2CZXAj%2BbJJ%2FPDGJW8t%2BxEbne8CQQtm11kRPxCHRzg1jvAyDmGYenZ%2FZATLYncgh6mafte44ECTCB7KTTBjqlAeQQPfyFDo0LQ4RbbTdCbuXyWZ1%2FthTUeB%2BlMcJIM6PeJtJGOptWgTuBrqLEdn7M9A3KqgbzmJ70ne7V%2BcuxYQR%2BiO9lcbRmEWQ4WgZW%2Bwa6dPBtwnudcDVJM2ovcuEy6W1qGdsZ8KrayO8kfvM0lQuBv%2Fr%2Fo47FGu9yvFXEI1X3Qs3BUWth125Z458Ygfr%2Fzlo%2BqXzTFvwS2RLv%2BpxKInguyVcEGA%3D%3D&X-Amz-Signature=daa99782ac2e752d786d051bbad3e1c5a184590977476644a611426e134ca983&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject",
+   "serials": "BCR2CDC_106_2_8_322_14_CO_1_1_2019 BCR2CDC_106_2_8_322_14_CO_1_1_2019 BCR2CDC_106_2_8_322_14_CO_1_1_2019 BCR2CDC_106_2_8_322_14_CO_1_1_2019",
+   "eligibles": [
+    {
+     "id": 1,
+     "code": "ICC",
+     "description": "Colombian Carbon Tax"
+    },
+    {
+     "id": 12,
+     "code": "CV",
+     "description": "Voluntary compensation"
+    }
+   ],
+   "ratedBy": [],
+   "insurances": [],
+   "tonAvailable": true,
+   "dmrv": []
+  },
+  {
+   "id": 85,
+   "name": "Celsia Solar Agrupado Colombia 2021",
+   "code": "CDC-85",
+   "projectStage": "Verification",
+   "projectStageId": 3,
+   "standard": "Carbono",
+   "verifier": "ICONTEC",
+   "vintage": [],
+   "sectorsText": "Energy industries",
+   "protocols": [
+    {
+     "description": "CVCC V2.1"
+    }
+   ],
+   "methodology": [
+    {
+     "methodologyId": 5,
+     "description": "CDM - ACM0002: Grid-connected electricity generation from renewable sources",
+     "type_avoidance_removals": "Avoidance",
+     "type_mechanism": ""
+    }
+   ],
+   "sectors": [
+    {
+     "shortName": "IE",
+     "description": "Energy industries"
+    }
+   ],
+   "location": [
+    "Colombia"
+   ],
+   "locationText": "Colombia",
+   "developer": "CELSIA COLOMBIA S.A. E.S.P.",
+   "convertedFromLink": null,
+   "projectsGlobalGoal": [],
+   "projectImage": "https://ecoregistry-projects-data.s3.us-east-1.amazonaws.com/projects/projectId%3D85/1638450253284_Celsia%20Solar%20La%20Paila%2C%20en%20alta%20%2837%29.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAWVH64BL3WMSHI4SQ%2F20260729%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260729T000408Z&X-Amz-Expires=60&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEKj%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJHMEUCIQCRBSDfP%2FVubpjMWw5v5zWFVFEQOK9VU66DyBehgqrL8QIgcM1dmR0j1Wm3G%2BNw2oKSVv7StQGmKYjAonDSUQNh%2BDsq9wMIcBACGgw0NTc5NDg1MzE0NDciDD25fDptvnExD955HirUA3sMfdI37GYtDNEUnGBPKaM0NwLl0uUEVfe698Sf06NeDvWsSQI9sU%2F49TPZ8lx5xUEacTbp2Qrvk%2BK23Eua5pSMzXSqaOumSX1suO%2BDwa2%2B5GDvPKO2mIJLFnrjqwmm0uG4ZZkuPtjXjlR5nExTvTYaQ00fT8FuQkFsFSEVTJ1MAFs%2FjtWjBZbJk3%2F05t1NlNgLD0kIQkihyV%2BX127O1eAST%2BxKQz92uqsb%2Fmn05xzSN0u3a7fdQH2Q5qNDSlHBC%2Bq%2BEZfN6EJp8BqSqZIO2zqN%2FmqVI4zK2wo3vIqq8%2Frnmim5hYHmVEp56JDX8y49JTRsU%2Fpj4bkKud%2FgUGR4%2BFpZHiWkQtdHM4JMUyUqQ%2FUFBx0e9owz1xIvEun4dhFku4dUCHQ60XpBPMaaJpCzVeUWygejkQsJEPVqjouG%2Bfpp7xKCEwAYFpPk6LWfYyQH0LnYvc555p6k0nndsX0u4%2FQLearEAMuYdB8kGowzb%2FYHIHYBjgtdZ387YBwE0MEGfiFLZEXWjD9SZ7%2FIbN%2BEH0OBksz%2Br0UiqKwz9c%2FO2CZXAj%2BbJJ%2FPDGJW8t%2BxEbne8CQQtm11kRPxCHRzg1jvAyDmGYenZ%2FZATLYncgh6mafte44ECTCB7KTTBjqlAeQQPfyFDo0LQ4RbbTdCbuXyWZ1%2FthTUeB%2BlMcJIM6PeJtJGOptWgTuBrqLEdn7M9A3KqgbzmJ70ne7V%2BcuxYQR%2BiO9lcbRmEWQ4WgZW%2Bwa6dPBtwnudcDVJM2ovcuEy6W1qGdsZ8KrayO8kfvM0lQuBv%2Fr%2Fo47FGu9yvFXEI1X3Qs3BUWth125Z458Ygfr%2Fzlo%2BqXzTFvwS2RLv%2BpxKInguyVcEGA%3D%3D&X-Amz-Signature=8a83608acc06def84362d1d037558240053ad9743c31487236afece7ebe9ac62&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject",
+   "serials": "",
+   "eligibles": [],
+   "ratedBy": [],
+   "insurances": [],
+   "tonAvailable": false,
+   "dmrv": []
+  },
+  {
+   "id": 29,
+   "name": "PROYECTO ASOCIATIVO PROGRAMÁTICO ZONA ANDINA Y COSTA ATLÁNTICA - FCG",
+   "code": "CDC-29",
+   "projectStage": "Certified",
+   "projectStageId": 4,
+   "standard": "Carbono",
+   "verifier": "ICONTEC",
+   "vintage": [
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+   ],
+   "sectorsText": "Land use (AFOLU)",
+   "protocols": [
+    {
+     "description": "CVCC V2.1"
+    }
+   ],
+   "methodology": [
+    {
+     "methodologyId": 29,
+     "description": "CCB - M/UT/F-A01: Methodology To Implement GHG Removal Projects Through Reforestation, Forest Restoration and the Establishment of Woody Crops",
+     "type_avoidance_removals": "Removal",
+     "type_mechanism": "ARR"
+    }
+   ],
+   "sectors": [
+    {
+     "shortName": "CF",
+     "description": "Land use (AFOLU)"
+    }
+   ],
+   "location": [
+    "Colombia"
+   ],
+   "locationText": "Colombia",
+   "developer": "Forestry Consulting Group S.A.S.",
+   "convertedFromLink": null,
+   "projectsGlobalGoal": [
+    {
+     "globalGoalId": 1,
+     "description": "No poverty"
+    },
+    {
+     "globalGoalId": 4,
+     "description": "Education"
+    },
+    {
+     "globalGoalId": 5,
+     "description": "Gender equality"
+    },
+    {
+     "globalGoalId": 8,
+     "description": "Economic growth"
+    },
+    {
+     "globalGoalId": 13,
+     "description": "Climate action"
+    },
+    {
+     "globalGoalId": 15,
+     "description": "Life on land"
+    }
+   ],
+   "projectImage": "https://ecoregistry-projects-data.s3.us-east-1.amazonaws.com/projects/projectId%3D29/1619119190718_Foto%20asociativo.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAWVH64BL3WMSHI4SQ%2F20260729%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260729T000408Z&X-Amz-Expires=60&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEKj%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJHMEUCIQCRBSDfP%2FVubpjMWw5v5zWFVFEQOK9VU66DyBehgqrL8QIgcM1dmR0j1Wm3G%2BNw2oKSVv7StQGmKYjAonDSUQNh%2BDsq9wMIcBACGgw0NTc5NDg1MzE0NDciDD25fDptvnExD955HirUA3sMfdI37GYtDNEUnGBPKaM0NwLl0uUEVfe698Sf06NeDvWsSQI9sU%2F49TPZ8lx5xUEacTbp2Qrvk%2BK23Eua5pSMzXSqaOumSX1suO%2BDwa2%2B5GDvPKO2mIJLFnrjqwmm0uG4ZZkuPtjXjlR5nExTvTYaQ00fT8FuQkFsFSEVTJ1MAFs%2FjtWjBZbJk3%2F05t1NlNgLD0kIQkihyV%2BX127O1eAST%2BxKQz92uqsb%2Fmn05xzSN0u3a7fdQH2Q5qNDSlHBC%2Bq%2BEZfN6EJp8BqSqZIO2zqN%2FmqVI4zK2wo3vIqq8%2Frnmim5hYHmVEp56JDX8y49JTRsU%2Fpj4bkKud%2FgUGR4%2BFpZHiWkQtdHM4JMUyUqQ%2FUFBx0e9owz1xIvEun4dhFku4dUCHQ60XpBPMaaJpCzVeUWygejkQsJEPVqjouG%2Bfpp7xKCEwAYFpPk6LWfYyQH0LnYvc555p6k0nndsX0u4%2FQLearEAMuYdB8kGowzb%2FYHIHYBjgtdZ387YBwE0MEGfiFLZEXWjD9SZ7%2FIbN%2BEH0OBksz%2Br0UiqKwz9c%2FO2CZXAj%2BbJJ%2FPDGJW8t%2BxEbne8CQQtm11kRPxCHRzg1jvAyDmGYenZ%2FZATLYncgh6mafte44ECTCB7KTTBjqlAeQQPfyFDo0LQ4RbbTdCbuXyWZ1%2FthTUeB%2BlMcJIM6PeJtJGOptWgTuBrqLEdn7M9A3KqgbzmJ70ne7V%2BcuxYQR%2BiO9lcbRmEWQ4WgZW%2Bwa6dPBtwnudcDVJM2ovcuEy6W1qGdsZ8KrayO8kfvM0lQuBv%2Fr%2Fo47FGu9yvFXEI1X3Qs3BUWth125Z458Ygfr%2Fzlo%2BqXzTFvwS2RLv%2BpxKInguyVcEGA%3D%3D&X-Amz-Signature=fb4bca53ecf1869f8fe8f30761ad5a6c8ea609d8e183b65521e3491f23a2bf97&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject",
+   "serials": "CDC_29_7_1_327_14_CO_1_1_2011 CDC_29_7_1_327_14_CO_1_1_2012 CDC_29_7_1_327_14_CO_1_1_2013 CDC_29_7_1_327_14_CO_1_1_2014 CDC_29_7_1_327_14_CO_1_1_2015 CDC_29_7_1_327_14_CO_1_1_2016 CDC_29_7_1_327_14_CO_1_1_2017 CDC_29_7_1_327_14_CO_1_1_2018 CDC_29_7_1_327_14_CO_1_1_2019 CDC_29_7_1_327_14_CO_1_1_2020 CDC_29_7_1_327_14_CO_1_1_2016 CDC_29_7_1_327_14_CO_1_1_2017 CDC_29_7_1_327_14_CO_1_1_2018 CDC_29_7_1_327_14_CO_1_1_2019 CDC_29_7_1_327_14_CO_1_1_2020 CDC_29_7_1_327_14_CO_1_1_2020 CDC_29_7_1_327_14_CO_1_1_2013 CDC_29_7_1_327_14_CO_1_1_2012 CDC_29_7_1_327_14_CO_1_1_2014 CDC_29_7_1_321_14_CO_1_2_2011 CDC_29_7_1_321_14_CO_1_2_2012 CDC_29_7_1_321_14_CO_1_2_2013 CDC_29_7_1_321_14_CO_1_2_2014 CDC_29_7_1_321_14_CO_1_2_2015 CDC_29_7_1_321_14_CO_1_2_2016 CDC_29_7_1_321_14_CO_1_2_2017 CDC_29_7_1_321_14_CO_1_2_2018 CDC_29_7_1_321_14_CO_1_2_2019 CDC_29_7_1_321_14_CO_1_2_2020 CDC_29_7_1_321_14_CO_1_2_2021 CDC_29_7_1_321_14_CO_1_2_2016 CDC_29_7_1_321_14_CO_1_2_2017 CDC_29_7_1_321_14_CO_1_2_2018 CDC_29_7_1_321_14_CO_1_2_2019 CDC_29_7_1_321_14_CO_1_2_2020 CDC_29_7_1_321_14_CO_1_2_2021 CDC_29_7_1_321_14_CO_1_2_2018 CDC_29_7_1_321_14_CO_1_2_2019 CDC_29_7_1_321_14_CO_1_2_2020 CDC_29_7_1_321_14_CO_1_2_2021 CDC_29_7_1_327_14_CO_1_1_2015 CDC_29_7_1_321_14_CO_1_2_2012 CDC_29_7_1_321_14_CO_1_2_2013 CDC_29_7_1_321_14_CO_1_2_2014 CDC_29_7_1_321_14_CO_1_2_2018 CDC_29_7_1_321_14_CO_1_2_2015 CDC_29_7_1_321_14_CO_1_2_2014 CDC_29_7_1_321_14_CO_1_2_2015 CDC_29_7_1_321_14_CO_1_2_2014 CDC_29_7_1_321_14_CO_1_2_2015 CDC_29_7_1_321_14_CO_1_2_2014 CDC_29_7_1_321_14_CO_1_2_2015 CDC_29_7_1_321_14_CO_1_2_2018 CDC_29_7_1_321_14_CO_1_2_2018 CDC_29_7_1_321_14_CO_1_3_2011 CDC_29_7_1_321_14_CO_1_3_2012 CDC_29_7_1_321_14_CO_1_3_2013 CDC_29_7_1_321_14_CO_1_3_2014 CDC_29_7_1_321_14_CO_1_3_2015 CDC_29_7_1_321_14_CO_1_3_2016 CDC_29_7_1_321_14_CO_1_3_2017 CDC_29_7_1_321_14_CO_1_3_2018 CDC_29_7_1_321_14_CO_1_3_2019 CDC_29_7_1_321_14_CO_1_3_2020 CDC_29_7_1_321_14_CO_1_3_2021 CDC_29_7_1_321_14_CO_1_3_2022 CDC_29_7_1_321_14_CO_1_3_2022 CDC_29_7_1_321_14_CO_1_3_2021 CDC_29_7_1_321_14_CO_1_3_2020 CDC_29_7_1_321_14_CO_1_3_2019 CDC_29_7_1_321_14_CO_1_3_2018 CDC_29_7_1_321_14_CO_1_3_2017 CDC_29_7_1_321_14_CO_1_3_2016 CDC_29_7_1_321_14_CO_1_3_2016 CDC_29_7_1_321_14_CO_1_3_2017 CDC_29_7_1_321_14_CO_1_3_2018 CDC_29_7_1_321_14_CO_1_3_2019 CDC_29_7_1_321_14_CO_1_3_2020 CDC_29_7_1_321_14_CO_1_3_2021 CDC_29_7_1_321_14_CO_1_3_2022 CDC_29_7_1_321_14_CO_1_3_2015 CDC_29_7_1_321_14_CO_1_3_2014 CDC_29_7_1_321_14_CO_1_3_2015 CDC_29_7_1_321_14_CO_1_3_2014 CDC_29_7_1_321_14_CO_1_3_2013 CDC_29_7_1_321_14_CO_1_2_2018 CDC_29_7_1_321_14_CO_1_3_2022 CDC_29_7_1_321_14_CO_1_3_2021 CDC_29_7_1_321_14_CO_1_3_2020 CDC_29_7_1_321_14_CO_1_3_2019 CDC_29_7_1_321_14_CO_1_3_2018 CDC_29_7_1_321_14_CO_1_3_2017 CDC_29_7_1_321_14_CO_1_3_2016 CDC_29_7_1_321_14_CO_1_3_2021 CDC_29_7_1_321_14_CO_1_3_2020 CDC_29_7_1_321_14_CO_1_3_2019 CDC_29_7_1_321_14_CO_1_3_2018 CDC_29_7_1_321_14_CO_1_3_2017 CDC_29_7_1_321_14_CO_1_3_2016 CDC_29_7_1_321_14_CO_1_3_2014 CDC_29_7_1_321_14_CO_1_3_2015 CDC_29_7_1_327_14_CO_1_1_2012_BF CDC_29_7_1_327_14_CO_1_1_2013_BF CDC_29_7_1_327_14_CO_1_1_2014_BF CDC_29_7_1_327_14_CO_1_1_2015_BF CDC_29_7_1_327_14_CO_1_1_2016_BF CDC_29_7_1_327_14_CO_1_1_2017_BF CDC_29_7_1_327_14_CO_1_1_2018_BF CDC_29_7_1_327_14_CO_1_1_2019_BF CDC_29_7_1_327_14_CO_1_1_2020_BF CDC_29_7_1_321_14_CO_1_2_2012_BF CDC_29_7_1_321_14_CO_1_2_2013_BF CDC_29_7_1_321_14_CO_1_2_2014_BF CDC_29_7_1_321_14_CO_1_2_2015_BF CDC_29_7_1_321_14_CO_1_2_2016_BF CDC_29_7_1_321_14_CO_1_2_2017_BF CDC_29_7_1_321_14_CO_1_2_2018_BF CDC_29_7_1_321_14_CO_1_2_2019_BF CDC_29_7_1_321_14_CO_1_2_2020_BF CDC_29_7_1_321_14_CO_1_2_2021_BF CDC_29_7_1_327_14_CO_1_1_2011_BF CDC_29_7_1_321_14_CO_1_3_2011_BF CDC_29_7_1_321_14_CO_1_3_2012_BF CDC_29_7_1_321_14_CO_1_3_2013_BF CDC_29_7_1_321_14_CO_1_3_2014_BF CDC_29_7_1_321_14_CO_1_3_2015_BF CDC_29_7_1_321_14_CO_1_3_2016_BF CDC_29_7_1_321_14_CO_1_3_2017_BF CDC_29_7_1_321_14_CO_1_3_2018_BF CDC_29_7_1_321_14_CO_1_3_2019_BF CDC_29_7_1_321_14_CO_1_3_2020_BF CDC_29_7_1_321_14_CO_1_3_2021_BF CDC_29_7_1_321_14_CO_1_3_2022_BF CDC_29_7_29_321_14_R1_XX_CO_1_4_2013 CDC_29_7_29_321_14_R1_XX_CO_1_4_2014 CDC_29_7_29_321_14_R1_XX_CO_1_4_2015 CDC_29_7_29_321_14_R1_XX_CO_1_4_2016 CDC_29_7_29_321_14_R1_XX_CO_1_4_2017 CDC_29_7_29_321_14_R1_XX_CO_1_4_2018 CDC_29_7_29_321_14_R1_XX_CO_1_4_2019 CDC_29_7_29_321_14_R1_XX_CO_1_4_2020 CDC_29_7_29_321_14_R1_XX_CO_1_4_2021 CDC_29_7_29_321_14_R1_XX_CO_1_4_2022 CDC_29_7_29_321_14_R1_XX_CO_1_4_BFC_2013 CDC_29_7_29_321_14_R1_XX_CO_1_4_BFC_2014 CDC_29_7_29_321_14_R1_XX_CO_1_4_BFC_2015 CDC_29_7_29_321_14_R1_XX_CO_1_4_BFC_2016 CDC_29_7_29_321_14_R1_XX_CO_1_4_BFC_2017 CDC_29_7_29_321_14_R1_XX_CO_1_4_BFC_2018 CDC_29_7_29_321_14_R1_XX_CO_1_4_BFC_2019 CDC_29_7_29_321_14_R1_XX_CO_1_4_BFC_2020 CDC_29_7_29_321_14_R1_XX_CO_1_4_BFC_2021 CDC_29_7_29_321_14_R1_XX_CO_1_4_BFC_2022 CDC_29_7_29_321_14_R1_XX_CO_1_4_2013 CDC_29_7_29_321_14_R1_XX_CO_1_4_2014 CDC_29_7_29_321_14_R1_XX_CO_1_4_2015 CDC_29_7_29_321_14_R1_XX_CO_1_4_2018 CDC_29_7_29_321_14_R1_XX_CO_1_4_2019 CDC_29_7_29_321_14_R1_XX_CO_1_4_2020 CDC_29_7_29_321_14_R1_XX_CO_1_4_2021 CDC_29_7_29_321_14_R1_XX_CO_1_4_2018 CDC_29_7_29_321_14_R1_XX_CO_1_4_2019 CDC_29_7_29_321_14_R1_XX_CO_1_4_2021 CDC_29_7_29_321_14_R1_XX_CO_1_4_2022 CDC_29_7_29_321_14_R1_XX_CO_1_4_2016 CDC_29_7_29_321_14_R1_XX_CO_1_4_2016 CDC_29_7_29_321_14_R1_XX_CO_1_4_2017 CDC_29_7_1_321_14_CO_1_2_2021 CDC_29_7_29_321_14_R1_XX_CO_1_5_2021 CDC_29_7_29_321_14_XX_XX_CO_1_5_2022 CDC_29_7_29_321_14_R1_XX_CO_1_5_2023 CDC_29_7_29_321_14_R1_XX_CO_1_5_BFC_2021 CDC_29_7_29_321_14_XX_XX_CO_1_5_BFC_2022 CDC_29_7_29_321_14_R1_XX_CO_1_5_BFC_2023 CDC_29_7_29_321_14_R1_XX_CO_1_5_2021 CDC_29_7_29_321_14_R1_XX_CO_1_5_2021 CDC_29_7_29_321_14_R1_XX_CO_1_5_2021 CDC_29_7_29_321_14_XX_XX_CO_1_5_2022 CDC_29_7_29_321_14_R1_XX_CO_1_5_2021 CDC_29_7_29_321_14_XX_XX_CO_1_5_2022 CDC_29_7_29_321_14_R1_XX_CO_1_5_2021 CDC_29_7_29_321_14_R1_XX_CO_1_5_2021 CDC_29_7_29_321_14_XX_XX_CO_1_5_2022 CDC_29_7_29_321_14_R1_XX_CO_1_5_2023 CDC_29_7_1_321_14_CO_1_2_2018 CDC_29_7_29_321_14_R1_XX_CO_1_6_2018 CDC_29_7_29_321_14_R1_XX_CO_1_6_2019 CDC_29_7_29_321_14_R1_XX_CO_1_6_2020 CDC_29_7_29_321_14_R1_XX_CO_1_6_2021 CDC_29_7_29_321_14_R1_XX_CO_1_6_2022 CDC_29_7_29_321_14_R1_XX_CO_1_6_2023 CDC_29_7_29_321_14_R1_XX_CO_1_6_2024 CDC_29_7_29_321_14_R1_XX_CO_1_6_BFC_2018 CDC_29_7_29_321_14_R1_XX_CO_1_6_BFC_2019 CDC_29_7_29_321_14_R1_XX_CO_1_6_BFC_2020 CDC_29_7_29_321_14_R1_XX_CO_1_6_BFC_2021 CDC_29_7_29_321_14_R1_XX_CO_1_6_BFC_2022 CDC_29_7_29_321_14_R1_XX_CO_1_6_BFC_2023 CDC_29_7_29_321_14_R1_XX_CO_1_6_BFC_2024 CDC_29_7_29_321_14_R1_XX_CO_1_6_2020 CDC_29_7_29_321_14_R1_XX_CO_1_6_2022 CDC_29_7_29_321_14_R1_XX_CO_1_6_2022 CDC_29_7_29_321_14_R1_XX_CO_1_6_2024 CDC_29_7_29_321_14_R1_XX_CO_1_6_2022 CDC_29_7_29_321_14_R1_XX_CO_1_6_2023 CDC_29_7_29_321_14_R1_XX_CO_1_6_2024 CDC_29_7_1_321_14_CO_1_2_2020 CDC_29_7_29_321_14_R1_XX_CO_1_7_2017 CDC_29_7_29_321_14_R1_XX_CO_1_7_2018 CDC_29_7_29_321_14_R1_XX_CO_1_7_2019 CDC_29_7_29_321_14_R1_XX_CO_1_7_2020 CDC_29_7_29_321_14_R1_XX_CO_1_7_2021 CDC_29_7_29_321_14_R1_XX_CO_1_7_2022 CDC_29_7_29_321_14_R1_XX_CO_1_7_2023 CDC_29_7_29_321_14_R1_XX_CO_1_7_2024 CDC_29_7_29_321_14_R1_XX_CO_1_7_2025 CDC_29_7_29_321_14_R1_XX_CO_1_7_BFC_2018 CDC_29_7_29_321_14_R1_XX_CO_1_7_BFC_2019 CDC_29_7_29_321_14_R1_XX_CO_1_7_BFC_2020 CDC_29_7_29_321_14_R1_XX_CO_1_7_BFC_2021 CDC_29_7_29_321_14_R1_XX_CO_1_7_BFC_2022 CDC_29_7_29_321_14_R1_XX_CO_1_7_BFC_2023 CDC_29_7_29_321_14_R1_XX_CO_1_7_BFC_2024 CDC_29_7_29_321_14_R1_XX_CO_1_7_BFC_2025 CDC_29_7_29_321_14_R1_XX_CO_1_7_2020 CDC_29_7_29_321_14_R1_XX_CO_1_7_2021 CDC_29_7_29_321_14_R1_XX_CO_1_7_2022 CDC_29_7_29_321_14_R1_XX_CO_1_7_2023 CDC_29_7_29_321_14_R1_XX_CO_1_7_2024 CDC_29_7_29_321_14_R1_XX_CO_1_7_2018 CDC_29_7_29_321_14_R1_XX_CO_1_7_2018 CDC_29_7_29_321_14_R1_XX_CO_1_7_2019 CDC_29_7_29_321_14_R1_XX_CO_1_7_2024 CDC_29_7_29_321_14_R1_XX_CO_1_7_2024 CDC_29_7_29_321_14_R1_XX_CO_1_7_2022 CDC_29_7_29_321_14_R1_XX_CO_1_7_2024 CDC_29_7_29_321_14_R1_XX_CO_1_7_2022 CDC_29_7_29_321_14_R1_XX_CO_1_7_2025 CDC_29_7_29_321_14_R1_XX_CO_1_7_2019 CDC_29_7_1_321_14_CO_1_2_2021",
+   "eligibles": [
+    {
+     "id": 1,
+     "code": "ICC",
+     "description": "Colombian Carbon Tax"
+    },
+    {
+     "id": 12,
+     "code": "CV",
+     "description": "Voluntary compensation"
+    }
+   ],
+   "ratedBy": [],
+   "insurances": [],
+   "tonAvailable": true,
+   "dmrv": []
+  },
+  {
+   "id": 1,
+   "name": "Carbono Agroporvanda",
+   "code": "CDC-1",
+   "projectStage": "Certified",
+   "projectStageId": 4,
+   "standard": "Carbono",
+   "verifier": "ICONTEC",
+   "vintage": [],
+   "sectorsText": "Land use (AFOLU)",
+   "protocols": [
+    {
+     "description": "CVCC V1.1"
+    }
+   ],
+   "methodology": [
+    {
+     "methodologyId": 1,
+     "description": "CDM - AR-ACM0003: Afforestation and reforestation of lands except wetlands",
+     "type_avoidance_removals": "Removal",
+     "type_mechanism": "ARR"
+    }
+   ],
+   "sectors": [
+    {
+     "shortName": "CF",
+     "description": "Land use (AFOLU)"
+    }
+   ],
+   "location": [
+    "Colombia"
+   ],
+   "locationText": "Colombia",
+   "developer": "Forestry Consulting Group S.A.S.",
+   "convertedFromLink": null,
+   "projectsGlobalGoal": [],
+   "projectImage": "https://ecoregistry-projects-data.s3.us-east-1.amazonaws.com/projects/projectId%3D1/1555081609778_Imagen%20proyecto%20agroporvanda.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAWVH64BL3WMSHI4SQ%2F20260729%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260729T000408Z&X-Amz-Expires=60&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEKj%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJHMEUCIQCRBSDfP%2FVubpjMWw5v5zWFVFEQOK9VU66DyBehgqrL8QIgcM1dmR0j1Wm3G%2BNw2oKSVv7StQGmKYjAonDSUQNh%2BDsq9wMIcBACGgw0NTc5NDg1MzE0NDciDD25fDptvnExD955HirUA3sMfdI37GYtDNEUnGBPKaM0NwLl0uUEVfe698Sf06NeDvWsSQI9sU%2F49TPZ8lx5xUEacTbp2Qrvk%2BK23Eua5pSMzXSqaOumSX1suO%2BDwa2%2B5GDvPKO2mIJLFnrjqwmm0uG4ZZkuPtjXjlR5nExTvTYaQ00fT8FuQkFsFSEVTJ1MAFs%2FjtWjBZbJk3%2F05t1NlNgLD0kIQkihyV%2BX127O1eAST%2BxKQz92uqsb%2Fmn05xzSN0u3a7fdQH2Q5qNDSlHBC%2Bq%2BEZfN6EJp8BqSqZIO2zqN%2FmqVI4zK2wo3vIqq8%2Frnmim5hYHmVEp56JDX8y49JTRsU%2Fpj4bkKud%2FgUGR4%2BFpZHiWkQtdHM4JMUyUqQ%2FUFBx0e9owz1xIvEun4dhFku4dUCHQ60XpBPMaaJpCzVeUWygejkQsJEPVqjouG%2Bfpp7xKCEwAYFpPk6LWfYyQH0LnYvc555p6k0nndsX0u4%2FQLearEAMuYdB8kGowzb%2FYHIHYBjgtdZ387YBwE0MEGfiFLZEXWjD9SZ7%2FIbN%2BEH0OBksz%2Br0UiqKwz9c%2FO2CZXAj%2BbJJ%2FPDGJW8t%2BxEbne8CQQtm11kRPxCHRzg1jvAyDmGYenZ%2FZATLYncgh6mafte44ECTCB7KTTBjqlAeQQPfyFDo0LQ4RbbTdCbuXyWZ1%2FthTUeB%2BlMcJIM6PeJtJGOptWgTuBrqLEdn7M9A3KqgbzmJ70ne7V%2BcuxYQR%2BiO9lcbRmEWQ4WgZW%2Bwa6dPBtwnudcDVJM2ovcuEy6W1qGdsZ8KrayO8kfvM0lQuBv%2Fr%2Fo47FGu9yvFXEI1X3Qs3BUWth125Z458Ygfr%2Fzlo%2BqXzTFvwS2RLv%2BpxKInguyVcEGA%3D%3D&X-Amz-Signature=6c53b2267660857df954fa4c5fe4ef947b74fd1950efaa8f668cedee5496f4e6&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject",
+   "serials": "CDC_1_1_1_321_14_1 CDC_1_1_1_321_14_1_2008 CDC_1_1_1_321_14_1_2009 CDC_1_1_1_321_14_1_2008 CDC_1_1_1_321_14_1_2009 CDC_1_1_1_321_14_1_2008 CDC_1_1_1_321_14_1_2009 CDC_1_1_1_321_14_1_2008_BF CDC_1_1_1_321_14_1_2009_BF CDC_1_1_1_321_14_1_BF",
+   "eligibles": [
+    {
+     "id": 1,
+     "code": "ICC",
+     "description": "Colombian Carbon Tax"
+    },
+    {
+     "id": 12,
+     "code": "CV",
+     "description": "Voluntary compensation"
+    }
+   ],
+   "ratedBy": [
+    {
+     "description": "MSCI Carbon Project Rating"
+    }
+   ],
+   "insurances": [],
+   "tonAvailable": false,
+   "dmrv": []
+  }
+ ]
+}
