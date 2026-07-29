@@ -10,6 +10,7 @@
     verra run                           sync + totals + derive + export
     verra status                        what is in the database
     verra coverage                      per-column fill rate, to spot gaps
+    verra slim-db                       the database the installer ships
 
 `--registry` accepts `verra`, `gs`, `cercarbono`, `planvivo` or `all` (default
 `all` where it makes sense). `sync`, `derive` and `export` are separate so that
@@ -20,6 +21,7 @@ from __future__ import annotations
 
 import logging
 import sys
+from pathlib import Path
 from typing import Optional
 
 import typer
@@ -301,6 +303,51 @@ def cache(
         for path in files:
             path.unlink(missing_ok=True)
         console.print("[green]Cache cleared.[/green]")
+
+
+@app.command(name="slim-db")
+def slim_db(
+    out: Optional[str] = typer.Option(
+        None, "--out", "-o", help="Where to write it. Default: dist/seed/carbon-seed.db"
+    ),
+    force: bool = typer.Option(False, "--force", help="Replace an existing file."),
+    verbose: bool = typer.Option(False, "--verbose", "-v"),
+) -> None:
+    """Write the database the installer ships. No network.
+
+    Keeps `projects`, `credit_totals`, `project_derived` and `runs`; drops
+    `credit_events` and `raw_snapshots`, which are most of the ~225 MB and
+    which the spreadsheet never reads directly. The aggregates it *does* need
+    from them are materialised first, so the slim database produces the same
+    sheet — see db.export_slim.
+
+    The result is a delivery artifact, not a working copy. `verra sync` against
+    an installed one fills the ledgers back in registry by registry, and every
+    seeded figure is outranked the moment real rows arrive.
+    """
+    _setup_logging(verbose)
+    target = Path(out) if out else settings.USER_ROOT / "dist" / "seed" / "carbon-seed.db"
+    with db.session() as conn:
+        source_bytes = settings.DB_PATH.stat().st_size if settings.DB_PATH.exists() else 0
+        counts = db.export_slim(conn, target, overwrite=force)
+
+    table = Table(title=f"Slim database → {target}")
+    table.add_column("Table")
+    table.add_column("Rows", justify="right")
+    for name in db.SLIM_TABLES:
+        table.add_row(name, f"{counts[name]:,}")
+    table.add_row("credit_totals seeded", f"{counts['seeded_totals']:,}")
+    console.print(table)
+
+    megabytes = counts["bytes"] / (1024 * 1024)
+    if source_bytes:
+        shrink = 100 - (counts["bytes"] * 100 // source_bytes)
+        console.print(
+            f"[green]{megabytes:,.1f} MB[/green] from "
+            f"{source_bytes / (1024 * 1024):,.1f} MB — {shrink}% smaller."
+        )
+    else:
+        console.print(f"[green]{megabytes:,.1f} MB[/green]")
 
 
 @app.command()

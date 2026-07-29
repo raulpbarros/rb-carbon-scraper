@@ -3,8 +3,10 @@
 Two things are changing at once:
 
 - **More registries.** Verra, Gold Standard, Cercarbono and Plan Vivo are live.
-  ACR, Puro.earth, BioCarbon and SocialCarbon were added during scoping. Eight
-  in total. Phase 5 keeps the last four independently droppable.
+  ACR, Puro.earth, BioCarbon and SocialCarbon were added during scoping, and
+  Plan Vivo V4 during Phase 4 — the live Plan Vivo adapter turned out to cover
+  only the V5 registry. Nine in total. Phase 5 keeps the last five
+  independently droppable.
 - **A different user.** The deliverable stops being a spreadsheet a developer
   mails out and becomes a Windows application the business team installs: tick
   the registries, pick a folder, press a button.
@@ -21,7 +23,7 @@ PyInstaller one-folder inside an Inno Setup installer.
 
 ---
 
-## Where things stand — 2026-07-28
+## Where things stand — 2026-07-29
 
 | Phase | | |
 |---|---|---|
@@ -29,21 +31,33 @@ PyInstaller one-folder inside an Inno Setup installer.
 | 1 — Cercarbono | ✅ | 231 projects, live and reconciled |
 | 2 — Plan Vivo | ✅ | Verra adapter generalised to `platts/`; 2 projects, reconciled |
 | 3 — Tkinter GUI | ✅ | `carbon-gui` — checkboxes, folder picker, two buttons, Cancel |
-| **4 — Packaging** | **next** | slim DB, PyInstaller, Inno Setup — puts it on their machine |
-| 5 — Four more registries | | BioCarbon, Puro.earth, ACR, SocialCarbon |
+| 4 — Packaging | ✅ | 20.8 MB shipped DB, EXE, per-user installer — 16.7 MB, no admin |
+| 4b — Distribution | 🔄 | portable ZIP + GitHub release; SmartScreen answered without signing |
+| **5 — Five more registries** | **next** | BioCarbon, Puro.earth, ACR, SocialCarbon, **Plan Vivo V4** |
 | 6 — Hardening | | incremental sync, `verra doctor` |
 
-**164 tests, green, offline.** Four registries live: Verra 5,245 projects, Gold
+**190 tests, green, offline.** Four registries live: Verra 5,245 projects, Gold
 Standard 4,141, Cercarbono 231, Plan Vivo 2 — **9,619 in one database**, every
 one carrying a derived Tipo Micro / Bioma / Durabilidade and 0 projects
 reporting more credits retired than issued. Last delivery is
 `out/carbon-projects_v2.xlsx`; a `_v3` covering all four registries has not
 been cut yet, because nobody has asked for one.
 
-There is now a window, and it runs from a checkout. What is left before the
-business team can use it is Phase 4: a database small enough to ship, an EXE,
-and an installer that needs no admin rights. Phase 5 adds registries to a tool
-they can already open — deliberately after, not before.
+**There is now an installer.** `.\build.ps1` produces
+`dist/installer/CarbonRegistryScraper-0.2.0-setup.exe`, which installs per-user
+with no admin rights and carries a 20.8 MB database, so `Export Excel` works on
+a machine that has never scraped anything and has no Python on it.
+
+**And a way to hand it over.** Phase 4b adds
+`dist/portable/CarbonRegistryScraper-0.2.0-portable.zip` and a GitHub release
+to put it on, because an unsigned installer is a build problem only until it
+meets someone else's machine — after that it is a trust problem, and that one
+is not fixed by building harder.
+
+What is left is registries. Phase 5 adds them to a tool the business can
+already open — deliberately after, not before. It has grown by one: the Plan
+Vivo adapter reaches the **V5 (PV Climate) registry only**, and its two
+projects are not the whole of Plan Vivo. See 5e.
 
 ---
 
@@ -270,22 +284,125 @@ database. The real `out/` and `data/` were never touched.
 
 ---
 
-## Phase 4 — PyInstaller, Inno Setup, shipped database
+## Phase 4 — PyInstaller, Inno Setup, shipped database ✅
 
-- [ ] `db.export_slim()` + `verra slim-db`: `projects`, `credit_totals`,
-      `project_derived`, `runs` only. The dev database is 225 MB, almost all of
-      it `raw_snapshots` and per-record `credit_events`, neither of which the
-      spreadsheet needs
-- [ ] PyInstaller one-folder spec: `--add-data` for `assets/` and `config/`,
-      slim DB as a seed, `--noconsole`, excluding playwright and pytest
-- [ ] `installer/carbon-registry.iss`: per-user install (no admin rights),
-      shortcuts, uninstaller that leaves `%LOCALAPPDATA%` data alone
-- [ ] `build.ps1`: clean → pytest → slim-db → PyInstaller → Inno
-- [ ] Clean Windows VM with no Python: install, export, update, uninstall
+- [x] `db.export_slim()` + `verra slim-db`: `projects`, `credit_totals`,
+      `project_derived`, `runs` only. **214.8 MB → 20.8 MB, 91% smaller**, and
+      the sheet it builds is identical — 9,619 rows × 25 columns, zero cell
+      mismatches against the full database
+- [x] PyInstaller one-folder spec, `--noconsole`, playwright and pytest
+      excluded. Data files and hidden imports are **derived** in
+      `packaging/bundle.py` from `settings.SEEDED_FILES` and
+      `registries.ADAPTERS`, not listed
+- [x] `packaging/carbon-registry.iss`: per-user install (no admin rights),
+      Start-menu and optional desktop shortcut, and **no `[UninstallDelete]`**
+      — the uninstaller leaves `%LOCALAPPDATA%\CarbonRegistryScraper` alone
+- [x] `build.ps1`: clean → pytest → slim-db → PyInstaller → Inno Setup, with
+      the bundle checked for the four files that must be in it
+- [x] `settings.seed_database()`: first run adopts the shipped database, and
+      **only when there is no database at all**
 
-**SmartScreen:** an unsigned installer shows "Windows protected your PC" and
-hides Run anyway behind *More info*. Not fixable in code — it needs an
-Authenticode certificate. Document the click-through; raise signing separately.
+**Verified**, on this machine rather than a clean VM (see below): the full
+build produces a 53.5 MB folder and a 16.7 MB installer; installing it raises
+no UAC prompt and lands in `%LOCALAPPDATA%\Programs`; the installed EXE creates
+`%LOCALAPPDATA%\CarbonRegistryScraper`, adopts the 20.8 MB database and seeds
+the editable config, with an empty log and no traceback file; `derive` against
+that installed tree writes the same 47,582 values the full database does, and
+two exports produce `_v1` then `_v2`; uninstalling removes the program, the
+shortcut and the Add/Remove entry and **leaves every byte of the data**.
+
+**Still open — a genuinely clean machine.** Everything above ran on the
+development box, which has Python 3.12 and the venv on it. The frozen EXE
+carries its own `python312.dll` and was observed running from the installed
+folder, so nothing suggests a hidden dependency; but "no Python installed" has
+not actually been tested, and that is the one claim the installer makes that
+this machine cannot check.
+
+**SmartScreen:** the installer is unsigned, so the first run shows "Windows
+protected your PC" with Run anyway behind *More info*. Not fixable in code — it
+needs an Authenticode certificate. `build.ps1` prints the warning at the end so
+whoever sends the file knows to warn the recipient. Raise signing separately.
+
+Three things the plan did not anticipate:
+
+- **`SELECT *` across two databases assumes column *order*.** `ALTER TABLE ADD
+  COLUMN` appends, so `runs.registry` sits last in any migrated database and
+  third in `SCHEMA`. The positional copy shifted every value one place along
+  and only failed because `started_at` is NOT NULL — with one more nullable
+  column it would have shipped a database full of plausible nonsense. Copied by
+  name now, and pinned by a test.
+- **A shipped total has to lose to a scraped one.** The slim database carries
+  the credit buckets in `credit_totals` because `credit_events` is gone. Left
+  at equal authority they would outrank the ledgers of any registry the user
+  later re-scraped, and the sheet would stay frozen at whenever the installer
+  was cut — no error, right shape, wrong numbers. `credit_totals.source`
+  separates `seed` from `registry`, `credit_totals()` ranks them, and
+  `pipeline.sync_one` drops the seed once a registry's ledgers have been
+  scraped **in full** (not after `--limit`, not after `--projects-only`).
+- **PowerShell 5.1 treats a native program's stderr as a terminating error**
+  under `$ErrorActionPreference = "Stop"`. PyInstaller logs its entire INFO
+  stream to stderr, so a successful freeze aborted the build — but only when
+  the output was piped, which is exactly the case nobody tries before handing
+  the script over. `Invoke-Native` checks the exit code instead.
+
+---
+
+## Phase 4b — Getting it to the business team, unsigned
+
+Phase 4 built an installer. It cannot be *sent*: it is unsigned, so the first
+person to double-click it meets SmartScreen's "Windows protected your PC" with
+the Run button hidden behind *More info*. An Authenticode certificate is the
+only thing that removes that, and it costs money and — since June 2023 — a
+hardware token. **The blocker was never the build.**
+
+So the fix is not to make the warning trustworthy, it is to remove what
+triggers it. SmartScreen's reputation check fires on files carrying a **Mark of
+the Web**, the `Zone.Identifier` stream Windows attaches to anything
+downloaded, and Explorer copies that mark onto everything extracted from a
+downloaded archive. Unblocking the `.zip` first — right-click → Properties →
+Unblock — strips it once, before any executable has run, and nothing extracted
+afterwards is checked at all.
+
+Two routes, both free, both off the existing public repo:
+
+| | Portable ZIP | Clone + editable install |
+|---|---|---|
+| For | everyone, including non-technical | the colleagues with a terminal |
+| Needs | nothing — carries its own Python | Python 3.11+ |
+| SmartScreen | gone, if the ZIP is unblocked first | never appears — no downloaded EXE |
+| Data | seed DB inside the ZIP, adopted on first run | seed DB dropped into `seed/` |
+| Code change | ZIP step in `build.ps1` + a pt-BR READ-ME | **none** |
+
+- [x] `build.ps1` packs `dist/portable/CarbonRegistryScraper-<v>-portable.zip`
+      after the bundle check and before the installer, so `-SkipInstaller`
+      still produces the artifact that actually gets shared. Version read from
+      `pyproject.toml`, not hardcoded a third time
+- [x] `packaging/LEIA-ME.txt` — Portuguese, travels inside the ZIP, unblock as
+      step 1. It quotes the window's real English button labels rather than
+      translating them
+- [x] `packaging/release-notes-pt.md` — the same unblock instruction, because
+      people download from the release page and never open the READ-ME first
+- [x] README: three ways to get it, plus why the source route needs
+      `pip install -e .` specifically
+- [x] `seed/` gitignored — the source route has people dropping a 21 MB
+      database into the checkout
+- [x] Tests: the `.iss` version pinned to `pyproject.toml`'s, and the READ-ME
+      pinned to `build.ps1` still copying it in
+- [ ] Cut `v0.2.0` on GitHub with the ZIP, the installer and `carbon-seed.db`
+- [ ] **Verify on a machine that is not this one** — download through a
+      browser, which is the only way to get a real Mark of the Web, then
+      unblock → extract → run and confirm no prompt appears. Once *without*
+      unblocking too, so the READ-ME describes the real dialog
+
+**The claim this cannot check from here is antivirus.** Corporate AV
+heuristically quarantines unsigned PyInstaller executables often enough that it
+has to be observed rather than assumed, and unblocking does nothing about it.
+If it happens, the source route stops being the alternative and becomes the
+plan. Same shape as every other trap in this repo: a build that finished clean
+says nothing about what happens on the other machine.
+
+**The installer stays.** It is built, it works, and someone will want a
+Start-menu entry. It is the second link in the release, not the first.
 
 ---
 
@@ -294,6 +411,9 @@ Authenticode certificate. Document the click-through; raise signing separately.
 Same recipe each time, each independently droppable: discover or bundle-grep →
 contract doc → settings entries → adapter → fixtures and tests → derivation
 rules. The GUI checkbox appears on its own.
+
+**5e is not like the others.** It is not a registry nobody has looked at — it
+is a registry we are already half-scraping and did not know it.
 
 - [ ] **5a BioCarbon** — ~~first check whether `BCCR` is BioCarbon~~ **it is
       not**: the S&P standards lookup names it "BC Carbon Registry", British
@@ -310,6 +430,47 @@ rules. The GUI checkbox appears on its own.
 - [ ] **5c ACR** — APX ASP platform, form posts and HTML tables. Highest effort
 - [ ] **5d SocialCarbon** — **blocked**: `registry.socialcarbon.org` serves a
       parked CDN page, not a registry. Need the real URL
+- [ ] **5e Plan Vivo V4** — **we are only scraping V5.** What
+      `registries/planvivo/api.py` reaches is the **PV Climate** registry, the
+      Plan Vivo Standard **V5** system launched on S&P in 2025, and its 2
+      projects are all of it. Plan Vivo has certified projects since 2008, and
+      those **V4-and-earlier projects are on a different registry** —
+      `planvivo.org/buy-credits/pv-climate-registry` is the page that names
+      both. A sheet claiming to cover Plan Vivo with 2 rows understates the
+      registry by an order of magnitude, and nothing in the pipeline can see
+      that: the sync reconciles 2/2 exactly, because 2 is what the V5 tenant
+      publishes. **This is the ignored-filter trap wearing a different hat —
+      the scrape is not wrong, its scope is.**
+
+      What is already ruled out, cheaply:
+
+      - **Not a second standard on the same tenant.** `verra standards -r
+        planvivo` returns exactly one for `PVCL`: `671000000000001` / `PV` /
+        "PV Climate". If V4 were another standard behind the same registry
+        code it would be in that list, with its own `standardId`, and the
+        adapter would be three class attributes away.
+
+      So the first question is which system holds it, and the S&P tenant table
+      in the app bundle is where to look first — `UKLR`, `RAAS`, `OxCP`,
+      `KRR`, `GCC`, `BCCR` are all unidentified from our side, and
+      `GET {cmsResources}/public/standardsByRegistry/<CODE>` names each in one
+      unauthenticated request. **Do that before assuming a new platform.**
+      Plan Vivo's older certificates were issued through the Markit
+      Environmental Registry, which S&P now owns — a lead, not a finding, and
+      it needs confirming rather than believing.
+
+      Then the usual traps apply, and two specifically:
+
+      - **A wrong `standardId` answers HTTP 200 with `totalEntities: 0`.** If
+        V4 turns out to be another S&P tenant, guessing its id looks exactly
+        like the empty registry we already have.
+      - **Do not merge V4 into `PLAN_VIVO`.** If it is a separate system it
+        gets its own registry identifier, the same way Cercarbono's
+        ex-BioCarbon projects are kept traceable — otherwise nobody can tell a
+        V4 row from a V5 one, and the credit columns of two standards get
+        added together. Whether the business wants them as one row set or two
+        is theirs to decide, and the database should be able to answer either
+        way.
 
 Each registry brings its own `Tipo Macro` vocabulary, carried through
 untranslated by design, plus a `docs/field-mapping.md` section with measured
@@ -335,12 +496,35 @@ fill rates and its deliberate blanks stated rather than filled.
    `CARBON_CERCARBONO_STANDARD`, if the business ever wants the others in a
    separate run.
 2. **SocialCarbon** — real registry URL needed.
+2b. **Code signing** — Phase 4b routes around SmartScreen rather than removing
+   the cause, and that works only as long as everyone does the unblock step.
+   An Authenticode certificate ends the question: roughly USD 200-400/year for
+   an OV certificate, which since June 2023 must live on a hardware token
+   (so it also has to be plugged into whichever machine runs `build.ps1`). An
+   EV certificate additionally buys immediate SmartScreen reputation rather
+   than reputation earned over downloads. Worth it if this ever ships outside
+   the team; a decision about money, not about code. **A self-signed
+   certificate is not a substitute** — it has to be installed into Trusted
+   Publishers on every machine, which needs admin rights and is exactly the
+   IT ticket the per-user install was designed to avoid.
 3. **Shipped-database freshness** — how stale may the bundled data be before a
    new installer is cut? Half-answered in Phase 3: the window now shows **"Data
    as of &lt;date&gt;"** at the top, deliberately the *oldest* registry rather
    than the newest, since a sheet is only as current as its stalest source. So
    the staleness is visible rather than assumed. What is still yours to decide
    is the threshold at which a new installer gets cut.
+
+   Phase 4 narrowed it further rather than answering it: `build.ps1` rebuilds
+   the shipped database from `data/verra.db` on every run, so an installer is
+   never older than the build that produced it — but nothing forces that
+   database to be fresh. **Run `verra status` before `build.ps1`**; the dates
+   it prints are the dates the business will read.
+
+5. **Plan Vivo V4** — see 5e. Not a question about how to build something, a
+   question about what the sheet currently claims: two rows are presented as
+   Plan Vivo, and they are Plan Vivo *V5*. Worth deciding whether the existing
+   rows should say so — `Standard` reads "PV Climate" today, which is accurate
+   but easy to read as the whole registry.
 4. **Plan Vivo forward credits (fPVC)** — 103,246 of Plan Vivo's 213,145 issued
    units are forward credits, issued against future sequestration and flagged
    `isVerified: false` by the platform itself. They are currently counted in

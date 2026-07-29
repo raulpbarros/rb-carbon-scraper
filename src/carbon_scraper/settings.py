@@ -71,6 +71,12 @@ BUNDLED_CONFIG_DIR = RESOURCE_ROOT / "config"
 DOCS_DIR = RESOURCE_ROOT / "docs"
 FIXTURES_DIR = RESOURCE_ROOT / "tests" / "fixtures"
 
+# The database the installer carries, so that `Export Excel` works on a machine
+# that has never scraped anything. Written by `verra slim-db`; see
+# db.export_slim. Absent in a development checkout, where it would be a stale
+# copy of the real thing sitting next to it.
+SEED_DB = RESOURCE_ROOT / "seed" / "carbon-seed.db"
+
 # --- writable -------------------------------------------------------------
 
 ASSETS_DIR = _dir("CARBON_ASSETS_DIR", USER_ROOT / "assets")
@@ -299,6 +305,7 @@ def ensure_dirs() -> None:
     for d in (DATA_DIR, OUT_DIR, CACHE_DIR, LOG_DIR, CONFIG_DIR, DERIVATION_DIR, ASSETS_DIR):
         d.mkdir(parents=True, exist_ok=True)
     seed_user_files()
+    seed_database()
 
 
 def seed_user_files() -> None:
@@ -320,6 +327,26 @@ def seed_user_files() -> None:
             pass
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(source, target)
+
+
+def seed_database() -> None:
+    """Copy the shipped database into place, the first time only.
+
+    This is what makes `Export Excel` work on a machine that has never
+    scraped anything: the installer carries a slimmed copy of the real
+    database and the first run adopts it.
+
+    **Only ever when there is no database at all.** Not "if it is empty", not
+    "if it is older" — the user's file is the source of truth from the moment
+    it exists, and an upgrade that quietly restored the installer's data over
+    a scrape the business had just waited two hours for would be indetectable:
+    the sheet would still build, with numbers from whenever the installer was
+    cut.
+    """
+    if DB_PATH.exists() or not SEED_DB.exists():
+        return
+    DB_PATH.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(SEED_DB, DB_PATH)
 
 
 def _editable(user_path: Path, relative: Path) -> Path:

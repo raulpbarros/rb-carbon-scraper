@@ -22,6 +22,7 @@ import sqlite3
 from contextlib import contextmanager
 from collections.abc import Iterable, Iterator, Sequence
 from datetime import datetime, timezone
+from pathlib import Path
 from typing import Any
 
 from . import settings
@@ -84,10 +85,17 @@ CREATE TABLE IF NOT EXISTS credit_events (
 CREATE INDEX IF NOT EXISTS idx_credit_events_project
     ON credit_events (registry, project_id, resource);
 
--- Exact per-project totals fetched straight from the API's SUM aggregate.
--- Authoritative: takes precedence over summing credit_events rows, because
--- some ledgers (Verra retirements) cannot be paged completely. See
--- registries/verra/api.py.
+-- Per-project totals that did not come from summing credit_events.
+--
+-- `source` says which, and it decides who wins in credit_totals():
+--   'registry' (or NULL, for rows written before the column existed) — the
+--       registry's own published figure, fetched straight from its SUM
+--       aggregate. Authoritative over summed rows, because some ledgers
+--       (Verra retirements) cannot be paged completely.
+--   'seed'    — a bucket materialised into a shipped database whose
+--       credit_events were stripped (see export_slim). It stands in for rows
+--       that are not there, so a registry the user has since re-scraped must
+--       beat it.
 CREATE TABLE IF NOT EXISTS credit_totals (
     registry    TEXT NOT NULL,
     project_id  INTEGER NOT NULL,
@@ -95,6 +103,7 @@ CREATE TABLE IF NOT EXISTS credit_totals (
     quantity    REAL,
     event_count INTEGER,
     fetched_at  TEXT NOT NULL,
+    source      TEXT,
     PRIMARY KEY (registry, project_id, resource)
 );
 
@@ -176,6 +185,24 @@ CREDIT_EVENT_FIELDS = (
     "serial_no",
 )
 
+# `credit_totals.source` values. See the schema comment above.
+REGISTRY_SOURCE = "registry"
+SEED_SOURCE = "seed"
+
+# The "sold" reading needs retirements that name a third-party beneficiary,
+# which normally means reading `credit_events`. A slim database has none, so
+# export_slim materialises the per-project figure under this pseudo-resource.
+# It is deliberately not a ledger name any adapter can produce: a colon cannot
+# appear in one, so it can never collide with a real resource or be mapped to
+# a column by `config/credits.yaml`.
+BENEFICIARY_RESOURCE = "retirements:beneficiary"
+
+# What a slim database keeps. `credit_events` (millions of rows) and
+# `raw_snapshots` are the bulk of a full database and neither reaches the
+# spreadsheet — everything the export needs from them is materialised into
+# `credit_totals` and `projects` first. See export_slim().
+SLIM_TABLES = ("projects", "credit_totals", "project_derived", "runs")
+
 
 def now() -> str:
     return datetime.now(timezone.utc).isoformat(timespec="seconds")
@@ -208,6 +235,11 @@ def _columns(conn: sqlite3.Connection, table: str) -> list[str]:
     return [row[1] for row in conn.execute(f"PRAGMA table_info({table})")]
 
 
+def _pragma_columns(conn: sqlite3.Connection, schema: str, table: str) -> list[str]:
+    """Column names of `schema.table`, in declaration order."""
+    return [row[1] for row in conn.execute(f"PRAGMA {schema}.table_info({table})")]
+
+
 def _table_exists(conn: sqlite3.Connection, table: str) -> bool:
     row = conn.execute(
         "SELECT 1 FROM sqlite_master WHERE type='table' AND name=?", (table,)
@@ -216,12 +248,37 @@ def _table_exists(conn: sqlite3.Connection, table: str) -> bool:
 
 
 def migrate(conn: sqlite3.Connection) -> None:
+    """Bring an older database up to the current schema.
+
+    Runs on every connect and is a no-op once done. Both steps are guarded on
+    what is actually in the file, not on a version number, so a database that
+    skipped a release still lands in the right place.
+    """
+    _migrate_registry_key(conn)
+    _migrate_credit_totals_source(conn)
+
+
+def _migrate_credit_totals_source(conn: sqlite3.Connection) -> None:
+    """Add `credit_totals.source`.
+
+    Purely additive, so no table rebuild. Existing rows keep NULL, which
+    `credit_totals()` reads as `registry` — every row written before this
+    column existed came from a registry's own published figure.
+    """
+    if not _table_exists(conn, "credit_totals"):
+        return
+    if "source" in _columns(conn, "credit_totals"):
+        return
+    conn.execute("ALTER TABLE credit_totals ADD COLUMN source TEXT")
+    conn.commit()
+
+
+def _migrate_registry_key(conn: sqlite3.Connection) -> None:
     """Bring a single-registry database up to the multi-registry schema.
 
     SQLite cannot alter a primary key, so each affected table is rebuilt and
     its rows copied across with `registry='VERRA'` — everything scraped before
     this change came from Verra. Data is preserved; no re-scrape is needed.
-    Runs on every connect and is a no-op once done.
     """
     if not _table_exists(conn, "projects"):
         return
@@ -433,27 +490,47 @@ def upsert_credit_totals(
     registry: str,
     resource: str,
     rows: Iterable[tuple[int, float, Any]],
+    *,
+    source: str = REGISTRY_SOURCE,
 ) -> int:
     stamp = now()
-    payload = [(registry, pid, resource, qty, count, stamp) for pid, qty, count in rows]
+    payload = [
+        (registry, pid, resource, qty, count, stamp, source) for pid, qty, count in rows
+    ]
     conn.executemany(
         """
         INSERT INTO credit_totals
-            (registry, project_id, resource, quantity, event_count, fetched_at)
-        VALUES (?,?,?,?,?,?)
+            (registry, project_id, resource, quantity, event_count, fetched_at, source)
+        VALUES (?,?,?,?,?,?,?)
         ON CONFLICT(registry, project_id, resource) DO UPDATE SET
             quantity=excluded.quantity, event_count=excluded.event_count,
-            fetched_at=excluded.fetched_at
+            fetched_at=excluded.fetched_at, source=excluded.source
         """,
         payload,
     )
     return len(payload)
 
 
+def clear_seed_totals(conn: sqlite3.Connection, registry: str) -> int:
+    """Drop the shipped stand-in totals for one registry.
+
+    Called once a registry's ledgers have been scraped in full: from then on
+    `credit_events` is the live account and the seeded buckets are a stale
+    copy of whatever the installer happened to carry. Leaving them would not
+    change today's numbers — events already outrank them — but it would leave
+    a second, silently ageing source of the same figure in the database.
+    """
+    cursor = conn.execute(
+        "DELETE FROM credit_totals WHERE registry=? AND source=?",
+        (registry, SEED_SOURCE),
+    )
+    return int(cursor.rowcount or 0)
+
+
 def credit_totals(conn: sqlite3.Connection) -> dict[Key, dict[str, float]]:
     """Per-project credit buckets, keyed by (registry, project_id).
 
-    Three sources, in increasing order of authority:
+    Four sources, in increasing order of authority:
 
     1. Verra's ledgers, each of which *is* a bucket — sum the rows per ledger.
     2. Gold Standard's single credit stream, where a block's `status` is its
@@ -461,9 +538,16 @@ def credit_totals(conn: sqlite3.Connection) -> dict[Key, dict[str, float]]:
        all of them, and `retirements` / `cancellations` are the subsets whose
        status says so. Summing only `status='ISSUED'` would report zero issued
        credits for any project that has since retired them.
-    3. Exact API-sourced totals in `credit_totals`, which override everything
-       above — some Verra ledgers cannot be paged completely, so their rows
-       undercount. See registries/verra/api.py.
+    3. `credit_totals` rows marked `seed` — buckets materialised into a
+       shipped database whose `credit_events` were stripped. They fill in for
+       rows that are not there, so anything actually scraped beats them.
+       Otherwise an install that re-scraped a registry would keep reporting
+       the figures the installer was built with: no error, plausible numbers,
+       silently frozen. See export_slim().
+    4. `credit_totals` rows marked `registry` (or NULL, from before the column
+       existed) — the registry's own published figure, which overrides
+       everything above. Some Verra ledgers cannot be paged completely, so
+       their rows undercount. See registries/verra/api.py.
     """
     totals: dict[Key, dict[str, float]] = {}
 
@@ -500,7 +584,17 @@ def credit_totals(conn: sqlite3.Connection) -> dict[Key, dict[str, float]]:
 
     for row in conn.execute(
         "SELECT registry, project_id, resource, quantity FROM credit_totals "
-        "WHERE quantity IS NOT NULL"
+        "WHERE quantity IS NOT NULL AND source = ?",
+        (SEED_SOURCE,),
+    ):
+        key = (row["registry"], row["project_id"])
+        # setdefault, not assignment: a scraped ledger wins over the seed.
+        totals.setdefault(key, {}).setdefault(row["resource"], float(row["quantity"]))
+
+    for row in conn.execute(
+        "SELECT registry, project_id, resource, quantity FROM credit_totals "
+        "WHERE quantity IS NOT NULL AND (source IS NULL OR source != ?)",
+        (SEED_SOURCE,),
     ):
         key = (row["registry"], row["project_id"])
         totals.setdefault(key, {})[row["resource"]] = float(row["quantity"])
@@ -520,8 +614,23 @@ def projects_with_credits(conn: sqlite3.Connection, registry: str) -> list[int]:
 
 
 def retired_by_beneficiary(conn: sqlite3.Connection) -> dict[Key, float]:
-    """Retirements naming a third-party beneficiary — the 'sold' reading."""
-    return {
+    """Retirements naming a third-party beneficiary — the 'sold' reading.
+
+    Materialised into `credit_totals` under `BENEFICIARY_RESOURCE` by
+    export_slim, because a slim database has no retirement rows to read the
+    beneficiary from. As everywhere else, the seeded figure only applies where
+    there are no events: flipping `sold_equals_retired` on a re-scraped
+    install must read the ledger, not the installer.
+    """
+    seeded = {
+        (row["registry"], row["project_id"]): float(row["quantity"])
+        for row in conn.execute(
+            "SELECT registry, project_id, quantity FROM credit_totals "
+            "WHERE resource=? AND quantity IS NOT NULL",
+            (BENEFICIARY_RESOURCE,),
+        )
+    }
+    live = {
         (row["registry"], row["project_id"]): float(row["total"] or 0.0)
         for row in conn.execute(
             """
@@ -534,6 +643,7 @@ def retired_by_beneficiary(conn: sqlite3.Connection) -> dict[Key, float]:
             """
         )
     }
+    return {**seeded, **live}
 
 
 def certifications_by_project(conn: sqlite3.Connection) -> dict[Key, str]:
@@ -702,6 +812,147 @@ def _elapsed(started: Any, finished: Any) -> float | None:
     except (TypeError, ValueError):
         return None
     return max((end - begin).total_seconds(), 0.0)
+
+
+# -- the shipped database --------------------------------------------------
+
+
+def export_slim(
+    conn: sqlite3.Connection, dest: Any, *, overwrite: bool = False
+) -> dict[str, int]:
+    """Write a database small enough to ship inside an installer.
+
+    The development database is ~225 MB, almost all of it `raw_snapshots` and
+    per-record `credit_events` — 500k rows that exist so a derivation rule can
+    be changed without re-scraping, and that the spreadsheet never reads
+    directly. What the export *does* need out of them is three aggregates, so
+    those are computed here and materialised before the rows are dropped:
+
+    * the per-project credit buckets, into `credit_totals` as `seed` rows;
+    * the beneficiary-based "sold" figure, under `BENEFICIARY_RESOURCE`, so
+      flipping `sold_equals_retired` still works on a fresh install;
+    * `Additional Certification`, which Verra only ever states on unit rows,
+      folded into `projects.additional_certification`.
+
+    Measured on the real database: **214.8 MB → 20.8 MB**, building the same
+    9,619 × 25 sheet with zero differing cells. (Same cells, not the same
+    bytes — openpyxl stamps a timestamp into the workbook either way.)
+
+    The result is a **delivery artifact, not a working copy**: `verra sync`
+    against it repairs the missing rows registry by registry, and every seeded
+    figure is outranked by whatever that scrape finds.
+
+    Returns per-table row counts.
+    """
+    dest = Path(dest)
+    source = _database_file(conn)
+    if source is not None and source == dest.resolve():
+        raise ValueError(f"Refusing to slim {dest} onto itself.")
+    if dest.exists():
+        if not overwrite:
+            raise FileExistsError(
+                f"{dest} already exists. Pass overwrite=True to replace it."
+            )
+        for suffix in ("", "-wal", "-shm"):
+            Path(str(dest) + suffix).unlink(missing_ok=True)
+
+    # Read the aggregates while the rows are still here.
+    resolved = credit_totals(conn)
+    beneficiary = retired_by_beneficiary(conn)
+    certifications = certifications_by_project(conn)
+    already = {
+        (row["registry"], row["project_id"], row["resource"])
+        for row in conn.execute(
+            "SELECT registry, project_id, resource FROM credit_totals"
+        )
+    }
+
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    fresh = sqlite3.connect(dest)
+    try:
+        fresh.executescript(SCHEMA)
+        fresh.commit()
+    finally:
+        fresh.close()
+
+    counts: dict[str, int] = {}
+    conn.commit()  # ATTACH is refused inside a transaction.
+    conn.execute("ATTACH DATABASE ? AS slim", (str(dest),))
+    try:
+        for table in SLIM_TABLES:
+            # By name, never `SELECT *`. `ALTER TABLE ... ADD COLUMN` appends,
+            # so a migrated database has the right columns in the wrong order —
+            # `runs.registry` sits last there and third in SCHEMA. A positional
+            # copy silently shifted every value one place along and only failed
+            # because `started_at` happens to be NOT NULL. Columns the source
+            # does not have are left to their defaults.
+            columns = [
+                name
+                for name in _pragma_columns(conn, "slim", table)
+                if name in _pragma_columns(conn, "main", table)
+            ]
+            listed = ", ".join(columns)
+            conn.execute(
+                f"INSERT INTO slim.{table} ({listed}) SELECT {listed} FROM main.{table}"
+            )
+
+        for (registry, project_id), value in certifications.items():
+            conn.execute(
+                "UPDATE slim.projects SET additional_certification=? "
+                "WHERE registry=? AND project_id=? "
+                "AND (additional_certification IS NULL "
+                "     OR TRIM(additional_certification)='')",
+                (value, registry, project_id),
+            )
+
+        stamp = now()
+        seeds: dict[tuple[str, int, str], float] = {}
+        for (registry, project_id), buckets in resolved.items():
+            for resource, quantity in buckets.items():
+                seeds[(registry, project_id, resource)] = quantity
+        for (registry, project_id), quantity in beneficiary.items():
+            seeds[(registry, project_id, BENEFICIARY_RESOURCE)] = quantity
+
+        payload = [
+            (registry, project_id, resource, quantity, None, stamp, SEED_SOURCE)
+            for (registry, project_id, resource), quantity in seeds.items()
+            if (registry, project_id, resource) not in already
+        ]
+        conn.executemany(
+            "INSERT INTO slim.credit_totals "
+            "(registry, project_id, resource, quantity, event_count, fetched_at, source) "
+            "VALUES (?,?,?,?,?,?,?)",
+            payload,
+        )
+        conn.commit()
+
+        for table in SLIM_TABLES:
+            counts[table] = _scalar(conn, f"SELECT COUNT(*) FROM slim.{table}")
+        counts["seeded_totals"] = len(payload)
+    finally:
+        conn.commit()
+        conn.execute("DETACH DATABASE slim")
+
+    # Rebuild the file compactly, and leave no -wal beside it: the installer
+    # ships one file, and a stray journal would be read as a crash recovery.
+    compact = sqlite3.connect(dest)
+    try:
+        compact.execute("PRAGMA journal_mode=DELETE")
+        compact.execute("VACUUM")
+        compact.commit()
+    finally:
+        compact.close()
+
+    counts["bytes"] = dest.stat().st_size
+    return counts
+
+
+def _database_file(conn: sqlite3.Connection) -> Path | None:
+    """The path `conn` is backed by, or None for an in-memory database."""
+    for row in conn.execute("PRAGMA database_list"):
+        if row[1] == "main":
+            return Path(row[2]).resolve() if row[2] else None
+    return None
 
 
 # -- helpers ---------------------------------------------------------------

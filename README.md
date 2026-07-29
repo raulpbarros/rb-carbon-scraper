@@ -3,17 +3,19 @@
 Pulls every carbon project from the public carbon registries into a local
 database, then exports the spreadsheet the business asked for.
 
-Two registries are live: **Verra VCS** and **Gold Standard**. They share one
-database and one spreadsheet — the `Registry` column tells the rows apart.
+Four registries are live: **Verra VCS**, **Gold Standard**, **Cercarbono** and
+**Plan Vivo** — 9,619 projects. They share one database and one spreadsheet;
+the `Registry` column tells the rows apart.
 
 Written for someone who has not built a scraper before — the sections below go
-in order.
+in order. If you are here to *use* the tool rather than work on it, skip to
+[Installing it](#installing-it-for-the-business-team).
 
 ## What it produces
 
 | File | What it is |
 |---|---|
-| `data/verra.db` | SQLite database. The source of truth: ~5,200 Verra projects plus the full Units ledger, and 4,141 Gold Standard projects plus 182,989 credit blocks. |
+| `data/verra.db` | SQLite database. The source of truth: ~5,200 Verra projects plus the full Units ledger, 4,141 Gold Standard projects plus 182,989 credit blocks, 231 Cercarbono projects and 2 Plan Vivo. |
 | `out/carbon-projects_vN.xlsx` | The deliverable. A **new version every time** — see below. |
 
 The spreadsheet's columns are read from `assets/fields-asked.txt` at runtime.
@@ -52,6 +54,106 @@ difference matters:
   version only appears because someone decided to send one.
 
 Everything below is the same pipeline, driven from a terminal instead.
+
+## Sharing it with the business team
+
+```powershell
+verra status        # the dates in here are the dates the business will read
+.\build.ps1
+```
+
+`build.ps1` runs the tests, builds the database the app carries, freezes it and
+produces two artifacts. Needs PyInstaller (`pip install -e ".[build]"`) and, for
+the installer only, Inno Setup (`winget install JRSoftware.InnoSetup`) — pass
+`-SkipInstaller` without it.
+
+| | |
+|---|---|
+| `dist/portable/CarbonRegistryScraper-0.2.0-portable.zip` | **hand this one out.** Unzip and run; no install |
+| `dist/installer/CarbonRegistryScraper-0.2.0-setup.exe` | per-user installer, for anyone who wants a Start-menu entry |
+
+Neither is signed, and that is the whole reason the ZIP is preferred. See
+[SmartScreen](#smartscreen-and-why-the-zip) below.
+
+Whichever they get, the deal is the same:
+
+- **No admin rights and no Python.** The EXE carries its own Python; the
+  installer lands under `%LOCALAPPDATA%\Programs`, the ZIP wherever they
+  extract it.
+- **A database in the box.** ~20 MB, every registry, so **Export Excel works
+  immediately** — before anyone has scraped anything. Updating is opt-in and
+  takes hours; exporting takes seconds.
+- **Their data is theirs.** Everything the program writes lives in
+  `%LOCALAPPDATA%\CarbonRegistryScraper` — the database, the spreadsheets, and
+  their own edits to `fields-asked.txt` and the derivation rules. Uninstalling,
+  or deleting the extracted folder, does not touch any of it, and the next
+  version picks it back up. The shipped database is only ever copied in when
+  there is no database at all.
+- **Never fresher than `data/verra.db` was when you built it.** The window
+  shows **"Data as of &lt;date&gt;"** at the top, taken from the *oldest*
+  registry, so staleness is visible rather than assumed. Hence `verra status`
+  before `build.ps1`.
+
+Both artifacts, plus `carbon-seed.db` on its own, go up as
+[GitHub release](https://github.com/raulpbarros/rb-carbon-scraper/releases)
+assets:
+
+```powershell
+gh release create v0.2.0 --notes-file packaging/release-notes-pt.md `
+    dist\portable\CarbonRegistryScraper-0.2.0-portable.zip `
+    dist\installer\CarbonRegistryScraper-0.2.0-setup.exe `
+    dist\seed\carbon-seed.db
+```
+
+### SmartScreen, and why the ZIP
+
+Windows tags every downloaded file with a *Mark of the Web*, and shows
+*"Windows protected your PC"* for anything marked and unsigned — Run is hidden
+behind **More info**. Signing it away needs an Authenticode certificate, which
+is neither free nor a code change.
+
+Removing the mark is free:
+
+> Right-click the `.zip` → Properties → tick **Unblock** → OK. **Then** extract.
+
+One click, before anything runs, and nothing extracted afterwards trips
+SmartScreen at all. `LEIA-ME.txt` inside the ZIP is the Portuguese version of
+this, and it is step 1 for a reason. The same Unblock works on the setup `.exe`;
+the ZIP is still preferable because one unblock covers every file in it and
+there is no install step for a locked-down machine to object to.
+
+What this does *not* solve: corporate antivirus sometimes quarantines unsigned
+PyInstaller executables on heuristics alone. If that happens, the source route
+below is the way in.
+
+### Run it from the source
+
+For colleagues who have a terminal — and the fallback if AV eats the EXE.
+
+```powershell
+git clone https://github.com/raulpbarros/rb-carbon-scraper.git
+cd rb-carbon-scraper
+python -m venv .venv
+.venv\Scripts\activate
+pip install -e .
+mkdir seed        # then put carbon-seed.db from the release into it
+carbon-gui
+```
+
+No downloaded executable, so no SmartScreen at any point.
+
+Two things worth knowing:
+
+- **`seed\carbon-seed.db` is picked up automatically.** `settings.SEED_DB` is
+  `RESOURCE_ROOT/seed/carbon-seed.db`, and `RESOURCE_ROOT` is the repo root in a
+  checkout, so the first run copies it to `data\verra.db` — the same first-run
+  path the frozen build takes. Without it the window opens on an empty database
+  and Export has nothing to write. `seed/` is gitignored.
+- **`pip install -e .` — editable, deliberately.** A plain `pip install .` puts
+  the package in `site-packages`, and `settings._user_root()` derives the
+  writable tree from `__file__`, so the database and the spreadsheets would land
+  inside the virtualenv. Fixing that properly is a path-logic change, not a
+  documentation one; until then, install editable.
 
 ## Normal use
 
@@ -159,6 +261,11 @@ column comes from. The short version:
 - **Blank means unknown.** The scraper never invents a value or substitutes
   zero. If a cell is empty, the registry did not publish it and no rule
   matched.
+- **Plan Vivo's 2 rows are Plan Vivo *V5*.** The adapter reaches the PV Climate
+  registry, which is the whole of the V5 system; Plan Vivo has certified
+  projects since 2008 and those sit on a registry we have not found yet. See
+  PLAN.md 5e. The number is right for what it covers and low for what the
+  column name suggests.
 
 ## Being a good citizen
 

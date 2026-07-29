@@ -1,0 +1,138 @@
+﻿CARBON REGISTRY SCRAPER — LEIA ANTES DE COMEÇAR
+================================================================
+
+O programa não precisa ser instalado e não precisa de Python. É só
+descompactar e abrir. Leve dois minutos para ler o passo 1: ele evita
+um aviso de segurança do Windows.
+
+
+1. ANTES DE EXTRAIR: DESBLOQUEIE O ARQUIVO .ZIP
+----------------------------------------------------------------
+
+   Clique com o botão direito no arquivo .zip que você baixou
+      -> Propriedades
+      -> na parte de baixo, marque "Desbloquear"
+      -> OK
+
+   Só depois disso extraia o conteúdo.
+
+   Por quê: o Windows marca tudo o que vem da internet. Enquanto essa
+   marca existir, o programa abre com a tela azul "O Windows protegeu
+   o seu computador" e o botão de executar fica escondido atrás de
+   "Mais informações". Desbloquear o .zip remove a marca de uma vez
+   só, antes de qualquer coisa ser executada.
+
+   Se você já extraiu sem desbloquear: apague a pasta extraída, volte
+   ao .zip, faça o passo acima e extraia de novo.
+
+
+2. ONDE EXTRAIR
+----------------------------------------------------------------
+
+   Extraia em "Documentos" (ou na Área de Trabalho).
+
+   NÃO extraia em "Arquivos de Programas" / "Program Files" — essa
+   pasta é protegida pelo Windows e o programa não conseguirá gravar
+   nada lá.
+
+
+3. COMO ABRIR
+----------------------------------------------------------------
+
+   Dentro da pasta extraída, dê dois cliques em:
+
+      CarbonRegistryScraper.exe
+
+   Para deixar um atalho na Área de Trabalho: botão direito no
+   CarbonRegistryScraper.exe -> Enviar para -> Área de trabalho
+   (criar atalho).
+
+   Na primeira vez o programa demora alguns segundos a mais: ele está
+   copiando o banco de dados que já vem junto. Os dados dos registros
+   (Verra, Gold Standard, Cercarbono, Plan Vivo) já estão dentro do
+   programa — você NÃO precisa baixar nada da internet para gerar a
+   planilha.
+
+
+4. OS DOIS BOTÕES — A DIFERENÇA IMPORTA
+----------------------------------------------------------------
+
+   A janela está em inglês. Os dois botões são:
+
+   [Export Excel] = gerar a planilha
+      Usa os dados que já estão no computador. Leva segundos, não usa
+      internet. É o botão do dia a dia.
+
+   [Update registry data...] = buscar dados novos
+      Vai até os sites dos registros. Leva HORAS (o programa mostra a
+      estimativa antes de começar) e pode ser interrompido a qualquer
+      momento pelo botão [Cancel] — nada é perdido, basta rodar de
+      novo depois.
+
+      Ele NÃO gera planilha, de propósito. Depois de atualizar,
+      clique em [Export Excel]. Assim uma nova versão da planilha só
+      aparece quando alguém decidiu enviar uma.
+
+   Em "Registries" ficam as caixinhas dos registros. Elas valem para
+   os DOIS botões: se você desmarcar um registro, ele fica de fora
+   tanto da atualização quanto da planilha.
+
+   Em cima da janela aparece "Data as of <data>": é a data do
+   registro mais ANTIGO entre os que estão no banco. Se ela estiver
+   velha demais para o que você precisa, use [Update registry data].
+
+
+5. ONDE A PLANILHA APARECE
+----------------------------------------------------------------
+
+   Por padrão em:
+
+      Documentos\Carbon Registry
+
+   Dá para escolher outra pasta na própria janela, em "Save the
+   spreadsheet to" -> [Browse...], e ela fica lembrada para a próxima
+   vez. O botão [Open folder] abre a pasta no Explorador de Arquivos
+   depois que a planilha fica pronta.
+
+   CADA EXPORTAÇÃO GERA UM ARQUIVO NOVO:
+
+      carbon-projects_v1.xlsx
+      carbon-projects_v2.xlsx
+      carbon-projects_v3.xlsx  ...
+
+   Nenhuma planilha antiga é sobrescrita, nunca. Se alguém perguntar
+   sobre um número de uma planilha enviada mês passado, o arquivo
+   daquele mês continua exatamente como estava.
+
+
+6. COMO ATUALIZAR O PROGRAMA
+----------------------------------------------------------------
+
+   Quando chegar uma versão nova:
+
+      1. feche o programa
+      2. apague a pasta extraída
+      3. desbloqueie e extraia o .zip novo (passos 1 e 2)
+
+   Seus dados NÃO são perdidos. O banco, as planilhas já geradas e
+   qualquer ajuste que você tenha feito nos arquivos de configuração
+   ficam guardados fora da pasta do programa, em:
+
+      %LOCALAPPDATA%\CarbonRegistryScraper
+
+   (Cole esse caminho na barra do Explorador de Arquivos para abrir.)
+
+
+7. SE ALGO DER ERRADO
+----------------------------------------------------------------
+
+   O registro do que aconteceu fica em:
+
+      %LOCALAPPDATA%\CarbonRegistryScraper\logs\gui.log
+
+   Se aparecer uma janela de erro, ela mostra o caminho de um arquivo
+   de erro específico daquela falha. Envie esse arquivo junto com a
+   descrição do que você estava fazendo.
+
+   Interromper uma atualização com o botão Cancelar NÃO é um erro e
+   não corrompe nada: é só rodar de novo quando quiser.

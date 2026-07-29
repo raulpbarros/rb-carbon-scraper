@@ -241,6 +241,20 @@ def sync_one(
                             f"{name} {resource}: {counts[resource]:,} "
                             f"(registry reports {expected:,})"
                         )
+
+                    # Every ledger has now been scraped in full, so the buckets
+                    # the installer shipped are superseded by real rows. Only
+                    # then: `--limit` is a smoke test and `--projects-only`
+                    # touches no ledger, and dropping the seed after either
+                    # would leave the credit columns reading a partial scrape.
+                    if limit is None:
+                        dropped = db.clear_seed_totals(conn, registry)
+                        conn.commit()
+                        if dropped:
+                            sink.message(
+                                f"{name}: replaced {dropped:,} shipped credit totals "
+                                f"with scraped ledgers."
+                            )
             db.finish_run(conn, run_id, ok=True, counts=counts)
         except Exception as exc:  # noqa: BLE001 - record the failure, then surface it
             db.finish_run(conn, run_id, ok=False, counts=counts, error=str(exc))

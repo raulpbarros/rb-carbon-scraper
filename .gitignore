@@ -18,6 +18,16 @@ out/*.csv
 .cache/
 logs/
 
+# Build artifacts: the frozen app, the installer, and the slimmed database it
+# ships. All three are rebuilt by build.ps1 from what is committed.
+dist/
+build/
+
+# The shipped database, when someone running from a checkout drops it here to
+# get an instant export instead of a two-hour scrape (see README, "Run it from
+# the source"). ~21 MB of regenerable data; `verra slim-db` writes it.
+seed/
+
 # Local env
 .env
 

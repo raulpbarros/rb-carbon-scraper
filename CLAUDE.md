@@ -80,7 +80,7 @@ flag.
 | Front end | `registry.verra.org` | `registry.spglobal.com/pvclimate` | `registry.goldstandard.org` | `registry.cercarbono.com` |
 | Backend | `prod-us.api.platts.com` (S&P) | **the same** | `public-api.goldstandard.org` | `api-front.ecoregistry.io` |
 | Shape | POST search, Elasticsearch behind it | **the same** | plain REST GET | plain REST GET |
-| Projects | ~5,200 | **2** | 4,141 | 231 (CO2 standard) |
+| Projects | ~5,200 | **2 — V5 only, see below** | 4,141 | 231 (CO2 standard) |
 | Credit records | ~305k retirements alone | 27 issuances + 10 holdings | ~183k blocks | 2,529 serials + 9,350 retirements |
 | Requests per sync | ~9,000 | **7** | ~7,300 | ~234 |
 | Contract doc | `docs/api-contract.md` | `docs/api-contract-planvivo.md` | `docs/api-contract-gs.md` | `docs/api-contract-cercarbono.md` |
@@ -348,8 +348,20 @@ carries its parent programme's number.
 
 Full contract in `docs/api-contract-planvivo.md`. Same backend, same request
 shape and same envelope as Verra — `registries/platts/api.py` does all the
-work and `registries/planvivo/api.py` is 40 lines of identity. Only what
-differs is worth remembering:
+work and `registries/planvivo/api.py` is 40 lines of identity.
+
+**This adapter reaches Plan Vivo V5 only, and that is a known gap, not a
+finished job.** `PVCL` is the **PV Climate** registry, the Plan Vivo Standard
+V5 system launched on S&P in 2025; its 2 projects are all of it. Plan Vivo has
+been certifying since 2008 and the **V4-and-earlier projects live somewhere
+else** — see PLAN.md 5e, which is where the search is tracked. The sync
+reconciles 2/2 exactly and always will, because 2 is what this tenant
+publishes: *the scrape is not wrong, its scope is*, which is the same shape as
+every ignored-filter trap in this file. `verra standards -r planvivo` has
+already ruled out the cheap explanation — `PVCL` publishes exactly one
+standard, so V4 is not a second `standardId` behind the same registry code.
+
+Only what differs from Verra is worth remembering:
 
 - **`sectoralScope` is null; `projectType` carries the vocabulary.** Plan Vivo
   says "Afforestation / Reforestation". The column map is rebuilt with
@@ -452,8 +464,10 @@ verra run                         # sync + totals + derive + export
 verra status                      # row counts per registry, last run, failures
 verra coverage -r gs              # per-column fill rate — where the gaps are
 verra cache --clear               # a full sync caches ~1 GB of responses
+verra slim-db --force             # the 20.8 MB database the installer ships
 carbon-gui                        # the window the business team uses
 pytest                            # offline, no network
+.\build.ps1                       # tests + slim DB + EXE + portable ZIP + installer
 ```
 
 `-r` / `--registry` takes `verra`, `gs`, `cercarbono`, `planvivo` or `all`.
@@ -586,6 +600,16 @@ src/carbon_scraper/
     state.py                   what the window remembers. No Tk, no pipeline
     worker.py                  thread + queue + logging bridge. NO Tk import
     app.py                     the window; the only module touching a widget
+
+build.ps1                      clean -> pytest -> slim-db -> EXE -> ZIP -> installer
+packaging/
+  bundle.py                    what goes in the frozen build, DERIVED from
+                               settings.SEEDED_FILES and registries.ADAPTERS
+  carbon_gui.py                the frozen entry point; calls gui.app.main()
+  carbon-registry.spec         PyInstaller one-folder, --noconsole
+  carbon-registry.iss          Inno Setup, per-user, keeps %LOCALAPPDATA% data
+  LEIA-ME.txt                  pt-BR, ships INSIDE the ZIP; unblock is step 1
+  release-notes-pt.md          pt-BR, the GitHub release body
 ```
 
 There is no browser-based scraping fallback: the direct API path works for
@@ -662,6 +686,24 @@ Other things that are load-bearing:
 
 ## Packaging
 
+`.\build.ps1` — clean → pytest → `slim-db` → PyInstaller → ZIP → Inno Setup.
+Two artifacts: `dist/portable/CarbonRegistryScraper-<version>-portable.zip` and
+`dist/installer/CarbonRegistryScraper-<version>-setup.exe`, 16.7 MB, per-user,
+no admin rights. `-SkipTests` and `-SkipInstaller` exist for iterating on the
+packaging itself; the ZIP is produced either way, because it is the one that
+gets handed out.
+
+**The ZIP is the delivery, and the reason is SmartScreen.** Nothing here is
+signed, so anything downloaded carries a Mark of the Web and greets the user
+with "Windows protected your PC". Unblocking the `.zip` before extracting
+(Properties → Unblock) strips that mark once, before any executable runs, and
+nothing extracted afterwards is checked. That instruction is step 1 of
+`packaging/LEIA-ME.txt` (Portuguese, shipped inside the ZIP), the first section
+of `packaging/release-notes-pt.md`, and printed by `build.ps1` at the end of
+every build — three places because the person who forgets it is the person the
+tool was built for. Do not replace it with advice to disable SmartScreen.
+Version lives in `pyproject.toml`; the `.iss` copy is pinned to it by a test.
+
 - Playwright is a developer dependency and is **excluded from the packaged
   build**. `discover` is a diagnostic; the EXE does not ship it.
 - Dependencies are weight in the bundle. Do not add one without a use — see the
@@ -674,3 +716,63 @@ Other things that are load-bearing:
   one version history is not split in two. A frozen build defaults to
   `Documents\Carbon Registry` instead — `%LOCALAPPDATA%` is the right place for
   a database and the wrong place for a file the user has to find and email.
+- **`packaging/bundle.py` derives what goes in; it does not list it.** Data
+  files come from `settings.SEEDED_FILES` and hidden imports from
+  `registries.ADAPTERS`, so adding a registry or a config file cannot forget
+  the build. A missed adapter is the nasty one: the checkbox still appears —
+  the window builds those from `REGISTRY_LABELS` — and Update raises
+  `ModuleNotFoundError` on a machine with no console to read it in.
+- **The uninstaller has no `[UninstallDelete]` section, deliberately.**
+  Everything the program writes is under `%LOCALAPPDATA%\CarbonRegistryScraper`
+  and survives an uninstall, so a reinstall picks the existing database back up
+  rather than costing someone a two-hour scrape.
+- **Nothing is signed**, so a downloaded artifact shows SmartScreen's "Windows
+  protected your PC" with Run anyway behind *More info*. Not fixable in code;
+  it needs an Authenticode certificate. Unblocking the ZIP first is the free
+  answer — see above. `build.ps1` prints the warning and the instruction.
+- **Antivirus is the part none of this fixes.** Unsigned PyInstaller
+  executables get heuristically quarantined by some corporate AV, and no
+  amount of unblocking changes that. It cannot be checked from the development
+  box; the source route (`pip install -e .` in a clone, seed DB into `seed/`)
+  is the documented fallback. Do not report the distribution as verified until
+  it has run on someone else's machine.
+- `build.ps1` routes every external command through `Invoke-Native`. Windows
+  PowerShell 5.1 turns a native program's stderr into a terminating error under
+  `$ErrorActionPreference = "Stop"`, and PyInstaller logs its whole INFO stream
+  to stderr — so a successful freeze aborted the build, but only when the
+  output was piped. The exit code is the only honest signal.
+
+### The shipped database
+
+`verra slim-db` writes `dist/seed/carbon-seed.db`: `projects`,
+`credit_totals`, `project_derived` and `runs` only. **214.8 MB → 20.8 MB**, and
+the sheet is identical — 9,619 rows × 25 columns, zero cell mismatches. The
+installer carries it, and `settings.seed_database()` adopts it on first run, so
+`Export Excel` works on a machine that has never scraped anything.
+
+The bulk tables carry three things the export needs, so `db.export_slim`
+materialises them before dropping the rows: the per-project credit buckets, the
+beneficiary-based "sold" figure (under `db.BENEFICIARY_RESOURCE`, so flipping
+`sold_equals_retired` still works on a fresh install), and `Additional
+Certification`, which Verra only ever states on unit rows.
+
+Three rules, each of which is a bug that would not have raised:
+
+- **A seeded total must lose to a scraped one.** `credit_totals.source`
+  separates `seed` from `registry`; `db.credit_totals()` ranks events → seed →
+  registry-stated. Equal authority would freeze an install's credit columns at
+  whenever the installer was cut, no matter how often the user re-scraped.
+  `pipeline.sync_one` drops the seed once a registry's ledgers are scraped **in
+  full** — not after `--limit`, not after `--projects-only`.
+- **`seed_database()` only ever writes when there is no database at all.** Not
+  "if it is empty", not "if it is older". Restoring installer data over a
+  scrape the business waited two hours for would be undetectable: the sheet
+  still builds.
+- **Copy tables by name, never `SELECT *`.** `ALTER TABLE ADD COLUMN` appends,
+  so a migrated database has the right columns in the wrong order —
+  `runs.registry` is last there and third in `SCHEMA`. The positional copy
+  shifted every value one place along and only failed because `started_at` is
+  NOT NULL.
+
+The result is a **delivery artifact, not a working copy**: `verra sync` against
+an installed one fills the ledgers back in registry by registry.
