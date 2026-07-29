@@ -8,9 +8,16 @@
 
 A scraper that builds a database of every carbon project across public
 registries and exports one formatted Excel sheet for the business team.
-Four registries are live: **Verra VCS**, **Gold Standard**, **Cercarbono** and
-**Plan Vivo**; four more are planned. Adding one means writing an adapter, not
-touching the pipeline.
+Four registries are live: **Verra** (VCS **and** JNR), **Gold Standard**,
+**Cercarbono** and **Plan Vivo** (**V5 and V4**, on two different platforms);
+four more are planned. Adding one means writing an adapter, not touching the
+pipeline.
+
+**A registry is not always one system, and not always one standard.**
+`registries.ADAPTERS` maps a registry to a *tuple* of adapters for exactly that
+reason: Plan Vivo publishes V5 on S&P Platts and V4 on the legacy Markit
+registry, and Verra publishes VCS and JNR as two standards on one tenant. Both
+cases store under one `registry` value, one checkbox, one row set.
 
 It is becoming an **installed Windows application**, not just a CLI: the
 business team ticks registries, picks a folder and presses a button. `PLAN.md`
@@ -90,7 +97,16 @@ All read via `--registry verra|planvivo|gs|cercarbono|all`. Verra and Plan Vivo
 share `registries/platts/api.py`; the others have their own sections and
 contract docs.
 
-Planned, in `PLAN.md` order: BioCarbon, Puro.earth, ACR and SocialCarbon.
+**Two of those registries are scraped by two adapters each**, and the counts
+above are only the S&P half:
+
+| | second adapter | adds |
+|---|---|---|
+| Verra | `verra/jnr.py` — JNR, a second standard on the same S&P tenant | 5 projects, **no credits at all** |
+| Plan Vivo | `planvivo/v4.py` — V4, on the **legacy Markit registry** | 30 projects, 411 issuances, 442 holdings, **5,034 retirements** |
+
+Planned, in `PLAN.md` order: BioCarbon, Puro.earth, ACR and SocialCarbon —
+and SocialCarbon is **no longer blocked**, see below.
 
 ### Adding a registry hosted on S&P Platts
 
@@ -272,6 +288,11 @@ these was a real afternoon:
 | Cercarbono | 2,529 issuance serials, run finished clean | one project publishes its serials twice, another two are missing entirely |
 | Plan Vivo | HTTP 200, `totalEntities: 0` — an empty registry | a wrong `standardId`; the right one returns rows |
 | Plan Vivo | `unitType` on every issuance | it repeats across reserve and non-reserve rows; `unitClass` is what distinguishes them |
+| Plan Vivo | 2 projects, reconciled 2/2, every run | the whole V4 registry lives on another platform. The scrape was right; its scope was not |
+| Markit | "Next →" offered on every page | it is never disabled, even 200 pages past the end |
+| Markit | a `<tr>` with plausible values | a malformed `style` attribute swallowed a data payload; it is not a record |
+| Markit | 35 project rows | 30 projects — merged cells and repeated ids |
+| Verra JNR | 5,247 projects, identical to VCS | the **cache key ignored headers**, so the second standard served the first one's responses |
 
 Four rules for every new adapter, before writing a line of paging code:
 
@@ -297,6 +318,16 @@ Header overrides must actually override. `http_client._send_once` merges through
 `httpx.Headers`, not a `dict`: header names are case-insensitive, and a plain
 dict merge kept both httpx's lowercased `origin` and an adapter's `Origin`,
 sending two conflicting values. That cost an afternoon on Cercarbono.
+
+**A header that selects data belongs in the cache key.** The S&P platform
+identifies a registry and a standard entirely in headers: the same POST body to
+the same URL returns Verra VCS or Verra JNR depending only on `standardid`.
+`_cache_key` originally hashed method, URL and body alone, so the second
+standard scraped in a run silently served the first one's cached responses —
+5,247 "JNR" projects, every one of them VCS, `standard_name` reading "Verified
+Carbon Standard", nothing raised and reconciliation perfectly happy. The real
+answer is 5 projects. `http_client.IDENTITY_HEADERS` is the fix and a test
+pins it. Transport headers (correlation ids) stay out, or the cache never hits.
 
 Server-side `groupKeys` aggregation returns 500, so per-project totals are
 aggregated locally in SQL. The exception is `retirements`, which is too large to
@@ -387,6 +418,98 @@ Only what differs from Verra is worth remembering:
   fact about the registry, and the day it fills nothing needs changing.
 - `verra totals` has nothing to do here: every ledger pages in one request.
 
+## Plan Vivo V4, and the legacy Markit registry — the third platform
+
+Full contract in `docs/api-contract-markit.md`. Adapter in
+`registries/markit/` (`api.py` + `tables.py`), identity in
+`registries/planvivo/v4.py`.
+
+**Plan Vivo is two registries on two platforms.** `planvivo/api.py` reaches PV
+Climate — the **V5** system launched on S&P in 2025, 2 projects, and that is
+genuinely all of it. Everything certified under **V4** and earlier is on
+`mer.markit.com/br-reg/public`, the registry S&P inherited with IHS Markit.
+That is 30 more projects and 5,034 retirements against V5's zero. The V5 sync
+was never wrong and always reconciled 2/2 exactly: **the scrape was not wrong,
+its scope was.**
+
+The `standardId` is `100000000000004` — the id PLAN.md had recorded as "the
+planning guess that returns `totalEntities: 0`". It was never a wrong id. It
+was the right id for the wrong platform.
+
+**Both eras store under one `PLAN_VIVO` registry** (user's decision,
+2026-07-29). `standard_name` is what keeps that honest and reversible: a V4 row
+reads "Plan Vivo Standard V4", a V5 row reads "PV Climate". The project id
+spaces do not overlap.
+
+It is a **platform, not a registry**: one HTML view serves **21 programmes**
+behind `standardId`, including Social Carbon, ACRE, CCB, Peru REDD+, Pacific
+Carbon Standard and W+. The full table is in the contract doc. Check it before
+writing any new adapter — it is the same afternoon-versus-day difference as
+the S&P tenant list.
+
+It is also the first adapter here that **parses HTML** (stdlib `html.parser`,
+no new dependency — the page is the contract; there is no JSON behind it).
+Its traps are its own:
+
+- **`limit` is accepted and ignored.** 15 rows a page whatever you ask for,
+  HTTP 200, byte-identical response. Third registry to do this.
+- **The pager lies, and asking past the end is not free.** No total is
+  published anywhere and `<li id="page_no">` renders empty; "Next →" is
+  *never* disabled, even 200 pages past the end. Worse, a 35-row feed answers
+  a past-the-end request with an empty page but the 5,034-row one answers
+  **HTTP 500**. So paging stops on a **short page** — fewer than `PAGE_SIZE`
+  records — which means never asking for the page that 500s. The 500 is still
+  handled for feeds that end exactly on a boundary, but only after a page has
+  already been read: a 500 on the *first* request is a broken registry, not
+  an empty one.
+- **`standardId` is a request, not a filter.** Asking for Social Carbon
+  returns rows whose Standard column reads "No Established Standard" — it is
+  an *additional certification* there, not a primary standard. Every row is
+  re-checked against the Standard column via `standard_names`.
+- **Some `<tr>`s are not records.** The view emits rows whose `style`
+  attribute has swallowed an entire data payload
+  (`style="34.914551Sofala…Active…"`), which parse into plausible values in
+  the wrong columns. A record is recognised structurally: it carries its own
+  "View" link, not one inherited through a `rowspan`.
+- **`rowspan` carries down**, and read positionally the continuation row puts
+  Category ("Carbon") in the project-name column.
+- **A project id is not unique.** Sofala renders twice; Scolel té's two rows
+  are two sub-projects sharing one `master-project.jsp` id; Olympic Forest is
+  "(Mali)" and "(Senegal)" under one id. **35 rows are 30 projects.** Rows
+  sharing an id are merged — distinct project types joined, the count in
+  `extra.mergedRows` — because `project_id` is half the primary key.
+- **The Country column holds the state too**, and several ISO names carry a
+  comma of their own: `Bolivia, Plurinational State of, Cochabamba` is one
+  country and one state, `Korea, Republic of` is a country with none.
+  `markit.COMMA_COUNTRY_NAMES` is the guard.
+- **Ledger rows have no id.** `entity_id` is hashed from the row's values plus
+  an occurrence index — hashed to stay idempotent, indexed because two
+  identical rows are two events.
+
+**Do not partition on `name`.** It looks like a project search and is not:
+`name=zzzznotathing` returns nothing, so it plainly narrows — but
+`name=N'hambita` returns **Mikoko Pamoja** rows, a different project, and
+`name=Sofala` returns none of Sofala's own issuances. Whatever it matches, it
+is not the project name. This is the "filter that appears applied" trap in its
+purest form, and it was caught only by checking *which* rows came back rather
+than how many. `dir=DESC` does work and reaches the far end of a feed, which
+is the one partitioning tool here that has been proven. Neither is needed
+today.
+
+**Two gaps in the registry's own data**, measured and left alone:
+
+- **`104000000013993` has credits but is not a project.** It appears in the
+  holdings and retirement ledgers, its detail page is an empty shell, and it
+  is absent from the project list even unfiltered. Its rows are kept; no
+  project row is invented, so it simply does not reach the sheet. Same shape
+  as Cercarbono's converted-in `CDC-106`/`CDC-107`.
+- **Six projects retire more than they issued**, Sofala most starkly at
+  **0 issued against 273,836 retired** — confirmed by searching the issuance
+  feed directly, not inferred from a gap. Nothing is back-computed to make the
+  arithmetic work: the issuance ledger is what the registry publishes, and
+  `Total Credits Issued` stays as published. Raised in
+  `docs/field-mapping.md` for the business rather than silently reconciled.
+
 ## Cercarbono
 
 Full contract in `docs/api-contract-cercarbono.md`. Runs on **EcoRegistry**, a
@@ -450,12 +573,17 @@ deliberately, not descriptively.
 ```bash
 verra discover -r verra           # capture a live S&P API contract (Playwright)
 verra standards -r planvivo       # an S&P registry's real standardId + ledger set
+verra standards -r all            # every S&P tenant named, in 8 GETs — check
+                                  # this BEFORE assuming a registry needs a
+                                  # new platform. It also takes a bare tenant
+                                  # code: `verra standards -r GCC`
 verra sync -r gs --limit 25       # smoke test one registry
 verra sync -r gs --projects-only  # 4,141 GS projects, ~1 min
 verra sync -r gs                  # + 182,989 credit blocks, ~2 h (7,320 requests)
 verra sync -r verra               # ~5k projects + units, ~2.5 h
 verra sync -r cercarbono          # 231 projects + both ledgers, ~4 min (234 requests)
-verra sync -r planvivo            # 2 projects + 4 ledgers, seconds (7 requests)
+verra sync -r planvivo            # BOTH systems: V5 on S&P (7 requests) and
+                                  # V4 on Markit (~440), ~10 min in total
 verra sync                        # every registry (-r defaults to `all`)
 verra totals                      # EXACT per-project Verra retirement totals
 verra derive                      # apply YAML rules -> derived columns
@@ -529,7 +657,29 @@ reach them and fall through to the country-name rules. Adding a country band
 the coarse continental one — check the blast radius with a before/after count
 on `project_derived` rather than assuming a new rule only touches new rows.
 
-**Deliberate blanks for Plan Vivo**, measured over the full 2-project index:
+**Plan Vivo V4 sources differently from V5**, because it is a different
+platform. Measured over the full 30-project index on 2026-07-29:
+
+| Column | Plan Vivo V4 |
+|---|---|
+| `Project ID` | Markit's numeric `project_id`, from the row's own "View" link — no human reference is published, and for a grouped project this is the **master's** id |
+| `Tipo Macro de Projeto` | the `Project Type` column, untranslated: "REDD", "Improved forest management", "Forest Conservation & Avoided Deforestation", "Forest Restoration", "Forest". Where one id covers several rows the distinct values are joined with `; ` |
+| `Standard` | **"Plan Vivo Standard V4"** — asserted by the adapter, not published. The view says only "Plan Vivo", which is what V5's platform says too, and this is the one thing that tells the two eras apart |
+| `Estado` | published, and it shares the `Country` cell — see the ISO-comma trap |
+| `Total Credits Issued` / `Retired` | the `issuance` and `retirement` ledgers: 411 and **5,034** rows |
+| `Total Credits Cancelled` | the ledger exists and is **empty** — blank, not zero |
+| `Additional Certification` | the per-project detail page, one request each |
+| `Continent` | derived from the country name. **The ISO inverted forms must be in `continent.yaml`** — "Bolivia, Plurinational State of" is not "Bolivia" to an exact-match list |
+| `Data de Início` / `Data de Término` | **not published — blank, 0 of 30.** No crediting period appears anywhere on this platform, listing or detail |
+| `Additional Certification` | from the detail page, and rare: 1 of 30 (Sofala, "Climate, Community and Biodiversity") |
+| `Metodologia`, `Yearly Ex Ante`, `Total Ex Ante`, `Cidade` | **not published — blank** |
+
+**Deliberate blanks for Verra JNR**, measured over its full 5-project index:
+all four credit columns. JNR publishes projects and no credits whatever — its
+issuance, holding, retirement and cancellation ledgers are all empty. Blank,
+not zero, exactly as Plan Vivo V5's empty ledgers are.
+
+**Deliberate blanks for Plan Vivo (V5)**, measured over the full 2-project index:
 
 - `Metodologia` — `methodologies` is null (0/2).
 - `Yearly Ex Ante` / `Total Ex Ante` — not published. Forward credits (fPVC)
@@ -588,7 +738,8 @@ src/carbon_scraper/
   excel.py                     xlsx writer; column order from assets/fields-asked.txt,
                                versioned output
   registries/
-    __init__.py                ADAPTERS dispatch table + name aliases
+    __init__.py                ADAPTERS dispatch table (registry -> a TUPLE of
+                               adapters) + name aliases
     base.py                    the adapter contract pipeline drives, plus the
                                optional iter_credit_totals seam
     platts/api.py              the S&P PLATFORM: POST search API, paging,
@@ -596,8 +747,14 @@ src/carbon_scraper/
                                Shared by every registry hosted on it
     platts/discovery.py        Playwright network capture -> a per-registry
                                contract file; plus standards_by_registry()
-    verra/api.py               Verra's identity only — a PlattsAPI subclass
-    planvivo/api.py            Plan Vivo's identity, plus its two field diffs
+    markit/api.py              the LEGACY MARKIT PLATFORM: HTML paging, the
+                               standard re-check, merged-row handling.
+                               21 programmes behind one standardId
+    markit/tables.py           rowspan-aware HTML table reader (stdlib only)
+    verra/api.py               Verra VCS's identity only — a PlattsAPI subclass
+    verra/jnr.py               Verra JNR — same tenant, second standard
+    planvivo/api.py            Plan Vivo V5's identity, plus its two field diffs
+    planvivo/v4.py             Plan Vivo V4 — a MarkitPublicAPI subclass
     goldstandard/api.py        REST paging, header-based reconciliation
     cercarbono/api.py          three bulk feeds + per-project detail, CO2 filter
   gui/
@@ -633,9 +790,23 @@ tests, and derivation rules that key on whatever field it publishes. Nothing in
 `db`, `derive`, `excel` or the GUI should need to change — the GUI builds its
 checkboxes from `REGISTRY_LABELS`.
 
-**If it is on S&P Platts** that shrinks further: subclass `PlattsAPI`, set six
+**Check both platform tables first.** `verra standards -r all` names every S&P
+tenant in eight GETs, and `docs/api-contract-markit.md` lists the 21
+programmes on the legacy Markit view. Between them that is 29 registries
+reachable by subclassing something that already works. Cracking a new site is
+the last resort, not the first move.
+
+**If it is on S&P Platts** that shrinks to: subclass `PlattsAPI`, set six
 class attributes, and check which fields the registry actually populates. See
-"Adding a registry hosted on S&P Platts" above.
+"Adding a registry hosted on S&P Platts" above. **If it is on legacy Markit**:
+subclass `MarkitPublicAPI`, set `standard_id` and `standard_names`, and check
+the fill rates — the column set differs per programme.
+
+**Before adding a second adapter to an existing registry**, be sure it is the
+same registry to the business, because the merge is what the sheet will show.
+Plan Vivo V4/V5 and Verra VCS/JNR are both merges the user asked for; what
+keeps them honest is that `standard_name` distinguishes the rows, so either
+can be split again with a query rather than a re-scrape.
 
 ## The GUI
 

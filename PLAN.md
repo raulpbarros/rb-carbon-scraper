@@ -33,15 +33,23 @@ PyInstaller one-folder inside an Inno Setup installer.
 | 3 — Tkinter GUI | ✅ | `carbon-gui` — checkboxes, folder picker, two buttons, Cancel |
 | 4 — Packaging | ✅ | 20.8 MB shipped DB, EXE, per-user installer — 16.7 MB, no admin |
 | 4b — Distribution | 🔄 | portable ZIP + GitHub release; SmartScreen answered without signing |
-| **5 — Five more registries** | **next** | BioCarbon, Puro.earth, ACR, SocialCarbon, **Plan Vivo V4** |
+| 4c — Docker | ✅ | the ~16,500-request scrape, headless, off the desktop |
+| **5 — More registries** | **🔄** | **5e Plan Vivo V4 ✅, Verra JNR ✅**; 5d unblocked; 5a/5b/5c open |
 | 6 — Hardening | | incremental sync, `verra doctor` |
 
-**190 tests, green, offline.** Four registries live: Verra 5,245 projects, Gold
-Standard 4,141, Cercarbono 231, Plan Vivo 2 — **9,619 in one database**, every
-one carrying a derived Tipo Micro / Bioma / Durabilidade and 0 projects
-reporting more credits retired than issued. Last delivery is
-`out/carbon-projects_v2.xlsx`; a `_v3` covering all four registries has not
-been cut yet, because nobody has asked for one.
+**235 tests, green, offline.** Four registries live and **six standards across
+three platforms**: Verra VCS 5,245 + JNR 5, Gold Standard 4,141, Cercarbono
+231, Plan Vivo V5 2 + V4 30 — **9,649 projects in one database**, every one
+carrying a derived Tipo Micro / Bioma / Durabilidade. Last delivery is
+`out/carbon-projects_v2.xlsx`; a `_v3` has still not been cut, because nobody
+has asked for one.
+
+**The "0 projects retiring more than they issued" invariant no longer holds,
+and that is a finding rather than a regression.** Six Plan Vivo V4 projects
+retire more than the registry publishes as issued — Sofala most starkly at
+**0 issued against 273,836 retired**, confirmed by querying the issuance feed
+directly rather than inferred from a gap. Nothing is back-computed to make the
+arithmetic close. See `docs/field-mapping.md`.
 
 **There is now an installer.** `.\build.ps1` produces
 `dist/installer/CarbonRegistryScraper-0.2.0-setup.exe`, which installs per-user
@@ -415,10 +423,17 @@ rules. The GUI checkbox appears on its own.
 **5e is not like the others.** It is not a registry nobody has looked at — it
 is a registry we are already half-scraping and did not know it.
 
+**Before writing any new adapter, check the two platform tables.**
+`verra standards -r all` names every S&P tenant in eight GETs, and
+`docs/api-contract-markit.md` lists the 21 programmes on legacy Markit. That
+is 29 registries reachable by subclassing something that already works, and it
+is how 5e turned out to be an afternoon instead of a week.
+
 - [ ] **5a BioCarbon** — ~~first check whether `BCCR` is BioCarbon~~ **it is
       not**: the S&P standards lookup names it "BC Carbon Registry", British
-      Columbia (`140000000000001` / `BC`). Settled in Phase 2. So this is a
-      real adapter: grep `globalcarbontrace.io`'s Vite bundle the way
+      Columbia (`140000000000001` / `BC`). Settled in Phase 2. Not on legacy
+      Markit either — that view's 21 programmes do not include it. So this is
+      a real adapter: grep `globalcarbontrace.io`'s Vite bundle the way
       Cercarbono's was cracked.
       **Watch for double counting**: Cercarbono re-issues projects migrated
       from BioCarbon and records the origin in
@@ -428,9 +443,91 @@ is a registry we are already half-scraping and did not know it.
 - [ ] **5b Puro.earth** — server-rendered HTML; look for a JSON endpoint before
       writing a parser
 - [ ] **5c ACR** — APX ASP platform, form posts and HTML tables. Highest effort
-- [ ] **5d SocialCarbon** — **blocked**: `registry.socialcarbon.org` serves a
-      parked CDN page, not a registry. Need the real URL
-- [ ] **5e Plan Vivo V4** — **we are only scraping V5.** What
+- [ ] **5d SocialCarbon** — ~~**blocked**: serves a parked CDN page~~
+      **unblocked, 2026-07-29.** `registry.socialcarbon.org` is not parked: it
+      is a **Bubble.io application with an open, unauthenticated Data API**,
+      run by Wilder Earth.
+
+      ```
+      GET https://registry.socialcarbon.org/api/1.1/meta
+      GET https://registry.socialcarbon.org/api/1.1/obj/project
+      ```
+
+      `meta` lists the readable types: `project`, `issuance`, `retirement`,
+      `transaction`, `cancellations`, `transfer`, `asset`, `assetlisting`,
+      `document`, `vvbs`. `obj/project` already returns real project records
+      as JSON with no key. That is a better contract than three of the four
+      registries already live.
+
+      Two things to establish before writing the adapter, both the usual
+      shape: Bubble's Data API pages with `cursor`/`limit` and states a
+      `remaining` count — **prove it narrows and reconcile against it** — and
+      SocialCarbon also appears on legacy Markit (`100000000000007`) as an
+      **additional certification**, where its rows read "No Established
+      Standard". Those are the same credits seen from another angle, so
+      **ingesting both would double-count**. The Bubble registry is the
+      current system and the one to use.
+- [x] **5e Plan Vivo V4 — done, 2026-07-29.** It was on the **legacy Markit
+      Environmental Registry** (`mer.markit.com/br-reg/public`), the system
+      S&P inherited with IHS Markit. 30 projects, 411 issuances, 442 holdings
+      and **5,034 retirements**, all reconciled; Plan Vivo goes from 2 rows to
+      32. Contract in `docs/api-contract-markit.md`, adapter in
+      `registries/markit/` + `registries/planvivo/v4.py`.
+
+      **The `standardId` was `100000000000004`** — the exact id this plan had
+      recorded as "the planning guess, from a legacy Markit URL, that returns
+      `totalEntities: 0`". It was never a wrong id. It was the right id for
+      the wrong platform, and the S&P sweep below is what made that provable
+      rather than suspected.
+
+      What the search actually cost: `verra standards -r all` (eight
+      unauthenticated GETs, and a new `-r all` mode) ruled out every S&P
+      tenant in one command, and Plan Vivo's own registry page named Markit.
+      No Playwright, no guessing.
+
+      **Both eras store under one `PLAN_VIVO` registry** (user's decision).
+      `standard_name` keeps it reversible: "Plan Vivo Standard V4" against
+      "PV Climate".
+
+      Five things the plan did not anticipate, each of them a measured trap:
+
+      - **Legacy Markit is a platform, not a registry** — 21 programmes behind
+        one `standardId`, including Social Carbon, ACRE, CCB and Peru REDD+.
+        The adapter is written as a platform for that reason.
+      - **It is HTML**, so this is the first adapter here that parses a page.
+        Stdlib `html.parser`; no new dependency in a bundle the business
+        downloads.
+      - **The pager is useless and asking past the end is not free.** "Next →"
+        is never disabled, even 200 pages past the end of a 35-row feed — and
+        a past-the-end request answers HTTP 500 on the large feed while
+        answering empty on the small one. Paging stops on a **short page**.
+      - **35 rows are 30 projects, and some rows are not records at all.** The
+        view emits `<tr>`s whose `style` attribute has swallowed a data
+        payload, merges cells with `rowspan`, and repeats a project id across
+        sub-projects of one master. Each of those produces plausible nonsense
+        if read positionally.
+      - **`name` is not a project search.** It narrows — so it passes the
+        usual check — but `name=N'hambita` returns *Mikoko Pamoja* rows. Only
+        checking *which* rows came back caught it.
+
+- [x] **Verra JNR — done, 2026-07-29.** Not in the original plan. The
+      `standards -r all` sweep showed the Verra tenant publishes **six**
+      standards and the scraper read one. JNR is tCO2e and comparable, so it
+      is in (user's decision): 5 jurisdictional projects, and **all four
+      ledgers empty** — blank, not zero. CCBS, SDVISTA, PWRS and S3S stay out,
+      each for a stated reason; CCBS in particular is a co-certification of
+      VCS projects and would double-count. See `registries/verra/jnr.py`.
+
+      **It also found a real bug.** JNR first reported 5,247 projects
+      identical to VCS: `_cache_key` hashed method, URL and body but **not
+      headers**, and the S&P platform selects a standard entirely in headers.
+      The second standard scraped in a run silently served the first one's
+      cached responses — right shape, wrong data, nothing raised.
+      `http_client.IDENTITY_HEADERS` fixes it and a test pins it. Any two
+      adapters sharing a URL were exposed to this.
+
+- [ ] ~~**5e Plan Vivo V4** — **we are only scraping V5.**~~ *(kept below for
+      the reasoning that led here.)* What
       `registries/planvivo/api.py` reaches is the **PV Climate** registry, the
       Plan Vivo Standard **V5** system launched on S&P in 2025, and its 2
       projects are all of it. Plan Vivo has certified projects since 2008, and

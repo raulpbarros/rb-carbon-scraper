@@ -1,0 +1,240 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<title>Markit Environmental Registry - Project Details</title>
+		<!-- CSS: Registry: public view --> 
+		
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/registry.css" />
+		<!-- JS: Registry: public view -->
+		<script type="text/javascript" src="js/jquery-2.1.0.min.js" charset="utf-8"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js" charset="utf-8"></script>
+		<script type="text/javascript" src="js/registry.js" charset="utf-8"></script>
+		<script type="text/javascript" async defer
+	    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBB2bs935dyYFRxhY7fCUivGt1GqVbd1PY&callback=initialize&libraries=geometry"></script>
+	</head>
+	<body onunload="GUnload();">
+<script type="text/javascript">
+			var lat = [];
+			var long = [];
+			var description = [];
+			var i = 0;
+			
+			
+		
+				lat[i] = -17;
+			
+				long[i] = -66;
+			
+			 		description[i] = 'Plan Vivo- Afforestation / Reforestation';
+				 
+			
+			i++;
+		
+		
+		  	function initialize() {
+		
+		  	if (lat && long && lat.length>0) {
+			    var latlng = new google.maps.LatLng(lat[0], long[0]);
+			    var myOptions = {
+			      	zoom: 4,
+			      	center: latlng,
+			      	mapTypeId: google.maps.MapTypeId.TERRAIN
+			    };
+			    var map = new google.maps.Map(document.getElementById("gmap"), myOptions);
+		
+				for(var i=0;i<lat.length;i++) {
+					var ll = new google.maps.LatLng(lat[i], long[i]);
+					if(ll) {
+				  		new google.maps.Marker({
+				      		position: ll, 
+				      		map: map, 
+				      		title: description[i]
+				  		}); 
+			  		}
+			  	}
+			} else {
+			    var latlng = new google.maps.LatLng(0, 0);
+			    var myOptions = {
+					zoom: 4,
+			      	center: latlng,
+			      	mapTypeId: google.maps.MapTypeId.TERRAIN
+			    };
+			    var map = new google.maps.Map(document.getElementById("gmap"), myOptions);
+			}
+		  };
+		</script><div id="add-info-modal-100000000015170" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+<h4 class="modal-title" id="myModalLabel">Additional Information</h4>
+</div>
+<div class="modal-body">
+<dl></dl>
+<dl></dl>
+</div>
+</div>
+</div>
+</div><br><div class="container">
+<div class="panel panel-default">
+<div class="panel-heading">
+<h3 class="panel-title">Registry - Project Details</h3>
+</div>
+<div class="panel-body">
+<div class="row">
+<div class="col-md-12">
+<h3>ArBolivia<span id="project_id"> (ID: 100000000000695)</span>
+</h3>
+<i></i>
+</div>
+</div>
+<div class="row">
+<div class="col-md-6">
+<dl>
+<dt>Account Holder</dt>
+<dd>Sicirec Bolivia ltda</dd>
+<dt>Description</dt>
+<dd>ArBolivia is an alternative business initiative to promote reforestation and economic development of small farmer families. The initiative seeks practical solutions to worldwide deforestation, climate change, and poverty in developing countries. The current focus is on reforestation but during the second half of 2011 it will be widened to include conservation and restoration of existing forests and to address forest degradation.
+
+ArBolivia will reforest 6,000 hectares in the sub-tropical lowlands of the Amazon Basin in Bolivia through small-scale forestry plantations with local farm families, using almost entirely native tree species.
+
+Since reforestation activities cannot be seen in isolation from other livelihood activities, project participation begins in all cases with the elaboration of an Integrated Land Use Plan.
+
+ArBolivia together with local rural smallholders promotes rural and productive development through reforestation activities, forestry plantation management and the provision of environmental services that generate economic resources and equal benefits for all
+stakeholders.</dd>
+<dt style="margin-bottom: 2%;">Project Documents
+									 	</dt>
+<dd>
+<ul>
+<li>
+<div class="file-icon-pdf">
+<a style="margin-left: 25px;" href="javascript:void(0)" onclick="downloadDocument(100000000005576)">(PV) Project Design Description (PDD)</a>
+</div> 
+</li>
+<li>
+<div class="file-icon-pdf">
+<a style="margin-left: 25px;" href="javascript:void(0)" onclick="downloadDocument(100000000005577)">(PV) Validation Report</a>
+</div> 
+</li>
+</ul>
+</dd>
+<dt style="margin-bottom: 2%;">Issuance Documents
+							 		</dt>
+<dd>
+<ul>
+<li>
+<div class="file-icon-pdf">
+<a style="margin-left: 25px;" href="javascript:void(0)" onclick="downloadDocument(103000000234531)">(PV) Annual Report</a>
+</div> (01 Jan 2019-31 Dec 2019)</li>
+<li>
+<div class="file-icon-pdf">
+<a style="margin-left: 25px;" href="javascript:void(0)" onclick="downloadDocument(103000000236804)">(PV) Annual Report</a>
+</div> (01 Jan 2020-31 Dec 2020)</li>
+<li>
+<div class="file-icon-pdf">
+<a style="margin-left: 25px;" href="javascript:void(0)" onclick="downloadDocument(103000000261300)">(PV) Annual Report</a>
+</div> (01 Jan 2022-31 Dec 2022)</li>
+<li>
+<div class="file-icon-pdf">
+<a style="margin-left: 25px;" href="javascript:void(0)" onclick="downloadDocument(103000000253011)">(PV) Annual Report</a>
+</div> (01 Jan 2022-31 Dec 2022)</li>
+<li>
+<div class="file-icon-pdf">
+<a style="margin-left: 25px;" href="javascript:void(0)" onclick="downloadDocument(103000000261455)">(PV) Annual Report</a>
+</div> (01 Jan 2023-30 Jun 2024)</li>
+<li>
+<div class="file-icon-pdf">
+<a style="margin-left: 25px;" href="javascript:void(0)" onclick="downloadDocument(103000000261491)">(PV) Annual Report</a>
+</div> (01 Jan 2023-30 Jun 2024)</li>
+<li>
+<div class="file-icon-pdf">
+<a style="margin-left: 25px;" href="javascript:void(0)" onclick="downloadDocument(103000000234544)">(PV) Annual Report</a>
+</div> (01 Jan 2018-31 Dec 2018)</li>
+<li>
+<div class="file-icon-pdf">
+<a style="margin-left: 25px;" href="javascript:void(0)" onclick="downloadDocument(103000000262928)">(PV) Annual Report</a>
+</div> (01 Jan 2025-30 Jun 2025)</li>
+<li>
+<div class="file-icon-pdf">
+<a style="margin-left: 25px;" href="javascript:void(0)" onclick="downloadDocument(103000000262802)">(PV) Annual Report</a>
+</div> (01 Jul 2024-31 Dec 2024)</li>
+<li>
+<div class="file-icon-pdf">
+<a style="margin-left: 25px;" href="javascript:void(0)" onclick="downloadDocument(100000000006715)">(PV) Conflict of Interest Report - Verification</a>
+</div> (01 Jan 2010-31 Dec 2010)</li>
+<li>
+<div class="file-icon-pdf">
+<a style="margin-left: 25px;" href="javascript:void(0)" onclick="downloadDocument(100000000007793)">(PV) Monitoring Report</a>
+</div> (01 Jan 2011-31 Dec 2011)</li>
+<li>
+<div class="file-icon-pdf">
+<a style="margin-left: 25px;" href="javascript:void(0)" onclick="downloadDocument(103000000104748)">(PV) Other</a>
+</div> (01 Jan 2017-31 Dec 2017)</li>
+<li>
+<div class="file-icon-pdf">
+<a style="margin-left: 25px;" href="javascript:void(0)" onclick="downloadDocument(103000000240250)">(PV) Other</a>
+</div> (01 Jan 2021-30 Jun 2021)</li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="col-md-6">
+<div id="gmap"></div>
+</div>
+</div>
+<br>
+<div class="row">
+<div class="col-md-12">
+<table class="table table-condensed table-hover table-shadow">
+<tr>
+<th>Category</th><th>Standard</th><th>Project Type</th><th>Additional Certification</th><th>Linked</th><th></th>
+</tr>
+<tr>
+<td>Carbon</td><td>Plan Vivo</td><td>Afforestation / Reforestation</td><td></td><td>No</td><td><button class="btn btn-primary" data-toggle="modal" data-target="#add-info-modal-100000000015170">
+												Details
+											</button></td>
+</tr>
+<tr style="border-top: 0px;">
+<td colspan="6" style="border-top: 0px;">Casella 6511,Cochabamba,Cochabamba,Bolivia, Plurinational State of</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="FooterSection">
+<div id="FooterInlineLeft">
+	<div id="FooterBottomLinks">
+		<a class="FooterTextwhite" href="https://ihsmarkit.com/Legal/modern-slavery-statement.html" target="_blank">Modern Slavery Act Statement</a>
+		<div class="FooterTextwhite">|</div>
+		<a class="FooterTextwhite" href="https://ihsmarkit.com/Legal/privacy.html" target="_blank">Privacy</a>
+		<div class="FooterTextwhite">|</div>
+		<a class="FooterTextwhite" href="https://ihsmarkit.com/legal/terms-of-use.html" target="_blank">Terms of Use</a>
+		<div class="FooterTextwhite">|</div>
+		<a class="FooterTextwhite" href="https://ihsmarkit.com/Legal/disclaimers.html" target="_blank">Disclaimer</a>
+		<!-- <div class="FooterTextwhite">|</div>
+		<a class="FooterTextwhite" href="https://ihsmarkit.com/Legal/index.html" target="_blank">Legal</a> -->
+	</div>
+	<div id="FooterCopyright">
+		 &copy; 2026&nbsp;
+		S&P Global. All rights reserved. Reproduction in whole or part without permission is prohibited.
+	</div>
+	</div> 
+	<div id="FooterInlineRight"> 
+		<div id="FooterIhsLogoImage"></div>
+		<h1 id="FooterHeadingRight">S&P Global</h1>
+	</div> 
+</div> 
+
+</body>
+</html>

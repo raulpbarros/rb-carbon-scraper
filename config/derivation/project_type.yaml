@@ -194,6 +194,59 @@ rules:
     match: [{ field: sectoral_scope, equals: "Afforestation / Reforestation" }]
     value: "Florestamento, Reflorestamento e Revegetação (ARR)"
 
+  # --- Plan Vivo V4, on the legacy Markit registry -----------------------
+  #
+  # V4 publishes NO methodology and NO AFOLU sub-type code — `sectoral_scope`
+  # is the only thing it states, so every rule above that keys on
+  # `methodologies` or `afolu_names` misses it entirely. Before these rules
+  # only 10 of its 30 projects had a Tipo Micro, all of them the one wording
+  # V5 shares.
+  #
+  # `equals`, like the V5 rule above and for the same reason: these are short
+  # exact vocabulary values and must not reach a Verra or Cercarbono row whose
+  # scopes are long descriptive strings. The values are the existing AFOLU
+  # sub-type ones, reused deliberately — a V4 REDD project and a Verra REDD
+  # project belong in the same bucket, and a new wording must never quietly
+  # become a new category.
+  #
+  # Where one project id covers several rows the adapter joins the distinct
+  # types with "; ", so those land here as a compound string and stay blank
+  # rather than being forced into one bucket. That is the correct failure.
+  - name: pv4-redd
+    match: [{ field: sectoral_scope, equals: "REDD" }]
+    value: "Desmatamento e Degradação Evitados (REDD)"
+
+  - name: pv4-avoided-deforestation
+    match:
+      - field: sectoral_scope
+        equals: "Forest Conservation & Avoided Deforestation"
+    value: "Desmatamento e Degradação Evitados (REDD)"
+
+  - name: pv4-reduced-emissions-deforestation
+    match:
+      - field: sectoral_scope
+        equals: "Reduced emissions from deforestation & degradation"
+    value: "Desmatamento e Degradação Evitados (REDD)"
+
+  - name: pv4-improved-forest-management
+    match: [{ field: sectoral_scope, equals: "Improved forest management" }]
+    value: "Manejo Florestal Melhorado (IFM)"
+
+  - name: pv4-forest-restoration
+    match: [{ field: sectoral_scope, equals: "Forest Restoration" }]
+    value: "Florestamento, Reflorestamento e Revegetação (ARR)"
+
+  - name: pv4-agriculture-land-management
+    match: [{ field: sectoral_scope, equals: "Agriculture land management" }]
+    value: "Manejo Agrícola de Terras (ALM)"
+
+  # "Forest" on its own is what the registry states for one project, and it
+  # names no sub-type. The generic AFOLU value says exactly that rather than
+  # guessing which kind of forest project it is.
+  - name: pv4-forest-unspecified
+    match: [{ field: sectoral_scope, equals: "Forest" }]
+    value: "AFOLU (subtipo não informado)"
+
   # --- Sectoral-scope fallbacks -----------------------------------------
   - name: scope-energy-industries
     match: [{ field: sectoral_scope, contains: "Energy industries" }]

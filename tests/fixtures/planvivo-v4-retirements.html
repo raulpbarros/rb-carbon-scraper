@@ -1,0 +1,543 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>S&P Global Registry - Public Reports</title>
+		<!-- CSS: Registry: public view --> 
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/registry.css" />
+		<!-- JS: Registry: public view -->
+		<script type="text/javascript" src="js/jquery-2.1.0.min.js" charset="utf-8"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js" charset="utf-8"></script>
+		<script type="text/javascript" src="js/registry.js" charset="utf-8"></script>
+		<script>
+			var sortColumn = "TODO";
+			var sortDirection = "TODO";
+		
+			$(document).ready(function () {
+				$("#public-search-clear").click(function(e) {
+					var queryField = $("#public-search-query");
+					queryField.val("");
+					$("#public-search-registry").val("");
+					$("#public-search-unitType").val("");
+					if ($("#public-view-download-report").show()) {
+						$("#public-view-download-report").hide();
+					}
+					$("#public-show-download-report").val("false")
+					doSearch("", true);
+				});
+
+				$("#public-search-query").keydown(function(event) {
+					if(event.keyCode == '13') doSearch($(this).val(), false);
+				});
+			});
+
+			doSearch = function(searchString, isClean) {
+				//alert("serach hit "+searchString);
+				var parameters = "?name=" + escape(searchString) + "&entity=retirement&entity_domain=Markit";
+				var searchParams = "";
+				if (false) {
+					searchParams = parameters;
+				} else if (false) {
+					searchParams = getParam(parameters, "&unitClass=", isClean);
+				} else {
+					searchParams = getParam(parameters, "&unitClass=", isClean);
+				}
+
+				setTimeout(function() {
+					 location.href = searchParams; 
+				 },1);
+			}; 
+
+			getParam = function(parameters, unitClassParam, isClean) {
+				if(isClean) {
+					return parameters + "&srd=false&additionalCertificationId=&acronym=&standardId=&categoryId=" + unitClassParam;
+				}
+			  return parameters  + "&srd=false&additionalCertificationId=&acronym=&standardId=100000000000004&categoryId=" + unitClassParam;
+			};
+		</script>
+	</head>
+
+	<body>
+		<div class="container">
+			<div class="page-header">
+				<div class="row">
+					<div class="col-md-6">
+						<a href="https://www.spglobal.com/">
+							<img alt="spglobal" src="css/images/spg.png" class="logo-w">
+						</a>
+					</div>
+					
+				</div>
+			</div>
+
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Registry - Public View</h3>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-1 text-right">
+							
+									
+    							
+									
+    							
+									
+    							
+									
+    							
+									
+    							
+									
+    							
+									
+    							
+									
+    							
+									
+    							
+									
+    							
+									
+    							
+									
+    							
+									
+    							
+									
+    							
+									
+    							
+						</div>
+						<div class="col-md-11 text-right">
+							<form id="public-search-form" action="index.jsp" class="form-inline" role="form">
+								<input type="hidden" id="public-search-entity" name="entity" value="retirement"/>
+								<input type="hidden" id="public-search-sort" name="sort" value="account_name"/>
+								<input type="hidden" id="public-search-dir" name="dir" value="ASC"/>
+								<input type="hidden" id="public-search-offset" name="start" value="0"/>
+								<input type="hidden" id="public-search-acr" name="acronym" value=""/>
+								<input type="hidden" id="public-search-limit" name="limit" value="15"/>
+								<input type="hidden" id="public-search-additional-certification-id" name="additionalCertificationId" value=""/>
+								<input type="hidden" id="public-search-category-id" name="categoryId" value=""/>
+								<input type="hidden" id="public-show-download-report" name="srd" value="false"/>
+								<div class="form-group">
+									<input id="public-search-clear" type="button" value="Clear" class="form-control"/>
+								</div>
+								<div class="form-group">
+									<label for="public-search-query">Search:</label>
+									<input id="public-search-query" name="name" type="text" value="" class="form-control" style="width: 160px"/>
+								</div>
+								<select id="public-search-registry" name="standardId" onchange="changeStandard('retirement', '', 'account_name', 'ASC', this)" class="form-control" >
+									<?xml version="1.0" encoding="UTF-8"?><option value="">S&amp;P Global Registry</option><optgroup label="Carbon"><option value="100000000000002" acronym="ISO" category_id="100000000000001" showDownloadReport="false">ISO 14064 - 2</option><option value="100000000000004" acronym="PV" category_id="100000000000001" showDownloadReport="false">Plan Vivo</option><option value="100000000000007" acronym="SC" category_id="100000000000001" showDownloadReport="false">Social Carbon</option><option value="100000000000008" acronym="ACRE" category_id="100000000000001" showDownloadReport="false">ACRE Carbon Standard</option><option value="100000000000009" acronym="CCB" category_id="100000000000001" showDownloadReport="false">Climate, Community and Biodiversity</option><option value="100000000000010" acronym="NZPFSI" category_id="100000000000001" showDownloadReport="false">New Zealand Permanent Forest Sink Initiative</option><option value="100000000000026" acronym="NZPRE" category_id="100000000000001" showDownloadReport="false">NZ Projects to Reduce Emissions (Pre 2008)</option><option value="100000000000027" acronym="NES" category_id="100000000000001" showDownloadReport="false">No Established Standard</option><option value="100000000000037" acronym="PCT" category_id="100000000000001" showDownloadReport="false">Pacific Carbon Standard</option><option value="100000000000130" acronym="REDD+PERU" category_id="100000000000001" showDownloadReport="false">Peru REDD+ Program</option></optgroup><optgroup label="Energy Efficiency"><option value="100000000000003" acronym="EE" category_id="100000000000002" showDownloadReport="false">Energy Efficiency</option></optgroup><optgroup label="Water Quality"><option value="100000000000006" acronym="COTEWQT" category_id="100000000000003" showDownloadReport="false">COTE: Willamette: Water Quality (Temperature) Standard</option></optgroup><optgroup label="Water Quantity"><option value="100000000000038" acronym="BEFWFR" category_id="100000000000004" showDownloadReport="false">BEF Flow Restoration Standard</option></optgroup><optgroup label="Biodiversity and Habitat"><option value="100000000000014" acronym="COTEWET" category_id="100000000000005" showDownloadReport="false">COTE: Willamette: Wetland Habitat Standard</option><option value="100000000000015" acronym="COTESAL" category_id="100000000000005" showDownloadReport="false">COTE: Willamette: Salmonid Standard</option><option value="100000000000016" acronym="COTEPRA" category_id="100000000000005" showDownloadReport="false">COTE: Willamette: Upland Prairie Habitat Standard</option><option value="100000000000021" acronym="NEBS" category_id="100000000000005" showDownloadReport="false">No Established Biodiversity Standard (Conservation Programmes)</option><option value="100000000000022" acronym="ORWR" category_id="100000000000005" showDownloadReport="false">Oregon Wetlands Regulatory (Ratios) Standard</option><option value="100000000000023" acronym="USFWSS" category_id="100000000000005" showDownloadReport="false">USFWS Conservation Banking</option></optgroup><optgroup label="Social"><option value="100000000000056" acronym="WEM" category_id="100000000000018" showDownloadReport="false">W+ Standard for Women's Empowerment</option></optgroup>
+								</select>
+								<div class="form-group">	
+									<select id="public-search-unitType" name="unitClass" onchange="changeUnitType('retirement', '100000000000004', 'account_name', 'ASC')" class="form-control" >
+										<option value="">All Units</option>
+										<option value="NON_PIU" >Verified Units</option>
+										<option value="PIU" >PIU</option>
+										<option value="CERTIFIED" >CERTIFIED</option>
+										<option value="VALIDATED" >VALIDATED</option>
+										<option value="PER" >PER</option>
+									</select> 
+								</div>
+								<div id="public-view-download-report" style="width: 12%;margin-top: 2%;margin-left: 87%; display : none;">
+								    <div style="width: 41%;height: 50px;float: left;"> 
+								        <input id="public-download-report" type="button" value="Excel" onclick="downloadReport('retirement', 'excel', 'Markit'); return false;" class="form-control">
+								    </div>
+								    <div style="margin-left: 60%;height: 50px;"> 
+								     	<input id="public-download-report" type="button" value="PDF" onclick="downloadReport('retirement', 'pdf', 'Markit'); return false;" class="form-control">
+								    </div>
+								</div>
+							</form>
+						</div>
+					</div>
+					<br/>
+					<ul class="nav nav-tabs">
+						<li class="">
+							<a id="public-search-accountHolderG" href="?entity=account&amp;srd=false&amp;sort=account_name&amp;dir=ASC&amp;start=0&amp;entity_domain=Markit">Account Holders</a>
+						</li>
+						<li class="">
+							<a id="public-search-projectsG" href="?entity=project&amp;srd=false&amp;sort=project_name&amp;dir=ASC&amp;start=0&amp;entity_domain=Markit&amp;additionalCertificationId=&amp;acronym=&amp;standardId=100000000000004&amp;categoryId=">Projects</a>
+						</li>
+						<li class="">
+							<a id="public-search-issuancesG" href="?entity=issuance&amp;srd=false&amp;sort=account_name&amp;dir=ASC&amp;start=0&amp;entity_domain=Markit&amp;additionalCertificationId=&amp;acronym=&amp;standardId=100000000000004&amp;categoryId=&amp;unitClass=">Issuances / Listings</a>
+						</li>
+						<li class="">
+							<a id="public-search-holdingG" href="?entity=holding&amp;srd=false&amp;sort=account_name&amp;dir=ASC&amp;start=0&amp;entity_domain=Markit&amp;additionalCertificationId=&amp;acronym=&amp;standardId=100000000000004&amp;categoryId=&amp;unitClass=">Holdings</a>
+						</li>
+						<li class="active">
+							<a id="public-search-retiredCreditsG" href="?entity=retirement&amp;srd=false&amp;sort=account_name&amp;dir=ASC&amp;start=0&amp;entity_domain=Markit&amp;additionalCertificationId=&amp;acronym=&amp;standardId=100000000000004&amp;categoryId=&amp;unitClass=">Retired Credits</a>
+						</li>
+						<li class="">
+							<a id="public-search-apiRetiredCreditsG" href="?entity=apiRetirement&amp;srd=false&amp;sort=account_name&amp;dir=ASC&amp;start=0&amp;entity_domain=Markit&amp;additionalCertificationId=&amp;acronym=&amp;standardId=100000000000004&amp;categoryId=&amp;unitClass=">API Retired Credits</a>
+						</li>
+						<li class="">
+							<a id="public-search-assignedCreditsG" href="?entity=assignment&amp;srd=false&amp;sort=account_name&amp;dir=ASC&amp;start=0&amp;entity_domain=Markit&amp;additionalCertificationId=&amp;acronym=&amp;standardId=100000000000004&amp;categoryId=&amp;unitClass=">Assigned Credits</a>
+						</li>
+						<li class="">
+							<a id="public-search-CancelledG" href="?entity=Cancelled&amp;srd=false&amp;sort=account_name&amp;dir=ASC&amp;start=0&amp;entity_domain=Markit&amp;additionalCertificationId=&amp;acronym=&amp;standardId=100000000000004&amp;categoryId=&amp;unitClass=">Cancelled Units</a>
+						</li>
+					</ul>
+					<table class="table table-condensed table-hover table-shadow">
+						
+							
+							
+							
+							
+							
+								
+
+								<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<tr>
+<input id="result-set-size" type="hidden" value="5034"><th sort-column="retirement_date" class="sortable"><span></span>
+				Retirement Date
+			</th><th sort-column="vintage" class="sortable"><span></span>
+				Vintage
+			</th><th sort-column="project_name" class="sortable" style="min-width: 200px;"><span></span>
+				Project
+			</th><th sort-column="account_name" class="sortable" style="min-width: 150px;"><span></span>
+				Account
+			</th><th sort-column="beneficial_owner" class="sortable"><span></span>
+				Beneficial Owner
+			</th><th sort-column="standard_name" class="sortable"><span></span>
+				Standard
+			</th><th sort-column="project_type_name" class="sortable"><span></span>
+				Project Type
+			</th><th sort-column="holding_quantity" class="sortable"><span></span>
+				Retirement Quantity
+			</th><th sort-column="measurement_name" class="sortable"><span></span>
+				Measurement
+			</th><th sort-column="unit_type" class="sortable"><span></span>
+				Type
+			</th><th>
+				Details
+			</th>
+</tr><tr>
+<td>15 Feb 2017</td><td>2010</td><td>Trees of Hope</td><td>&nbsp;</td><td>&nbsp;</td><td>Plan Vivo</td><td>Afforestation / Reforestation</td><td>28</td><td>PVC (tCO2e)</td><td>UNIT</td><td><a target="_BLANK" href="project.jsp?project_id=100000000000781">
+						View
+					</a></td>
+</tr><tr>
+<td colspan="5" style="border-top: 0px;">
+<p style="font-style: italic; color: #666;">
+						Serial No.:
+						PV-PVC-MW-100000000000781-01012010-31122010-2072166-2072193-MER-0-A</p>
+</td><td colspan="6" style="border-top: 0px;">
+<p class="remark" title="Retirement Remarks:
+Retired by ZeroMission on behalf of Atea (tidning och katalog, purchase Feb 2015).">Retired by ZeroMission on behalf of Atea (tidning och katalog, purchase Feb 2015).</p>
+</td>
+</tr><tr>
+<td>15 Feb 2017</td><td>2010</td><td>Trees of Hope</td><td>&nbsp;</td><td>&nbsp;</td><td>Plan Vivo</td><td>Afforestation / Reforestation</td><td>532</td><td>PVC (tCO2e)</td><td>UNIT</td><td><a target="_BLANK" href="project.jsp?project_id=100000000000781">
+						View
+					</a></td>
+</tr><tr>
+<td colspan="5" style="border-top: 0px;">
+<p style="font-style: italic; color: #666;">
+						Serial No.:
+						PV-PVC-MW-100000000000781-01012010-31122010-2219550-2220081-MER-0-A</p>
+</td><td colspan="6" style="border-top: 0px;">
+<p class="remark" title="Retirement Remarks:
+Retired by ZeroMission on behalf of Carl Bennet (purchase Jan 2013)">Retired by ZeroMission on behalf of Carl Bennet (purchase Jan 2013)</p>
+</td>
+</tr><tr>
+<td>08 Aug 2014</td><td>2011</td><td>Trees for Global Benefits</td><td>&nbsp;</td><td>&nbsp;</td><td>Plan Vivo</td><td>Afforestation / Reforestation</td><td>64,469</td><td>PVC (tCO2e)</td><td>UNIT</td><td><a target="_BLANK" href="project.jsp?project_id=100000000000171">
+						View
+					</a></td>
+</tr><tr>
+<td colspan="5" style="border-top: 0px;">
+<p style="font-style: italic; color: #666;">
+						Serial No.:
+						PV-PVC-UG-100000000000171-01012011-31122011-2297219-2361687-MER-0-A</p>
+</td><td colspan="6" style="border-top: 0px;">
+<p class="remark" title="Retirement Remarks:
+Retired on behalf of Max Hamburger">Retired on behalf of Max Hamburger</p>
+</td>
+</tr><tr>
+<td>09 Sep 2013</td><td>2012</td><td>The CommuniTree Carbon Program (formerly Limay Community Carbon Project)</td><td>&nbsp;</td><td>&nbsp;</td><td>Plan Vivo</td><td>Forest</td><td>11</td><td>PVC (tCO2e)</td><td>UNIT</td><td><a target="_BLANK" href="project.jsp?project_id=100000000000609">
+						View
+					</a></td>
+</tr><tr>
+<td colspan="5" style="border-top: 0px;">
+<p style="font-style: italic; color: #666;">
+						Serial No.:
+						PV-PVC-NI-100000000000609-01012012-31122012-2427884-2427894-MER-0-A</p>
+</td><td colspan="6" style="border-top: 0px;">
+<p class="remark" title="Retirement Remarks:
+Tree sponsorships (Indiegogo campaign, monthly PayPal contributions) from 12 February - 31 July 2013">Tree sponsorships (Indiegogo campaign, monthly PayPal contributions) from 12 February - 31 July 2013</p>
+</td>
+</tr><tr>
+<td>15 Mar 2013</td><td>2010</td><td>Trees of Hope</td><td>&nbsp;</td><td>&nbsp;</td><td>Plan Vivo</td><td>Afforestation / Reforestation</td><td>468</td><td>PVC (tCO2e)</td><td>UNIT</td><td><a target="_BLANK" href="project.jsp?project_id=100000000000781">
+						View
+					</a></td>
+</tr><tr>
+<td colspan="5" style="border-top: 0px;">
+<p style="font-style: italic; color: #666;">
+						Serial No.:
+						PV-PVC-MW-100000000000781-01012010-31122010-2218082-2218549-MER-0-A</p>
+</td><td colspan="6" style="border-top: 0px;">
+<p class="remark" title="Retirement Remarks:
+Retired on behalf of COTAP">Retired on behalf of COTAP</p>
+</td>
+</tr><tr>
+<td>21 Mar 2013</td><td>2012</td><td>The CommuniTree Carbon Program (formerly Limay Community Carbon Project)</td><td>&nbsp;</td><td>&nbsp;</td><td>Plan Vivo</td><td>Forest</td><td>1</td><td>PVC (tCO2e)</td><td>UNIT</td><td><a target="_BLANK" href="project.jsp?project_id=100000000000609">
+						View
+					</a></td>
+</tr><tr>
+<td colspan="5" style="border-top: 0px;">
+<p style="font-style: italic; color: #666;">
+						Serial No.:
+						PV-PVC-NI-100000000000609-01012012-31122012-2427809-2427809-MER-0-A</p>
+</td><td colspan="6" style="border-top: 0px;">
+<p class="remark" title="Retirement Remarks:
+Retired on behalf of McGill University's Montreal Green Business Awards">Retired on behalf of McGill University's Montreal Green Business Awards</p>
+</td>
+</tr><tr>
+<td>30 Dec 2016</td><td>2012</td><td>Trees for Global Benefits</td><td>&nbsp;</td><td>&nbsp;</td><td>Plan Vivo</td><td>Afforestation / Reforestation</td><td>3,400</td><td>PVC (tCO2e)</td><td>UNIT</td><td><a target="_BLANK" href="project.jsp?project_id=100000000000171">
+						View
+					</a></td>
+</tr><tr>
+<td colspan="5" style="border-top: 0px;">
+<p style="font-style: italic; color: #666;">
+						Serial No.:
+						PV-PVC-UG-100000000000171-01012012-31122012-2570829-2574228-MER-0-A</p>
+</td><td colspan="6" style="border-top: 0px;">
+<p class="remark" title="Retirement Remarks:
+Retired by ZeroMission on behalf of Fritidsresor (purchase July 2012).">Retired by ZeroMission on behalf of Fritidsresor (purchase July 2012).</p>
+</td>
+</tr><tr>
+<td>06 Jun 2013</td><td>2012</td><td>The CommuniTree Carbon Program (formerly Limay Community Carbon Project)</td><td>&nbsp;</td><td>&nbsp;</td><td>Plan Vivo</td><td>Forest</td><td>6</td><td>PVC (tCO2e)</td><td>UNIT</td><td><a target="_BLANK" href="project.jsp?project_id=100000000000609">
+						View
+					</a></td>
+</tr><tr>
+<td colspan="5" style="border-top: 0px;">
+<p style="font-style: italic; color: #666;">
+						Serial No.:
+						PV-PVC-NI-100000000000609-01012012-31122012-2427860-2427865-MER-0-A</p>
+</td><td colspan="6" style="border-top: 0px;">
+<p class="remark" title="Retirement Remarks:
+Retired on behalf of Cascades (for the eco-friendly program at John Abbott's Men's Basketball National Championship 2013)">Retired on behalf of Cascades (for the eco-friendly program at John Abbott's Men's Basketball National Championship 2013)</p>
+</td>
+</tr><tr>
+<td>06 Jun 2013</td><td>2012</td><td>The CommuniTree Carbon Program (formerly Limay Community Carbon Project)</td><td>&nbsp;</td><td>&nbsp;</td><td>Plan Vivo</td><td>Forest</td><td>1</td><td>PVC (tCO2e)</td><td>UNIT</td><td><a target="_BLANK" href="project.jsp?project_id=100000000000609">
+						View
+					</a></td>
+</tr><tr>
+<td colspan="5" style="border-top: 0px;">
+<p style="font-style: italic; color: #666;">
+						Serial No.:
+						PV-PVC-NI-100000000000609-01012012-31122012-2427866-2427866-MER-0-A</p>
+</td><td colspan="6" style="border-top: 0px;">
+<p class="remark" title="Retirement Remarks:
+Retired on behalf of CDEC Rosemont-Petite Patrie (&eacute;v&egrave;nements 2012)">Retired on behalf of CDEC Rosemont-Petite Patrie (&eacute;v&egrave;nements 2012)</p>
+</td>
+</tr><tr>
+<td>06 Jun 2013</td><td>2012</td><td>The CommuniTree Carbon Program (formerly Limay Community Carbon Project)</td><td>&nbsp;</td><td>&nbsp;</td><td>Plan Vivo</td><td>Forest</td><td>3</td><td>PVC (tCO2e)</td><td>UNIT</td><td><a target="_BLANK" href="project.jsp?project_id=100000000000609">
+						View
+					</a></td>
+</tr><tr>
+<td colspan="5" style="border-top: 0px;">
+<p style="font-style: italic; color: #666;">
+						Serial No.:
+						PV-PVC-NI-100000000000609-01012012-31122012-2427867-2427869-MER-0-A</p>
+</td><td colspan="6" style="border-top: 0px;">
+<p class="remark" title="Retirement Remarks:
+Retired on behalf of Island Instrument Manufacture">Retired on behalf of Island Instrument Manufacture</p>
+</td>
+</tr><tr>
+<td>18 Feb 2014</td><td>2011</td><td>ArBolivia</td><td>&nbsp;</td><td>&nbsp;</td><td>Plan Vivo</td><td>Afforestation / Reforestation</td><td>307</td><td>PVC (tCO2e)</td><td>UNIT</td><td><a target="_BLANK" href="project.jsp?project_id=100000000000695">
+						View
+					</a></td>
+</tr><tr>
+<td colspan="5" style="border-top: 0px;">
+<p style="font-style: italic; color: #666;">
+						Serial No.:
+						PV-PVC-BO-100000000000695-01012011-31122011-2115878-2116184-MER-0-A</p>
+</td><td colspan="6" style="border-top: 0px;">
+<p class="remark" title="Retirement Remarks:
+Retired on behalf of Nordnet">Retired on behalf of Nordnet</p>
+</td>
+</tr><tr>
+<td>07 Aug 2013</td><td>2012</td><td>The CommuniTree Carbon Program (formerly Limay Community Carbon Project)</td><td>&nbsp;</td><td>&nbsp;</td><td>Plan Vivo</td><td>Forest</td><td>3</td><td>PVC (tCO2e)</td><td>UNIT</td><td><a target="_BLANK" href="project.jsp?project_id=100000000000609">
+						View
+					</a></td>
+</tr><tr>
+<td colspan="5" style="border-top: 0px;">
+<p style="font-style: italic; color: #666;">
+						Serial No.:
+						PV-PVC-NI-100000000000609-01012012-31122012-2427874-2427876-MER-0-A</p>
+</td><td colspan="6" style="border-top: 0px;">
+<p class="remark" title="Retirement Remarks:
+Retired on behalf of Coop Mille et une fa&ccedil;ons">Retired on behalf of Coop Mille et une fa&ccedil;ons</p>
+</td>
+</tr><tr>
+<td>28 Aug 2013</td><td>2012</td><td>The CommuniTree Carbon Program (formerly Limay Community Carbon Project)</td><td>&nbsp;</td><td>&nbsp;</td><td>Plan Vivo</td><td>Forest</td><td>2</td><td>PVC (tCO2e)</td><td>UNIT</td><td><a target="_BLANK" href="project.jsp?project_id=100000000000609">
+						View
+					</a></td>
+</tr><tr>
+<td colspan="5" style="border-top: 0px;">
+<p style="font-style: italic; color: #666;">
+						Serial No.:
+						PV-PVC-NI-100000000000609-01012012-31122012-2427877-2427878-MER-0-A</p>
+</td><td colspan="6" style="border-top: 0px;">
+<p class="remark" title="Retirement Remarks:
+Tree sponsorships from May - September 2012">Tree sponsorships from May - September 2012</p>
+</td>
+</tr><tr>
+<td>09 Sep 2013</td><td>2012</td><td>The CommuniTree Carbon Program (formerly Limay Community Carbon Project)</td><td>&nbsp;</td><td>&nbsp;</td><td>Plan Vivo</td><td>Forest</td><td>5</td><td>PVC (tCO2e)</td><td>UNIT</td><td><a target="_BLANK" href="project.jsp?project_id=100000000000609">
+						View
+					</a></td>
+</tr><tr>
+<td colspan="5" style="border-top: 0px;">
+<p style="font-style: italic; color: #666;">
+						Serial No.:
+						PV-PVC-NI-100000000000609-01012012-31122012-2427879-2427883-MER-0-A</p>
+</td><td colspan="6" style="border-top: 0px;">
+<p class="remark" title="Retirement Remarks:
+Retired on behalf of Phil Communications, 2012 carbon footprint">Retired on behalf of Phil Communications, 2012 carbon footprint</p>
+</td>
+</tr><tr>
+<td>18 Mar 2019</td><td>2013</td><td>The CommuniTree Carbon Program (formerly Limay Community Carbon Project)</td><td>&nbsp;</td><td>myclimate</td><td>Plan Vivo</td><td>Forest</td><td>4,039</td><td>PVC (tCO2e)</td><td>UNIT</td><td><a target="_BLANK" href="project.jsp?project_id=100000000000609">
+						View
+					</a></td>
+</tr><tr>
+<td colspan="5" style="border-top: 0px;">
+<p style="font-style: italic; color: #666;">
+						Serial No.:
+						PV-PVC-NI-100000000000609-01012013-31122013-2706929-2710967-MER-0-A</p>
+</td><td colspan="6" style="border-top: 0px;">
+<p class="remark" title="Retirement Remarks:
+Stilllegung 2018">Stilllegung 2018</p>
+</td>
+</tr>
+
+							
+							
+							
+							
+							
+						
+					</table>
+					<div class="row">
+						<div class="col-md-12 text-left">
+							
+								
+								
+								
+								
+								
+									<small>Retirement of a unit: The permanent removal of a credit from circulation in the registry system.</small><br/><br/>
+								
+								
+								
+								
+								
+							
+						</div>
+					</div>
+					<ul class="pager">
+						
+							<li class="previous disabled"><a>&larr; Previous</a>
+							
+						
+						</li>
+						<li id="page_no"></li>
+						<li id="next_pager"  align="right" class="next">
+						<a href="?entity=retirement&amp;srd=false&amp;name=&amp;standardId=100000000000004&amp;acronym=&amp;additionalCertificationId=&amp;unitClass=&amp;sort=account_name&amp;dir=ASC&amp;start=15&amp;categoryId=">Next &rarr;</a>
+						</li>
+					</ul>
+					
+				</div>
+			</div>
+
+		<div id="FooterSection">
+<div id="FooterInlineLeft">
+	<div id="FooterBottomLinks">
+		<a class="FooterTextwhite" href="https://ihsmarkit.com/Legal/modern-slavery-statement.html" target="_blank">Modern Slavery Act Statement</a>
+		<div class="FooterTextwhite">|</div>
+		<a class="FooterTextwhite" href="https://ihsmarkit.com/Legal/privacy.html" target="_blank">Privacy</a>
+		<div class="FooterTextwhite">|</div>
+		<a class="FooterTextwhite" href="https://ihsmarkit.com/legal/terms-of-use.html" target="_blank">Terms of Use</a>
+		<div class="FooterTextwhite">|</div>
+		<a class="FooterTextwhite" href="https://ihsmarkit.com/Legal/disclaimers.html" target="_blank">Disclaimer</a>
+		<!-- <div class="FooterTextwhite">|</div>
+		<a class="FooterTextwhite" href="https://ihsmarkit.com/Legal/index.html" target="_blank">Legal</a> -->
+	</div>
+	<div id="FooterCopyright">
+		 &copy; 2026&nbsp;
+		S&P Global. All rights reserved. Reproduction in whole or part without permission is prohibited.
+	</div>
+	</div> 
+	<div id="FooterInlineRight"> 
+		<div id="FooterIhsLogoImage"></div>
+		<h1 id="FooterHeadingRight">S&P Global</h1>
+	</div> 
+</div> 
+
+		</div>
+		<script>
+		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+		  ga('create', 'UA-83302622-1', 'auto');
+		  ga('send', 'pageview');
+
+
+		</script>
+		
+		<!--Google Anlaytics tracking--> 
+	   <script type="text/javascript"> 
+	                try { 
+	                                var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www."); 
+	                                document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E")); 
+	                } 
+	                catch (err) {} 
+	    </script> 
+	    <script type="text/javascript"> 
+	                try { 
+	                                var pageTracker = _gat._getTracker("UA-4483294-1"); 
+	                                pageTracker._initData(); 
+	                                pageTracker._setDomainName('markit.com'); 
+	                                pageTracker._setAllowLinker(true); 
+	                                pageTracker._trackPageview();} 
+	                catch (err) {} 
+	    </script>
+     
+	</body>
+</html>

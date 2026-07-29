@@ -205,6 +205,59 @@ def target(registry: str = settings.VERRA) -> type:
     return cls
 
 
+#: A bare platform tenant code, as the app's own bundle spells them: `UKLR`,
+#: `OxCP`. Deliberately narrow — it is checked only after the adapter lookup
+#: has failed, so it must not swallow a mistyped registry name and turn it
+#: into a request.
+_TENANT_CODE = re.compile(r"[A-Za-z]{2,12}")
+
+
+def standards_target(registry: str) -> tuple[str, str]:
+    """`(registry_code, config_url)` for the standards lookup.
+
+    Two kinds of argument, and the difference matters:
+
+    * **A registry we have an adapter for** (`verra`, `planvivo`) — its own
+      code and its own routing table, so nothing about it is assumed.
+    * **A bare tenant code** we have no adapter for (`UKLR`, `GCC`, ...).
+      Naming one of those is the entire point of this command: the lookup is
+      unauthenticated, costs one GET, and is the only published source of a
+      registry's real `standardId`. `settings.PLATTS_TENANT_CODES` lists the
+      ones the app declares, but any code is allowed — the table is a
+      convenience, not a gate.
+
+    A bare code reads the multi-registry app's routing table, because
+    `registry.spglobal.com` is the site that serves every tenant without a
+    domain of its own. Verra has one, which is why its adapter carries a
+    different `config_url` and why that is read from the class rather than
+    assumed here.
+    """
+    from .. import adapter_class
+
+    try:
+        cls = adapter_class(registry)
+    except ValueError:
+        code = registry.strip()
+        if not _TENANT_CODE.fullmatch(code):
+            raise ValueError(
+                f"{registry!r} is neither a registry we have an adapter for nor "
+                f"a plausible S&P tenant code. Known codes: "
+                f"{', '.join(settings.PLATTS_TENANT_CODES)}"
+            ) from None
+        # Sent exactly as typed. The app spells its codes in mixed case
+        # (`OxCP`) and nothing says the lookup is case-insensitive.
+        return code, settings.PV_ENVIRONMENT_CONFIG_URL
+
+    from .api import PlattsAPI
+
+    if not issubclass(cls, PlattsAPI):
+        raise ValueError(
+            f"{registry} is not on the S&P Platts platform, so it publishes no "
+            f"`standardId`. That lookup is the platform's, not a general one."
+        )
+    return cls.registry_code, cls.config_url
+
+
 # -- the capture itself -----------------------------------------------------
 
 def discover(

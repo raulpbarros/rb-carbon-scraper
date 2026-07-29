@@ -274,6 +274,93 @@ reading `ISSUED` — not 350 separate issuance events.
 
 ---
 
+## Plan Vivo V4 — the other half of Plan Vivo, added 2026-07-29
+
+**Plan Vivo is two registries.** The section above describes **PV Climate**,
+the Plan Vivo Standard **V5** system launched on S&P in 2025 — 2 projects, and
+that really is all of it. Everything certified under **V4** and earlier is on
+a different platform entirely: the legacy Markit Environmental Registry
+(`mer.markit.com`), which S&P inherited with IHS Markit.
+
+That is **30 more projects**, so the sheet's Plan Vivo rows go from 2 to 32.
+Credits go from 27 issuances and no retirements at all to 411 issuances, 442
+holdings and **5,034 retirements**.
+
+Both eras appear under the one registry name **Plan Vivo**, as agreed. The
+`Standard` column is what tells them apart:
+
+| `Standard` reads | means | rows |
+|---|---|---|
+| `PV Climate` | Plan Vivo Standard V5, on S&P | 2 |
+| `Plan Vivo Standard V4` | V4 and earlier, on legacy Markit | 30 |
+
+Where V4 sources differently from V5:
+
+| Column | V4 |
+|---|---|
+| `Tipo Macro de Projeto` | the registry's own wider vocabulary — "REDD", "Improved forest management", "Forest Conservation & Avoided Deforestation", "Forest Restoration", "Agriculture land management", "Forest". Untranslated, as every registry's is |
+| `Estado` | **published** (V5 publishes it too; Gold Standard does not) |
+| `Total Credits Retired` | a real ledger with 5,034 rows, where V5's is genuinely empty |
+| `Total Credits Cancelled` | the ledger exists and is empty — **blank, not zero** |
+| `Data de Início` / `Data de Término` / `Duração` | **not published — blank (0 of 30).** The legacy registry states no crediting period anywhere, on the listing or the project page |
+| `Additional Certification` | published, and rare — **1 of 30**. Sofala carries "Climate, Community and Biodiversity" |
+| `Metodologia`, `Cidade`, `Yearly Ex Ante`, `Total Ex Ante` | **not published — blank** |
+
+### Two things in V4's data the business should know about
+
+**1. Six projects have retired more credits than the registry says were
+issued.** This is not a scraping gap — the issuance feed was queried directly
+for the worst case and returns nothing:
+
+| Project | Issued | Retired |
+|---|---:|---:|
+| Sofala Community Carbon Project (formerly N'hambita) | **0** | 273,836 |
+| Scolel té | 1,059,528 | 1,390,330 |
+| Emiti Nibwo Bulora | 71,240 | 77,484 |
+| Rarakau Rainforest Carbon Project | 20,734 | 24,455 |
+| Hiniduma Biolink Project | 3,255 | 3,731 |
+| HALO VERDE TIMOR COMMUNITY FOREST CARBON | 42,164 | 42,488 |
+
+Nothing has been back-computed to make these balance. `Total Credits Issued`
+shows what the registry publishes, which for Sofala is nothing at all. The
+likely explanation is issuances predating this registry's own records, but
+that is a guess and is not written into any cell. **If the business needs
+these six reconciled, it is a question for Plan Vivo.**
+
+**2. Some V4 projects share one row in the sheet.** The registry publishes
+several rows under a single project id — sub-projects of one "master" project,
+or simply the same project twice. Those become one row, with the distinct
+project types joined by `; `. Scolel té is the visible case: it reads
+"Forest Conservation & Avoided Deforestation; Afforestation / Reforestation",
+and because that is two categories at once its `Tipo Micro de Projeto` is left
+blank rather than forced into one. **35 published rows are 30 projects.**
+
+---
+
+## Verra JNR — a second Verra standard, added 2026-07-29
+
+Verra publishes six standards and the scraper read one. **JNR** —
+Jurisdictional and Nested REDD+ — is now read too, because its credits are
+tCO2e and therefore comparable with VCS. It adds **5 projects**, jurisdictional
+programmes such as ACRE (Brazil) and Chocó (Colombia). They appear under the
+registry name **Verra**, with `Standard` reading
+"Jurisdictional and Nested REDD+ Framework".
+
+**All four of their credit columns are blank.** JNR publishes no issuances,
+holdings, retirements or cancellations at all — the programmes are registered
+and have issued nothing. Blank, not zero.
+
+The four standards deliberately left out, so nobody has to re-ask:
+
+| | why not |
+|---|---|
+| **CCBS** (Climate, Community & Biodiversity) | a **co-certification of VCS projects**, not separate projects. Including it would count the same project twice. It already appears in `Additional Certification` |
+| **SDVISTA** | SDG impact units, not tCO2e |
+| **PWRS** | plastic waste units, not tCO2e |
+| **S3S** (Scope 3) | publishes projects only, no credits |
+
+---
+
 ## Data-quality note: why retirement totals come from a different route
 
 Three of the four Units ledgers download completely and reconcile exactly

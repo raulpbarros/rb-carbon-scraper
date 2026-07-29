@@ -20,6 +20,12 @@ def _verra() -> type:
     return VerraAPI
 
 
+def _verra_jnr() -> type:
+    from .verra.jnr import VerraJNRAPI
+
+    return VerraJNRAPI
+
+
 def _goldstandard() -> type:
     from .goldstandard.api import GoldStandardAPI
 
@@ -38,17 +44,32 @@ def _planvivo() -> type:
     return PlanVivoAPI
 
 
-#: registry identifier -> a callable that imports and returns its adapter class.
+def _planvivo_v4() -> type:
+    from .planvivo.v4 import PlanVivoV4API
+
+    return PlanVivoV4API
+
+
+#: registry identifier -> the adapters that publish it, in scrape order.
+#:
 #: A table rather than a chain of `if`s on purpose: the old fall-through
 #: returned the Gold Standard adapter for any registry it did not recognise,
 #: so a registry added to ALIASES but forgotten here scraped Gold Standard and
 #: stored the rows under the new registry's name — wrong data, and no error
 #: anywhere to notice it by.
-ADAPTERS: dict[str, Callable[[], type]] = {
-    settings.VERRA: _verra,
-    settings.GOLD_STANDARD: _goldstandard,
-    settings.CERCARBONO: _cercarbono,
-    settings.PLAN_VIVO: _planvivo,
+#:
+#: **A registry can have more than one adapter**, because a registry is not
+#: always one system or one standard. Plan Vivo publishes its V5 projects on
+#: S&P Platts and its V4 ones on the legacy Markit registry; Verra publishes
+#: VCS and JNR as two standards on one tenant. In both cases the rows belong
+#: under one `registry` column and one checkbox. The first entry is the
+#: primary — it is the one `discover` drives and the one whose
+#: `detail_url_template` a bare row falls back to.
+ADAPTERS: dict[str, tuple[Callable[[], type], ...]] = {
+    settings.VERRA: (_verra, _verra_jnr),
+    settings.GOLD_STANDARD: (_goldstandard,),
+    settings.CERCARBONO: (_cercarbono,),
+    settings.PLAN_VIVO: (_planvivo, _planvivo_v4),
 }
 
 # --registry accepts either the stored value or a short alias.
@@ -85,24 +106,51 @@ def resolve(name: str) -> str:
     return resolved
 
 
-def adapter_class(registry: str) -> type:
-    """The adapter class for `registry`, imported on demand.
+def adapter_classes(registry: str) -> tuple[type, ...]:
+    """Every adapter class publishing `registry`, imported on demand.
 
-    Separate from `adapter()` because `discover` needs the class's declared
-    URLs without constructing a client and opening a connection.
+    Separate from `adapters()` because `discover` and the packaging bundle need
+    the classes' declared URLs and module names without constructing a client
+    and opening a connection.
     """
     registry = resolve(registry)
     try:
-        loader = ADAPTERS[registry]
+        loaders = ADAPTERS[registry]
     except KeyError:  # pragma: no cover - resolve() rejects unknown names first
         raise ValueError(
             f"{registry} has no adapter registered in registries.ADAPTERS."
         ) from None
-    return loader()
+    return tuple(loader() for loader in loaders)
+
+
+def adapter_class(registry: str) -> type:
+    """The **primary** adapter class for `registry`.
+
+    Where a registry is published across more than one system this is the first
+    one listed — the tenant `discover` drives and the one a project row falls
+    back to for its public URL. Anything that must cover the whole registry
+    (scraping, packaging) uses `adapter_classes` instead; a caller that wants
+    one system's contract wants this.
+    """
+    return adapter_classes(registry)[0]
+
+
+def adapters(registry: str, **kwargs: Any) -> tuple[RegistryAdapter, ...]:
+    """Construct every adapter publishing `registry`."""
+    return tuple(cls(**kwargs) for cls in adapter_classes(registry))
 
 
 def adapter(registry: str, **kwargs: Any) -> RegistryAdapter:
+    """Construct the primary adapter. See `adapter_class`."""
     return adapter_class(registry)(**kwargs)
 
 
-__all__ = ["ALL", "RegistryAdapter", "adapter", "adapter_class", "resolve"]
+__all__ = [
+    "ALL",
+    "RegistryAdapter",
+    "adapter",
+    "adapter_class",
+    "adapter_classes",
+    "adapters",
+    "resolve",
+]

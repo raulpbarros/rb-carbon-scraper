@@ -49,12 +49,21 @@ def test_every_registry_adapter_is_bundled(bundle):
     """
     hidden = bundle.hidden_imports()
     for name in registries.ALL:
-        assert registries.adapter_class(name).__module__ in hidden
+        for cls in registries.adapter_classes(name):
+            assert cls.__module__ in hidden
 
 
 def test_the_adapter_list_is_derived_not_typed(bundle):
     """Adding a registry must not require editing the packaging."""
-    assert len(bundle.hidden_imports()) == len(registries.ALL)
+    expected = {
+        cls.__module__
+        for name in registries.ALL
+        for cls in registries.adapter_classes(name)
+    }
+    assert len(bundle.hidden_imports()) == len(expected)
+    # A registry published across two systems contributes two modules, so this
+    # is deliberately not `len(registries.ALL)` any more.
+    assert len(expected) > len(registries.ALL)
 
 
 def test_the_diagnostic_is_not_shipped(bundle):

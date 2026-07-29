@@ -7,14 +7,53 @@ run against Verra: the Phase-2 move of the paging code into
 
 from __future__ import annotations
 
+from carbon_scraper import http_client, settings
 from carbon_scraper.registries.platts import discovery
 from carbon_scraper.registries.verra import api
+from carbon_scraper.registries.verra.jnr import VerraJNRAPI
 
 
 def test_registry_headers_are_present():
     """Without these four headers every call is a misleading HTTP 500."""
     for header in ("registry", "standardid", "standardacronym", "language"):
         assert header in api.REGISTRY_HEADERS
+
+
+# -- two standards on one tenant -------------------------------------------
+
+
+def test_jnr_differs_from_vcs_only_in_the_standard():
+    """One registry, one platform, two standards. Three attributes apart."""
+    assert VerraJNRAPI.registry == api.VerraAPI.registry == settings.VERRA
+    assert VerraJNRAPI.registry_code == api.VerraAPI.registry_code
+    assert VerraJNRAPI.standard_id == settings.VERRA_JNR_STANDARD_ID
+    assert VerraJNRAPI.standard_id != api.VerraAPI.standard_id
+
+
+def test_the_cache_key_separates_two_standards_on_one_url():
+    """The header is the only thing that says which standard was asked for.
+
+    VCS and JNR POST an identical body to an identical URL and differ only in
+    `standardid`. With headers left out of the cache key the second standard
+    scraped in a run serves the first one's responses — 5,247 JNR projects,
+    every one of them VCS, `standard_name` reading "Verified Carbon Standard",
+    and nothing raised anywhere.
+    """
+    url = "https://prod-us.api.platts.com/x/project/publicReportPageSearch"
+    body = {"searchFilter": {"pagination": {"start": 0}}}
+
+    vcs = http_client._cache_key("POST", url, body, api.VerraAPI.registry_headers())
+    jnr = http_client._cache_key("POST", url, body, VerraJNRAPI.registry_headers())
+    assert vcs != jnr
+
+
+def test_the_cache_key_ignores_headers_that_are_not_identity():
+    """A correlation id changes per call; it must not defeat the cache."""
+    url = "https://example.invalid/x"
+    base = {"registry": "VERRA", "standardid": "1"}
+    assert http_client._cache_key("GET", url, None, base) == http_client._cache_key(
+        "GET", url, None, {**base, "x-correlation-id": "whatever"}
+    )
 
 
 def test_text_equals_builds_the_filter_shape_the_api_expects():

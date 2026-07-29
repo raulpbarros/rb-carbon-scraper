@@ -55,9 +55,19 @@ def datas(*, seed: Path | None = None) -> list[tuple[str, str]]:
 
 
 def hidden_imports() -> list[str]:
-    """Every registry adapter module, asked of the dispatch table."""
+    """Every registry adapter module, asked of the dispatch table.
+
+    `adapter_classes`, not `adapter_class`: a registry published across two
+    systems has two adapter modules, and shipping only the primary one gives
+    an EXE that scrapes half a registry and raises ModuleNotFoundError for the
+    rest — on a machine with no console to read it in.
+    """
     return sorted(
-        registries.adapter_class(name).__module__ for name in registries.ALL
+        {
+            cls.__module__
+            for name in registries.ALL
+            for cls in registries.adapter_classes(name)
+        }
     )
 
 

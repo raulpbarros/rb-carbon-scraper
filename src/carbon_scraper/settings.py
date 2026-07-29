@@ -144,10 +144,15 @@ REGISTRY_LABELS = {
 # says so. It does not guess, and it does not silently omit the registry from
 # the total.
 SYNC_ESTIMATE_MINUTES = {
-    VERRA: 150,
+    # VCS, plus JNR on the same tenant.
+    VERRA: 155,
     GOLD_STANDARD: 120,
     CERCARBONO: 4,
-    PLAN_VIVO: 1,
+    # Two systems, and the second is the expensive one. V5 on S&P is 7
+    # requests; V4 on the legacy Markit view is ~440, because that view pages
+    # 15 rows at a time and ignores any `limit` asked of it — 5,034
+    # retirements alone are 336 pages. Measured 2026-07-29 on a cold cache.
+    PLAN_VIVO: 10,
 }
 
 # The exact-totals pass, on top of Verra's sync. One request per project with
@@ -162,6 +167,17 @@ VERRA_TOTALS_ESTIMATE_MINUTES = 175
 # Only hosts we are willing to record or call.
 API_HOST = "prod-us.api.platts.com"
 PLATTS_BASE = f"https://{API_HOST}/ci-raas-prod"
+
+# The tenants the multi-registry app declares in its own `app.js`. These are
+# platform codes, not registries we support: several are almost certainly not
+# carbon registries at all, and none of them has an adapter. They are listed
+# so `verra standards -r all` can name each in one unauthenticated GET, which
+# is the cheapest way to find out whether a registry we want is already on a
+# platform we already speak.
+#
+# `BCCR` is the BC Carbon Registry (British Columbia), NOT BioCarbon —
+# established by this lookup in Phase 2, after the plan assumed otherwise.
+PLATTS_TENANT_CODES = ("VERRA", "UKLR", "RAAS", "PVCL", "OxCP", "KRR", "GCC", "BCCR")
 
 # --- Verra ----------------------------------------------------------------
 
@@ -200,6 +216,13 @@ FALLBACK_HEADERS = {
 
 PROGRAM = "VCS"
 
+# The VERRA tenant publishes six standards; two are ingested. See
+# registries/verra/jnr.py for why the other four are not, which is a decision
+# and not an omission. Read from the platform's own standards lookup
+# (`verra standards -r verra`), never guessed.
+VERRA_JNR_STANDARD_ID = "150000000000002"
+VERRA_JNR_ACRONYM = "JNR"
+
 # --- Plan Vivo ------------------------------------------------------------
 # Same platform, same backend, same request shape as Verra. Only the three
 # identity headers differ. Measured 2026-07-28; see
@@ -221,6 +244,23 @@ PV_PROJECT_DETAIL_URL = f"{PV_PUBLIC_SEARCH_URL}/projects/{{project_id}}"
 PV_REGISTRY_CODE = "PVCL"
 PV_STANDARD_ID = "671000000000001"
 PV_STANDARD_ACRONYM = "PV"
+
+# --- Plan Vivo V4, on the legacy Markit registry --------------------------
+# The other half of Plan Vivo, and a different platform entirely. PV Climate
+# on S&P is the V5 system launched in 2025; everything certified under V4 and
+# earlier is still on the Markit Environmental Registry. Measured 2026-07-29;
+# see docs/api-contract-markit.md and registries/planvivo/v4.py.
+#
+# Read from the view's own programme dropdown, not guessed. It is the same id
+# an old Markit URL suggested during planning — which returned no rows against
+# S&P, because it was never an S&P id.
+
+PV4_STANDARD_ID = "100000000000004"
+
+# Stored in `projects.standard_name`. Both eras sit under one PLAN_VIVO
+# registry (user's decision, 2026-07-29), so this is the only thing that tells
+# a V4 row from a V5 one — V5 rows read "PV Climate".
+PV4_STANDARD_LABEL = "Plan Vivo Standard V4"
 
 # --- Gold Standard --------------------------------------------------------
 # Plain unauthenticated REST. Measured 2026-07-28; see docs/api-contract-gs.md.

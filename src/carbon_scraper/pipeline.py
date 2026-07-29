@@ -194,72 +194,107 @@ def sync_one(
     with db.session() as conn:
         run_id = db.start_run(conn, "sync", registry)
         try:
-            with registries.adapter(registry, cancel=cancel) as client:
-                total = client.project_total()
-                sink.message(f"{name} reports {total:,} projects.")
+            # A registry can be published across more than one system — Plan
+            # Vivo's V5 projects are on S&P Platts and its V4 ones on the
+            # legacy Markit registry. Each is scraped in turn and its rows land
+            # under the same `registry`, which is what makes them one registry
+            # to the database, the sheet and the checkbox.
+            for client in registries.adapters(registry, cancel=cancel):
+                with client:
+                    _sync_adapter(
+                        conn,
+                        registry,
+                        client,
+                        counts=counts,
+                        limit=limit,
+                        projects_only=projects_only,
+                        sink=sink,
+                    )
 
-                progress = _Throttle(sink, registry, "projects", limit or total)
-                counts["projects"] = db.upsert_projects(
-                    conn,
-                    registry,
-                    client.iter_projects(max_records=limit, progress=progress),
-                )
-                progress.final(counts["projects"])
+            # Every ledger of every system has now been scraped in full, so the
+            # buckets the installer shipped are superseded by real rows. Only
+            # then: `--limit` is a smoke test and `--projects-only` touches no
+            # ledger, and dropping the seed after either would leave the credit
+            # columns reading a partial scrape. Outside the loop for the same
+            # reason — one system's ledgers are not the registry's.
+            if limit is None and not projects_only:
+                dropped = db.clear_seed_totals(conn, registry)
                 conn.commit()
-                sink.message(f"{name} projects: {counts['projects']:,}")
-
-                if not projects_only:
-                    for resource in client.ledgers:
-                        expected = client.count(resource)
-                        progress = _Throttle(sink, registry, resource, limit or expected)
-                        counts[resource] = db.upsert_credit_events(
-                            conn,
-                            registry,
-                            resource,
-                            client.iter_credits(
-                                resource, max_records=limit, progress=progress
-                            ),
-                        )
-                        progress.final(counts[resource])
-
-                        # A registry that publishes its own per-project totals
-                        # gets them stored too: they outrank summed rows, and
-                        # they are the number the business reconciles against.
-                        stated = base.credit_totals_of(client, resource)
-                        if stated is not None:
-                            written = db.upsert_credit_totals(
-                                conn, registry, resource, stated
-                            )
-                            if written:
-                                sink.message(
-                                    f"{name} {resource}: {written:,} project totals "
-                                    f"stated by the registry."
-                                )
-
-                        conn.commit()
-                        sink.message(
-                            f"{name} {resource}: {counts[resource]:,} "
-                            f"(registry reports {expected:,})"
-                        )
-
-                    # Every ledger has now been scraped in full, so the buckets
-                    # the installer shipped are superseded by real rows. Only
-                    # then: `--limit` is a smoke test and `--projects-only`
-                    # touches no ledger, and dropping the seed after either
-                    # would leave the credit columns reading a partial scrape.
-                    if limit is None:
-                        dropped = db.clear_seed_totals(conn, registry)
-                        conn.commit()
-                        if dropped:
-                            sink.message(
-                                f"{name}: replaced {dropped:,} shipped credit totals "
-                                f"with scraped ledgers."
-                            )
+                if dropped:
+                    sink.message(
+                        f"{name}: replaced {dropped:,} shipped credit totals "
+                        f"with scraped ledgers."
+                    )
             db.finish_run(conn, run_id, ok=True, counts=counts)
         except Exception as exc:  # noqa: BLE001 - record the failure, then surface it
             db.finish_run(conn, run_id, ok=False, counts=counts, error=str(exc))
             raise
     return counts
+
+
+def _sync_adapter(
+    conn: Any,
+    registry: str,
+    client: Any,
+    *,
+    counts: dict[str, int],
+    limit: int | None,
+    projects_only: bool,
+    sink: ProgressSink,
+) -> None:
+    """Scrape one system of one registry, accumulating into `counts`.
+
+    Counts are added rather than assigned: two systems both yield `projects`,
+    and the registry's project count is the sum of them. `limit` applies per
+    system, which is what a smoke test wants — 25 rows from each — rather than
+    a budget one system could exhaust before the other is reached.
+    """
+    name = label(registry)
+    system = getattr(client, "system_label", None) or name
+
+    total = client.project_total()
+    sink.message(f"{system} reports {total:,} projects.")
+
+    progress = _Throttle(sink, registry, "projects", limit or total)
+    written = db.upsert_projects(
+        conn, registry, client.iter_projects(max_records=limit, progress=progress)
+    )
+    progress.final(written)
+    counts["projects"] = counts.get("projects", 0) + written
+    conn.commit()
+    sink.message(f"{system} projects: {written:,}")
+
+    if projects_only:
+        return
+
+    for resource in client.ledgers:
+        expected = client.count(resource)
+        progress = _Throttle(sink, registry, resource, limit or expected)
+        written = db.upsert_credit_events(
+            conn,
+            registry,
+            resource,
+            client.iter_credits(resource, max_records=limit, progress=progress),
+        )
+        progress.final(written)
+        counts[resource] = counts.get(resource, 0) + written
+
+        # A registry that publishes its own per-project totals gets them stored
+        # too: they outrank summed rows, and they are the number the business
+        # reconciles against.
+        stated = base.credit_totals_of(client, resource)
+        if stated is not None:
+            stored = db.upsert_credit_totals(conn, registry, resource, stated)
+            if stored:
+                sink.message(
+                    f"{system} {resource}: {stored:,} project totals "
+                    f"stated by the registry."
+                )
+
+        conn.commit()
+        sink.message(
+            f"{system} {resource}: {written:,} (registry reports {expected:,})"
+        )
 
 
 # --- exact Verra totals ---------------------------------------------------

@@ -115,7 +115,10 @@ def discover(
 @app.command()
 def standards(
     registry: str = typer.Option(
-        "verra", "--registry", "-r", help="An S&P registry code or name."
+        "verra",
+        "--registry",
+        "-r",
+        help="A registry name, a bare S&P tenant code (UKLR, GCC), or `all`.",
     ),
     verbose: bool = typer.Option(False, "--verbose", "-v"),
 ) -> None:
@@ -129,30 +132,52 @@ def standards(
 
     `publicReportExport` in the output says which ledgers the registry exposes
     publicly, which is how a new adapter's ledger set is decided.
+
+    `-r all` sweeps every tenant code the multi-registry app declares, which is
+    how to find out whether a registry you are about to write a scraper for is
+    already on a platform this codebase speaks. It answers in eight GETs.
     """
     _setup_logging(verbose)
     from .http_client import RegistryClient
     from .registries.platts import api as platts
     from .registries.platts import discovery
 
-    cls = discovery.target(registry)
-    with RegistryClient() as client:
-        found = platts.standards_by_registry(
-            client, cls.registry_code, config_url=cls.config_url
-        )
+    codes = (
+        list(settings.PLATTS_TENANT_CODES)
+        if registry.strip().lower() == "all"
+        else [registry]
+    )
 
-    table = Table(title=f"{cls.registry_code} standards")
-    for column in ("standardId", "acronym", "name", "public reports"):
-        table.add_column(column)
-    for standard in found:
-        exports = standard.get("publicReportExport") or {}
-        table.add_row(
-            str(standard.get("id")),
-            str(standard.get("metaData") or ""),
-            str(standard.get("name") or ""),
-            ", ".join(sorted(k for k, v in exports.items() if v)) or "—",
-        )
-    console.print(table)
+    with RegistryClient() as client:
+        for name in codes:
+            code, config_url = discovery.standards_target(name)
+            try:
+                found = platts.standards_by_registry(
+                    client, code, config_url=config_url
+                )
+            except Exception as exc:  # noqa: BLE001 - a sweep must not stop dead
+                console.print(f"[red]{code}: {type(exc).__name__}: {exc}[/red]")
+                continue
+
+            if not found:
+                # Not nothing: an empty list is the platform saying this code
+                # publishes no standard, which is a finding about the tenant
+                # rather than a failed request.
+                console.print(f"[yellow]{code}: no standards published.[/yellow]")
+                continue
+
+            table = Table(title=f"{code} standards")
+            for column in ("standardId", "acronym", "name", "public reports"):
+                table.add_column(column)
+            for standard in found:
+                exports = standard.get("publicReportExport") or {}
+                table.add_row(
+                    str(standard.get("id")),
+                    str(standard.get("metaData") or ""),
+                    str(standard.get("name") or ""),
+                    ", ".join(sorted(k for k, v in exports.items() if v)) or "—",
+                )
+            console.print(table)
 
 
 @app.command()

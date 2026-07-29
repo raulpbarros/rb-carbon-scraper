@@ -84,6 +84,37 @@ rules:
     match: [{ field: sectoral_scope, equals: "Afforestation / Reforestation" }]
     value: "Média (25-100 anos) — estoque biológico, reversível"
 
+  # --- Plan Vivo V4 project types ------------------------------------------
+  # The V4 registry on legacy Markit publishes its own, wider vocabulary and —
+  # like V5 — no methodology and no AFOLU code, so every rule above misses it.
+  # Each wording is given the band its Verra equivalent already has: avoided
+  # deforestation carries reversal risk, improved forest management is a
+  # forest stock, restoration is a biological store.
+  - name: pv4-redd-avoided
+    match:
+      - field: sectoral_scope
+        in:
+          - "REDD"
+          - "Forest Conservation & Avoided Deforestation"
+          - "Reduced emissions from deforestation & degradation"
+    value: "Curta/Média — desmatamento evitado, alto risco de reversão"
+
+  - name: pv4-improved-forest-management
+    match: [{ field: sectoral_scope, equals: "Improved forest management" }]
+    value: "Média (25-100 anos) — estoque florestal, reversível"
+
+  - name: pv4-forest-restoration
+    match: [{ field: sectoral_scope, equals: "Forest Restoration" }]
+    value: "Média (25-100 anos) — estoque biológico, reversível"
+
+  - name: pv4-agriculture-land-management
+    match: [{ field: sectoral_scope, equals: "Agriculture land management" }]
+    value: "Curta (10-40 anos) — carbono no solo, reversível"
+
+  - name: pv4-forest-unspecified
+    match: [{ field: sectoral_scope, equals: "Forest" }]
+    value: "Média — uso da terra, reversível"
+
   # --- Gold Standard project types ----------------------------------------
   # Gold Standard has no AFOLU sub-type codes, so its rows are read from the
   # `type` vocabulary instead. `equals` / `in` against that closed list cannot

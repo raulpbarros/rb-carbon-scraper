@@ -81,9 +81,31 @@ def _sleep(seconds: float, cancel: threading.Event | None) -> None:
         raise Cancelled("cancelled while waiting")
 
 
-def _cache_key(method: str, url: str, body: Any) -> str:
+#: Headers that select *which data* a response contains, rather than how it is
+#: transported. They belong in the cache key: two requests identical in method,
+#: URL and body but differing in one of these are two different questions.
+#:
+#: This is not hypothetical. The S&P platform identifies a registry and a
+#: standard entirely in headers — `POST …/project/publicReportPageSearch` with
+#: the same body returns Verra VCS or Verra JNR depending only on `standardid`.
+#: Left out of the key, the second standard scraped in a run silently served
+#: the first one's cached responses: 5,247 JNR projects, all of them VCS, with
+#: `standard_name` reading "Verified Carbon Standard" and nothing raised.
+IDENTITY_HEADERS = ("registry", "standardid", "standardacronym", "language", "platform")
+
+
+def _cache_key(
+    method: str, url: str, body: Any, headers: Any = None
+) -> str:
+    identity = {
+        name: value
+        for name, value in (headers or {}).items()
+        if name.lower() in IDENTITY_HEADERS
+    }
     raw = json.dumps(
-        {"m": method.upper(), "u": url, "b": body}, sort_keys=True, default=str
+        {"m": method.upper(), "u": url, "b": body, "h": identity},
+        sort_keys=True,
+        default=str,
     )
     return hashlib.sha256(raw.encode()).hexdigest()[:32]
 
@@ -190,7 +212,12 @@ class RegistryClient:
         refresh: bool = False,
     ) -> httpx.Response:
         self.raise_if_cancelled()
-        key = _cache_key(method, httpx.URL(url).copy_merge_params(params or {}).__str__(), json_body)
+        key = _cache_key(
+            method,
+            httpx.URL(url).copy_merge_params(params or {}).__str__(),
+            json_body,
+            headers,
+        )
         path = _cache_path(key)
         caching = use_cache and not cache_disabled()
 
@@ -280,6 +307,17 @@ class RegistryClient:
         response = self.request("GET", url, **kwargs)
         response.raise_for_status()
         return response.json()
+
+    def get_text(self, url: str, **kwargs: Any) -> str:
+        """GET returning the body as text.
+
+        For the registries that never learned to speak JSON: the legacy Markit
+        public view is server-rendered JSP, so its adapter parses HTML. The
+        cache stores the body as text either way, so this costs nothing extra.
+        """
+        response = self.request("GET", url, **kwargs)
+        response.raise_for_status()
+        return response.text
 
     def get_json_with_headers(self, url: str, **kwargs: Any) -> tuple[Any, Any]:
         """GET returning (body, headers).

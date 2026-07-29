@@ -20,16 +20,27 @@
 column: "Bioma"
 
 applies_when:
-  # FOUR vocabularies for the same sector, all carried through untranslated in
+  # FIVE vocabularies for the same sector, all carried through untranslated in
   # Tipo Macro: Verra's "Agriculture Forestry and Other Land Use", Gold
-  # Standard's single type "A/R", Cercarbono's "Land use (AFOLU)", Plan Vivo's
-  # "Afforestation / Reforestation". Anything else stays blank.
+  # Standard's single type "A/R", Cercarbono's "Land use (AFOLU)", Plan Vivo
+  # V5's "Afforestation / Reforestation", and Plan Vivo V4's own set on the
+  # legacy Markit registry — "REDD", "Forest", "Forest Restoration", "Improved
+  # forest management", "Forest Conservation & Avoided Deforestation",
+  # "Reduced emissions from deforestation & degradation". Anything else stays
+  # blank.
   #
   # This gate is load-bearing and fails silently: one unrecognised wording
   # means NO biome for any row of that registry, with nothing in the log to
   # say so. A new registry's wording belongs here before anything else.
+  #
+  # Blast radius of the V4 additions, measured against the real database on
+  # 2026-07-29 before the change: **zero**. No project in any existing
+  # registry has a Tipo Macro that the four old wordings miss and the three
+  # new ones catch, so this widens the gate for Plan Vivo V4 and for nothing
+  # else. Measure again before widening it further — a country band added for
+  # one registry has already been shown to move rows in three others.
   - field: sectoral_scope
-    regex: "Agriculture Forestry|^A/R$|Land use \\(AFOLU\\)|Afforestation / Reforestation"
+    regex: "Agriculture Forestry|^A/R$|Land use \\(AFOLU\\)|Afforestation / Reforestation|REDD|[Ff]orest|[Dd]eforestation"
 
 rules:
   # --- Brazil, by state (dominant biome) --------------------------------
