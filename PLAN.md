@@ -28,22 +28,22 @@ PyInstaller one-folder inside an Inno Setup installer.
 | 0 — Foundation | ✅ | path split, dispatch table, `pipeline.py`, cancellation |
 | 1 — Cercarbono | ✅ | 231 projects, live and reconciled |
 | 2 — Plan Vivo | ✅ | Verra adapter generalised to `platts/`; 2 projects, reconciled |
-| **3 — Tkinter GUI** | **next** | the phase that makes this a thing the business opens |
-| 4 — Packaging | | slim DB, PyInstaller, Inno Setup |
+| 3 — Tkinter GUI | ✅ | `carbon-gui` — checkboxes, folder picker, two buttons, Cancel |
+| **4 — Packaging** | **next** | slim DB, PyInstaller, Inno Setup — puts it on their machine |
 | 5 — Four more registries | | BioCarbon, Puro.earth, ACR, SocialCarbon |
 | 6 — Hardening | | incremental sync, `verra doctor` |
 
-**117 tests, green, offline.** Four registries live: Verra 5,245 projects, Gold
+**164 tests, green, offline.** Four registries live: Verra 5,245 projects, Gold
 Standard 4,141, Cercarbono 231, Plan Vivo 2 — **9,619 in one database**, every
 one carrying a derived Tipo Micro / Bioma / Durabilidade and 0 projects
 reporting more credits retired than issued. Last delivery is
 `out/carbon-projects_v2.xlsx`; a `_v3` covering all four registries has not
 been cut yet, because nobody has asked for one.
 
-Half the remaining work is still CLI-only: the business team cannot run any of
-this today. Phase 3 is what changes that, and Phase 4 is what puts it on their
-machine. Phase 5 adds registries to a tool they can already use — deliberately
-after, not before.
+There is now a window, and it runs from a checkout. What is left before the
+business team can use it is Phase 4: a database small enough to ship, an EXE,
+and an installer that needs no admin rights. Phase 5 adds registries to a tool
+they can already open — deliberately after, not before.
 
 ---
 
@@ -210,25 +210,63 @@ Verra projects out of the Amazon basin. No project lost a biome.
 
 ---
 
-## Phase 3 — Tkinter GUI
+## Phase 3 — Tkinter GUI ✅
 
-`src/carbon_scraper/gui/` — `app.py`, `worker.py`, `state.py`. Registered as a
-`gui-scripts` entry point so no console window appears. Drives `pipeline`,
-**never** the Typer commands.
+`src/carbon_scraper/gui/` — `state.py`, `worker.py`, `app.py`, split by what is
+allowed to touch a widget. Registered as `carbon-gui` under `gui-scripts` so no
+console appears. Drives `pipeline`, **never** the Typer commands — and a test
+enforces that rather than trusting anyone to remember it.
 
-- [ ] Registry checkboxes generated from `REGISTRY_LABELS`, each showing local
-      row count and last successful sync from the `runs` table
-- [ ] Output folder picker, remembered; feeds `pipeline.export(out_dir=...)`,
+- [x] Registry checkboxes generated from `REGISTRY_LABELS`, each showing local
+      row count and last sync from the `runs` table (`db.registry_summary`).
+      A test fails if any registry identifier is hard-coded in `app.py`
+- [x] Output folder picker, remembered; feeds `pipeline.export(out_dir=...)`,
       which keeps versioning — it is not an overwrite flag
-- [ ] **Two buttons, deliberately separate**: `Export Excel` (seconds, from the
-      shipped database — the button the business uses) and `Update registry
-      data` (hours, opt-in, with the estimate shown up front)
-- [ ] Progress bar + per-registry line fed by a queue sink drained on
+- [x] **Two buttons, deliberately separate**: `Export Excel` (derive + export,
+      seconds, no network) and `Update registry data` (sync + Verra's exact
+      totals + derive, hours, opt-in, estimate shown before it starts)
+- [x] Progress bar + per-registry line fed by a queue sink drained on
       `root.after`; never a widget call from the worker thread
-- [ ] Log pane via a `logging.Handler` installed before `basicConfig`, so
-      `INCOMPLETE` reconciliation errors are visible
-- [ ] Cancel wired to the Phase 0.5 event; partial syncs are safe to resume
-- [ ] Uncaught worker exceptions → dialog + traceback file under `LOG_DIR`
+- [x] Log pane via a `logging.Handler` installed before `basicConfig`, so
+      `INCOMPLETE` reconciliation errors are visible; everything also to
+      `LOG_DIR/gui.log`
+- [x] Cancel wired to the Phase 0.5 event; **measured at 0.6 s** against a live
+      Cercarbono sync, and reported as "stopped", not as a crash
+- [x] Uncaught worker exceptions → dialog + `LOG_DIR/error-<task>-<stamp>.log`,
+      with the path in the dialog
+
+Four things the plan did not anticipate:
+
+- **The checkboxes could not honour both buttons without widening the registry
+  filter.** `db.all_projects` took one registry or all; a subset ticked would
+  have scraped four and exported everything. `pipeline.selected/only`,
+  `db.all_projects` and `excel.build_rows` now take a sequence. The trap it
+  opened is that an **empty** selection must mean *no rows*, not everything —
+  treating it as falsy would make an untick silently export the whole database.
+  `db.registry_clause` pins that, and a test mutates it to prove the test bites.
+- **The time estimate cannot come from the `runs` table.** A repeat run reads
+  most of its responses from the ~1 GB cache and finishes in minutes, so
+  measured history would promise four minutes and then take two hours. The
+  estimate is a static table in `settings`; past durations are reported as
+  history, never as a forecast. A registry missing from the table makes the
+  estimate *unknown* rather than quietly short.
+- **A cancelled first sync looked like a fresh install.** Found by running it,
+  not by reading it: the caption said "nothing stored yet" for a Cercarbono
+  sync that had been cancelled, which is indistinguishable from a registry
+  nobody has ever tried — and one of those means "press the button again".
+  Failed and cancelled attempts are now shown even when the registry is empty.
+- **`pipeline.sync(refresh=True)` leaked.** It set `VERRA_NO_CACHE` and never
+  cleared it, which is invisible in a CLI that exits and permanent in a window
+  that does not: one refreshed run would have disabled the cache for every run
+  after it, for the life of the process.
+
+**Verified:** 164 tests green (117 unchanged + 47 new), all offline and none
+opening a window. The window itself was built, driven and torn down headlessly,
+then opened for real through `main()`. End to end against live registries in a
+scratch tree: a Plan Vivo update wrote **no** spreadsheet (correct — that is the
+other button), two exports produced `_v1` then `_v2` with `_v1` byte-identical
+afterwards, and a live Cercarbono sync cancelled in 0.6 s leaving a readable
+database. The real `out/` and `data/` were never touched.
 
 ---
 
@@ -298,8 +336,11 @@ fill rates and its deliberate blanks stated rather than filled.
    separate run.
 2. **SocialCarbon** — real registry URL needed.
 3. **Shipped-database freshness** — how stale may the bundled data be before a
-   new installer is cut? Suggest showing "data as of &lt;date&gt;" in the GUI so
-   the answer is explicit rather than assumed.
+   new installer is cut? Half-answered in Phase 3: the window now shows **"Data
+   as of &lt;date&gt;"** at the top, deliberately the *oldest* registry rather
+   than the newest, since a sheet is only as current as its stalest source. So
+   the staleness is visible rather than assumed. What is still yours to decide
+   is the threshold at which a new installer gets cut.
 4. **Plan Vivo forward credits (fPVC)** — 103,246 of Plan Vivo's 213,145 issued
    units are forward credits, issued against future sequestration and flagged
    `isVerified: false` by the platform itself. They are currently counted in

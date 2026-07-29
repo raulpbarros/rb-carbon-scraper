@@ -17,8 +17,11 @@ Two seams make that possible:
 from __future__ import annotations
 
 import logging
+import os
 import threading
 import time
+from collections.abc import Iterator, Sequence
+from contextlib import contextmanager
 from pathlib import Path
 from typing import Any, Protocol
 
@@ -82,29 +85,62 @@ class _Throttle:
 # --- registry selection ---------------------------------------------------
 
 
-def selected(registry: str) -> list[str]:
-    """Expand `all` / an alias into stored registry identifiers."""
-    if registry.strip().lower() in ("all", "*"):
-        return list(registries.ALL)
-    return [registries.resolve(registry)]
+#: What the CLI accepts as a registry argument, and what the GUI passes: a name,
+#: the word `all`, or the sequence of ticked checkboxes.
+Registries = "str | Sequence[str]"
 
 
-def only(registry: str) -> str | None:
-    """`None` for "every registry", used by the read-only SQL paths."""
-    if registry.strip().lower() in ("all", "*"):
-        return None
-    return registries.resolve(registry)
+def selected(registry: str | Sequence[str]) -> list[str]:
+    """Expand `all` / an alias / a sequence into stored registry identifiers.
+
+    Order follows `registries.ALL` rather than the caller's, so two front ends
+    asking for the same set scrape it in the same order. Duplicates collapse.
+    """
+    if isinstance(registry, str):
+        if registry.strip().lower() in ("all", "*"):
+            return list(registries.ALL)
+        return [registries.resolve(registry)]
+
+    names = {registries.resolve(name) for name in registry}
+    return [name for name in registries.ALL if name in names]
+
+
+def only(registry: str | Sequence[str]) -> str | list[str] | None:
+    """The registry filter for the read-only SQL paths.
+
+    `None` means every registry, and is returned **only** for `all` — never as
+    a fallback. An empty selection stays an empty list, which `db` reads as no
+    rows: a front end with nothing ticked must not quietly export everything.
+    """
+    if isinstance(registry, str):
+        if registry.strip().lower() in ("all", "*"):
+            return None
+        return registries.resolve(registry)
+    return selected(registry)
 
 
 def label(registry: str) -> str:
     return settings.REGISTRY_LABELS.get(registry, registry)
 
 
+def _run_label(registry: str | Sequence[str]) -> str:
+    """What goes in the `runs.registry` column for a whole-selection command.
+
+    `sync` logs one run per registry and passes a concrete name; `derive` runs
+    once over a selection, so it stores the selection itself. A list would not
+    bind to SQLite at all.
+    """
+    if isinstance(registry, str):
+        return registry
+    names = selected(registry)
+    return ",".join(names) if names else "none"
+
+
 # --- sync -----------------------------------------------------------------
 
 
 def sync(
-    registry: str = "all",
+    registry: str | Sequence[str] = "all",
     *,
     limit: int | None = None,
     projects_only: bool = False,
@@ -114,18 +150,33 @@ def sync(
 ) -> dict[str, dict[str, int]]:
     """Scrape one or every registry. Returns per-registry record counts."""
     sink = sink or NullSink()
-    if refresh:
-        import os
-
-        # http_client reads this per request, so setting it here is enough.
-        os.environ["VERRA_NO_CACHE"] = "1"
-
     results: dict[str, dict[str, int]] = {}
-    for name in selected(registry):
-        results[name] = sync_one(
-            name, limit=limit, projects_only=projects_only, sink=sink, cancel=cancel
-        )
+    # `refresh` lasts exactly as long as this call. http_client reads the
+    # variable per request, so setting it here is enough — but the CLI exits
+    # afterwards and the GUI does not, and a leaked value would silently
+    # disable the cache for every later run in the same process.
+    with _no_cache(refresh):
+        for name in selected(registry):
+            results[name] = sync_one(
+                name, limit=limit, projects_only=projects_only, sink=sink, cancel=cancel
+            )
     return results
+
+
+@contextmanager
+def _no_cache(active: bool) -> Iterator[None]:
+    if not active:
+        yield
+        return
+    previous = os.environ.get("VERRA_NO_CACHE")
+    os.environ["VERRA_NO_CACHE"] = "1"
+    try:
+        yield
+    finally:
+        if previous is None:
+            os.environ.pop("VERRA_NO_CACHE", None)
+        else:
+            os.environ["VERRA_NO_CACHE"] = previous
 
 
 def sync_one(
@@ -251,7 +302,9 @@ def totals(
 # --- derive / export ------------------------------------------------------
 
 
-def derive_all(registry: str = "all", *, sink: ProgressSink | None = None) -> int:
+def derive_all(
+    registry: str | Sequence[str] = "all", *, sink: ProgressSink | None = None
+) -> int:
     """Apply config/derivation/*.yaml. No network."""
     sink = sink or NullSink()
     rulesets = derive.load_rulesets()
@@ -261,7 +314,7 @@ def derive_all(registry: str = "all", *, sink: ProgressSink | None = None) -> in
 
     written = 0
     with db.session() as conn:
-        run_id = db.start_run(conn, "derive", registry)
+        run_id = db.start_run(conn, "derive", _run_label(registry))
         try:
             for name in selected(registry):
                 db.clear_derived(conn, name)
@@ -281,7 +334,7 @@ def derive_all(registry: str = "all", *, sink: ProgressSink | None = None) -> in
 
 
 def export(
-    registry: str = "all",
+    registry: str | Sequence[str] = "all",
     *,
     out_dir: Any = None,
     sink: ProgressSink | None = None,
@@ -303,7 +356,7 @@ def export(
 
 
 def run_all(
-    registry: str = "all",
+    registry: str | Sequence[str] = "all",
     *,
     limit: int | None = None,
     skip_totals: bool = False,

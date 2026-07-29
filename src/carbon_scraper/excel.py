@@ -23,6 +23,7 @@ import logging
 import re
 import shutil
 import sqlite3
+from collections.abc import Sequence
 from datetime import datetime
 from pathlib import Path
 from typing import Any
@@ -107,9 +108,14 @@ def _project_url(record: dict[str, Any]) -> str | None:
 
 
 def build_rows(
-    conn: sqlite3.Connection, registry: str | None = None
+    conn: sqlite3.Connection, registry: str | Sequence[str] | None = None
 ) -> tuple[list[str], list[dict[str, Any]]]:
-    """Assemble one dict per project, keyed by the requested column names."""
+    """Assemble one dict per project, keyed by the requested column names.
+
+    `registry` is `None` for every registry, a name, or the sequence the GUI's
+    checkboxes produce. See `db.registry_clause` for why an empty sequence
+    means no rows rather than all of them.
+    """
     columns = settings.read_requested_fields()
     for extra in EXTRA_COLUMNS:
         if extra not in columns:
@@ -244,7 +250,7 @@ def write_xlsx(
     conn: sqlite3.Connection,
     path: Any = None,
     *,
-    registry: str | None = None,
+    registry: str | Sequence[str] | None = None,
     out_dir: Any = None,
 ) -> tuple[Path, int, Path | None]:
     """Write the next version of the spreadsheet.
@@ -300,7 +306,7 @@ def write_xlsx(
 
 
 def coverage_report(
-    conn: sqlite3.Connection, registry: str | None = None
+    conn: sqlite3.Connection, registry: str | Sequence[str] | None = None
 ) -> list[tuple[str, int, int]]:
     """(column, filled, total) — how complete each column actually is."""
     columns, rows = build_rows(conn, registry)

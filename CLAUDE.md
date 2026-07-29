@@ -176,7 +176,17 @@ seams make it drivable from either front end:
 
 **The GUI must never call the Typer command functions.** They carry `OptionInfo`
 defaults; calling them from anything but Typer works by accident and breaks the
-moment a signature changes. Both front ends call `pipeline`.
+moment a signature changes. Both front ends call `pipeline`. A test enforces it
+rather than trusting anyone to remember.
+
+A registry filter is `None`, a name, **or a sequence** — the GUI's checkboxes
+select registries for both of its buttons, so `pipeline.selected/only`,
+`db.all_projects` and `excel.build_rows` all take a set. `db.registry_clause`
+is where the meanings are pinned: `None` is every registry, and an **empty
+sequence is no rows, never everything**. Falling back to "all" on an empty
+selection would make an untick silently export the whole database — no error,
+plausible output, wrong scope, which is exactly the shape of the ignored-filter
+bug this codebase keeps meeting at the registries.
 
 `registries.ADAPTERS` maps registry identifier → a lazy importer. It is a table
 rather than a chain of `if`s because the old fall-through returned the Gold
@@ -442,6 +452,7 @@ verra run                         # sync + totals + derive + export
 verra status                      # row counts per registry, last run, failures
 verra coverage -r gs              # per-column fill rate — where the gaps are
 verra cache --clear               # a full sync caches ~1 GB of responses
+carbon-gui                        # the window the business team uses
 pytest                            # offline, no network
 ```
 
@@ -571,6 +582,10 @@ src/carbon_scraper/
     planvivo/api.py            Plan Vivo's identity, plus its two field diffs
     goldstandard/api.py        REST paging, header-based reconciliation
     cercarbono/api.py          three bulk feeds + per-project detail, CO2 filter
+  gui/
+    state.py                   what the window remembers. No Tk, no pipeline
+    worker.py                  thread + queue + logging bridge. NO Tk import
+    app.py                     the window; the only module touching a widget
 ```
 
 There is no browser-based scraping fallback: the direct API path works for
@@ -589,17 +604,73 @@ checkboxes from `REGISTRY_LABELS`.
 class attributes, and check which fields the registry actually populates. See
 "Adding a registry hosted on S&P Platts" above.
 
-## GUI and packaging
+## The GUI
 
 `PLAN.md` is the phase tracker; read it before touching this area.
 
-- The GUI lives in `src/carbon_scraper/gui/` and drives `pipeline`, never the
-  Typer commands.
-- Playwright is a developer dependency and is **excluded from the packaged
-  build**. `discover` is a diagnostic; the EXE does not ship it.
+Three modules, split by **what is allowed to touch a widget**:
+
+| | |
+|---|---|
+| `gui/state.py` | what the window remembers: ticked registries, output folder. No Tk, no pipeline |
+| `gui/worker.py` | the thread, the queue, the logging bridge. **Imports no Tk, and a test asserts it** |
+| `gui/app.py` | the window. The only module that reads or creates a widget |
+
+Tkinter is not thread-safe, and the failure is not immediate or reproducible.
+The worker thread can only put messages on a `queue.Queue`; `app._drain` pulls
+them on `root.after`, on the main loop, which is the only place a widget may be
+touched. `worker.py` holding no Tk import is what makes that structural rather
+than a rule someone has to remember.
+
+**Two buttons, and the separation is the design.** `Export Excel` runs
+derive + export — seconds, no network, works on a machine that has never
+scraped anything because the installer ships a database. `Update registry data`
+runs sync + Verra's exact-totals pass + derive, and **deliberately does not
+export**: if a refresh wrote a delivery, every update would burn a version
+number and the business would receive `_v9` without anyone deciding to send
+anything. `build_export_task` / `build_update_task` are module-level so that
+difference is testable without opening a window.
+
+Other things that are load-bearing:
+
+- **The checkboxes mean the same thing to both buttons.** That is why
+  `db.all_projects`, `excel.build_rows` and `pipeline.only/selected` take a
+  *sequence* of registries, not just one-or-all. `db.registry_clause` treats an
+  **empty** selection as no rows, never as everything — falling back to "all"
+  would make an untick silently export the whole database, which is the same
+  shape of bug as a silently ignored API filter.
+- **The time estimate is a static table** (`settings.SYNC_ESTIMATE_MINUTES`),
+  not the durations in the `runs` table. A repeat run reads most responses from
+  the ~1 GB cache and finishes in minutes, so measured history would promise
+  four minutes and then take two hours. Past durations are reported as history,
+  never as a forecast. A registry missing from the table makes the estimate
+  *unknown* — it is never quietly omitted from the total.
 - The folder picker feeds `pipeline.export(out_dir=...)`, which still writes
   `_vN+1`. It is not, and must not become, an overwrite flag.
-- Long work runs on a worker thread with the cancellation event; widgets are
-  only ever touched from the Tk main loop.
+- `install_logging` puts a handler on the root logger before anything calls
+  `logging.basicConfig` — which is a no-op once a handler exists — so
+  `INCOMPLETE` reconciliation errors reach the log pane. A business user has no
+  console to find them in. Everything also goes to `LOG_DIR/gui.log`, and an
+  uncaught worker exception writes `LOG_DIR/error-<task>-<stamp>.log` and puts
+  the path in the dialog.
+- **A cancel is not a crash.** `http_client.Cancelled` is caught separately, so
+  pressing Cancel shows "stopped", writes no traceback file, and says the run
+  is safe to resume.
+- Adding a registry adds a checkbox with no GUI edit: the window builds them
+  from `settings.REGISTRY_LABELS`, and a test fails if any registry identifier
+  is hard-coded in `app.py`.
+
+## Packaging
+
+- Playwright is a developer dependency and is **excluded from the packaged
+  build**. `discover` is a diagnostic; the EXE does not ship it.
 - Dependencies are weight in the bundle. Do not add one without a use — see the
-  note in `pyproject.toml` about `pandas` and `pydantic`.
+  note in `pyproject.toml` about `pandas` and `pydantic`. Tkinter is standard
+  library and costs nothing extra.
+- `carbon-gui` is registered under `[project.gui-scripts]`, not
+  `[project.scripts]`: on Windows that builds a `pythonw` launcher, so no
+  console flashes up behind the window.
+- In a checkout the GUI delivers to `out/`, the same folder the CLI uses, so
+  one version history is not split in two. A frozen build defaults to
+  `Documents\Carbon Registry` instead — `%LOCALAPPDATA%` is the right place for
+  a database and the wrong place for a file the user has to find and email.

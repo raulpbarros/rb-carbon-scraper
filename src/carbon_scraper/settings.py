@@ -124,6 +124,30 @@ REGISTRY_LABELS = {
     PLAN_VIVO: "Plan Vivo",
 }
 
+# Roughly how long a full sync of each registry takes, in minutes, measured on
+# a cold cache at the default ~1 req/s. Shown before the GUI starts a scrape,
+# so "this takes hours" is a number the user sees rather than a surprise.
+#
+# **Deliberately a static table rather than the durations in the `runs` table.**
+# A repeat run reads most of its responses from the ~1 GB on-disk cache and
+# finishes in minutes, so measured history predicts a cold scrape very badly —
+# it would tell a user that Gold Standard takes four minutes and then take two
+# hours. Past durations are reported as history, never as a forecast.
+#
+# A registry missing from this table makes the estimate unknown, and the GUI
+# says so. It does not guess, and it does not silently omit the registry from
+# the total.
+SYNC_ESTIMATE_MINUTES = {
+    VERRA: 150,
+    GOLD_STANDARD: 120,
+    CERCARBONO: 4,
+    PLAN_VIVO: 1,
+}
+
+# The exact-totals pass, on top of Verra's sync. One request per project with
+# credits, and the reason Verra's credit columns are right; see pipeline.totals.
+VERRA_TOTALS_ESTIMATE_MINUTES = 175
+
 # --- S&P Global "Carbon Registry" (Platts) --------------------------------
 # A platform, not a registry. Verra and Plan Vivo are both served from it, as
 # are UKLR, RAAS, OxCP, KRR, GCC and BCCR. Adding one of those is a change of

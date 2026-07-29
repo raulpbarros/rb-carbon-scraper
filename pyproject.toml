@@ -1,7 +1,7 @@
 [project]
 name = "carbon-registry-scraper"
 version = "0.2.0"
-description = "Scrapes carbon registries (Verra VCS, Gold Standard) into SQLite and exports a formatted Excel sheet."
+description = "Scrapes the public carbon registries into SQLite and exports a formatted Excel sheet."
 requires-python = ">=3.11"
 # Kept deliberately small: every entry here is weight in the packaged EXE.
 # `pandas` and `pydantic` were declared but imported nowhere, and cost roughly
@@ -29,6 +29,13 @@ build = [
 [project.scripts]
 verra = "carbon_scraper.cli:app"
 carbon = "carbon_scraper.cli:app"
+
+# `gui-scripts`, not `scripts`: on Windows this builds a pythonw-backed
+# launcher, so double-clicking the shortcut opens the window without a console
+# flashing up behind it. Tkinter is in the standard library, so this adds no
+# dependency and no bundle weight.
+[project.gui-scripts]
+carbon-gui = "carbon_scraper.gui.app:main"
 
 [build-system]
 requires = ["setuptools>=68"]

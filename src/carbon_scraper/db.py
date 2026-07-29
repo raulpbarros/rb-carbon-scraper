@@ -20,7 +20,7 @@ import json
 import logging
 import sqlite3
 from contextlib import contextmanager
-from collections.abc import Iterable, Iterator
+from collections.abc import Iterable, Iterator, Sequence
 from datetime import datetime, timezone
 from typing import Any
 
@@ -554,17 +554,50 @@ def certifications_by_project(conn: sqlite3.Connection) -> dict[Key, str]:
     return {key: "; ".join(sorted(set(values))) for key, values in result.items()}
 
 
+RegistryFilter = "str | Sequence[str] | None"
+
+
+def registry_clause(
+    registry: str | Sequence[str] | None, column: str = "registry"
+) -> tuple[str, list[str]]:
+    """Build a WHERE fragment for a registry filter. Returns (sql, params).
+
+    Three inputs, three different meanings, and the middle one is the trap:
+
+    * `None` — every registry. The fragment is empty.
+    * a name, or a sequence of names — those registries.
+    * an **empty sequence** — *no* registries, so the fragment is a
+      contradiction rather than nothing.
+
+    An empty selection has to mean zero rows. Falling back to "everything"
+    would turn a GUI with no boxes ticked into a full export of the database,
+    which is the same class of silent superset as an ignored API filter: no
+    error, plausible-looking output, wrong scope.
+    """
+    if registry is None:
+        return "", []
+    names = [registry] if isinstance(registry, str) else list(registry)
+    if not names:
+        return f" WHERE {column} IS NULL AND {column} IS NOT NULL", []
+    placeholders = ",".join("?" for _ in names)
+    return f" WHERE {column} IN ({placeholders})", names
+
+
 def all_projects(
-    conn: sqlite3.Connection, registry: str | None = None
+    conn: sqlite3.Connection, registry: str | Sequence[str] | None = None
 ) -> list[sqlite3.Row]:
-    if registry:
-        return list(
-            conn.execute(
-                "SELECT * FROM projects WHERE registry=? ORDER BY project_id",
-                (registry,),
-            )
+    """Project rows for one registry, several, or every one.
+
+    A sequence is what the GUI passes: its checkboxes select registries for
+    both buttons, so the export has to honour the same selection the scrape
+    does.
+    """
+    where, params = registry_clause(registry)
+    return list(
+        conn.execute(
+            f"SELECT * FROM projects{where} ORDER BY registry, project_id", params
         )
-    return list(conn.execute("SELECT * FROM projects ORDER BY registry, project_id"))
+    )
 
 
 def derived_map(conn: sqlite3.Connection) -> dict[Key, dict[str, str]]:
@@ -597,6 +630,78 @@ def last_runs(conn: sqlite3.Connection, limit: int = 5) -> list[sqlite3.Row]:
     return list(
         conn.execute("SELECT * FROM runs ORDER BY run_id DESC LIMIT ?", (limit,))
     )
+
+
+def registry_summary(conn: sqlite3.Connection) -> dict[str, dict[str, Any]]:
+    """Per-registry: how much is stored, and when it last arrived.
+
+    What the GUI puts beside each checkbox, so the user can see that a
+    registry has never been scraped before pressing a button that takes hours.
+    Keyed by the stored registry identifier; a registry with no rows is still
+    present, with `projects: 0` and `last_sync: None`, because "nothing here
+    yet" is the fact worth showing.
+
+    `last_sync_seconds` is how long that run took. It is the honest estimate
+    for the next one — better than any table of guesses, because it was
+    measured on this machine, against this cache, over this network.
+    """
+    summary: dict[str, dict[str, Any]] = {
+        name: {
+            "projects": 0,
+            "credit_events": 0,
+            "last_sync": None,
+            "last_sync_ok": None,
+            "last_sync_seconds": None,
+        }
+        for name in settings.REGISTRY_LABELS
+    }
+
+    def slot(name: str) -> dict[str, Any]:
+        return summary.setdefault(
+            name,
+            {
+                "projects": 0,
+                "credit_events": 0,
+                "last_sync": None,
+                "last_sync_ok": None,
+                "last_sync_seconds": None,
+            },
+        )
+
+    for row in conn.execute(
+        "SELECT registry, COUNT(*) AS n FROM projects GROUP BY registry"
+    ):
+        slot(row["registry"])["projects"] = int(row["n"])
+    for row in conn.execute(
+        "SELECT registry, COUNT(*) AS n FROM credit_events GROUP BY registry"
+    ):
+        slot(row["registry"])["credit_events"] = int(row["n"])
+
+    # Most recent finished sync per registry. A run still in flight (or killed)
+    # has finished_at NULL and is deliberately skipped: it is not evidence that
+    # the data arrived.
+    for row in conn.execute(
+        "SELECT registry, started_at, finished_at, ok FROM runs "
+        "WHERE command='sync' AND registry IS NOT NULL AND finished_at IS NOT NULL "
+        "ORDER BY run_id DESC"
+    ):
+        entry = slot(row["registry"])
+        if entry["last_sync"] is not None:
+            continue
+        entry["last_sync"] = row["finished_at"]
+        entry["last_sync_ok"] = bool(row["ok"])
+        entry["last_sync_seconds"] = _elapsed(row["started_at"], row["finished_at"])
+    return summary
+
+
+def _elapsed(started: Any, finished: Any) -> float | None:
+    """Seconds between two stored timestamps, or None if either is unreadable."""
+    try:
+        begin = datetime.fromisoformat(str(started))
+        end = datetime.fromisoformat(str(finished))
+    except (TypeError, ValueError):
+        return None
+    return max((end - begin).total_seconds(), 0.0)
 
 
 # -- helpers ---------------------------------------------------------------

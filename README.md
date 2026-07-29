@@ -35,6 +35,24 @@ pip install -e ".[dev]"
 playwright install chromium       # only needed for `verra discover`
 ```
 
+## The window
+
+```bash
+carbon-gui
+```
+
+Tick registries, choose a folder, press a button. Two buttons, and the
+difference matters:
+
+- **Export Excel** — writes the next version of the spreadsheet from data
+  already stored. Seconds, no network. This is the everyday one.
+- **Update registry data** — the scrape. Hours, with the estimate shown before
+  it starts, and a Cancel that takes effect in about a second. It deliberately
+  writes **no** spreadsheet: press Export Excel afterwards, so a new delivery
+  version only appears because someone decided to send one.
+
+Everything below is the same pipeline, driven from a terminal instead.
+
 ## Normal use
 
 ```bash
