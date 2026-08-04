@@ -3,8 +3,8 @@
 Two things are changing at once:
 
 - **More registries.** Verra, Gold Standard, Cercarbono, Plan Vivo,
-  SocialCarbon and BioCarbon are live. ACR and Puro.earth were added during
-  scoping and are what remains; Plan Vivo V4 was added during Phase 4, the
+  SocialCarbon, BioCarbon and Puro.earth are live. ACR was added during
+  scoping and is what remains; Plan Vivo V4 was added during Phase 4, the
   live Plan Vivo adapter having turned out to cover only the V5 registry.
   Nine in total. Phase 5 keeps each independently droppable.
 - **A different user.** The deliverable stops being a spreadsheet a developer
@@ -23,7 +23,7 @@ PyInstaller one-folder inside an Inno Setup installer.
 
 ---
 
-## Where things stand — 2026-08-04
+## Where things stand — 2026-08-05
 
 | Phase | | |
 |---|---|---|
@@ -34,15 +34,16 @@ PyInstaller one-folder inside an Inno Setup installer.
 | 4 — Packaging | ✅ | 20.8 MB shipped DB, EXE, per-user installer — 16.7 MB, no admin |
 | 4b — Distribution | 🔄 | portable ZIP + GitHub release; SmartScreen answered without signing |
 | 4c — Docker | ✅ | the ~16,500-request scrape, headless, off the desktop |
-| **5 — More registries** | **🔄** | **5a ✅, 5d ✅, 5e ✅, Verra JNR ✅**; 5b/5c open |
+| **5 — More registries** | **🔄** | **5a ✅, 5b ✅, 5d ✅, 5e ✅, Verra JNR ✅**; 5c open |
 | 6 — Hardening | | incremental sync, `verra doctor` |
 
-**386 tests, green, offline.** Six registries live and **eight standards across
-five platforms**: Verra VCS 5,245 + JNR 5, Gold Standard 4,141, Cercarbono
-231, BioCarbon 105, Plan Vivo V5 2 + V4 30, SocialCarbon 19 — **9,773 projects
-in one database**, every one carrying a derived Tipo Micro / Bioma /
-Durabilidade. Last delivery is `out/carbon-projects_v2.xlsx`; a `_v3` has still
-not been cut, because nobody has asked for one.
+**427 tests, green, offline.** Seven registries live and **nine standards
+across six platforms**: Verra VCS 5,245 + JNR 5, Gold Standard 4,141,
+Cercarbono 231, Puro.earth 118, BioCarbon 105, Plan Vivo V5 2 + V4 30,
+SocialCarbon 19 — **9,891 projects in one database**, every one carrying a
+derived Tipo Micro / Bioma / Durabilidade. Last delivery is
+`out/carbon-projects_v2.xlsx`; a `_v3` has still not been cut, because nobody
+has asked for one.
 
 **One project is now known to be in two registries.** BioCarbon's
 `BCR-CO-319-14-002`/`-005` are Cercarbono's `CDC-106`/`CDC-107` — the same
@@ -69,11 +70,10 @@ to put it on, because an unsigned installer is a build problem only until it
 meets someone else's machine — after that it is a trust problem, and that one
 is not fixed by building harder.
 
-What is left is two registries — **Puro.earth (5b)** and **ACR (5c)**. Phase 5
-adds them to a tool the business can already open, deliberately after and not
-before. Every other item on it is done, including the one it grew: the Plan
-Vivo adapter reached the V5 registry only, and V4 turned out to be a whole
-second platform.
+What is left is one registry — **ACR (5c)**. Phase 5 adds it to a tool the
+business can already open, deliberately after and not before. Every other item
+on it is done, including the one it grew: the Plan Vivo adapter reached the V5
+registry only, and V4 turned out to be a whole second platform.
 
 ---
 
@@ -437,6 +437,12 @@ is a registry we are already half-scraping and did not know it.
 is 29 registries reachable by subclassing something that already works, and it
 is how 5e turned out to be an afternoon instead of a week.
 
+**Then check whether the site ships the data in its own HTML**, before going
+looking for an API. 5b was filed as "server-rendered HTML, find a JSON
+endpoint" and is neither: it is a Next.js app whose server-rendered payload
+carries the whole registry as JSON inside the page. There is no endpoint, and
+looking for one is time spent proving a negative.
+
 **Then check whether the registry is already reachable from another angle, and
 refuse it if it is.** SocialCarbon is on the legacy Markit list *and* has its
 own current system; ingesting both would have counted the same credits twice.
@@ -508,8 +514,63 @@ already holds these credits before scraping, not after.
         pre-existing value: SocialCarbon's bare-`AFOLU` project, which was
         missing a `Durabilidade` for the same reason it was missing a `Bioma`
         a week earlier
-- [ ] **5b Puro.earth** — server-rendered HTML; look for a JSON endpoint before
-      writing a parser
+- [x] **5b Puro.earth — done, 2026-08-05.** ~~server-rendered HTML; look for a
+      JSON endpoint before writing a parser~~. Neither guess held.
+      `registry.puro.earth` is a **Next.js App Router app**, and the first
+      target here with **no API at all**: the server renders each route and
+      streams its React Server Components payload *inside the HTML*, where the
+      lists sit as ordinary JSON. Contract in `docs/api-contract-puro.md`,
+      adapter in `registries/puro/` (`api.py` + `flight.py`).
+
+      **118 projects, 583 issuance transactions, 1,519 retirement
+      transactions — three requests for all of it**, plus one detail page per
+      project. ~121 requests, about four minutes. Every count reconciled on
+      the first live run.
+
+      What the plan expected and what was actually there:
+
+      - **There is no JSON endpoint, and an hour proving it was the cost of
+        not knowing.** `RSC: 1`, `?_rsc=`, and a full
+        `Next-Router-State-Tree` each return the same prerendered HTML, and no
+        API host appears in any of the 15 client chunks. The data is fetched
+        server-side. `flight.py` reads it out of the `__next_f.push` stream —
+        stdlib only, the Puro half of what `markit/tables.py` is for Markit.
+        **The pushes must be joined before decoding**: the 5.2 MB retirement
+        page splits mid-object.
+      - **No paging, no filtering, no key, no `Origin` check.** The friendliest
+        contract here after SocialCarbon's, once you stop looking for an API.
+
+      Four things the plan did not anticipate:
+
+      - **A transaction is not a credit record.** Each carries a `bundles`
+        list and a retirement routinely draws from several production
+        facilities at once: **1,519 retirements are 2,099 bundles**. A row per
+        transaction would file each multi-facility retirement against
+        whichever facility came first.
+      - **`countryCode` is `"NA"` for Namibia**, where two projects are. Three
+        adapters here carry a `NOT_STATED` table listing `na`; reusing one
+        deletes a real country code and takes the Continent with it.
+        `puro.NOT_STATED` is empty on purpose and a test pins it.
+      - **The registry publishes no row count anywhere** — not in the body,
+        not in a header, not on the site. So reconciliation is not a count at
+        all: every bundle's facility must resolve to a project, every
+        transaction's volume must equal its bundles', and every project's
+        bundles must sum to the total its own page states. **All 118 agree
+        exactly**, on both ledgers — which is also the only place the country
+        *name* is published.
+      - **Withdrawal is a label with no quantity.** 20 issuances carry
+        `FULLY_WITHDRAWN` or `PARTIALLY_WITHDRAWN`, `withdrawalDetails` is
+        null on all 2,102 transactions, and the registry's own issued total
+        counts the units in full. So there is no cancellation ledger and
+        `Total Credits Cancelled` is blank, not zero.
+
+      And one thing no other registry has offered: **Puro publishes a
+      durability**, in years, on every labelled bundle. Seven of its eight
+      methodologies therefore have a `Durabilidade` band that is *checked*
+      rather than inferred — the first time that has been possible. Wooden
+      Building Elements is the exception and the one to review first. Blast
+      radius of the new rules, measured against the real database before the
+      change: **471 values added, 0 removed, 0 changed**, all of them Puro's
 - [ ] **5c ACR** — APX ASP platform, form posts and HTML tables. Highest effort
 - [x] **5d SocialCarbon — done, 2026-08-04.** ~~**blocked**: serves a parked
       CDN page~~ ~~**unblocked, 2026-07-29**~~. `registry.socialcarbon.org` is

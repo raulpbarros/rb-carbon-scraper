@@ -56,6 +56,43 @@ rules:
         regex: "AR-ACM0003|AR-AMS0003|M/UT/F-A01|BCR0001|Reforestation|Afforestation|Forest Restoration"
     value: "Florestamento, Reflorestamento e Revegetação (ARR)"
 
+  # --- Puro.earth methodologies -------------------------------------------
+  # Puro publishes exactly one classification of what a project does — the
+  # methodology — and no sector vocabulary at all, so the same string reaches
+  # both Tipo Macro and Metodologia and these rules key on it. None of them can
+  # fire on another registry: no other registry publishes these names.
+  #
+  # They sit above the sectoral-scope fallbacks below for the usual reason, and
+  # above nothing else: Puro certifies engineered and hybrid removals, so no
+  # AFOLU or energy rule was ever going to match them.
+  - name: puro-biochar
+    match: [{ field: methodologies, regex: "Biochar" }]
+    value: "Biochar"
+
+  - name: puro-enhanced-rock-weathering
+    match: [{ field: methodologies, regex: "Enhanced Rock Weathering" }]
+    value: "Intemperismo Acelerado de Rochas (ERW)"
+
+  - name: puro-carbonated-materials
+    match: [{ field: methodologies, regex: "Carbonated Materials" }]
+    value: "Materiais Carbonatados"
+
+  - name: puro-geological-storage
+    match: [{ field: methodologies, regex: "Geologically stored carbon" }]
+    value: "Captura e Armazenamento de Carbono"
+
+  - name: puro-wooden-building-elements
+    match: [{ field: methodologies, regex: "Wooden Building Elements" }]
+    value: "Produtos de Madeira (armazenamento em construção)"
+
+  - name: puro-terrestrial-biomass
+    match: [{ field: methodologies, regex: "Terrestrial Storage of Biomass" }]
+    value: "Armazenamento Terrestre de Biomassa"
+
+  - name: puro-soil-amendment
+    match: [{ field: methodologies, regex: "Soil Amendment" }]
+    value: "Condicionador de Solo (carbono no solo)"
+
   - name: methodology-redd
     match: [{ field: methodologies, regex: "REDD" }]
     value: "Desmatamento e Degradação Evitados (REDD)"

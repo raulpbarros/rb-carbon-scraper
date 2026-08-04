@@ -561,6 +561,112 @@ used to drop it, so honouring it later is a query rather than a re-scrape.
 
 ---
 
+## Puro.earth — the same 22 columns, different sources, added 2026-08-05
+
+**118 projects**, 583 issuance transactions and 1,519 retirement transactions.
+Puro certifies **engineered and hybrid carbon removal** — biochar, enhanced
+rock weathering, geological storage, carbon in wooden building elements — so it
+looks different from every other registry here: no AFOLU, no methodology codes
+anyone else uses, and no avoided emissions at all.
+
+| Column | Source |
+|---|---|
+| `Project ID` | the published `code` (`227253`). Unique across all 118 — checked — and the same value the public URL, the credit serials and every bundle use |
+| `Project Name` | project record |
+| `Standard` | **`Puro Standard`, asserted.** The registry names a *General Rules* version per project (13 versions across 118) and never names the standard; the version is kept in `extra` |
+| `Tipo Macro de Projeto` | the **methodology name**, untranslated: "Biochar, 2022" (80), "Wooden Building Elements" (14), "Terrestrial Storage of Biomass" (8), "Enhanced Rock Weathering, 2022" (6), "Carbonated Materials" (5), "Geologically stored carbon" (3+1), "Soil Amendment" (1) |
+| `Metodologia` | **the same string.** Puro publishes exactly one classification of what a project does, and no sector vocabulary at all — see below |
+| `Durabilidade` | derivation layer, and **the only registry where the bands are checked rather than guessed** — see below |
+| `País` | **published only on the project's own page**, read beside the flag its ISO code builds. The list route carries `countryCode` and no name |
+| `Continent` | derived from `countryCode`, published 118 of 118 — the Gold Standard path |
+| `Data de Início` / `Data de Término` | the crediting period, **117 of 118** |
+| `Total Credits Issued` | **1,819,251** units across 117 projects |
+| `Total Credits Retired` / `Sold` | **1,041,121** units across 96 projects |
+| `Total Credits Cancelled` | **not published — blank.** Withdrawal is a label with no quantity; see below |
+| `Estado`, `Cidade` | **not published — blank.** No sub-national field exists on the list or the detail page. A lat/long pair is published for 31 of 118 and kept in `extra` |
+| `Yearly Ex Ante` / `Total Ex Ante` | **not published — blank.** Puro certifies removals that have already happened; nothing is back-computed from the issuances |
+| `Additional Certification` | **no equivalent field — blank.** The `sdgs` list is a Sustainable Development Goal claim, not a co-certification, and is kept in `extra` |
+
+Both credit totals are confirmed twice: summed from the transaction bundles,
+and read from the registry's own per-project figures on all 118 project pages.
+**The two agree exactly, project by project.**
+
+### Tipo Macro and Metodologia hold the same string, deliberately
+
+Puro publishes no sector field. The methodology *is* the description of what
+the project does, so it fills both columns rather than one being left blank or
+filled from somewhere it is not published. It is carried through untranslated,
+like every other registry's vocabulary.
+
+Two wrinkles the business will see in the column:
+
+* the edition year is part of some names and not others — "Biochar, 2022" but
+  "Wooden Building Elements";
+* one methodology appears under two names, "Geologically stored carbon" and
+  "Geologically stored carbon, 2024", because a new edition was published.
+
+Both are the registry's own text. The derivation rules match on a stem, so a
+project is classified the same either way.
+
+### Durability is published here, and nowhere else
+
+Every labelled credit bundle carries a `durability` in years, and the credit
+class says it out loud: `CORC20+`, `CORC100+`, `CORC1000+`. Seven of Puro's
+eight methodologies therefore have a `Durabilidade` band that was **checked
+against the registry's own number** rather than inferred:
+
+| Methodology | Registry says | Band |
+|---|---:|---|
+| Geologically stored carbon | 1000 | Longa (>1000 anos) — armazenamento geológico |
+| Enhanced Rock Weathering | 1000 | Longa (>1000 anos) — mineralização |
+| Carbonated Materials | 1000 | Longa (>1000 anos) — mineralização |
+| Biochar | 100 | Longa (100-1000 anos) — biochar |
+| Terrestrial Storage of Biomass | 100 | Longa (100-1000 anos) — biomassa em armazenamento terrestre |
+| Soil Amendment | 20 | Curta (10-40 anos) — carbono no solo, reversível |
+| **Wooden Building Elements** | **nothing** | Média (25-100 anos) — madeira em produtos de longa vida, reversível |
+
+**Wooden Building Elements is the one to review first.** Its 14 projects issue
+the bare `CORC` class, which carries no durability figure at all, so its band is
+an ordinary informed guess — the same standing as every band on every other
+registry, and the only Puro row that cannot be checked.
+
+### `Total Credits Cancelled` is blank, and that is not the same as zero
+
+20 issuance transactions are flagged `PARTIALLY_WITHDRAWN` (14) or
+`FULLY_WITHDRAWN` (6). **No withdrawn quantity is published for either**, and
+for the partial ones none could be worked out: the transaction states its full
+volume and nothing else. The `withdrawalDetails` field exists in the schema and
+is null on all 2,102 transactions.
+
+The registry's own `Issued credits` counts the withdrawn units in full —
+`517437` has a fully withdrawn issuance of 3,272 units and still states 9,694
+issued, the sum of all its bundles. So on this registry a withdrawal is a flag
+on units that stay issued, not a cancellation.
+
+The flag is stored on the issuance row (`credit_events.status`), so if the
+business wants a withdrawn figure, the 6 fully-withdrawn transactions total
+**10,229 units** and can be reported without a re-scrape. The 14 partial ones
+cannot be quantified from anything the registry publishes.
+
+### Beneficiaries: this registry withholds, rather than flags
+
+A retirement names a beneficiary on 1,468 of 1,519 rows, and it is genuinely a
+third party — it matches the retiring account on only 88 of them.
+
+The 51 blanks are an embargo the registry states *and honours*: those rows
+carry a `beneficiaryHiddenUntil` date in the future and the name is simply
+absent from the API. It appears on a later sync, once the date passes. That is
+the opposite of BioCarbon, which marks retirements private and returns the name
+anyway — no decision is needed here, because nothing was disclosed.
+
+### Bioma is blank for every Puro project, on purpose
+
+Biome is a land-use classification and Puro has no land-use projects. Its
+rows fall outside the AFOLU gate in `biome.yaml` and stay blank rather than
+being placed in a biome on the strength of a country name.
+
+---
+
 ## Data-quality note: why retirement totals come from a different route
 
 Three of the four Units ledgers download completely and reconcile exactly

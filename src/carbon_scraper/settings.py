@@ -121,6 +121,7 @@ CERCARBONO = "CERCARBONO"
 PLAN_VIVO = "PLAN_VIVO"
 SOCIAL_CARBON = "SOCIAL_CARBON"
 BIOCARBON = "BIOCARBON"
+PURO = "PURO"
 
 REGISTRY_LABELS = {
     VERRA: "Verra VCS",
@@ -129,6 +130,7 @@ REGISTRY_LABELS = {
     PLAN_VIVO: "Plan Vivo",
     SOCIAL_CARBON: "SocialCarbon",
     BIOCARBON: "BioCarbon",
+    PURO: "Puro.earth",
 }
 
 # Roughly how long a full sync of each registry takes, in minutes, measured on
@@ -162,6 +164,11 @@ SYNC_ESTIMATE_MINUTES = {
     # a page) plus one detail and one cancellation request per project — 105
     # each. ~225 requests in total. Measured 2026-08-04.
     BIOCARBON: 5,
+    # Three pages carry the entire registry — projects, issuances and
+    # retirements — and then one detail page per project, 118 of them. ~121
+    # requests, but the pages are large: 5.2 MB for the retirement feed and
+    # ~900 KB per detail page, about 120 MB in all. Measured 2026-08-05.
+    PURO: 4,
 }
 
 # The exact-totals pass, on top of Verra's sync. One request per project with
@@ -368,6 +375,37 @@ BIOCARBON_PROJECT_DETAIL_URL = (
     f"{BIOCARBON_SITE}/registry/biocarbon/gei/project/{{project_id}}"
 )
 
+# --- Puro.earth -----------------------------------------------------------
+# A Next.js App Router site, and the first registry here whose data arrives
+# **inside the HTML** rather than from an API the page calls. The server
+# renders each route and streams the React Server Component payload to the
+# browser in `self.__next_f.push([1, "<json string>"])` calls; the project and
+# transaction lists are plain JSON objects inside it. There is no XHR to
+# intercept and no JSON route to ask for — `RSC: 1`, `?_rsc=`, and a full
+# router-state header were each tried and all three return the same prerendered
+# HTML. Measured 2026-08-05; see docs/api-contract-puro.md.
+
+PURO_SITE = "https://registry.puro.earth"
+
+#: Route -> what it carries. Three requests are the whole registry: 118
+#: projects, 583 issuance transactions and 1,519 retirement transactions, with
+#: no paging anywhere. `/issuances` and `/retirements` are two tabs of one
+#: view, and each returns only its own transaction type.
+PURO_PROJECTS_PATH = "/projects"
+PURO_ISSUANCES_PATH = "/issuances"
+PURO_RETIREMENTS_PATH = "/retirements"
+
+#: The public page for one project, and the only place three things are
+#: published: the country **name** (the list carries an ISO code and nothing
+#: else), and the registry's own `Issued credits` / `Retired credits` totals,
+#: which are the only counts this registry states anywhere.
+PURO_PROJECT_DETAIL_URL = f"{PURO_SITE}/projects/{{project_id}}"
+
+#: Asserted by the adapter. The registry names its rule set per project
+#: (`Puro Standard General Rules Version 3.1`, thirteen versions across 118
+#: projects) and never names the standard itself; the version goes to `extra`.
+PURO_STANDARD_NAME = "Puro Standard"
+
 # --- public project pages -------------------------------------------------
 # Used only as a fallback when an adapter did not store a `detail_url` on the
 # project row. A registry missing from this map gets a blank cell, never
@@ -387,6 +425,7 @@ PROJECT_DETAIL_URLS = {
     PLAN_VIVO: PV_PROJECT_DETAIL_URL,
     SOCIAL_CARBON: SOCIALCARBON_PROJECT_DETAIL_URL,
     BIOCARBON: BIOCARBON_PROJECT_DETAIL_URL,
+    PURO: PURO_PROJECT_DETAIL_URL,
 }
 
 # --- shared HTTP ----------------------------------------------------------

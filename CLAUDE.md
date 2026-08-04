@@ -8,10 +8,10 @@
 
 A scraper that builds a database of every carbon project across public
 registries and exports one formatted Excel sheet for the business team.
-Six registries are live: **Verra** (VCS **and** JNR), **Gold Standard**,
+Seven registries are live: **Verra** (VCS **and** JNR), **Gold Standard**,
 **Cercarbono**, **Plan Vivo** (**V5 and V4**, on two different platforms),
-**SocialCarbon** and **BioCarbon**; two more are planned. Adding one means
-writing an adapter, not touching the pipeline.
+**SocialCarbon**, **BioCarbon** and **Puro.earth**; one more is planned.
+Adding one means writing an adapter, not touching the pipeline.
 
 **A registry is not always one system, and not always one standard.**
 `registries.ADAPTERS` maps a registry to a *tuple* of adapters for exactly that
@@ -82,19 +82,20 @@ flag.
 
 ## Registries
 
-| | Verra VCS | Plan Vivo | Gold Standard | Cercarbono | SocialCarbon | BioCarbon |
-|---|---|---|---|---|---|---|
-| Front end | `registry.verra.org` | `registry.spglobal.com/pvclimate` | `registry.goldstandard.org` | `registry.cercarbono.com` | `registry.socialcarbon.org` | `globalcarbontrace.io` |
-| Backend | `prod-us.api.platts.com` (S&P) | **the same** | `public-api.goldstandard.org` | `api-front.ecoregistry.io` | **the same host** — a Bubble.io app | `api.globalcarbontrace.io` — Laravel |
-| Shape | POST search, Elasticsearch behind it | **the same** | plain REST GET | plain REST GET | Bubble Data API, `cursor`/`limit` | plain REST GET, Laravel paginator |
-| Projects | ~5,200 | **2 — V5 only, see below** | 4,141 | 231 (CO2 standard) | 19 | 105 (GHG programme) |
-| Credit records | ~305k retirements alone | 27 issuances + 10 holdings | ~183k blocks | 2,529 serials + 9,350 retirements | 17 + 81 + 2 | 626 + 11,439 + 3 |
-| Requests per sync | ~9,000 | **7** | ~7,300 | ~234 | **4** | ~225 |
-| Contract doc | `docs/api-contract.md` | `docs/api-contract-planvivo.md` | `docs/api-contract-gs.md` | `docs/api-contract-cercarbono.md` | `docs/api-contract-socialcarbon.md` | `docs/api-contract-biocarbon.md` |
-| `discover` needed | yes | no — the standards lookup was enough | no — plain HTTP was enough | no — plain HTTP plus a bundle read | no — the API is open and self-describing | no — the key and the routes are in the bundle |
+| | Verra VCS | Plan Vivo | Gold Standard | Cercarbono | SocialCarbon | BioCarbon | Puro.earth |
+|---|---|---|---|---|---|---|---|
+| Front end | `registry.verra.org` | `registry.spglobal.com/pvclimate` | `registry.goldstandard.org` | `registry.cercarbono.com` | `registry.socialcarbon.org` | `globalcarbontrace.io` | `registry.puro.earth` |
+| Backend | `prod-us.api.platts.com` (S&P) | **the same** | `public-api.goldstandard.org` | `api-front.ecoregistry.io` | **the same host** — a Bubble.io app | `api.globalcarbontrace.io` — Laravel | **none — there is no API** |
+| Shape | POST search, Elasticsearch behind it | **the same** | plain REST GET | plain REST GET | Bubble Data API, `cursor`/`limit` | plain REST GET, Laravel paginator | JSON inside the HTML — a Next.js RSC payload |
+| Projects | ~5,200 | **2 — V5 only, see below** | 4,141 | 231 (CO2 standard) | 19 | 105 (GHG programme) | 118 |
+| Credit records | ~305k retirements alone | 27 issuances + 10 holdings | ~183k blocks | 2,529 serials + 9,350 retirements | 17 + 81 + 2 | 626 + 11,439 + 3 | 583 + 2,099 bundles |
+| Requests per sync | ~9,000 | **7** | ~7,300 | ~234 | **4** | ~225 | ~121 |
+| Contract doc | `docs/api-contract.md` | `docs/api-contract-planvivo.md` | `docs/api-contract-gs.md` | `docs/api-contract-cercarbono.md` | `docs/api-contract-socialcarbon.md` | `docs/api-contract-biocarbon.md` | `docs/api-contract-puro.md` |
+| `discover` needed | yes | no — the standards lookup was enough | no — plain HTTP was enough | no — plain HTTP plus a bundle read | no — the API is open and self-describing | no — the key and the routes are in the bundle | no — the data ships in the page |
 
 All read via
-`--registry verra|planvivo|gs|cercarbono|socialcarbon|biocarbon|all`. Verra
+`--registry verra|planvivo|gs|cercarbono|socialcarbon|biocarbon|puro|all`.
+Verra
 and Plan Vivo share `registries/platts/api.py`; the others have their own
 sections and contract docs.
 
@@ -106,8 +107,8 @@ above are only the S&P half:
 | Verra | `verra/jnr.py` — JNR, a second standard on the same S&P tenant | 5 projects, **no credits at all** |
 | Plan Vivo | `planvivo/v4.py` — V4, on the **legacy Markit registry** | 30 projects, 411 issuances, 442 holdings, **5,034 retirements** |
 
-Planned, in `PLAN.md` order: **Puro.earth** and **ACR**. Everything else on
-the original list is live.
+Planned, in `PLAN.md` order: **ACR**. Everything else on the original list is
+live.
 
 ### Adding a registry hosted on S&P Platts
 
@@ -306,6 +307,11 @@ these was a real afternoon:
 | BioCarbon | `verified_reductions` equals the ledger on 103 of 105 | it is *verified*, not issued: one project has 322,687 verified and **no issuance blocks at all** |
 | BioCarbon | a `cancellations` endpoint, 3 rows | 14 issuance blocks carry a `dropouts` the endpoint never mentions — 584,940 against 477,859 |
 | BioCarbon | `País` reads "Malasia", "Perú", "Brasil" | the registry's own two languages, and `biome.yaml` matches on the **name** |
+| Puro | a server-rendered page, so parse the HTML | the HTML *is* the transport: the JSON is in a Next.js RSC payload, split across pushes that must be joined before decoding |
+| Puro | `RSC: 1` — the documented way to ask for that payload | ignored. Three variants all return the same prerendered HTML; there is no JSON route and no API host in any bundle |
+| Puro | `countryCode: "NA"` — a placeholder | **Namibia.** Three adapters here strip `na` as "not stated"; reusing one deletes a real country |
+| Puro | 1,519 retirements, so 1,519 rows | **2,099** — a retirement draws from several facilities at once, and the bundle is what names one |
+| Puro | 20 issuances flagged withdrawn | a label with **no quantity**, and the registry's own issued total counts them in full |
 
 Four rules for every new adapter, before writing a line of paging code:
 
@@ -706,6 +712,75 @@ categories (`gei`, `biodiversity`, `water`). Only `gei` is tCO2e and only
 - One project publishes a crediting period ending 26 years before it starts.
   Stored as published.
 
+## Puro.earth
+
+Full contract in `docs/api-contract-puro.md`. **The first target here with no
+API at all.** `registry.puro.earth` is a Next.js App Router app: the browser
+never fetches registry data: the server renders each route and streams its
+React Server Components payload *inside the HTML*, where the lists sit as
+ordinary JSON.
+
+```
+GET {site}/projects        118 projects
+GET {site}/issuances       583 issuance transactions
+GET {site}/retirements   1,519 retirement transactions
+GET {site}/projects/<code> one project — the detail page
+```
+
+Three requests are the whole registry. A sync is ~121 because one detail page
+per project is read too, and about 120 MB because the pages are large — the
+retirement feed alone is 5.2 MB and a detail page is ~900 KB.
+
+`registries/puro/flight.py` is the Puro equivalent of `markit/tables.py`: the
+part that knows the delivery format, kept away from the part that knows what
+the fields mean.
+
+- **The pushes must be joined before anything is decoded.** The payload
+  arrives as any number of `self.__next_f.push([1,"<json string>"])` calls and
+  the split lands mid-object on the big pages. Decoding them one at a time
+  finds truncated JSON.
+- **There is no JSON route.** `RSC: 1`, `?_rsc=`, and a full
+  `Next-Router-State-Tree` were each tried and all three return the same
+  prerendered HTML. No API host appears in any of the 15 client chunks either:
+  the fetch happens server-side. Do not go looking again.
+- **A transaction is not a credit record.** Every one carries a `bundles`
+  list, and a retirement routinely draws on several production facilities at
+  once — 1,519 retirements are **2,099 bundles**. The bundle names the
+  facility, so a row per transaction files a multi-facility retirement against
+  whichever facility came first and loses the rest. Issuances are 1:1 *today*;
+  they are read the same way regardless.
+- **`countryCode` is `"NA"` for Namibia**, and two projects are there. Three
+  adapters here carry a `NOT_STATED` table listing `na`; reusing one deletes a
+  real country code and takes its Continent with it. Puro states absence as
+  JSON `null` and has no placeholder vocabulary, so `puro.NOT_STATED` is
+  **empty on purpose** and a test pins it.
+- **Withdrawal is a label, not a deduction.** 20 issuances carry
+  `FULLY_WITHDRAWN` (6) or `PARTIALLY_WITHDRAWN` (14), `withdrawalDetails` is
+  null on all 2,102 transactions, and **no withdrawn quantity is published**.
+  The registry's own `Issued credits` counts them in full — measured, not
+  assumed. So there is no cancellation ledger and `Total Credits Cancelled` is
+  blank; the label lives in `credit_events.status`.
+- **The registry publishes no row count anywhere** — not in the body, not in a
+  header, not on the site. Reconciling `len(data)` against itself proves
+  nothing, so the guards are the ones that can fail: every bundle's facility
+  must be a known project (0 orphans across 2,682 bundles), every
+  transaction's volume must equal its bundles', and every project's bundles
+  must sum to what its own detail page states. **All 118 agree exactly, on
+  both ledgers.**
+- **The detail page is the only source of the country *name*.** The list
+  publishes an ISO code and nothing else. The name is read beside the flag
+  that code builds, so a positional read of someone's markup is a checked one.
+- **Puro is the only registry that publishes a durability**, in years, on
+  every labelled bundle — `CORC20+`, `CORC100+`, `CORC1000+`. Seven of its
+  eight methodologies therefore have a `Durabilidade` band that is *checked*
+  rather than inferred. Wooden Building Elements is the exception: bare `CORC`
+  credits, no durability figure, so its band is an ordinary guess and is the
+  one to take to the business first.
+- **The beneficiary embargo is honoured by the registry, not by us.** 108
+  retirements state a `beneficiaryHiddenUntil`; on the 51 still in force the
+  name is simply absent from the API. The opposite of BioCarbon, which marks a
+  retirement private and returns the name anyway. A later sync picks it up.
+
 ## Commands
 
 ```bash
@@ -724,6 +799,7 @@ verra sync -r planvivo            # BOTH systems: V5 on S&P (7 requests) and
                                   # V4 on Markit (~440), ~10 min in total
 verra sync -r socialcarbon        # the whole registry in 4 requests, ~1 min
 verra sync -r biocarbon           # 105 projects + three ledgers, ~5 min (225 requests)
+verra sync -r puro                # 118 projects + both ledgers, ~4 min (121 requests)
 verra sync                        # every registry (-r defaults to `all`)
 verra totals                      # EXACT per-project Verra retirement totals
 verra derive                      # apply YAML rules -> derived columns
@@ -743,10 +819,11 @@ cd docker; docker compose run --rm publish   # the container's DB -> data/verra.
 ```
 
 `-r` / `--registry` takes `verra`, `gs`, `cercarbono`, `planvivo`,
-`socialcarbon`, `biocarbon` or `all`.
+`socialcarbon`, `biocarbon`, `puro` or `all`.
 `totals` is Verra-only — Gold Standard's whole credit stream pages cleanly,
-Cercarbono, SocialCarbon and BioCarbon pick up their exact totals during `sync`
-through `iter_credit_totals`, and Plan Vivo's ledgers each fit in one request.
+Cercarbono, SocialCarbon, BioCarbon and Puro pick up their exact totals during
+`sync` through `iter_credit_totals`, and Plan Vivo's ledgers each fit in one
+request.
 `discover` and `standards` are S&P-only and refuse anything else.
 
 `sync`, `derive` and `export` are separate on purpose: fixing a classification rule must never require re-scraping a registry.
@@ -797,6 +874,12 @@ alternative missed it silently. BioCarbon says
 why `durability.yaml`'s `afolu-generic` now carries `\bAFOLU\b` too, a gap
 that had been silently costing SocialCarbon a `Durabilidade` since it was
 added.
+
+**A registry staying out of that gate can also be right.** Puro adds no wording
+to it: it certifies engineered and hybrid removals — biochar, enhanced rock
+weathering, geological storage, wood in buildings — and none of its 118
+projects is land use, so `Bioma` is blank for all of them by design. The check
+is whether the registry has land-use projects, not whether it has rows.
 
 **The country-name bands are language-specific, and not every registry writes
 English.** BioCarbon publishes "Malasia", "Perú", "Panamá", "Brasil",
@@ -915,6 +998,34 @@ GHG index on 2026-08-04:
 - `afolu_names` — no sub-type code. `type_project_name` is a display name, not
   a vocabulary; Tipo Micro keys on the methodology string, as Cercarbono's does.
 
+**Puro sources differently again**, measured over its full 118-project index on
+2026-08-05:
+
+| Column | Puro.earth |
+|---|---|
+| `Project ID` | the published `code` (`227253`). Unique across all 118 — checked, not assumed — and unlike BioCarbon it *is* the primary key: the public URL, the certificate serials and every credit bundle use the same value |
+| `Standard` | **"Puro Standard", asserted.** The registry names a *General Rules* version per project (13 versions across 118) and never names the standard; the version goes to `extra` |
+| `Tipo Macro de Projeto` | the **methodology name**, untranslated: "Biochar, 2022" (80), "Wooden Building Elements" (14), "Terrestrial Storage of Biomass" (8), "Enhanced Rock Weathering, 2022" (6), "Carbonated Materials" (5), "Geologically stored carbon" (3+1), "Soil Amendment" (1) |
+| `Metodologia` | **the same string.** Puro publishes one classification of what a project does and no sector vocabulary at all, so both columns carry it rather than one being filled from somewhere it is not published |
+| `Durabilidade` | derivation layer, keyed on the methodology — and the **only** registry whose bands can be checked against a published figure |
+| `País` | **published only on the detail page**, read beside the flag the project's own ISO code builds. The list route carries `countryCode` and no name |
+| `Continent` | derived from `countryCode`, 118/118 — the Gold Standard path |
+| `Total Credits Issued` / `Retired` | the two ledgers, 1,819,251 and 1,041,121 — confirmed twice, by summing the bundles and by reading each project's own page |
+
+**Deliberate blanks for Puro**, same index:
+
+- `Estado` / `Cidade` — no sub-national field exists on the list or the detail
+  page. A lat/long pair is published for 31 of 118 and goes to `extra`.
+- `Yearly Ex Ante` / `Total Ex Ante` — no estimate is published at all. Puro
+  certifies removals that have already happened.
+- `Total Credits Cancelled` — withdrawal is a **label with no quantity**, and
+  the registry's own issued total counts the units anyway. Blank, not zero.
+- `Additional Certification` — no equivalent. The `sdgs` list is an SDG claim,
+  exactly like Cercarbono's `elegible` list.
+- `Bioma` — biome is a land-use classification and Puro has no land-use
+  projects. Blank for all 118, correctly.
+- `status`, `region_name`, `afolu_names` — not published.
+
 **Known wrinkle:** under "retired = sold", `Total Credits Sold` and `Total Credits Retired` are the same number. Retirement beneficiary is stored anyway, and `config/credits.yaml` has a `sold_equals_retired` toggle that flips to a beneficiary-based split (retired for a named third party = sold) if the business confirms that is wanted. Do not change the default without being asked.
 
 ## Rules for working in this repo
@@ -971,6 +1082,12 @@ src/carbon_scraper/
     biocarbon/api.py           Global CarbonTrace: Laravel paginator, a 403
                                that arrives inside a 200, and the one ledger
                                with two feeds and no published total
+    puro/api.py                Puro.earth: no API at all. Bundles rather than
+                               transactions, and the only registry that
+                               publishes a durability of its own
+    puro/flight.py             the Next.js RSC payload reader — joins the
+                               `__next_f.push` stream, then decodes. Stdlib
+                               only, and the Puro half of markit/tables.py
   gui/
     state.py                   what the window remembers. No Tk, no pipeline
     worker.py                  thread + queue + logging bridge. NO Tk import
@@ -1009,6 +1126,14 @@ tenant in eight GETs, and `docs/api-contract-markit.md` lists the 21
 programmes on the legacy Markit view. Between them that is 29 registries
 reachable by subclassing something that already works. Cracking a new site is
 the last resort, not the first move.
+
+**Then check whether the site is shipping the data in its own HTML.** Puro was
+filed as "server-rendered HTML, look for a JSON endpoint before writing a
+parser" and turned out to be neither: it is a Next.js App Router app whose RSC
+payload carries the whole registry as JSON inside the page. There is no XHR to
+intercept and no endpoint to find — and looking for one is an hour spent
+proving a negative. A modern JS framework rendering on the server is a *good*
+outcome here, not a browser-automation problem. See `puro/flight.py`.
 
 **If it is on S&P Platts** that shrinks to: subclass `PlattsAPI`, set six
 class attributes, and check which fields the registry actually populates. See

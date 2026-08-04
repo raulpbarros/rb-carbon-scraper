@@ -25,6 +25,54 @@ rules:
     match: [{ field: methodologies, regex: "VM0044" }]
     value: "Longa (100-1000 anos) — biochar"
 
+  # --- Puro.earth: the one registry that publishes a durability -----------
+  # Puro states a durability in years on every credit bundle it labels —
+  # `CORC20+`, `CORC100+`, `CORC1000+` — so for seven of its eight
+  # methodologies these bands are **checked against the registry's own
+  # number** rather than inferred. Measured over the full 583-issuance feed on
+  # 2026-08-05: Biochar and Terrestrial Storage of Biomass 100 years,
+  # Enhanced Rock Weathering, Carbonated Materials and Geologically stored
+  # carbon 1000, Soil Amendment 20.
+  #
+  # These key on `methodologies`, which is what Puro publishes; it states no
+  # sector vocabulary at all and the same string is carried in both columns.
+  # The edition year is part of some names and not others ("Biochar, 2022"
+  # against "Wooden Building Elements", "Geologically stored carbon" against
+  # "Geologically stored carbon, 2024"), so every rule matches on the stem.
+  - name: puro-geological-storage
+    match: [{ field: methodologies, regex: "Geologically stored carbon" }]
+    value: "Longa (>1000 anos) — armazenamento geológico"
+
+  - name: puro-mineralisation
+    # Enhanced Rock Weathering and Carbonated Materials: the CO2 ends up as
+    # carbonate rock or in concrete. Puro says 1000 years for both.
+    match:
+      - field: methodologies
+        regex: "Enhanced Rock Weathering|Carbonated Materials"
+    value: "Longa (>1000 anos) — mineralização"
+
+  - name: puro-biochar
+    match: [{ field: methodologies, regex: "Biochar" }]
+    value: "Longa (100-1000 anos) — biochar"
+
+  - name: puro-terrestrial-biomass
+    match: [{ field: methodologies, regex: "Terrestrial Storage of Biomass" }]
+    value: "Longa (100-1000 anos) — biomassa em armazenamento terrestre"
+
+  - name: puro-soil-amendment
+    match: [{ field: methodologies, regex: "Soil Amendment" }]
+    value: "Curta (10-40 anos) — carbono no solo, reversível"
+
+  - name: puro-wooden-building-elements
+    # **The one Puro band with nothing published behind it.** Its credits are
+    # the bare `CORC` class, which carries no durability number at all — 39 of
+    # 39 bundles. The band below is the usual informed guess, on the reading
+    # that the store lasts as long as the building; it is the value to take to
+    # the business first, because every other Puro row can be checked and this
+    # one cannot.
+    match: [{ field: methodologies, regex: "Wooden Building Elements" }]
+    value: "Média (25-100 anos) — madeira em produtos de longa vida, reversível"
+
   # --- Biological storage: real removal, but reversible -------------------
   - name: afolu-arr-removal
     match: [{ field: afolu_names, any_of: [ARR] }]
