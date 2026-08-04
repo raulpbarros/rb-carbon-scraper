@@ -55,7 +55,7 @@ rules:
   - name: methodology-afforestation-removal
     match:
       - field: methodologies
-        regex: "AR-ACM0003|AR-AMS0003|M/UT/F-A01|Reforestation|Afforestation|Forest Restoration"
+        regex: "AR-ACM0003|AR-AMS0003|M/UT/F-A01|BCR0001|Reforestation|Afforestation|Forest Restoration"
     value: "Média (25-100 anos) — estoque biológico, reversível"
 
   - name: methodology-redd-avoided
@@ -63,12 +63,27 @@ rules:
     value: "Curta/Média — desmatamento evitado, alto risco de reversão"
 
   - name: methodology-forest-wetland-modular
-    match: [{ field: methodologies, regex: "M/LU/F-W01" }]
+    match: [{ field: methodologies, regex: "M/LU/F-W01|BCR0010" }]
     value: "Média (25-100 anos) — estoque florestal, reversível"
 
+  # BioCarbon's wetland and blue-carbon methodologies build a biological
+  # store, the same reading as Verra's WRC rows above. Its other BCR numbers
+  # are avoided land-use change and fall through to `afolu-generic`.
+  - name: bcr-wetlands-and-blue-carbon
+    match: [{ field: methodologies, regex: "BCR0004|BCR0007|BCR0012" }]
+    value: "Média (25-100 anos) — estoque biológico, reversível"
+
   - name: afolu-generic
-    # Verra's wording and Cercarbono's, both carried through untranslated.
-    match: [{ field: sectoral_scope, regex: "Agriculture Forestry|Land use \\(AFOLU\\)" }]
+    # Verra's wording, Cercarbono's, and the two that state the acronym on its
+    # own or inside a longer phrase — SocialCarbon's bare "AFOLU" and
+    # BioCarbon's "Agriculture, forestry and other land uses (AFOLU)", which
+    # the `Agriculture Forestry` alternative misses on the comma alone.
+    # `\bAFOLU\b` is the same gate config/derivation/biome.yaml uses, and for
+    # the same reason: an unrecognised wording means no value and nothing in
+    # the log to say so.
+    match:
+      - field: sectoral_scope
+        regex: "Agriculture Forestry|Land use \\(AFOLU\\)|\\bAFOLU\\b"
     value: "Média — uso da terra, reversível"
 
   - name: ecosystem-conservation

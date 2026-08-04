@@ -1,0 +1,68 @@
+{
+ "116": {
+  "status": 200,
+  "data": []
+ },
+ "24": {
+  "status": 200,
+  "data": []
+ },
+ "31": {
+  "status": 200,
+  "data": []
+ },
+ "85": {
+  "status": 200,
+  "data": []
+ },
+ "35": {
+  "status": 200,
+  "data": [
+   {
+    "serial": "BCR-CO-259-14-005-2-2310-2312-0000001-0000841",
+    "amount": "841",
+    "year": "2023",
+    "initial_vintage": "2023-10-01",
+    "final_vintage": "2023-12-31",
+    "cancellation_date": "2026-06-26"
+   },
+   {
+    "serial": "BCR-CO-259-14-005-2-2401-2410-0000001-0002972",
+    "amount": "2,972",
+    "year": "2024",
+    "initial_vintage": "2024-01-01",
+    "final_vintage": "2024-10-31",
+    "cancellation_date": "2026-06-26"
+   }
+  ]
+ },
+ "9": {
+  "status": 200,
+  "data": [
+   {
+    "serial": "PCR-CO-ATI-14-001-2-1012-1712-0080283-0554328",
+    "amount": "474,046",
+    "year": "2017",
+    "initial_vintage": "2010-12-31",
+    "final_vintage": "2017-12-31",
+    "cancellation_date": "2019-11-06"
+   }
+  ]
+ },
+ "20": {
+  "status": 200,
+  "data": []
+ },
+ "22": {
+  "status": 200,
+  "data": []
+ },
+ "46": {
+  "status": 200,
+  "data": []
+ },
+ "7": {
+  "status": 200,
+  "data": []
+ }
+}

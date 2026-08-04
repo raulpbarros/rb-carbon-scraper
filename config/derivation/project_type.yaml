@@ -53,7 +53,7 @@ rules:
   - name: methodology-afforestation
     match:
       - field: methodologies
-        regex: "AR-ACM0003|AR-AMS0003|M/UT/F-A01|Reforestation|Afforestation|Forest Restoration"
+        regex: "AR-ACM0003|AR-AMS0003|M/UT/F-A01|BCR0001|Reforestation|Afforestation|Forest Restoration"
     value: "Florestamento, Reflorestamento e Revegetação (ARR)"
 
   - name: methodology-redd
@@ -63,6 +63,41 @@ rules:
   - name: methodology-forest-wetland-modular
     match: [{ field: methodologies, regex: "M/LU/F-W01" }]
     value: "Manejo Florestal Melhorado (IFM)"
+
+  # --- BioCarbon's own methodology numbers -------------------------------
+  # BioCarbon publishes no AFOLU sub-type code either, and its methodology
+  # *names* carry both the number and the activity — "BCR0001_Actividades
+  # ARR", "BCR0002_… Proyectos REDD+". The CDM methodologies it also uses
+  # (AR-ACM0003, ACM0001, ACM0002, AMS-I.*, AMS-III.F/H) are matched by the
+  # rules above unchanged, which is why only the BCR-numbered ones appear
+  # here. The codes exist on no other registry, so these rules cannot reach
+  # another registry's rows.
+  #
+  # Deliberately absent: BCR0006 (petrol-to-natural-gas vehicle conversion).
+  # There is no transport value in this vocabulary and inventing one is a
+  # business decision, so that project's cell stays blank — the correct
+  # failure, per the note at the top of this file.
+  - name: bcr-improved-forest-management
+    match: [{ field: methodologies, regex: "BCR0010" }]
+    value: "Manejo Florestal Melhorado (IFM)"
+
+  - name: bcr-wetlands-and-blue-carbon
+    # BCR0004 continental wetlands, BCR0007 wetland conservation and
+    # restoration, BCR0012 blue carbon.
+    match: [{ field: methodologies, regex: "BCR0004|BCR0007|BCR0012" }]
+    value: "Restauração e Conservação de Áreas Úmidas (WRC)"
+
+  - name: bcr-natural-savanna
+    # Avoided land-use change in natural savanna — grassland and shrubland
+    # conservation, which is what ACoGS covers on Verra.
+    match: [{ field: methodologies, regex: "BCR0005" }]
+    value: "Conservação de Pastagens e Campos (ACoGS)"
+
+  - name: bcr-high-mountain
+    # Avoided land-use change in high-mountain ecosystems (páramo). Genuinely
+    # AFOLU, and genuinely not one of the sub-types this vocabulary has.
+    match: [{ field: methodologies, regex: "BCR0003" }]
+    value: "AFOLU (subtipo não informado)"
 
   - name: methodology-land-use-generic
     match: [{ field: methodologies, regex: "NTC 6208|land use" }]

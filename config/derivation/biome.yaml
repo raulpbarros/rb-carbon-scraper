@@ -53,43 +53,43 @@ rules:
   # --- Brazil, by state (dominant biome) --------------------------------
   - name: br-amazonia
     match:
-      - { field: country_name, contains: "Brazil" }
+      - { field: country_name, regex: "Brazil|Brasil" }
       - { field: state_province, regex: "Acre|Amap|Amazonas|Pará|^PA$|Rondônia|Roraima|Tocantins" }
     value: "Amazônia"
 
   - name: br-pantanal
     match:
-      - { field: country_name, contains: "Brazil" }
+      - { field: country_name, regex: "Brazil|Brasil" }
       - { field: state_province, regex: "Mato Grosso do Sul|Pantanal" }
     value: "Pantanal"
 
   - name: br-cerrado
     match:
-      - { field: country_name, contains: "Brazil" }
+      - { field: country_name, regex: "Brazil|Brasil" }
       - { field: state_province, regex: "Goiás|Distrito Federal|Mato Grosso|Piauí|Maranhão|Minas Gerais" }
     value: "Cerrado"
 
   - name: br-caatinga
     match:
-      - { field: country_name, contains: "Brazil" }
+      - { field: country_name, regex: "Brazil|Brasil" }
       - { field: state_province, regex: "Ceará|Rio Grande do Norte|Paraíba|Pernambuco|Alagoas|Sergipe|Bahia" }
     value: "Caatinga"
 
   - name: br-pampa
     match:
-      - { field: country_name, contains: "Brazil" }
+      - { field: country_name, regex: "Brazil|Brasil" }
       - { field: state_province, regex: "Rio Grande do Sul" }
     value: "Pampa"
 
   - name: br-mata-atlantica
     match:
-      - { field: country_name, contains: "Brazil" }
+      - { field: country_name, regex: "Brazil|Brasil" }
       - { field: state_province, regex: "São Paulo|Rio de Janeiro|Espírito Santo|Paraná|Santa Catarina" }
     value: "Mata Atlântica"
 
   - name: br-unknown-state
     match:
-      - { field: country_name, contains: "Brazil" }
+      - { field: country_name, regex: "Brazil|Brasil" }
     value: "Brasil (bioma não determinado)"
 
   # --- Colombia, by department (dominant biome) --------------------------
@@ -140,10 +140,24 @@ rules:
     value: "Colômbia (bioma não determinado)"
 
   # --- Rest of the world, continental bands -----------------------------
+  #
+  # **These read a country NAME, and not every registry writes it in
+  # English.** BioCarbon states its own — "Malasia", "Perú", "Panamá",
+  # "México", "Brasil", "Turquía", "Estados Unidos" — carried through
+  # untranslated like every registry's vocabulary. An accented or Spanish
+  # spelling is invisible to an English-only pattern, and the failure is the
+  # usual silent one: no biome, nothing in the log. The Spanish forms are
+  # therefore alternatives below rather than a translation applied at scrape
+  # time.
+  #
+  # Blast radius of adding them, measured against the real database on
+  # 2026-08-04 before the change: **zero rows**. Every existing project in
+  # every registry states its country in English, so each addition widens a
+  # pattern for BioCarbon and for nothing else.
   - name: amazon-basin-neighbours
     # Colombia is handled by department above and is deliberately absent here.
     match:
-      - { field: country_name, regex: "Peru|Ecuador|Bolivia|Guyana|Suriname|Venezuela" }
+      - { field: country_name, regex: "Per[uú]|Ecuador|Bolivia|Guyana|Suriname|Venezuela" }
     value: "Amazônia (bacia amazônica)"
 
   - name: congo-basin
@@ -153,7 +167,7 @@ rules:
 
   - name: southeast-asia-tropical
     match:
-      - { field: country_name, regex: "Indonesia|Malaysia|Papua|Philippines|Viet Nam|Cambodia|Lao|Myanmar|Thailand" }
+      - { field: country_name, regex: "Indonesia|Malaysia|Malasia|Papua|Philippines|Filipinas|Viet Nam|Cambodia|Lao|Myanmar|Thailand|Tailandia" }
     value: "Floresta Tropical do Sudeste Asiático"
 
   - name: miombo-woodland
@@ -167,7 +181,7 @@ rules:
 
   - name: mesoamerica-tropical
     match:
-      - { field: country_name, regex: "Guatemala|Belize|Honduras|Nicaragua|Costa Rica|Panama|El Salvador" }
+      - { field: country_name, regex: "Guatemala|Belize|Honduras|Nicaragua|Costa Rica|Panam[aá]|El Salvador" }
     value: "Floresta Tropical Mesoamericana"
 
   - name: africa-savanna

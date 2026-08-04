@@ -2,11 +2,11 @@
 
 Two things are changing at once:
 
-- **More registries.** Verra, Gold Standard, Cercarbono and Plan Vivo are live.
-  ACR, Puro.earth, BioCarbon and SocialCarbon were added during scoping, and
-  Plan Vivo V4 during Phase 4 — the live Plan Vivo adapter turned out to cover
-  only the V5 registry. Nine in total. Phase 5 keeps the last five
-  independently droppable.
+- **More registries.** Verra, Gold Standard, Cercarbono, Plan Vivo,
+  SocialCarbon and BioCarbon are live. ACR and Puro.earth were added during
+  scoping and are what remains; Plan Vivo V4 was added during Phase 4, the
+  live Plan Vivo adapter having turned out to cover only the V5 registry.
+  Nine in total. Phase 5 keeps each independently droppable.
 - **A different user.** The deliverable stops being a spreadsheet a developer
   mails out and becomes a Windows application the business team installs: tick
   the registries, pick a folder, press a button.
@@ -23,7 +23,7 @@ PyInstaller one-folder inside an Inno Setup installer.
 
 ---
 
-## Where things stand — 2026-07-29
+## Where things stand — 2026-08-04
 
 | Phase | | |
 |---|---|---|
@@ -34,15 +34,22 @@ PyInstaller one-folder inside an Inno Setup installer.
 | 4 — Packaging | ✅ | 20.8 MB shipped DB, EXE, per-user installer — 16.7 MB, no admin |
 | 4b — Distribution | 🔄 | portable ZIP + GitHub release; SmartScreen answered without signing |
 | 4c — Docker | ✅ | the ~16,500-request scrape, headless, off the desktop |
-| **5 — More registries** | **🔄** | **5e Plan Vivo V4 ✅, Verra JNR ✅**; 5d unblocked; 5a/5b/5c open |
+| **5 — More registries** | **🔄** | **5a ✅, 5d ✅, 5e ✅, Verra JNR ✅**; 5b/5c open |
 | 6 — Hardening | | incremental sync, `verra doctor` |
 
-**235 tests, green, offline.** Four registries live and **six standards across
-three platforms**: Verra VCS 5,245 + JNR 5, Gold Standard 4,141, Cercarbono
-231, Plan Vivo V5 2 + V4 30 — **9,649 projects in one database**, every one
-carrying a derived Tipo Micro / Bioma / Durabilidade. Last delivery is
-`out/carbon-projects_v2.xlsx`; a `_v3` has still not been cut, because nobody
-has asked for one.
+**386 tests, green, offline.** Six registries live and **eight standards across
+five platforms**: Verra VCS 5,245 + JNR 5, Gold Standard 4,141, Cercarbono
+231, BioCarbon 105, Plan Vivo V5 2 + V4 30, SocialCarbon 19 — **9,773 projects
+in one database**, every one carrying a derived Tipo Micro / Bioma /
+Durabilidade. Last delivery is `out/carbon-projects_v2.xlsx`; a `_v3` has still
+not been cut, because nobody has asked for one.
+
+**One project is now known to be in two registries.** BioCarbon's
+`BCR-CO-319-14-002`/`-005` are Cercarbono's `CDC-106`/`CDC-107` — the same
+projects, different credit tranches, and both rows ship cross-linked (user's
+decision, 2026-08-04). It is the only overlap found so far, and it is the one
+thing that stops "sum every registry's Total Credits Issued" being a safe
+query. See `docs/field-mapping.md`.
 
 **The "0 projects retiring more than they issued" invariant no longer holds,
 and that is a finding rather than a regression.** Six Plan Vivo V4 projects
@@ -62,10 +69,11 @@ to put it on, because an unsigned installer is a build problem only until it
 meets someone else's machine — after that it is a trust problem, and that one
 is not fixed by building harder.
 
-What is left is registries. Phase 5 adds them to a tool the business can
-already open — deliberately after, not before. It has grown by one: the Plan
-Vivo adapter reaches the **V5 (PV Climate) registry only**, and its two
-projects are not the whole of Plan Vivo. See 5e.
+What is left is two registries — **Puro.earth (5b)** and **ACR (5c)**. Phase 5
+adds them to a tool the business can already open, deliberately after and not
+before. Every other item on it is done, including the one it grew: the Plan
+Vivo adapter reached the V5 registry only, and V4 turned out to be a whole
+second platform.
 
 ---
 
@@ -432,22 +440,74 @@ is how 5e turned out to be an afternoon instead of a week.
 **Then check whether the registry is already reachable from another angle, and
 refuse it if it is.** SocialCarbon is on the legacy Markit list *and* has its
 own current system; ingesting both would have counted the same credits twice.
-Two of the four registries below have a known double-count risk (5a against
-Cercarbono's converted-in projects, 5d against Markit — now settled), and 5d
-turned out to carry a third one *inside its own API*. Ask what else already
-holds these credits before scraping, not after.
+Two of the four registries below had a known double-count risk and **both
+turned out to be real**: 5d against legacy Markit, and 5a against Cercarbono's
+converted-in projects. 5d carried a third one *inside its own API*, and 5a's is
+the one case where the answer was to keep both rows rather than drop one — the
+two registries publish different tranches of the same project. Ask what else
+already holds these credits before scraping, not after.
 
-- [ ] **5a BioCarbon** — ~~first check whether `BCCR` is BioCarbon~~ **it is
-      not**: the S&P standards lookup names it "BC Carbon Registry", British
-      Columbia (`140000000000001` / `BC`). Settled in Phase 2. Not on legacy
-      Markit either — that view's 21 programmes do not include it. So this is
-      a real adapter: grep `globalcarbontrace.io`'s Vite bundle the way
-      Cercarbono's was cracked.
-      **Watch for double counting**: Cercarbono re-issues projects migrated
-      from BioCarbon and records the origin in
-      `projects.extra.converted_from` — `CDC-106` and `CDC-107` are both
-      ex-BioCarbon and link back to `biocarbonregistry.com`. The same project
-      appearing under two registries must not be added up twice
+- [x] **5a BioCarbon — done, 2026-08-04.** ~~first check whether `BCCR` is
+      BioCarbon~~ **it is not**: the S&P standards lookup names it "BC Carbon
+      Registry", British Columbia (`140000000000001` / `BC`). Settled in
+      Phase 2. Not on legacy Markit either. So it was a real adapter — and
+      the Vite-bundle grep was the whole of the discovery, exactly as
+      Cercarbono's was.
+
+      **BioCarbon publishes through Global CarbonTrace**
+      (`globalcarbontrace.io`), a Laravel API behind a Vue SPA;
+      `biocarbonregistry.com` no longer resolves. Contract in
+      `docs/api-contract-biocarbon.md`, adapter in `registries/biocarbon/`.
+
+      **105 projects, 626 issuance blocks, 11,439 retirements and 3
+      cancellation records in ~225 requests.** Both credit totals match the
+      registry's own published `impact-stats` figures **to the unit** —
+      85,177,570 issued and 50,157,520 retired — which is what makes them
+      trustworthy rather than merely self-consistent.
+
+      What the plan expected and what was there:
+
+      - **The double count was real and the user's call settled it.**
+        Cercarbono's `CDC-106`/`CDC-107` are BioCarbon's
+        `BCR-CO-319-14-002`/`-005`, still `Registered` here. The credits are
+        *different tranches*, not the same units twice: 3,945,085 and
+        8,029,639 here against Cercarbono's 79,450 and 170,550. **Both rows
+        ship, cross-linked** (user's decision, 2026-08-04) —
+        `extra.also_registered_as`, because the linkage is published only
+        from Cercarbono's side. This is the only known overlap between any
+        two registries in the database.
+      - **A 403 wearing an HTTP 200.** Without the public `x-api-key` the
+        body reads `{"status": 403, "data": []}` under a 200 status line —
+        indistinguishable from an empty registry, the fourth registry here
+        to report a refusal this way. The key ships in the site's own
+        `assets/api-*.js`, like Verra's `appkey`.
+      - **`per_page` is honoured**, verified at 100 through 5000. The *first*
+        registry in this project that does not silently clamp or ignore a
+        page size.
+
+      Three things the plan did not anticipate:
+
+      - **Two feeds disagree about cancellations, and the fuller one has no
+        dates.** The `cancellations` endpoint publishes 3 rows / 477,859
+        units; 14 issuance blocks carry a `dropouts` totalling **584,940**,
+        and `amount = active + outof + dropouts` holds on every one. Rows
+        from the endpoint, total from the blocks, through
+        `iter_credit_totals` — the same seam as Cercarbono's
+        `certificatedVerification`.
+      - **`verified_reductions` is not an issued total, and this is
+        Cercarbono's trap inverted.** It equals the ledger for 103 of 105
+        projects; `BCR-TR-152-1-001` states 322,687 verified and has **no
+        issuance blocks at all**. There the ledger was the incomplete feed,
+        here it is the authoritative one — and only checking both against the
+        registry's own headline figure says which.
+      - **`País` arrives in two languages.** "Colombia" beside "Malasia",
+        "Perú", "Panamá", "Brasil". No language switch exists; it is what was
+        typed. `Continent` is safe (ISO code, 105/105), `biome.yaml` now
+        carries both spellings, and the blast radius of adding them was
+        **zero existing rows**. Re-running `derive` moved exactly **one**
+        pre-existing value: SocialCarbon's bare-`AFOLU` project, which was
+        missing a `Durabilidade` for the same reason it was missing a `Bioma`
+        a week earlier
 - [ ] **5b Puro.earth** — server-rendered HTML; look for a JSON endpoint before
       writing a parser
 - [ ] **5c ACR** — APX ASP platform, form posts and HTML tables. Highest effort

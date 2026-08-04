@@ -430,6 +430,137 @@ different angle.
 
 ---
 
+## BioCarbon — the same 22 columns, different sources, added 2026-08-04
+
+**105 projects**, 626 issuance blocks, 11,439 retirements and 3 cancellation
+records. BioCarbon Registry publishes through **Global CarbonTrace**
+(`globalcarbontrace.io`); the old `biocarbonregistry.com` no longer resolves.
+Only its **GHG programme** is ingested — the platform also hosts a biodiversity
+and a water programme, whose units are not tCO2e.
+
+| Column | Source |
+|---|---|
+| `Project ID` | the published `BCR-CO-319-14-004` reference. Unique across all 105, unlike SocialCarbon's — checked, not assumed |
+| `Project Name` | project record |
+| `Standard` | `BioCarbon Standard`, the registry's own `applicable_standard`, on 105 of 105 |
+| `Tipo Macro de Projeto` | the `sector_name` field, untranslated: "Agriculture, forestry and other land uses (AFOLU)" (74), "Energy industries (renewable sources / energy efficiency)" (17), "Waste handling and disposal" (11), "Transport" (3) |
+| `Metodologia` | the methodology names, **105 of 105**. Its own numbered set (`BCR0001`…`BCR0012`) plus CDM methodologies (`AR-ACM0003`, `ACM0002`, `AMS-I.D.`…); 25 projects list more than one |
+| `Status` | `Registered` (47), `Listed` (26), `Declined` (16), `De-registered` (7), `Registration Request Under Review` (7), `Withdrawn` (2) |
+| `País` | published as a name, **in the registry's own two languages** — see below |
+| `Continent` | derived from `country_iso`, which is published on **105 of 105** |
+| `Data de Início` / `Data de Término` | the quantification period, **99 of 105** |
+| `Total Ex Ante` | `total_reductions_general`, **41 of 105** — the registry's own estimate over the whole period |
+| `Total Credits Issued` | the issuance ledger — **85,177,570** units across 46 projects |
+| `Total Credits Retired` / `Sold` | the retirement ledger — **50,157,520** units across 41 projects |
+| `Total Credits Cancelled` | **584,940** units across 9 projects — from the issuance blocks, not the cancellation feed. See below |
+| `Estado`, `Cidade` | **not published — blank.** No structured sub-national field exists; the only one is a free-text sentence ("…municipality of Puerto Gaitán…"), kept in `extra` |
+| `Yearly Ex Ante` | **not published — blank.** The total is published and is never divided by the duration to manufacture a yearly figure |
+| `Additional Certification` | **no equivalent field — blank** |
+
+Both credit totals match the registry's own published headline figures
+(`impact-stats`) **to the unit**, which is what makes them trustworthy rather
+than merely internally consistent.
+
+### Two projects are also in Cercarbono, and both rows ship
+
+`BCR-CO-319-14-002` and `BCR-CO-319-14-005` are the same physical projects as
+Cercarbono's `CDC-106` and `CDC-107`. Cercarbono's own records say so — they
+carry `converted_from: BioCarbon` and link back to these two BioCarbon ids.
+
+| | BioCarbon | Cercarbono |
+|---|---|---|
+| Aire de Vida "FIIVO JAAGAVA KOMUYA JAG+Y+" Monochoa REDD+ | `BCR-CO-319-14-002`, 3,945,085 issued | `CDC-106`, 79,450 issued |
+| Proyecto Nuestro Aire de Vida "Kai KOMUYA JAG+Y+" REDD+ | `BCR-CO-319-14-005`, 8,029,639 issued | `CDC-107`, 170,550 issued |
+
+The credits are **different tranches**, not the same units counted twice: the
+project migrated to Cercarbono and each registry publishes what it issued.
+
+**Both rows appear in the sheet** (user's decision, 2026-08-04). Nothing is
+summed across registries and nothing is dropped. The BioCarbon rows carry
+`extra.also_registered_as`, because the linkage is published only from
+Cercarbono's side and would otherwise be invisible from this one.
+
+**If a total across all registries is ever wanted, these two projects are the
+place to look first** — they are the only known overlap, and adding the
+`Total Credits Issued` of all six registries counts their two project's
+credits under two registry names.
+
+### `Total Credits Cancelled` comes from the issuance blocks, not the cancellation feed
+
+Two feeds disagree, and the one with the dates is the smaller one:
+
+| | rows | units |
+|---|---|---|
+| the `cancellations` endpoint | 3, across 2 projects | 477,859 |
+| `dropouts` on the issuance blocks | 14, across 9 projects | **584,940** |
+
+The block field is the registry's own arithmetic — `amount = active + outof +
+dropouts` holds on every block that carries one — so it is what the column
+reports. The endpoint's three rows are still stored, because they carry
+cancellation dates the blocks do not.
+
+### `verified_reductions` is not the issued total
+
+The registry states a per-project `verified_reductions`, and for 103 of 105
+projects it equals that project's issuance blocks exactly. Two do not:
+
+* **`BCR-TR-152-1-001`** states 322,687 verified reductions and has **no
+  issuance blocks at all**. Verification precedes issuance, so this project has
+  verified units and issued none. Its `Total Credits Issued` is blank.
+* **`BCR-CO-635-14-003`** states 477,625 against 477,623 in the ledger — a
+  two-unit gap left as published.
+
+The registry's own emitted-credits figure agrees with the ledger, not with the
+verified sum, so the ledger is what the column reports. This is the **opposite**
+of Cercarbono's case, where the ledger was the incomplete one — only comparing
+both against the registry's own headline figure says which way round it is.
+
+### `País` is in two languages, because the registry wrote it that way
+
+`Colombia`, `Nigeria` and `Ecuador` sit beside `Malasia`, `Perú`, `México`,
+`Panamá`, `Turquía`, `Brasil` and `Estados Unidos`. There is no language
+setting on the API — these are the strings the registry holds, and they are
+carried through untranslated like every registry's own vocabulary.
+
+`Continent` is unaffected: it derives from the ISO code, which is published on
+every project. `Bioma` reads the country *name*, so
+`config/derivation/biome.yaml` now carries both spellings — measured blast
+radius on the existing database: **zero rows**, since every other registry
+writes its countries in English.
+
+**If the business wants one spelling in `País`, that is a normalisation rule to
+agree on, not a scrape to redo.**
+
+### One project's crediting period ends 26 years before it starts
+
+`BCR-NG-657-14-001` publishes `2045-01-09` as its start and `2019-01-07` as its
+end. The registry's own data-entry error, stored and exported as published.
+Nothing is swapped.
+
+### Buffer units are counted as issued
+
+`destination` on an issuance block reads `Impuesto` (266), `Reserva` (254),
+`reserved` (101) or `Voluntario` (5). The reserve classes are buffer units, and
+they are included in `Total Credits Issued` because the registry's own
+published figure includes them — the same call as Cercarbono's. The class is
+stored per row, so reporting them separately is a `config/credits.yaml` change
+and not a re-scrape.
+
+### Retirement beneficiaries: `final_user`, not the retiring account
+
+Every retirement names a `to_name` (11,439 of 11,439) and 9,174 also name a
+`final_user`. `to_name` is the account that retired the units and is very often
+an intermediary — `ORGANIZACIÓN TERPEL S.A.` appears thousands of times with a
+different end user on each row. Only `final_user` is read as the beneficiary,
+so the `sold_equals_retired: false` reading stays meaningful.
+
+The registry marks **7,033 of 11,439 retirements `private`** and returns the
+beneficiary name on them anyway. The flag is stored beside the name rather than
+used to drop it, so honouring it later is a query rather than a re-scrape.
+**Worth a decision if this sheet ever leaves the team.**
+
+---
+
 ## Data-quality note: why retirement totals come from a different route
 
 Three of the four Units ledgers download completely and reconcile exactly

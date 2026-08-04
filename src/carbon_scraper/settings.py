@@ -120,6 +120,7 @@ GOLD_STANDARD = "GOLD_STANDARD"
 CERCARBONO = "CERCARBONO"
 PLAN_VIVO = "PLAN_VIVO"
 SOCIAL_CARBON = "SOCIAL_CARBON"
+BIOCARBON = "BIOCARBON"
 
 REGISTRY_LABELS = {
     VERRA: "Verra VCS",
@@ -127,6 +128,7 @@ REGISTRY_LABELS = {
     CERCARBONO: "Cercarbono",
     PLAN_VIVO: "Plan Vivo",
     SOCIAL_CARBON: "SocialCarbon",
+    BIOCARBON: "BioCarbon",
 }
 
 # Roughly how long a full sync of each registry takes, in minutes, measured on
@@ -156,6 +158,10 @@ SYNC_ESTIMATE_MINUTES = {
     # each of which fits in one page. Measured 2026-08-04. Rounded up to a
     # minute because zero would read as "nothing will happen".
     SOCIAL_CARBON: 1,
+    # ~14 for the four bulk feeds (the retirement ledger is 11,439 rows at 1000
+    # a page) plus one detail and one cancellation request per project — 105
+    # each. ~225 requests in total. Measured 2026-08-04.
+    BIOCARBON: 5,
 }
 
 # The exact-totals pass, on top of Verra's sync. One request per project with
@@ -324,6 +330,44 @@ SOCIALCARBON_PROJECT_DETAIL_URL = f"{SOCIALCARBON_SITE}/project_details/{{projec
 # reads `remaining` rather than trusting it got what it asked for.
 SOCIALCARBON_PAGE_SIZE = 100
 
+# --- BioCarbon, on Global CarbonTrace -------------------------------------
+# BioCarbon Registry publishes through **Global CarbonTrace**, a Laravel API
+# behind a Vue SPA. Like EcoRegistry it is a platform, not a registry: the app
+# declares one programme (`biocarbon`) with three categories (`gei`,
+# `biodiversity`, `water`), and only `gei` is tCO2e. Measured 2026-08-04; see
+# docs/api-contract-biocarbon.md.
+
+BIOCARBON_SITE = "https://globalcarbontrace.io"
+BIOCARBON_API = "https://api.globalcarbontrace.io"
+
+# Shipped in the site's own `assets/api-*.js` bundle and sent on every request
+# the anonymous public registry makes — the same posture as Verra's `appkey`.
+# Without it the API answers `{"status": 403, ...}` **at HTTP 200**, which is
+# the EcoRegistry trap exactly: the status code cannot see the refusal.
+# Overridable in case the site rotates it, so a rotation is a config change
+# rather than a release.
+BIOCARBON_API_KEY = os.environ.get(
+    "CARBON_BIOCARBON_KEY", "SboCiHaHxtC2xRM92hpBjy1S2Y5La7IwjeB76z"
+)
+
+# The GHG programme. `/api/public/*` and `/api/ghg/*` are the same data —
+# identical totals on all four resources — but the per-project routes exist
+# only under `ghg`, so the adapter speaks `ghg` throughout and never has to
+# explain why two prefixes appear.
+BIOCARBON_PROGRAM = "ghg"
+
+# `per_page` is honoured up to at least 5000 with no clamp and no marker: this
+# is the first registry here that does *not* silently ignore a page size.
+# Verified 100/200/500/1000/2000/5000 all return exactly what was asked for.
+# 1000 is politeness, not a limit — 11,439 retirements in 12 requests.
+BIOCARBON_PAGE_SIZE = 1000
+
+# The SPA's own route: /registry/:program/:category/project/:id, keyed on the
+# numeric initiative id, which is what `project_id` stores.
+BIOCARBON_PROJECT_DETAIL_URL = (
+    f"{BIOCARBON_SITE}/registry/biocarbon/gei/project/{{project_id}}"
+)
+
 # --- public project pages -------------------------------------------------
 # Used only as a fallback when an adapter did not store a `detail_url` on the
 # project row. A registry missing from this map gets a blank cell, never
@@ -342,6 +386,7 @@ PROJECT_DETAIL_URLS = {
     CERCARBONO: CERCARBONO_PROJECT_DETAIL_URL,
     PLAN_VIVO: PV_PROJECT_DETAIL_URL,
     SOCIAL_CARBON: SOCIALCARBON_PROJECT_DETAIL_URL,
+    BIOCARBON: BIOCARBON_PROJECT_DETAIL_URL,
 }
 
 # --- shared HTTP ----------------------------------------------------------

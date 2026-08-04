@@ -56,6 +56,12 @@ def _socialcarbon() -> type:
     return SocialCarbonAPI
 
 
+def _biocarbon() -> type:
+    from .biocarbon.api import BioCarbonAPI
+
+    return BioCarbonAPI
+
+
 #: registry identifier -> the adapters that publish it, in scrape order.
 #:
 #: A table rather than a chain of `if`s on purpose: the old fall-through
@@ -77,6 +83,7 @@ ADAPTERS: dict[str, tuple[Callable[[], type], ...]] = {
     settings.CERCARBONO: (_cercarbono,),
     settings.PLAN_VIVO: (_planvivo, _planvivo_v4),
     settings.SOCIAL_CARBON: (_socialcarbon,),
+    settings.BIOCARBON: (_biocarbon,),
 }
 
 # --registry accepts either the stored value or a short alias.
@@ -103,6 +110,12 @@ ALIASES = {
     "sc": settings.SOCIAL_CARBON,
     "socialcarbon": settings.SOCIAL_CARBON,
     "social-carbon": settings.SOCIAL_CARBON,
+    "bc": settings.BIOCARBON,
+    "bcr": settings.BIOCARBON,
+    "biocarbon": settings.BIOCARBON,
+    "bio-carbon": settings.BIOCARBON,
+    "gct": settings.BIOCARBON,
+    "globalcarbontrace": settings.BIOCARBON,
 }
 
 ALL = tuple(ADAPTERS)

@@ -176,6 +176,17 @@ def build_rows(
                 row[column] = project_totals.get(totals_map[column])
             elif column == "Project URL":
                 row[column] = _project_url(record)
+            elif column == "Total Ex Ante":
+                # Derived first: for every registry that publishes a yearly
+                # estimate, `yearly x duration` is the total. BioCarbon
+                # publishes the *total* and no yearly figure at all — its
+                # certificate wording states `total_reductions_general` as the
+                # estimate over the whole quantification period — so the
+                # stored value fills in where no rule could fire. It is never
+                # divided by the duration to manufacture a yearly one.
+                row[column] = project_derived.get(column) or record.get(
+                    "exante_quantity"
+                )
             else:
                 # Derived columns (Tipo Micro, Bioma, Durabilidade, Duração,
                 # Total Ex Ante). Blank when no rule matched — never invented.
