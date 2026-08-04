@@ -26,8 +26,11 @@ Everything the platform gets wrong, and how each is handled:
   renders empty, no header carries a count, and the "Next →" link is *never*
   disabled: `start=240` on a 35-row feed answers 200 with an empty table and
   still offers a next page. Trusting the pager costs 2,000 requests and
-  finishes clean. Paging therefore ends on **an empty page**, which is the
-  only signal this view gives honestly.
+  finishes clean. Asking past the end is not free either — the 5,034-row
+  retirement feed answers a past-the-end `start` with **HTTP 500**, not an
+  empty page. Paging therefore ends on **a short page**: fewer than
+  `PAGE_SIZE` records means the feed is exhausted, and stopping there means
+  never asking for the page that 500s. See `_pages`.
 * **Some rows are not records.** A merged project emits a second `<tr>` whose
   fourth cell carries a malformed `style` attribute that has swallowed a whole
   data payload (`style="34.914551Sofala…Active…"`). Parsed positionally it
@@ -59,7 +62,6 @@ path that any other name selects.
 
 from __future__ import annotations
 
-import hashlib
 import logging
 import threading
 from collections.abc import Iterator
@@ -67,6 +69,8 @@ from typing import Any
 
 from ... import db, settings
 from ...http_client import RegistryClient, RetryableStatus
+from ..base import ClientOwner, reconciled
+from ..text import hashed_id, stated
 from . import tables
 
 log = logging.getLogger(__name__)
@@ -133,12 +137,7 @@ NOT_STATED = {"", "-", "--", "n/a", "na", "none", "not applicable"}
 
 def _stated(value: Any) -> str | None:
     """Registry text, or None where the registry stated nothing."""
-    if value is None:
-        return None
-    text = " ".join(str(value).split()).strip()
-    if not text or text.casefold() in NOT_STATED:
-        return None
-    return text
+    return stated(value, NOT_STATED)
 
 
 def _number(value: Any) -> float | None:
@@ -184,25 +183,14 @@ def is_record(row: tables.Row) -> bool:
     return tables.link_id(row, parameter="project_id", own_only=True) is not None
 
 
-def event_id(*parts: Any) -> int:
-    """A stable numeric key for a ledger row, which has no id of its own.
-
-    `credit_events` is keyed on an integer and this view publishes none, so it
-    is hashed from the row's own values. Hashing rather than counting is what
-    keeps the upsert idempotent: a positional key would renumber every row the
-    moment the registry inserted one.
-
-    The registry name is part of the hash, so a Markit key cannot collide with
-    the platform-issued `entityId` of the same registry's rows on S&P — Plan
-    Vivo's ledgers hold both.
-
-    60 bits, which fits SQLite's signed INTEGER with room to spare.
-    """
-    seed = "|".join("" if p is None else str(p) for p in parts)
-    return int(hashlib.sha1(seed.encode("utf-8")).hexdigest()[:15], 16)
+#: A stable numeric key for a ledger row, which has no id of its own. The
+#: registry name is part of the hash, so a Markit key cannot collide with the
+#: platform-issued `entityId` of the same registry's rows on S&P — Plan Vivo's
+#: ledgers hold both. See `registries.text.hashed_id`.
+event_id = hashed_id
 
 
-class MarkitPublicAPI:
+class MarkitPublicAPI(ClientOwner):
     """Reads one programme off the legacy Markit public view.
 
     Implements registries.base.RegistryAdapter. Subclasses set the class
@@ -212,7 +200,10 @@ class MarkitPublicAPI:
 
     #: Value stored in our `registry` column (settings.PLAN_VIVO, ...).
     registry: str = ""
-    #: Used in fixture and capture filenames.
+    #: Names this programme's fixture files. Read by no code — `discover` is
+    #: S&P-only and refuses this platform — so it documents the convention a
+    #: human follows when capturing one, and keeps two programmes' fixtures
+    #: from colliding.
     slug: str = ""
     #: The `standardId` query parameter. Read from the view's own programme
     #: dropdown, never invented.
@@ -243,19 +234,8 @@ class MarkitPublicAPI:
         *,
         cancel: threading.Event | None = None,
     ) -> None:
-        self.client = client or RegistryClient(cancel=cancel)
-        self._owns_client = client is None
+        self._bind_client(client, cancel)
         self._rows: dict[str, list[tables.Row]] = {}
-
-    def close(self) -> None:
-        if self._owns_client:
-            self.client.close()
-
-    def __enter__(self) -> MarkitPublicAPI:
-        return self
-
-    def __exit__(self, *exc: object) -> None:
-        self.close()
 
     # -- plumbing ----------------------------------------------------------
 
@@ -387,6 +367,8 @@ class MarkitPublicAPI:
         not_records = 0
         off_standard = 0
         repeats = 0
+        #: What the rejected rows actually said, so the error below can name it.
+        stated_names: set[str] = set()
 
         for page, table in enumerate(self._pages(entity, sort)):
             for row in table.rows:
@@ -395,6 +377,7 @@ class MarkitPublicAPI:
                     continue
                 if not self._on_standard(row):
                     off_standard += 1
+                    stated_names.add(self._standard_of(row) or "")
                     continue
                 fingerprint = tuple(sorted(row.values.items()))
                 if fingerprint in seen:
@@ -416,7 +399,25 @@ class MarkitPublicAPI:
                 key,
                 not_records,
             )
-        if off_standard:
+        if off_standard and not collected:
+            # Every single row rejected is not a feed of another programme's
+            # data — it is the Standard column having moved or been renamed,
+            # so `_standard_of` returns None for everything. That empties the
+            # ledger, and because `count()` reads this same list it empties
+            # the expected total too: the sync then reports "0 (registry
+            # reports 0)" and reconciles perfectly against nothing.
+            log.error(
+                "%s %s: every one of %s row(s) was rejected as belonging to "
+                "another standard. Expected one of %s; the feed states %s. "
+                "That is the Standard column missing or renamed, not an empty "
+                "registry.",
+                self.registry,
+                key,
+                off_standard,
+                ", ".join(self.standard_names) or "(none)",
+                ", ".join(sorted(stated_names)) or "(nothing)",
+            )
+        elif off_standard:
             log.info(
                 "%s %s: dropped %s row(s) belonging to another standard — the "
                 "standardId filter does not narrow on its own.",
@@ -471,12 +472,8 @@ class MarkitPublicAPI:
         template = self.master_url_template if master else self.detail_url_template
         return template.format(project_id=project_id)
 
-    def iter_projects(
-        self, *, max_records: int | None = None, progress: Any = None
-    ) -> Iterator[tuple[dict[str, Any], dict[str, Any]]]:
-        for index, (project_id, rows) in enumerate(self.project_rows().items()):
-            if max_records is not None and index >= max_records:
-                return
+    def _projects(self) -> Iterator[tuple[dict[str, Any], dict[str, Any]]]:
+        for project_id, rows in self.project_rows().items():
             raw: dict[str, Any] = {
                 "rows": [dict(row.values) for row in rows],
                 "master": any(
@@ -490,8 +487,20 @@ class MarkitPublicAPI:
                     project_id, master=bool(raw["master"])
                 )
             yield self.normalize_project(raw, project_id), raw
-            if progress:
-                progress(1)
+
+    def iter_projects(
+        self, *, max_records: int | None = None, progress: Any = None
+    ) -> Iterator[tuple[dict[str, Any], dict[str, Any]]]:
+        # `expected` is this adapter's own count of the same list, so it can
+        # only catch a normalisation drop — the view publishes no total to
+        # reconcile against. What `rows()` guards is the read itself.
+        yield from reconciled(
+            self._projects(),
+            expected=self.project_total(),
+            progress=progress,
+            max_records=max_records,
+            label=f"{self.registry} projects",
+        )
 
     def project_detail(self, project_id: int, *, master: bool = False) -> dict[str, str]:
         """The per-project page, which is the only source of some fields."""
@@ -591,18 +600,22 @@ class MarkitPublicAPI:
         # index makes the key unique and keeps it stable across runs, which is
         # what the upsert needs.
         occurrences: dict[str, int] = {}
-        for index, row in enumerate(self.rows(resource)):
-            if max_records is not None and index >= max_records:
-                return
-            record = self.normalize_credit(row, resource, occurrences)
-            if record is not None:
-                yield record
-            if progress:
-                progress(1)
+        rows = self.rows(resource)
+        yield from reconciled(
+            (self.normalize_credit(row, resource, occurrences) for row in rows),
+            expected=len(rows),
+            progress=progress,
+            max_records=max_records,
+            label=f"{self.registry} {resource}",
+        )
 
     def normalize_credit(
         self, row: tables.Row, resource: str, occurrences: dict[str, int]
-    ) -> dict[str, Any] | None:
+    ) -> dict[str, Any]:
+        # Always a record. A row that is not one was already rejected
+        # structurally by `is_record`, so there is nothing left to return None
+        # for — the `| None` this used to declare made `iter_credits` carry a
+        # check that could not fire.
         project_id = tables.link_id(row, parameter="project_id")
         quantity = _number(row.get("Retirement Quantity", "Units", "Quantity", "Volume"))
         seed = "|".join(

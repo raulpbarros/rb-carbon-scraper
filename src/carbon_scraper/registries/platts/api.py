@@ -52,11 +52,15 @@ from __future__ import annotations
 import logging
 import threading
 import uuid
-from collections.abc import Iterator
+from collections.abc import Iterator, Mapping
+from types import MappingProxyType
 from typing import Any
 
+import httpx
+
 from ... import db, settings
-from ...http_client import RegistryClient
+from ...http_client import Cancelled, RegistryClient, RetryableStatus
+from ..base import ClientOwner, reconciled
 
 log = logging.getLogger(__name__)
 
@@ -125,12 +129,17 @@ def standards_by_registry(
     return payload if isinstance(payload, list) else []
 
 
-class PlattsAPI:
+class PlattsAPI(ClientOwner):
     """Talks to the public search API. Knows nothing about our database.
 
-    Implements registries.base.RegistryAdapter. Subclasses set the six class
+    Implements registries.base.RegistryAdapter. Subclasses set the class
     attributes below and nothing else; everything measured about the platform
     is shared, so a fix here fixes every registry on it.
+
+    The first seven are what a scrape needs. The last three are only read by
+    `discover`, which drives the live page with a browser — they are declared
+    here rather than left implicit so a new subclass following this docstring
+    does not meet an `AttributeError` from a command it has never run.
     """
 
     #: Value stored in our `registry` column (settings.VERRA, ...).
@@ -148,6 +157,16 @@ class PlattsAPI:
     #: Public project page, for spot-checking a row against the registry.
     detail_url_template: str = ""
 
+    # -- read only by `verra discover` -------------------------------------
+
+    #: Names the capture and fixture files this registry writes.
+    slug: str = ""
+    #: The public page `discover` opens to observe real API traffic.
+    public_search_url: str = ""
+    #: A project id whose detail page `discover` opens, to capture the
+    #: per-project calls the search alone never fires.
+    sample_project_id: str = ""
+
     ledgers: tuple[str, ...] = LEDGERS
     partition_keys: dict[str, list[str]] = PARTITION_KEYS
 
@@ -157,18 +176,7 @@ class PlattsAPI:
         *,
         cancel: threading.Event | None = None,
     ) -> None:
-        self.client = client or RegistryClient(cancel=cancel)
-        self._owns_client = client is None
-
-    def close(self) -> None:
-        if self._owns_client:
-            self.client.close()
-
-    def __enter__(self) -> PlattsAPI:
-        return self
-
-    def __exit__(self, *exc: object) -> None:
-        self.close()
+        self._bind_client(client, cancel)
 
     # -- plumbing ----------------------------------------------------------
 
@@ -245,7 +253,11 @@ class PlattsAPI:
         return float(payload.get("sum") or 0.0)
 
     def filter_narrows(
-        self, resource: str, filter_model: dict[str, Any], parent_total: int
+        self,
+        resource: str,
+        filter_model: dict[str, Any],
+        parent_total: int,
+        child_total: int | None = None,
     ) -> bool:
         """True if `filter_model` actually filters anything.
 
@@ -253,8 +265,15 @@ class PlattsAPI:
         a partition whose count equals its parent's is a filter that was
         ignored — using it would corrupt the data. Always check before
         partitioning on a filter shape that has not been proven.
+
+        `_partitions` passes `child_total` because it has already paid for the
+        count. It calls this rather than repeating the comparison inline: the
+        guard against the most expensive bug in this codebase should have one
+        implementation, and it should be the one the tests exercise.
         """
-        return self.count(resource, filter_model) < parent_total
+        if child_total is None:
+            child_total = self.count(resource, filter_model)
+        return child_total < parent_total
 
     # -- exact per-project totals ------------------------------------------
 
@@ -264,27 +283,32 @@ class PlattsAPI:
         project_ids: list[int],
         *,
         field: str = "holdingQuantity",
-        with_counts: bool = False,
         progress: Any = None,
     ) -> Iterator[tuple[int, float, int | None]]:
-        """Yield (project_id, summed_quantity, row_count) straight from the API.
+        """Yield (project_id, summed_quantity, None) straight from the API.
 
         This sidesteps paging entirely, so it is immune to both the 10k window
         and the silently-ignored-filter trap. It is the authoritative source
         for Verra's `retirements`, which is too large to page reliably.
 
-        One request per project (two with `with_counts`), so it is slow — but
-        exact.
+        One request per project, so it is slow — but exact. The row count is
+        always None: `credit_totals` takes it, nothing reads it here, and
+        fetching it would double a pass that already runs for ~175 minutes.
         """
         for index, project_id in enumerate(project_ids, start=1):
             filter_model = number_equals("projectId", project_id)
             try:
                 quantity = self.sum_field(resource, field, filter_model)
-                rows = self.count(resource, filter_model) if with_counts else None
+            except Cancelled:
+                # One bad project must not stop the run; a cancel must. Without
+                # this the loop spins through every remaining project logging an
+                # error apiece, and `pipeline.totals` then marks the run OK — so
+                # a cancelled run reports success in the window.
+                raise
             except Exception as exc:  # noqa: BLE001 - one bad project must not stop the run
                 log.error("Totals failed for project %s on %s: %s", project_id, resource, exc)
                 continue
-            yield project_id, quantity, rows
+            yield project_id, quantity, None
             if progress is not None:
                 progress(index)
 
@@ -304,15 +328,15 @@ class PlattsAPI:
         (discovered by sampling), so it adapts if the registry adds a new
         vintage or region rather than relying on a hardcoded list.
         """
-        emitted = 0
-        for partition, expected in self._partitions(resource, filter_model or {}):
-            for record in self._drain(resource, partition, expected):
-                yield record
-                emitted += 1
-                if progress is not None:
-                    progress(emitted)
-                if max_records is not None and emitted >= max_records:
-                    return
+        def records() -> Iterator[dict[str, Any]]:
+            for partition, expected in self._partitions(resource, filter_model or {}):
+                yield from self._drain(resource, partition, expected)
+
+        # No `expected`: reconciliation happens per partition inside `_drain`,
+        # which is where the counts the server gave us actually are.
+        yield from reconciled(
+            records(), progress=progress, max_records=max_records
+        )
 
     def _drain(
         self, resource: str, filter_model: dict[str, Any], expected: int
@@ -380,11 +404,13 @@ class PlattsAPI:
                 key,
                 len(values),
             )
-            # Partition values are discovered by sampling, so a value that never
-            # appears in the sample would silently drop its records. Account for
-            # every bucket and shout if the parts do not add up to the whole.
-            covered = 0
-            ignored = False
+            # Every child is counted and checked BEFORE any of them is yielded.
+            # Validating as we go meant that if values 1..n-1 narrowed and value
+            # n turned out to be ignored, the records of 1..n-1 had already been
+            # drained by the caller — so abandoning the split and retrying with
+            # the next key re-emitted them under a different filter. Upserts
+            # survive that; the counts this reconciliation depends on do not.
+            children: list[tuple[dict[str, Any], int]] | None = []
             for value in values:
                 child = dict(filter_model)
                 child.update(text_equals(key, value))
@@ -392,7 +418,7 @@ class PlattsAPI:
                 # A child that is no smaller than its parent means the filter
                 # was ignored and this "partition" is actually the whole index.
                 # Draining it would duplicate everything and still miss rows.
-                if child_total >= total:
+                if not self.filter_narrows(resource, child, total, child_total):
                     log.error(
                         "Filter %s=%s on %s was IGNORED by the API "
                         "(returned %s of a %s-record parent). Abandoning this split.",
@@ -402,12 +428,15 @@ class PlattsAPI:
                         child_total,
                         total,
                     )
-                    ignored = True
+                    children = None
                     break
-                covered += child_total
-                yield from self._partitions(resource, child, child_total)
-            if ignored:
+                children.append((child, child_total))
+            if children is None:
                 continue
+
+            covered = sum(child_total for _, child_total in children)
+            for child, child_total in children:
+                yield from self._partitions(resource, child, child_total)
             if covered < total:
                 log.error(
                     "INCOMPLETE: %s %s split by %s covers %s of %s records "
@@ -450,7 +479,21 @@ class PlattsAPI:
                 payload = self.page_search(
                     resource, start=start, limit=MAX_LIMIT, filter_model=filter_model
                 )
-            except Exception:  # noqa: BLE001 - a short index is not an error
+            except Cancelled:
+                raise
+            except (RetryableStatus, httpx.HTTPError) as exc:
+                # A short index is not an error; a 500 or an expired appkey is.
+                # Silently treating one as the other builds the partition set
+                # from fewer values than exist, which lands in the `covered <
+                # total` INCOMPLETE branch at best and returns an empty value
+                # list — key skipped, nothing logged — at worst.
+                log.warning(
+                    "Sampling %s for distinct %s values failed at start=%s: %s",
+                    resource,
+                    field,
+                    start,
+                    exc,
+                )
                 break
             entities = payload.get("entities") or []
             for entity in entities:
@@ -480,7 +523,38 @@ class PlattsAPI:
             yield self.normalize_credit(record)
 
     def project_total(self) -> int:
-        return self.count(PROJECT)
+        total = self.count(PROJECT)
+        if total == 0:
+            # A wrong `standardId` answers HTTP 200 with `totalEntities: 0`,
+            # which is indistinguishable from a registry with no projects —
+            # except that no registry on this platform has no projects. An
+            # empty *ledger* is a fact (JNR publishes no credits at all); an
+            # empty project list is a misconfigured adapter.
+            #
+            # Invalidated because a 200 is cacheable: without this the wrong
+            # answer is replayed for 24 hours, so correcting the header and
+            # re-running changes nothing.
+            self.client.invalidate(
+                "POST",
+                f"{self._base()}/{PROJECT}/publicReportPageSearch",
+                json_body={
+                    "searchFilter": {
+                        "pagination": {"start": 0, "limit": 1},
+                        "filterModel": {},
+                    }
+                },
+                headers=self._headers(),
+            )
+            log.error(
+                "%s (%s/%s) published no projects at all. On this platform that "
+                "is a wrong standardId answering 200 with totalEntities: 0, not "
+                "an empty registry — check `verra standards -r %s`.",
+                self.registry,
+                self.registry_code,
+                self.standard_acronym,
+                self.registry_code,
+            )
+        return total
 
     def detail_url(self, project_id: int) -> str:
         return self.detail_url_template.format(project_id=project_id)
@@ -556,8 +630,10 @@ class PlattsAPI:
 EVENT_DATE_FIELDS = ("retiredDate", "issueDate", "cancelledDate", "modifiedDate")
 
 # Kept at module level: it is the platform's map, and a subclass that wants
-# most of it copies from here.
-PROJECT_COLUMNS = PlattsAPI.project_columns
+# most of it copies from here. Read-only, so "copies from here" stays true —
+# an alias let any mutation of this name rewrite the column map of every
+# registry on the platform at once.
+PROJECT_COLUMNS: Mapping[str, str] = MappingProxyType(PlattsAPI.project_columns)
 
 
 def _describe(filter_model: dict[str, Any]) -> str:

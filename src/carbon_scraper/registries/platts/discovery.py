@@ -317,14 +317,22 @@ def discover(
             call.status = response.status
             try:
                 payload = response.json()
-                call.response_is_json = True
-                call.total_hint = find_total(payload)
-                records = find_records(payload)
-                call.item_count = len(records) if records else None
-                call.response_sample = _truncate(payload)
-                _save_fixture(cls.slug, call, payload)
             except Exception:  # noqa: BLE001 - non-JSON (csv/xlsx) is fine
                 call.response_sample = f"<non-JSON {response.headers.get('content-type', '')}>"
+                return
+            call.response_is_json = True
+            call.total_hint = find_total(payload)
+            records = find_records(payload)
+            call.item_count = len(records) if records else None
+            call.response_sample = _truncate(payload)
+            # Outside the handler above: an OSError writing the fixture (a
+            # read-only checkout, a long path) would otherwise relabel a
+            # perfectly good JSON call as non-JSON and throw away its sample
+            # and its total_hint — the two things the capture exists for.
+            try:
+                _save_fixture(cls.slug, call, payload)
+            except OSError as exc:
+                log.warning("Could not save a fixture for %s: %s", call.url, exc)
 
         page.on("request", on_request)
         page.on("response", on_response)
@@ -524,8 +532,7 @@ def render_markdown(result: DiscoveryResult) -> str:
     return "\n".join(lines)
 
 
-def load_contract(slug: str = "verra") -> dict[str, Any] | None:
-    _, json_path = settings.api_contract_paths(slug)
-    if not json_path.exists():
-        return None
-    return json.loads(json_path.read_text(encoding="utf-8"))
+# There is deliberately no `load_contract()` reader. A capture is a document
+# for a human to read when the operator changes something, not an input the
+# scraper consults: the adapters hold the contract in code, where a test can
+# pin it. One existed, unused, and reading like the data path.

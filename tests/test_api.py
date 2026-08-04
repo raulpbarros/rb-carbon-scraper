@@ -118,6 +118,81 @@ def test_filter_guard_detects_an_ignored_filter():
     assert real.filter_narrows("retirements", {"vintage": "2016"}, 305_144) is True
 
 
+def test_filter_narrows_accepts_a_count_already_paid_for():
+    """`_partitions` has the child's count in hand; it must not re-ask."""
+    api_ = _FakeAPI(999_999)  # would say "ignored" if it were consulted
+    assert api_.filter_narrows("retirements", {}, 305_144, 26_963) is True
+
+
+# -- partitioning ----------------------------------------------------------
+
+
+class _PartitioningAPI(api.VerraAPI):
+    """Answers counts from a table and records what was drained."""
+
+    def __init__(self, counts, values):
+        self.client = None
+        self._owns_client = False
+        self._counts = counts
+        self._values = values
+        self.drained: list[str] = []
+
+    @staticmethod
+    def _key(filter_model):
+        for field, spec in sorted(filter_model.items()):
+            return f"{field}={spec['columnFilters'][0]['filter']}"
+        return "*"
+
+    def count(self, resource, filter_model=None):
+        return self._counts[self._key(filter_model or {})]
+
+    def _distinct_values(self, resource, field, filter_model):
+        return self._values.get(field, [])
+
+    def _drain(self, resource, filter_model, expected):
+        self.drained.append(self._key(filter_model))
+        return iter(())
+
+
+def test_a_split_is_validated_whole_before_anything_is_drained():
+    """One ignored value must abandon the split, not half-emit it.
+
+    Validating as it went meant the buckets checked before the bad one had
+    already been drained by the caller, so retrying with the next key
+    re-emitted them under a different filter: duplicate reads and inflated
+    counts, from the guard that exists to prevent exactly that.
+    """
+    counts = {
+        "*": 20_000,
+        "vintage=2016": 5_000,
+        "vintage=2017": 4_000,
+        "vintage=2018": 20_000,  # ignored: no smaller than its parent
+        "regionName=Asia": 12_000,
+        "regionName=Africa": 8_000,
+    }
+    client = _PartitioningAPI(
+        counts,
+        {"vintage": ["2016", "2017", "2018"], "regionName": ["Asia", "Africa"]},
+    )
+    list(client.iter_records("retirements"))
+
+    # Nothing from the abandoned vintage split reached the drain.
+    assert not any(name.startswith("vintage=") for name in client.drained)
+    assert client.drained == ["regionName=Asia", "regionName=Africa"]
+
+
+def test_a_split_that_narrows_is_used():
+    counts = {
+        "*": 20_000,
+        "vintage=2016": 9_000,
+        "vintage=2017": 9_000,
+        "vintage=2018": 2_000,
+    }
+    client = _PartitioningAPI(counts, {"vintage": ["2016", "2017", "2018"]})
+    list(client.iter_records("retirements"))
+    assert client.drained == ["vintage=2016", "vintage=2017", "vintage=2018"]
+
+
 def test_discovery_classifies_captured_calls():
     assert discovery.classify(".../project/publicReportPageSearch", None) == "project_search"
     assert discovery.classify(".../retirements/publicReportPageSearch", None) == "units_search"

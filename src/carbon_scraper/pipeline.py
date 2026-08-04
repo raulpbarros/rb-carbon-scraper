@@ -23,7 +23,7 @@ import time
 from collections.abc import Iterator, Sequence
 from contextlib import contextmanager
 from pathlib import Path
-from typing import Any, Protocol
+from typing import Any, Protocol, TypeAlias
 
 from . import db, derive, excel, registries, settings
 from .registries import base
@@ -87,10 +87,10 @@ class _Throttle:
 
 #: What the CLI accepts as a registry argument, and what the GUI passes: a name,
 #: the word `all`, or the sequence of ticked checkboxes.
-Registries = "str | Sequence[str]"
+Registries: TypeAlias = "str | Sequence[str]"
 
 
-def selected(registry: str | Sequence[str]) -> list[str]:
+def selected(registry: Registries) -> list[str]:
     """Expand `all` / an alias / a sequence into stored registry identifiers.
 
     Order follows `registries.ALL` rather than the caller's, so two front ends
@@ -105,7 +105,7 @@ def selected(registry: str | Sequence[str]) -> list[str]:
     return [name for name in registries.ALL if name in names]
 
 
-def only(registry: str | Sequence[str]) -> str | list[str] | None:
+def only(registry: Registries) -> str | list[str] | None:
     """The registry filter for the read-only SQL paths.
 
     `None` means every registry, and is returned **only** for `all` — never as
@@ -123,7 +123,7 @@ def label(registry: str) -> str:
     return settings.REGISTRY_LABELS.get(registry, registry)
 
 
-def _run_label(registry: str | Sequence[str]) -> str:
+def _run_label(registry: Registries) -> str:
     """What goes in the `runs.registry` column for a whole-selection command.
 
     `sync` logs one run per registry and passes a concrete name; `derive` runs
@@ -140,7 +140,7 @@ def _run_label(registry: str | Sequence[str]) -> str:
 
 
 def sync(
-    registry: str | Sequence[str] = "all",
+    registry: Registries = "all",
     *,
     limit: int | None = None,
     projects_only: bool = False,
@@ -340,9 +340,15 @@ def totals(
             db.finish_run(conn, run_id, ok=False, error=str(exc))
             raise
 
+        # Scraped rows only. On an installed machine the seed database's
+        # totals are still present until a full sync clears them, and summing
+        # those in makes this line compare installer data against a live
+        # registry-wide figure — a reconciliation that reports "off by N" for
+        # a reason that has nothing to do with the run that just happened.
         local = conn.execute(
-            "SELECT SUM(quantity) FROM credit_totals WHERE registry=? AND resource=?",
-            (settings.VERRA, resource),
+            "SELECT SUM(quantity) FROM credit_totals "
+            "WHERE registry=? AND resource=? AND (source IS NULL OR source=?)",
+            (settings.VERRA, resource, db.REGISTRY_SOURCE),
         ).fetchone()[0] or 0.0
 
     return written, float(local), float(grand)
@@ -352,7 +358,7 @@ def totals(
 
 
 def derive_all(
-    registry: str | Sequence[str] = "all", *, sink: ProgressSink | None = None
+    registry: Registries = "all", *, sink: ProgressSink | None = None
 ) -> int:
     """Apply config/derivation/*.yaml. No network."""
     sink = sink or NullSink()
@@ -383,7 +389,7 @@ def derive_all(
 
 
 def export(
-    registry: str | Sequence[str] = "all",
+    registry: Registries = "all",
     *,
     out_dir: Any = None,
     sink: ProgressSink | None = None,
@@ -405,7 +411,7 @@ def export(
 
 
 def update_all(
-    registry: str | Sequence[str] = "all",
+    registry: Registries = "all",
     *,
     limit: int | None = None,
     skip_totals: bool = False,
@@ -434,7 +440,7 @@ def update_all(
 
 
 def run_all(
-    registry: str | Sequence[str] = "all",
+    registry: Registries = "all",
     *,
     limit: int | None = None,
     skip_totals: bool = False,

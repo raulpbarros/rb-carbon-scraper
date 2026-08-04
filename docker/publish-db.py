@@ -24,6 +24,7 @@ from an accidental overwrite.
 
 from __future__ import annotations
 
+import os
 import sqlite3
 import sys
 from pathlib import Path
@@ -52,19 +53,34 @@ def publish(target: Path, *, force: bool) -> int:
             )
             return 1
         print(f"Replacing {target} ({_megabytes(target)}).")
-        target.unlink()
 
     target.parent.mkdir(parents=True, exist_ok=True)
 
-    with sqlite3.connect(source) as conn:
+    # `VACUUM INTO` refuses an existing file, so the old target has to go —
+    # but deleting it first means a full disk or a permission error leaves
+    # the operator with neither database, which is the outcome the --force
+    # guard exists to prevent. Vacuum to a sibling and swap it in.
+    staging = target.with_name(target.name + ".new")
+    staging.unlink(missing_ok=True)
+    conn = sqlite3.connect(source)
+    try:
         # A snapshot read, so a concurrent sync neither blocks this nor leaks
         # a half-written transaction into the copy.
-        conn.execute("VACUUM INTO ?", (str(target),))
+        conn.execute("VACUUM INTO ?", (str(staging),))
+    except BaseException:
+        staging.unlink(missing_ok=True)
+        raise
+    finally:
+        conn.close()
+    os.replace(staging, target)
 
-    with sqlite3.connect(f"file:{target}?mode=ro", uri=True) as check:
+    check = sqlite3.connect(f"file:{target}?mode=ro", uri=True)
+    try:
         rows = check.execute(
             "SELECT registry, COUNT(*) FROM projects GROUP BY registry ORDER BY registry"
         ).fetchall()
+    finally:
+        check.close()
 
     print(f"Wrote {target} ({_megabytes(target)}) from {source}.")
     for registry, count in rows:
@@ -75,10 +91,18 @@ def publish(target: Path, *, force: bool) -> int:
 
 
 def main(argv: list[str]) -> int:
+    # Unknown flags are rejected rather than dropped: `-force` silently
+    # meaning "not --force" would refuse to publish and read as a bug in the
+    # tool. There is only one flag, so this stays a two-line parser.
+    flags = [a for a in argv if a.startswith("-")]
+    unknown = [a for a in flags if a != "--force"]
+    if unknown:
+        print(f"Unknown option(s): {' '.join(unknown)}. Only --force is accepted.",
+              file=sys.stderr)
+        return 2
     args = [a for a in argv if not a.startswith("-")]
-    force = "--force" in argv
     target = Path(args[0]) if args else Path("/publish/verra.db")
-    return publish(target, force=force)
+    return publish(target, force="--force" in flags)
 
 
 if __name__ == "__main__":

@@ -7,6 +7,7 @@ pass `refresh=True` (or run with VERRA_NO_CACHE=1) to bypass it.
 
 from __future__ import annotations
 
+import base64
 import hashlib
 import json
 import logging
@@ -33,9 +34,9 @@ def cache_disabled() -> bool:
     """Read the env var per call, not at import.
 
     `sync --refresh` sets VERRA_NO_CACHE at runtime. Reading it at import time
-    only worked because `http_client` happened to be imported lazily inside
-    `registries.adapter()`; anything that imports it eagerly — the GUI, for one
-    — would silently get a cached run instead of a fresh one.
+    only worked because `http_client` happened to be imported lazily by the
+    adapter dispatch; anything that imports it eagerly — the GUI, for one —
+    would silently get a cached run instead of a fresh one.
     """
     return os.environ.get("VERRA_NO_CACHE") == "1"
 
@@ -114,6 +115,47 @@ def _cache_path(key: str) -> Path:
     return settings.CACHE_DIR / f"{key}.json"
 
 
+def _read_cache(path: Path) -> dict[str, Any] | None:
+    """A cache entry, or None if it cannot be read.
+
+    A full sync writes ~50,000 of these. A process killed mid-write — Cancel,
+    a closed lid — leaves one truncated, and an unguarded `json.loads` then
+    ends the next run with a traceback in a dialog rather than a cache miss.
+    """
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        log.debug("Discarding unreadable cache entry %s", path.name)
+        return None
+
+
+def _cached_body(cached: dict[str, Any]) -> bytes:
+    """The stored body as bytes.
+
+    `body` is the pre-base64 format. Kept so an existing ~1 GB cache is not
+    invalidated by the change; new entries are always written as `body_b64`.
+    """
+    encoded = cached.get("body_b64")
+    if encoded is not None:
+        return base64.b64decode(encoded)
+    return str(cached.get("body", "")).encode()
+
+
+def _write_cache(path: Path, payload: dict[str, Any]) -> None:
+    """Write a cache entry atomically.
+
+    Straight to the final name leaves a truncated file behind when the
+    process dies mid-write; `os.replace` is atomic on NTFS.
+    """
+    tmp = path.with_suffix(".tmp")
+    try:
+        tmp.write_text(json.dumps(payload), encoding="utf-8")
+        os.replace(tmp, path)
+    except OSError as exc:  # a cache is an optimisation, never a hard failure
+        log.debug("Could not write cache entry %s: %s", path.name, exc)
+        tmp.unlink(missing_ok=True)
+
+
 class RetryableStatus(Exception):
     """Raised for status codes worth retrying (429 / 5xx)."""
 
@@ -176,6 +218,10 @@ class RegistryClient:
         try:
             data = self.get_json(url, use_cache=True)
             self._uris[url] = data.get("uris", {})
+        except Cancelled:
+            # A cancel is not a network degradation. Swallowing it here turns
+            # pressing Cancel into "using fallback URIs" and the run carries on.
+            raise
         except Exception as exc:  # noqa: BLE001 - degrade, don't crash
             log.warning("Could not read live environment config (%s); using fallback.", exc)
             self._uris[url] = dict(settings.FALLBACK_URIS)
@@ -224,36 +270,69 @@ class RegistryClient:
         if caching and not refresh and path.exists():
             age = time.time() - path.stat().st_mtime
             if age < cache_ttl_seconds():
-                cached = json.loads(path.read_text(encoding="utf-8"))
-                return httpx.Response(
-                    status_code=cached["status"],
-                    content=cached["body"].encode(),
-                    headers=cached.get("headers", {}),
-                    request=httpx.Request(method, url),
-                )
+                cached = _read_cache(path)
+                if cached is not None:
+                    return httpx.Response(
+                        status_code=cached["status"],
+                        content=_cached_body(cached),
+                        headers=cached.get("headers", {}),
+                        request=httpx.Request(method, url),
+                    )
 
         response = self._send(method, url, json_body, params, headers)
 
         if caching and response.status_code < 400:
-            path.write_text(
-                json.dumps(
-                    {
-                        "status": response.status_code,
-                        "body": response.text,
-                        # `x-total-*` matters: Gold Standard returns its result
-                        # counts only in headers, and a cache hit that dropped
-                        # them would silently break reconciliation.
-                        "headers": {
-                            name: value
-                            for name, value in response.headers.items()
-                            if name.lower() == "content-type"
-                            or name.lower().startswith("x-total")
-                        },
-                    }
-                ),
-                encoding="utf-8",
+            _write_cache(
+                path,
+                {
+                    "status": response.status_code,
+                    # Bytes, not `response.text`. Storing the decoded body and
+                    # re-encoding it as UTF-8 on read while keeping the origin's
+                    # `charset=` corrupts anything that was not UTF-8 to begin
+                    # with — the legacy Markit view is server-rendered JSP and
+                    # answers ISO-8859-1, so "Scolel té" came back out of the
+                    # cache as "Scolel tÃ©" and a cached re-run disagreed with
+                    # the live one.
+                    "body_b64": base64.b64encode(response.content).decode("ascii"),
+                    # `x-total-*` matters: Gold Standard returns its result
+                    # counts only in headers, and a cache hit that dropped
+                    # them would silently break reconciliation.
+                    "headers": {
+                        name: value
+                        for name, value in response.headers.items()
+                        if name.lower() == "content-type"
+                        or name.lower().startswith("x-total")
+                    },
+                },
             )
         return response
+
+    def invalidate(
+        self,
+        method: str,
+        url: str,
+        *,
+        json_body: Any = None,
+        params: dict[str, Any] | None = None,
+        headers: dict[str, str] | None = None,
+    ) -> None:
+        """Drop one cached response.
+
+        For the answers that are refusals wearing a 200: EcoRegistry reports
+        `ERROR_401` in the body, and the Platts platform reports a wrong
+        `standardId` as `totalEntities: 0`. Both pass the `status_code < 400`
+        test and get written to disk, so every re-run for the next 24 hours
+        replays the same poisoned answer — and "fix the header, re-run" is
+        exactly what someone debugging a header does, without reaching for
+        `--refresh`.
+        """
+        key = _cache_key(
+            method,
+            httpx.URL(url).copy_merge_params(params or {}).__str__(),
+            json_body,
+            headers,
+        )
+        _cache_path(key).unlink(missing_ok=True)
 
     def _send(
         self,
@@ -334,7 +413,3 @@ class RegistryClient:
         response = self.request("POST", url, json_body=json_body, **kwargs)
         response.raise_for_status()
         return response.json()
-
-
-# The class was called VerraClient before the scraper grew a second registry.
-VerraClient = RegistryClient

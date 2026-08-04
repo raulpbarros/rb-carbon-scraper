@@ -184,7 +184,11 @@ seams make it drivable from either front end:
   passes a rich console sink, the GUI a queue sink, tests the null sink.
   Adapters call their `progress` callback **once per record** (~183k times on a
   full Gold Standard sync); `pipeline._Throttle` rate-limits that centrally so
-  no sink can forget to.
+  no sink can forget to. **`done` is a cumulative position, never `1`** — both
+  sinks read it against a total (`done * 100 / total` in the window), so a
+  per-record `1` pins the bar at "1 of N" for a whole scrape. Go through
+  `base.reconciled()` and it cannot be got wrong; `conftest.RecordingProgress`
+  asserts it.
 - **`cancel`** — a `threading.Event` threaded down to `http_client`, checked
   between requests and slept on during retry backoff. Cancelling is safe at any
   point: every write is an idempotent upsert, so a stopped sync is repaired by
@@ -741,7 +745,11 @@ src/carbon_scraper/
     __init__.py                ADAPTERS dispatch table (registry -> a TUPLE of
                                adapters) + name aliases
     base.py                    the adapter contract pipeline drives, plus the
-                               optional iter_credit_totals seam
+                               optional iter_credit_totals seam, the
+                               ClientOwner lifecycle mixin and reconciled()
+    text.py                    stated() / joined() / hashed_id(), shared by the
+                               adapters. The placeholder TABLES stay per
+                               registry; the code applying them does not
     platts/api.py              the S&P PLATFORM: POST search API, paging,
                                partitioning, reconciliation, normalisation.
                                Shared by every registry hosted on it

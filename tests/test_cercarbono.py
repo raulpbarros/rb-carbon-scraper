@@ -17,7 +17,7 @@ from carbon_scraper import db, derive, excel, settings
 from carbon_scraper.registries import base
 from carbon_scraper.registries.cercarbono import api as cc
 
-FIXTURES = settings.FIXTURES_DIR
+from conftest import RecordingProgress, load_fixture as _load
 
 # Project ids in the fixture set, and what each one is there to prove.
 IN_CO2 = {1, 29, 85, 106, 274}
@@ -26,8 +26,6 @@ OFF_STANDARD_RETIREMENT = 224  # ditto, on the retirement side
 CONVERTED_IN = 106             # ex-BioCarbon: absent from analytics entirely
 
 
-def _load(name):
-    return json.loads((FIXTURES / name).read_text(encoding="utf-8"))
 
 
 class FakeClient:
@@ -35,6 +33,7 @@ class FakeClient:
 
     def __init__(self):
         self.calls = []
+        self.invalidated = []
         self._by_path = {
             f"project/public-by-standard/{settings.CERCARBONO_STANDARD}": _load(
                 "cercarbono-projects.json"
@@ -56,6 +55,9 @@ class FakeClient:
             return payload
         return self._by_path[path]
 
+    def invalidate(self, method, url, **kwargs):
+        self.invalidated.append(url)
+
     def close(self):
         pass
 
@@ -70,11 +72,14 @@ def adapter(client):
     return cc.CercarbonoAPI(client)
 
 
-@pytest.fixture()
-def conn():
-    connection = db.connect(":memory:")
-    yield connection
-    connection.close()
+def test_progress_is_cumulative(adapter, progress):
+    """The contract every adapter's progress callback has to honour."""
+    list(adapter.iter_projects(progress=progress))
+    progress.assert_cumulative(adapter.project_total())
+
+    counts = RecordingProgress()
+    list(adapter.iter_credits(cc.RETIREMENTS, progress=counts))
+    counts.assert_cumulative()
 
 
 # -- the header trap -------------------------------------------------------
@@ -103,6 +108,26 @@ def test_an_application_level_error_is_raised_not_swallowed(adapter, client):
     }
     with pytest.raises(ValueError, match="ERROR_401"):
         adapter.analytics()
+
+
+def test_a_refusal_is_dropped_from_the_cache(adapter, client):
+    """It arrived as a 200, so it was cached — for the next 24 hours.
+
+    Left there, correcting the header and re-running replays the same
+    refusal, and `--refresh` is not what anyone reaches for when debugging a
+    header.
+    """
+    client._by_path["analytics/projects"] = {
+        "codeMessages": [{"codeMessage": "ERROR_401", "message": "No autorizado"}],
+    }
+    with pytest.raises(ValueError):
+        adapter.analytics()
+    assert client.invalidated == [f"{settings.CERCARBONO_API}/analytics/projects"]
+
+
+def test_a_good_response_is_left_in_the_cache(adapter, client):
+    adapter.analytics()
+    assert client.invalidated == []
 
 
 # -- CO2 only --------------------------------------------------------------

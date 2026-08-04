@@ -96,11 +96,6 @@ def adapter():
     return PlanVivoV4API(projects_client())
 
 
-@pytest.fixture()
-def conn():
-    connection = db.connect(":memory:")
-    yield connection
-    connection.close()
 
 
 # -- the table parser ------------------------------------------------------
@@ -109,6 +104,40 @@ def conn():
 def test_headings_are_read_from_the_page():
     table = tables.results_table(PAGE1)
     assert table.headings[:4] == ["Name", "Category", "Standard Name", "Project Type"]
+
+
+NESTED = """
+<html><body>
+<table class="layout">
+  <tr><td>
+    <table class="results">
+      <tr><th>Name</th><th>Country</th><th>Details</th></tr>
+      <tr><td>Sofala</td><td>Mozambique</td>
+          <td><a href="project.jsp?project_id=7">View</a></td></tr>
+    </table>
+  </td></tr>
+</table>
+</body></html>
+"""
+
+
+def test_a_nested_table_does_not_pollute_the_one_around_it():
+    """A layout table wrapping the results is what `results_table` is for.
+
+    Flattened into the outer table, the inner `<th>`s append to the outer
+    headings and the inner `<tr>`s to its rows — which shifts the
+    heading -> index mapping for every later row and produces real values
+    under the wrong column names. Every fixture here holds exactly one
+    table, which is why that was invisible.
+    """
+    parsed = tables.parse_tables(NESTED)
+    assert len(parsed) == 2
+
+    results = tables.results_table(NESTED)
+    assert results.headings == ["Name", "Country", "Details"]
+    assert len(results.rows) == 1
+    assert results.rows[0].get("Name") == "Sofala"
+    assert results.rows[0].get("Country") == "Mozambique"
 
 
 def test_a_merged_cell_carries_down_instead_of_shifting_columns():
@@ -189,10 +218,24 @@ def test_a_500_on_the_very_first_page_still_fails():
 
 
 def test_malformed_style_attribute_rows_are_not_records(adapter):
-    """The view emits <tr>s whose style attribute swallowed a data payload."""
-    parsed = len(tables.results_table(PAGE2).rows)
-    kept = len([r for r in adapter.rows(markit.PROJECTS) if True])
-    assert kept < parsed + len(tables.results_table(PAGE1).rows)
+    """The view emits <tr>s whose style attribute swallowed a data payload.
+
+    They parse into plausible values in the wrong columns, so the count has
+    to be exact: page 2 carries 17 `<tr>`s of which 2 are these, and a bound
+    like `kept < parsed` passes when *any* row anywhere is dropped.
+    """
+    assert len(tables.results_table(PAGE1).rows) == 15
+    assert len(tables.results_table(PAGE2).rows) == 17
+    assert sum(1 for r in tables.results_table(PAGE2).rows if markit.is_record(r)) == 15
+
+    # 32 `<tr>`s -> 30 records (the 2 malformed ones gone) -> 29 kept, because
+    # Sofala renders twice identically and a repeat is one project.
+    kept = adapter.rows(markit.PROJECTS)
+    assert len(kept) == 29
+
+    # Recognised structurally, not by pattern-matching the payload: a record
+    # carries its own "View" link rather than one inherited via a rowspan.
+    assert all(tables.link_targets(row, own_only=True) for row in kept)
 
 
 def test_rows_of_another_standard_are_dropped():
@@ -214,6 +257,50 @@ def test_the_standard_filter_is_not_a_no_op(adapter):
     """Guard the guard: with no expected standard, the rows come through."""
     adapter.standard_names = ()
     assert adapter.rows(markit.PROJECTS)
+
+
+def test_rejecting_every_row_is_an_error_not_an_empty_registry(caplog):
+    """A renamed Standard column empties the feed AND its expected total.
+
+    `count()` reads this same list, so the sync then reports
+    "0 (registry reports 0)" — an empty registry that reconciles perfectly,
+    which is the exact failure shape this codebase keeps meeting.
+    """
+    client = FakeClient({("retirement", 0): OFF_STANDARD})
+    adapter = PlanVivoV4API(client)
+    with caplog.at_level("ERROR"):
+        assert adapter.rows(markit.RETIREMENTS) == []
+    assert "every one of" in caplog.text
+    assert "Standard column missing or renamed" in caplog.text
+    # It names what the feed actually said, which is how the cause is found.
+    assert "No Established Standard" in caplog.text
+
+
+def test_dropping_some_rows_is_not_an_error(adapter, caplog):
+    """The ordinary case — a mixed feed — stays at INFO."""
+    with caplog.at_level("ERROR"):
+        assert adapter.rows(markit.PROJECTS)
+    assert "every one of" not in caplog.text
+
+
+# -- progress reporting ----------------------------------------------------
+
+
+def test_progress_is_cumulative_not_per_record(adapter, progress):
+    """Both sinks read `done` as an absolute position against `total`.
+
+    `gui/app.py` computes `done * 100 / total` and the CLI prints
+    `{done}/{total}`, so an adapter reporting `1` per record pins the bar at
+    "1 of 30" for the whole scrape and then jumps to 100% on `final()`. Every
+    other adapter passes a running count; this one did not.
+    """
+    list(adapter.iter_projects(progress=progress))
+    progress.assert_cumulative(adapter.project_total())
+
+
+def test_credit_progress_is_cumulative_too(adapter, progress):
+    list(adapter.iter_credits(markit.RETIREMENTS, progress=progress))
+    progress.assert_cumulative(adapter.count(markit.RETIREMENTS))
 
 
 # -- merging rows that share a project id ----------------------------------
@@ -342,15 +429,35 @@ def test_a_markit_event_id_cannot_collide_with_an_sp_one():
 
 
 def test_the_account_is_not_recorded_as_a_beneficiary(adapter):
-    """The holder is not the named third party a retirement was made for."""
-    rows = tables.results_table(RETIREMENTS).rows
-    accounts = {r.get("Account") for r in rows if r.get("Account")}
-    beneficiaries = {
-        e["beneficiary"] for e in adapter.iter_credits(markit.RETIREMENTS)
-    }
-    assert not (beneficiaries - {None}) & accounts or True  # documented below
-    for event in adapter.iter_credits(markit.RETIREMENTS):
-        assert event["beneficiary"] is None or event["beneficiary"] != ""
+    """The holder is not the named third party a retirement was made for.
+
+    The view publishes both columns. `beneficiary` must come from `Beneficial
+    Owner` alone: copying the `Account` across when it is empty would invent
+    a beneficiary the registry never named.
+    """
+    table = tables.results_table(RETIREMENTS)
+    assert {"Account", "Beneficial Owner"} <= set(table.headings)
+
+    owners = {r.get("Beneficial Owner") for r in table.rows if r.get("Beneficial Owner")}
+    beneficiaries = {e["beneficiary"] for e in adapter.iter_credits(markit.RETIREMENTS)}
+    assert beneficiaries - {None} == owners
+    assert "" not in beneficiaries
+
+
+def test_an_account_never_leaks_into_the_beneficiary():
+    """The fixture leaves `Account` blank throughout, so state it directly."""
+    row = tables.Row(
+        values={
+            "Account": "Some Broker Ltd",
+            "Beneficial Owner": "",
+            "Retirement Quantity": "10",
+            "Vintage": "2019",
+        },
+        links=[],
+    )
+    adapter = PlanVivoV4API(FakeClient())
+    record = adapter.normalize_credit(row, markit.RETIREMENTS, {})
+    assert record["beneficiary"] is None
 
 
 # -- the registry it belongs to --------------------------------------------

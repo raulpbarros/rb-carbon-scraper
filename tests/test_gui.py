@@ -17,6 +17,7 @@ import logging
 import queue
 import threading
 import time
+from contextlib import contextmanager
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -31,13 +32,6 @@ from carbon_scraper.http_client import Cancelled
 VERRA = settings.VERRA
 GS = settings.GOLD_STANDARD
 CERC = settings.CERCARBONO
-
-
-@pytest.fixture()
-def conn():
-    connection = db.connect(":memory:")
-    yield connection
-    connection.close()
 
 
 def add_project(conn, registry, project_id, name="A project"):
@@ -532,6 +526,99 @@ def test_data_as_of_ignores_registries_holding_nothing():
         GS: {"projects": 0, "last_sync": "2020-01-01T00:00:00+00:00"},
     }
     assert "2026-07-28" in gui_app.data_as_of(summary)
+
+
+# --- the poll loop --------------------------------------------------------
+#
+# `_drain` is the whole bridge between the worker thread and the screen. It is
+# exercised here against a stand-in `self` rather than a window, because what
+# matters about it is control flow, not widgets.
+
+
+class _FakeRoot:
+    def __init__(self):
+        self.scheduled = []
+
+    def after(self, delay, callback):
+        self.scheduled.append((delay, callback))
+
+
+class _DrainHarness:
+    """Enough of the window for `_drain` to run against."""
+
+    def __init__(self, messages, explode=False):
+        self.root = _FakeRoot()
+        self.queue = queue.Queue()
+        for message in messages:
+            self.queue.put(message)
+        self.handled = []
+        self._explode = explode
+
+    def _handle(self, message):
+        self.handled.append(message)
+        if self._explode:
+            raise RuntimeError("a widget raised")
+
+    def _drain(self):
+        return gui_app.App._drain(self)
+
+
+def test_the_poll_loop_reschedules_itself():
+    harness = _DrainHarness([gui_worker.Note("hello")])
+    gui_app.App._drain(harness)
+    assert harness.handled == [gui_worker.Note("hello")]
+    assert [delay for delay, _ in harness.root.scheduled] == [gui_app.POLL_MS]
+
+
+def test_one_bad_message_does_not_stop_the_window_forever():
+    """The reschedule is the loop.
+
+    Unprotected, a single TclError out of `_handle` freezes the log pane and
+    the bar for the lifetime of the process, `Finished` never arrives, and
+    Cancel and Export stay disabled — on the one front end whose user has no
+    console to find the traceback in.
+    """
+    harness = _DrainHarness([gui_worker.Note("boom")], explode=True)
+    with pytest.raises(RuntimeError):
+        gui_app.App._drain(harness)
+    assert harness.root.scheduled, "the poll loop was not rearmed"
+
+
+def test_the_end_of_a_run_refreshes_even_though_the_thread_is_still_alive(monkeypatch):
+    """`Finished` is the worker's last message, sent before the thread unwinds.
+
+    So `worker.busy` is usually still True when `_finish` runs, and the
+    refresh that exists to show the new counts is the one that silently does
+    not happen. Its caller passes `force`.
+    """
+    assert "self.refresh_summary(force=True)" in Path(gui_app.__file__).read_text(
+        encoding="utf-8"
+    )
+
+    reads = []
+
+    class _Caption:
+        def configure(self, **kwargs):
+            pass
+
+    class _Window:
+        worker = type("W", (), {"busy": True})()
+        captions: dict = {}
+        as_of = _Caption()
+
+    @contextmanager
+    def fake_session(path=None):
+        reads.append(path)
+        yield None
+
+    monkeypatch.setattr(gui_app.db, "session", fake_session)
+    monkeypatch.setattr(gui_app.db, "registry_summary", lambda conn: {})
+
+    gui_app.App.refresh_summary(_Window())
+    assert reads == [], "a refresh mid-run is still skipped"
+
+    gui_app.App.refresh_summary(_Window(), force=True)
+    assert len(reads) == 1
 
 
 # --- structural rules -----------------------------------------------------

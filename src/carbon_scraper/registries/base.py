@@ -16,8 +16,14 @@ Two rules hold for every adapter, and both are lessons paid for on Verra:
 
 from __future__ import annotations
 
-from collections.abc import Iterator
+import logging
+import threading
+from collections.abc import Iterable, Iterator
 from typing import Any, Protocol, runtime_checkable
+
+from ..http_client import RegistryClient
+
+log = logging.getLogger(__name__)
 
 # (normalised_row, raw_payload)
 ProjectRecord = tuple[dict[str, Any], dict[str, Any]]
@@ -57,6 +63,80 @@ class RegistryAdapter(Protocol):
 
     def detail_url(self, project_id: int) -> str:
         """Public page for one project, so any row can be spot-checked."""
+
+
+class ClientOwner:
+    """Owns an HTTP client only if it made one.
+
+    Four adapters carried a byte-identical copy of this. It is not much code,
+    but it is the code that decides whether a `with` block closes a client the
+    caller still needs, and four copies is four places to get that wrong.
+    """
+
+    client: Any
+    _owns_client: bool
+
+    def _bind_client(
+        self,
+        client: RegistryClient | None,
+        cancel: threading.Event | None = None,
+    ) -> None:
+        self.client = client or RegistryClient(cancel=cancel)
+        # An injected client belongs to the caller — closing it here would
+        # shut a connection pool the pipeline is still paging through.
+        self._owns_client = client is None
+
+    def close(self) -> None:
+        if self._owns_client:
+            self.client.close()
+
+    def __enter__(self):  # noqa: ANN204 - the subclass's own type
+        return self
+
+    def __exit__(self, *exc: object) -> None:
+        self.close()
+
+
+def reconciled(
+    records: Iterable[Any],
+    *,
+    expected: int | None = None,
+    progress: Any = None,
+    max_records: int | None = None,
+    label: str = "",
+) -> Iterator[Any]:
+    """Yield `records`, reporting progress and reconciling at the end.
+
+    The four adapters each grew their own version of this loop and gave four
+    slightly different answers. Two things in particular have to be the same
+    everywhere:
+
+    * **`progress` is cumulative.** Both sinks read it as an absolute
+      position against a total — `done * 100 / total` in the window,
+      `{done}/{total}` on the console. An adapter passing `1` per record
+      pinned the bar at "1 of N" for a whole scrape.
+    * **A short read is an error, not a quiet finish.** Never trust a row
+      count just because nothing was raised.
+
+    `expected=None` means the caller reconciles elsewhere (the S&P adapter
+    does it per partition, where the counts actually are).
+    """
+    seen = 0
+    for record in records:
+        yield record
+        seen += 1
+        if progress is not None:
+            progress(seen)
+        if max_records is not None and seen >= max_records:
+            return
+
+    if expected is not None and seen < expected:
+        log.error(
+            "INCOMPLETE: %s yielded %s of %s records the registry reports.",
+            label or "resource",
+            seen,
+            expected,
+        )
 
 
 def credit_totals_of(

@@ -317,14 +317,20 @@ class App:
 
     # -- database-backed captions ------------------------------------------
 
-    def refresh_summary(self) -> None:
+    def refresh_summary(self, *, force: bool = False) -> None:
         """Re-read the row counts. Skipped while a run is in flight.
 
         Not only to avoid two connections contending: during a sync the numbers
         change every second, and a caption that flickers upward is noise on top
         of a progress bar that already says the same thing.
+
+        `force` is for the one call that happens *because* a run ended.
+        `Finished` is the worker's last message but the thread is still alive
+        while it unwinds, so `busy` usually still reads True there — and the
+        refresh that exists to show the new numbers is the one that silently
+        does not happen.
         """
-        if self.worker.busy:
+        if self.worker.busy and not force:
             return
         try:
             with db.session() as conn:
@@ -418,14 +424,24 @@ class App:
     # -- the queue ---------------------------------------------------------
 
     def _drain(self) -> None:
-        """Move the worker's messages onto the screen. Main loop only."""
-        for _ in range(MAX_PER_TICK):
-            try:
-                message = self.queue.get_nowait()
-            except queue.Empty:
-                break
-            self._handle(message)
-        self.root.after(POLL_MS, self._drain)
+        """Move the worker's messages onto the screen. Main loop only.
+
+        The reschedule is in a `finally` because it is the whole loop. One
+        exception out of `_handle` — a `TclError` from a widget, a messagebox
+        that fails — would otherwise stop the poll for the lifetime of the
+        process: the log pane and the bar freeze, `Finished` never arrives,
+        and Cancel and Export stay disabled forever, on the one front end
+        whose user has no console to find the traceback in.
+        """
+        try:
+            for _ in range(MAX_PER_TICK):
+                try:
+                    message = self.queue.get_nowait()
+                except queue.Empty:
+                    break
+                self._handle(message)
+        finally:
+            self.root.after(POLL_MS, self._drain)
 
     def _handle(self, message: Any) -> None:
         if isinstance(message, Progress):
@@ -464,7 +480,7 @@ class App:
         self._set_running(False)
         self.status.configure(text=message.summary)
         self._append(message.summary)
-        self.refresh_summary()
+        self.refresh_summary(force=True)
 
         if message.ok:
             if isinstance(message.result, Path):

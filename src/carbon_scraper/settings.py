@@ -61,9 +61,6 @@ def _dir(env_var: str, default: Path) -> Path:
 RESOURCE_ROOT = _resource_root()
 USER_ROOT = _user_root()
 
-# Kept for callers that predate the split; it means "the bundled side".
-ROOT = RESOURCE_ROOT
-
 # --- read-only, shipped ---------------------------------------------------
 
 BUNDLED_ASSETS_DIR = RESOURCE_ROOT / "assets"
@@ -183,7 +180,6 @@ PLATTS_TENANT_CODES = ("VERRA", "UKLR", "RAAS", "PVCL", "OxCP", "KRR", "GCC", "B
 
 SITE = "https://registry.verra.org"
 ENVIRONMENT_CONFIG_URL = f"{SITE}/config/environment.config.json"
-ENDPOINTS_CONFIG_URL = f"{SITE}/config/endpoints.json"
 
 # Page the `discover` command drives to observe real API traffic.
 # Use the public program page: `/app/search/...` redirects anonymous visitors
@@ -328,11 +324,20 @@ BROWSER_HEADERS = {
 # --- politeness -----------------------------------------------------------
 # Do not raise these to "make it faster". See CLAUDE.md.
 
+# Politeness. There is deliberately no concurrency knob: every registry here
+# is a public service being read for free, and each adapter's page size is a
+# measured property of its API (`platts.MAX_LIMIT`, `goldstandard.PAGE_SIZES`,
+# `markit.PAGE_SIZE`), not something a caller may raise.
 REQUESTS_PER_SECOND = float(os.environ.get("VERRA_RPS", "1.0"))
-MAX_CONCURRENCY = int(os.environ.get("VERRA_CONCURRENCY", "2"))
 REQUEST_TIMEOUT = float(os.environ.get("VERRA_TIMEOUT", "60"))
 MAX_RETRIES = int(os.environ.get("VERRA_RETRIES", "4"))
-PAGE_SIZE = int(os.environ.get("VERRA_PAGE_SIZE", "100"))
+
+
+#: Set once `ensure_dirs()` has done its work. Three modules call it — `db`,
+#: `http_client` and `excel` — so a read-only command (`export`, `coverage`,
+#: `status`) was doing seven mkdirs, six `resolve()` pairs and a seed check
+#: several times over. Reset by `reset_prepared()`.
+_prepared = False
 
 
 def ensure_dirs() -> None:
@@ -341,11 +346,42 @@ def ensure_dirs() -> None:
     Only writable directories are created. `DOCS_DIR` and `FIXTURES_DIR` are
     repository artifacts, not runtime state, and under a frozen build they
     would land inside the temporary bundle.
+
+    Once per process: nothing here is idempotent-but-cheap, and every caller
+    is on a hot path.
     """
+    global _prepared
+    if _prepared:
+        return
     for d in (DATA_DIR, OUT_DIR, CACHE_DIR, LOG_DIR, CONFIG_DIR, DERIVATION_DIR, ASSETS_DIR):
         d.mkdir(parents=True, exist_ok=True)
     seed_user_files()
     seed_database()
+    _prepared = True
+
+
+def reset_prepared() -> None:
+    """Make the next `ensure_dirs()` do its work again.
+
+    For tests that repoint the directory constants after something has
+    already prepared the old ones.
+    """
+    global _prepared
+    _prepared = False
+
+
+def _seed_target(relative: Path) -> Path:
+    """Where a bundled default is seeded to, honouring the directory overrides.
+
+    `USER_ROOT / relative` is wrong whenever `CARBON_CONFIG_DIR` or
+    `CARBON_ASSETS_DIR` is set: the file lands in the default tree while
+    every reader looks in the overridden one, which then stays empty.
+    """
+    head, *rest = relative.parts
+    root = {"assets": ASSETS_DIR, "config": CONFIG_DIR}.get(head)
+    if root is None:
+        return USER_ROOT.joinpath(*relative.parts)
+    return root.joinpath(*rest)
 
 
 def seed_user_files() -> None:
@@ -357,7 +393,7 @@ def seed_user_files() -> None:
     """
     for relative in SEEDED_FILES:
         source = RESOURCE_ROOT / relative
-        target = USER_ROOT / relative
+        target = _seed_target(relative)
         if target.exists() or not source.exists():
             continue
         try:
@@ -390,8 +426,20 @@ def seed_database() -> None:
 
 
 def _editable(user_path: Path, relative: Path) -> Path:
-    """The user's copy if it exists, else the bundled original."""
-    if user_path.exists():
+    """The user's copy if it has content, else the bundled original.
+
+    "Has content" rather than "exists", because a *directory* answers
+    `exists()` the moment `ensure_dirs()` creates it — before anything has
+    been seeded into it. An empty `config/derivation` winning over the
+    bundled one makes `derive.load_rulesets()` return no rules at all, and
+    every classified column (Tipo Micro, Bioma, Durabilidade, Continent)
+    goes blank in the delivered sheet with nothing raised.
+    """
+    if user_path.is_dir():
+        populated = any(user_path.glob("*.yaml"))
+    else:
+        populated = user_path.is_file()
+    if populated:
         return user_path
     bundled = RESOURCE_ROOT / relative
     return bundled if bundled.exists() else user_path

@@ -41,6 +41,7 @@ from typing import Any
 
 from ... import db, settings
 from ...http_client import RegistryClient
+from ..base import ClientOwner, reconciled
 
 log = logging.getLogger(__name__)
 
@@ -61,7 +62,7 @@ TOTAL_HEADER = "x-total-count"
 CREDIT_TOTAL_HEADER = "x-total-number-of-credits"
 
 
-class GoldStandardAPI:
+class GoldStandardAPI(ClientOwner):
     """Talks to the public registry API. Knows nothing about our database.
 
     Implements registries.base.RegistryAdapter.
@@ -76,18 +77,7 @@ class GoldStandardAPI:
         *,
         cancel: threading.Event | None = None,
     ) -> None:
-        self.client = client or RegistryClient(cancel=cancel)
-        self._owns_client = client is None
-
-    def close(self) -> None:
-        if self._owns_client:
-            self.client.close()
-
-    def __enter__(self) -> GoldStandardAPI:
-        return self
-
-    def __exit__(self, *exc: object) -> None:
-        self.close()
+        self._bind_client(client, cancel)
 
     # -- plumbing ----------------------------------------------------------
 
@@ -142,32 +132,32 @@ class GoldStandardAPI:
         walk is safe. The reconciliation at the end is the point: a run that
         ends without an exception still has to prove it saw everything.
         """
-        expected = self.count(resource)
+        yield from reconciled(
+            self._paged(resource),
+            expected=self.count(resource),
+            progress=progress,
+            max_records=max_records,
+            label=resource,
+        )
+
+    def _paged(self, resource: str) -> Iterator[dict[str, Any]]:
+        """Every record of `resource`, in page order.
+
+        `size` caps differ per resource and lie in different ways: `projects`
+        clamps 1000 to 150 with no error and no marker, `credits` refuses
+        anything above 25 with a 403. `PAGE_SIZES` holds the measured values,
+        and a page shorter than the one asked for is the end of the feed.
+        """
         size = PAGE_SIZES.get(resource, 25)
-        seen = 0
         page = 1
         while True:
             records, _ = self.page(resource, page)
             if not records:
-                break
-            for record in records:
-                yield record
-                seen += 1
-                if progress is not None:
-                    progress(seen)
-                if max_records is not None and seen >= max_records:
-                    return
+                return
+            yield from records
             if len(records) < size:
-                break
+                return
             page += 1
-
-        if seen < expected:
-            log.error(
-                "INCOMPLETE: %s yielded %s of %s records the registry reports.",
-                resource,
-                seen,
-                expected,
-            )
 
     def iter_projects(
         self, *, max_records: int | None = None, progress: Any = None

@@ -23,7 +23,7 @@ from contextlib import contextmanager
 from collections.abc import Iterable, Iterator, Sequence
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, TypeAlias
 
 from . import settings
 
@@ -273,20 +273,64 @@ def _migrate_credit_totals_source(conn: sqlite3.Connection) -> None:
     conn.commit()
 
 
+#: The tables the multi-registry migration rebuilds, in copy order.
+_PRE_REGISTRY_TABLES = (
+    "projects",
+    "credit_events",
+    "credit_totals",
+    "project_derived",
+    "raw_snapshots",
+)
+
+
 def _migrate_registry_key(conn: sqlite3.Connection) -> None:
     """Bring a single-registry database up to the multi-registry schema.
 
     SQLite cannot alter a primary key, so each affected table is rebuilt and
     its rows copied across with `registry='VERRA'` — everything scraped before
     this change came from Verra. Data is preserved; no re-scrape is needed.
+
+    **The `_pre_registry` tables are the resume point, not the new column.**
+    `executescript` issues an implicit COMMIT, so the rename and the fresh
+    `SCHEMA` are durable before a single row has been copied. Guarding on
+    `"registry" in projects` therefore declares a half-finished migration
+    complete: the user's entire pre-multi-registry database sits orphaned in
+    `*_pre_registry`, `migrate()` refuses to try again, and nothing raises —
+    the sheet just builds with no Verra rows in it.
     """
+    if _table_exists(conn, "projects_pre_registry"):
+        # A previous attempt renamed and then stopped. Finish it.
+        _copy_pre_registry_rows(conn)
+        return
     if not _table_exists(conn, "projects"):
         return
     if "registry" in _columns(conn, "projects"):
         return
 
     log.info("Migrating database to the multi-registry schema (backfilling VERRA).")
-    old_project_columns = _columns(conn, "projects")
+    conn.executescript(
+        """
+        DROP INDEX IF EXISTS idx_credit_events_project;
+        ALTER TABLE projects        RENAME TO projects_pre_registry;
+        ALTER TABLE credit_events   RENAME TO credit_events_pre_registry;
+        ALTER TABLE credit_totals   RENAME TO credit_totals_pre_registry;
+        ALTER TABLE project_derived RENAME TO project_derived_pre_registry;
+        ALTER TABLE raw_snapshots   RENAME TO raw_snapshots_pre_registry;
+        """
+    )
+    conn.executescript(SCHEMA)
+    _copy_pre_registry_rows(conn)
+
+
+def _copy_pre_registry_rows(conn: sqlite3.Connection) -> None:
+    """Copy the renamed tables into the rebuilt ones, then drop them.
+
+    Idempotent, so a resumed migration repeats it harmlessly: the inserts are
+    `INSERT OR REPLACE` on the new primary keys, and the drops only happen
+    once every copy has succeeded. Rolled back as a unit on failure, which
+    leaves the `_pre_registry` tables in place for the next connect to retry.
+    """
+    old_project_columns = _columns(conn, "projects_pre_registry")
     # `vcs_project_id` became the registry-neutral `external_id`.
     external = "vcs_project_id" if "vcs_project_id" in old_project_columns else "NULL"
     carried = [
@@ -301,47 +345,39 @@ def _migrate_registry_key(conn: sqlite3.Connection) -> None:
         "raw_snapshots": ["resource", "entity_id", "payload", "scraped_at"],
     }
     available = {
-        table: [c for c in cols if c in _columns(conn, table)]
+        table: [c for c in cols if c in _columns(conn, f"{table}_pre_registry")]
         for table, cols in legacy.items()
     }
 
-    conn.executescript(
-        """
-        DROP INDEX IF EXISTS idx_credit_events_project;
-        ALTER TABLE projects        RENAME TO projects_pre_registry;
-        ALTER TABLE credit_events   RENAME TO credit_events_pre_registry;
-        ALTER TABLE credit_totals   RENAME TO credit_totals_pre_registry;
-        ALTER TABLE project_derived RENAME TO project_derived_pre_registry;
-        ALTER TABLE raw_snapshots   RENAME TO raw_snapshots_pre_registry;
-        """
-    )
-    conn.executescript(SCHEMA)
-
-    cols = ", ".join(available["projects"])
-    conn.execute(
-        f"INSERT INTO projects (registry, external_id, {cols}) "
-        f"SELECT 'VERRA', {external}, {cols} FROM projects_pre_registry"
-    )
-    for table in ("credit_events", "credit_totals", "project_derived", "raw_snapshots"):
-        cols = ", ".join(available[table])
+    try:
+        cols = ", ".join(available["projects"])
         conn.execute(
-            f"INSERT INTO {table} (registry, {cols}) "
-            f"SELECT 'VERRA', {cols} FROM {table}_pre_registry"
+            f"INSERT OR REPLACE INTO projects (registry, external_id, {cols}) "
+            f"SELECT 'VERRA', {external}, {cols} FROM projects_pre_registry"
         )
+        for table in _PRE_REGISTRY_TABLES[1:]:
+            cols = ", ".join(available[table])
+            conn.execute(
+                f"INSERT OR REPLACE INTO {table} (registry, {cols}) "
+                f"SELECT 'VERRA', {cols} FROM {table}_pre_registry"
+            )
 
-    if "registry" not in _columns(conn, "runs"):
-        conn.execute("ALTER TABLE runs ADD COLUMN registry TEXT")
+        if "registry" not in _columns(conn, "runs"):
+            conn.execute("ALTER TABLE runs ADD COLUMN registry TEXT")
 
-    moved = conn.execute("SELECT COUNT(*) FROM projects").fetchone()[0]
-    conn.executescript(
-        """
-        DROP TABLE projects_pre_registry;
-        DROP TABLE credit_events_pre_registry;
-        DROP TABLE credit_totals_pre_registry;
-        DROP TABLE project_derived_pre_registry;
-        DROP TABLE raw_snapshots_pre_registry;
-        """
-    )
+        moved = conn.execute("SELECT COUNT(*) FROM projects").fetchone()[0]
+        # Individually, not via executescript: that would COMMIT first and put
+        # the drops outside the transaction the rollback below depends on.
+        for table in _PRE_REGISTRY_TABLES:
+            conn.execute(f"DROP TABLE {table}_pre_registry")
+    except Exception:
+        conn.rollback()
+        log.error(
+            "Migration to the multi-registry schema failed and was rolled back. "
+            "The original tables are still present as *_pre_registry and the "
+            "next connect will retry."
+        )
+        raise
     conn.commit()
     log.info("Migration complete: %s projects carried over as VERRA.", moved)
 
@@ -352,13 +388,13 @@ def upsert_projects(
     conn: sqlite3.Connection,
     registry: str,
     records: Iterable[tuple[dict[str, Any], dict[str, Any]]],
-    *,
-    keep_raw: bool = True,
 ) -> int:
-    """Upsert normalised project rows.
+    """Upsert normalised project rows, keeping the raw payload beside them.
 
     `records` yields (normalised_row, raw_payload) pairs — the adapter has
-    already translated its registry's field names into `PROJECT_FIELDS`.
+    already translated its registry's field names into `PROJECT_FIELDS`. The
+    raw payload is what makes a mapping fixable without a re-scrape, so it is
+    always kept; the `keep_raw=False` switch was never passed by anything.
     """
     stamp = now()
     columns = ["registry", *PROJECT_FIELDS, "scraped_at"]
@@ -380,8 +416,7 @@ def upsert_projects(
             continue
         values = [_clean(row.get(field)) for field in PROJECT_FIELDS]
         rows.append((registry, *values, stamp))
-        if keep_raw:
-            raws.append((registry, "project", project_id, json.dumps(raw), stamp))
+        raws.append((registry, "project", project_id, json.dumps(raw), stamp))
         count += 1
         if len(rows) >= 500:
             _flush(conn, sql, rows, raws)
@@ -664,12 +699,13 @@ def certifications_by_project(conn: sqlite3.Connection) -> dict[Key, str]:
     return {key: "; ".join(sorted(set(values))) for key, values in result.items()}
 
 
-RegistryFilter = "str | Sequence[str] | None"
+#: What every registry-filtered read accepts. A real alias, not a string that
+#: reads like documentation a type checker cannot enforce — the three meanings
+#: below are the whole point, so the signatures should name them.
+RegistryFilter: TypeAlias = "str | Sequence[str] | None"
 
 
-def registry_clause(
-    registry: str | Sequence[str] | None, column: str = "registry"
-) -> tuple[str, list[str]]:
+def registry_clause(registry: RegistryFilter) -> tuple[str, list[str]]:
     """Build a WHERE fragment for a registry filter. Returns (sql, params).
 
     Three inputs, three different meanings, and the middle one is the trap:
@@ -688,13 +724,13 @@ def registry_clause(
         return "", []
     names = [registry] if isinstance(registry, str) else list(registry)
     if not names:
-        return f" WHERE {column} IS NULL AND {column} IS NOT NULL", []
+        return " WHERE registry IS NULL AND registry IS NOT NULL", []
     placeholders = ",".join("?" for _ in names)
-    return f" WHERE {column} IN ({placeholders})", names
+    return f" WHERE registry IN ({placeholders})", names
 
 
 def all_projects(
-    conn: sqlite3.Connection, registry: str | Sequence[str] | None = None
+    conn: sqlite3.Connection, registry: RegistryFilter = None
 ) -> list[sqlite3.Row]:
     """Project rows for one registry, several, or every one.
 
@@ -755,28 +791,22 @@ def registry_summary(conn: sqlite3.Connection) -> dict[str, dict[str, Any]]:
     for the next one — better than any table of guesses, because it was
     measured on this machine, against this cache, over this network.
     """
-    summary: dict[str, dict[str, Any]] = {
-        name: {
+    def blank() -> dict[str, Any]:
+        """One shape, written once: a sixth key must reach both users of it."""
+        return {
             "projects": 0,
             "credit_events": 0,
             "last_sync": None,
             "last_sync_ok": None,
             "last_sync_seconds": None,
         }
-        for name in settings.REGISTRY_LABELS
+
+    summary: dict[str, dict[str, Any]] = {
+        name: blank() for name in settings.REGISTRY_LABELS
     }
 
     def slot(name: str) -> dict[str, Any]:
-        return summary.setdefault(
-            name,
-            {
-                "projects": 0,
-                "credit_events": 0,
-                "last_sync": None,
-                "last_sync_ok": None,
-                "last_sync_seconds": None,
-            },
-        )
+        return summary.setdefault(name, blank())
 
     for row in conn.execute(
         "SELECT registry, COUNT(*) AS n FROM projects GROUP BY registry"
@@ -999,6 +1029,25 @@ def first(record: dict[str, Any], fields: tuple[str, ...]) -> Any:
         value = record.get(field)
         if value:
             return value
+    return None
+
+
+#: The date formats the registries publish. One list, because `excel` and
+#: `derive` read the same stored columns — two copies of this meant a format
+#: added for the sheet silently did not reach the crediting-period arithmetic.
+DATE_FORMATS = ("%Y-%m-%dT%H:%M:%S", "%Y-%m-%dT%H:%M:%S.%f", "%Y-%m-%d")
+
+
+def parse_date(value: Any) -> datetime | None:
+    """A stored date column as a datetime, or None if it is not one."""
+    if not value:
+        return None
+    text = str(value).replace("Z", "")
+    for fmt in DATE_FORMATS:
+        try:
+            return datetime.strptime(text, fmt)
+        except ValueError:
+            continue
     return None
 
 

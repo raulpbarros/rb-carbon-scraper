@@ -40,13 +40,6 @@ def add_events(conn, resource, records):
     )
 
 
-@pytest.fixture()
-def conn():
-    connection = db.connect(":memory:")
-    yield connection
-    connection.close()
-
-
 def test_requested_columns_are_the_schema():
     """The Excel layout must come from the asset file, not from code."""
     fields = settings.read_requested_fields()

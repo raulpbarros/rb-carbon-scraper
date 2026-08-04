@@ -6,41 +6,134 @@ Runs against `tests/fixtures/gs-*.json`, captured from the live API on
 
 from __future__ import annotations
 
-import json
-
 import pytest
 
 from carbon_scraper import db, excel, settings
 from carbon_scraper.registries.goldstandard import api as gs
 
-FIXTURES = settings.FIXTURES_DIR
-
-
-def _load(name):
-    return json.loads((FIXTURES / name).read_text(encoding="utf-8"))
+from conftest import load_fixture
 
 
 @pytest.fixture(scope="module")
 def projects():
-    return _load("gs-projects.json")
+    return load_fixture("gs-projects.json")
 
 
 @pytest.fixture(scope="module")
 def credits():
-    return _load("gs-credits.json")
+    return load_fixture("gs-credits.json")
 
 
-@pytest.fixture()
-def conn():
-    connection = db.connect(":memory:")
-    yield connection
-    connection.close()
+class FakeClient:
+    """Serves fixed-size pages and records the parameters it was asked for.
+
+    Counts come back in **headers** here, not the body, which is what the
+    reconciliation reads.
+    """
+
+    def __init__(self, pages, total, credit_total=None):
+        #: [n_records_on_page_1, n_records_on_page_2, ...]
+        self._pages = list(pages)
+        self._total = total
+        self._credit_total = credit_total
+        self.calls: list[dict] = []
+
+    def get_json_with_headers(self, url, *, params=None, headers=None, **kwargs):
+        params = dict(params or {})
+        self.calls.append(params)
+        page = int(params["page"])
+        size = int(params["size"])
+        count = self._pages[page - 1] if page <= len(self._pages) else 0
+        records = [{"id": (page - 1) * 1000 + i} for i in range(min(count, size))]
+        response_headers = {gs.TOTAL_HEADER: str(self._total)}
+        if self._credit_total is not None:
+            response_headers[gs.CREDIT_TOTAL_HEADER] = str(self._credit_total)
+        return records, response_headers
+
+    def close(self):
+        pass
+
+
+# -- paging ----------------------------------------------------------------
+#
+# The 182,989-record half of this registry, and the three documented traps are
+# all here rather than in normalisation.
 
 
 def test_page_size_caps_match_what_the_api_actually_allows():
     """Measured limits. `projects` clamps silently at 150; `credits` 403s above 25."""
     assert settings.GS_PROJECT_PAGE_SIZE == 150
     assert settings.GS_CREDIT_PAGE_SIZE == 25
+
+
+def test_each_resource_asks_for_its_own_measured_page_size():
+    """A single shared page size is wrong in both directions.
+
+    `projects` clamps 1000 to 150 with no error and no marker, so a naive
+    loop that trusts its own arithmetic skips 85% of the registry.
+    `credits` answers anything above 25 with a **403**, which reads like a
+    block and is a response-size limit.
+    """
+    # The first call is `count()` asking for one row; the data pages follow.
+    client = FakeClient(pages=[150, 10], total=160)
+    list(gs.GoldStandardAPI(client).iter_raw(gs.PROJECT))
+    assert client.calls[0]["size"] == 1
+    assert {c["size"] for c in client.calls[1:]} == {settings.GS_PROJECT_PAGE_SIZE}
+
+    client = FakeClient(pages=[25, 5], total=30)
+    list(gs.GoldStandardAPI(client).iter_raw(gs.CREDITS))
+    assert {c["size"] for c in client.calls[1:]} == {settings.GS_CREDIT_PAGE_SIZE}
+
+
+def test_paging_stops_on_a_short_page_and_reconciles(caplog, progress):
+    """Three pages, then stop — no request for a fourth."""
+    client = FakeClient(pages=[150, 150, 40], total=340)
+    with caplog.at_level("ERROR"):
+        records = list(gs.GoldStandardAPI(client).iter_raw(gs.PROJECT, progress=progress))
+
+    assert len(records) == 340
+    # One count() call at size=1, then three pages.
+    assert [call["page"] for call in client.calls] == [1, 1, 2, 3]
+    assert "INCOMPLETE" not in caplog.text
+    progress.assert_cumulative(340)
+
+
+def test_paging_stops_on_an_empty_page_too():
+    """A feed whose length is an exact multiple of the page size."""
+    client = FakeClient(pages=[150, 150], total=300)
+    records = list(gs.GoldStandardAPI(client).iter_raw(gs.PROJECT))
+    assert len(records) == 300
+    assert [call["page"] for call in client.calls] == [1, 1, 2, 3]
+
+
+def test_a_short_read_is_reported_as_incomplete(caplog):
+    """The registry's own header is the check. Never trust a row count just
+    because the run finished without an exception."""
+    client = FakeClient(pages=[150, 40], total=500)
+    with caplog.at_level("ERROR"):
+        records = list(gs.GoldStandardAPI(client).iter_raw(gs.PROJECT))
+
+    assert len(records) == 190
+    assert "INCOMPLETE" in caplog.text
+    assert "190 of 500" in caplog.text
+
+
+def test_limit_stops_early_without_claiming_a_short_read(caplog):
+    """`--limit` is a smoke test, not a failed sync."""
+    client = FakeClient(pages=[150, 150, 40], total=340)
+    with caplog.at_level("ERROR"):
+        records = list(
+            gs.GoldStandardAPI(client).iter_raw(gs.PROJECT, max_records=25)
+        )
+    assert len(records) == 25
+    assert "INCOMPLETE" not in caplog.text
+
+
+def test_the_counts_come_from_headers_not_the_body():
+    client = FakeClient(pages=[1], total=4141, credit_total=182_989)
+    adapter = gs.GoldStandardAPI(client)
+    assert adapter.project_total() == 4141
+    assert adapter.credit_total() == 182_989
 
 
 def test_project_normalises_onto_the_shared_columns(projects):

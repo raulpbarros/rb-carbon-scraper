@@ -27,7 +27,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from html.parser import HTMLParser
-from typing import Any
+from typing import Any  # noqa: F401 - used in the parser's stack annotation
 
 #: Cells whose merged value spans more rows than this are treated as a markup
 #: error rather than obeyed. The public view merges 2-3 rows for a
@@ -82,7 +82,13 @@ class _TableReader(HTMLParser):
         # `&amp;` and `S&atilde;o`, and we want the text a reader would see.
         super().__init__(convert_charrefs=True)
         self.tables: list[Table] = []
-        self._depth = 0
+        # A stack, not a depth counter. A nested table used to append its
+        # `<th>`s to the enclosing table's headings and its `<tr>`s to its
+        # rows, which shifts the heading -> index mapping for every later row
+        # — plausible values under the wrong column names, silently. Every
+        # fixture here happens to hold exactly one table, which is precisely
+        # why the flattening was invisible.
+        self._stack: list[tuple[list[str], list[Row], dict[int, Any], list[Cell]]] = []
         self._headings: list[str] = []
         self._rows: list[Row] = []
         # column index -> (text, links, rows still to carry)
@@ -91,14 +97,16 @@ class _TableReader(HTMLParser):
         self._cell: Cell | None = None
         self._is_heading = False
 
+    @property
+    def _depth(self) -> int:
+        return len(self._stack)
+
     # -- structure ---------------------------------------------------------
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         attributes = {name: (value or "") for name, value in attrs}
         if tag == "table":
-            if self._depth == 0:
-                self._start_table()
-            self._depth += 1
+            self._start_table()
         elif tag == "tr" and self._depth:
             self._cells = []
         elif tag in ("td", "th") and self._depth:
@@ -120,9 +128,7 @@ class _TableReader(HTMLParser):
         elif tag == "tr" and self._depth:
             self._end_row()
         elif tag == "table" and self._depth:
-            self._depth -= 1
-            if self._depth == 0:
-                self._end_table()
+            self._end_table()
 
     def handle_data(self, data: str) -> None:
         if self._cell is not None:
@@ -131,12 +137,22 @@ class _TableReader(HTMLParser):
     # -- rows --------------------------------------------------------------
 
     def _start_table(self) -> None:
+        """Begin a table, suspending whatever one encloses it."""
+        self._stack.append((self._headings, self._rows, self._carry, self._cells))
         self._headings = []
         self._rows = []
         self._carry = {}
+        self._cells = []
 
     def _end_table(self) -> None:
+        """Record this table and resume the one that encloses it.
+
+        The enclosing table's own `<tr>` is still open, and its cells are
+        restored untouched: a table nested inside a cell contributes its
+        markup to that cell's text, never a row of its own to the parent.
+        """
         self.tables.append(Table(list(self._headings), list(self._rows)))
+        self._headings, self._rows, self._carry, self._cells = self._stack.pop()
 
     def _end_row(self) -> None:
         cells, self._cells = self._cells, []

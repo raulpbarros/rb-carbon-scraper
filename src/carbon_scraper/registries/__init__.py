@@ -7,7 +7,7 @@ command that only touches the other one.
 
 from __future__ import annotations
 
-from collections.abc import Callable
+from collections.abc import Callable, Iterator
 from typing import Any
 
 from .. import settings
@@ -73,15 +73,19 @@ ADAPTERS: dict[str, tuple[Callable[[], type], ...]] = {
 }
 
 # --registry accepts either the stored value or a short alias.
+#
+# Keys are the shape `resolve()` looks them up in: lowercased with `_` already
+# turned into `-`. So the stored identifiers reach here as `verra`,
+# `gold-standard` and `plan-vivo`, which are the entries below — spelling
+# `settings.GOLD_STANDARD.lower()` as a key of its own added `gold_standard`,
+# which `resolve()` can never ask for.
 ALIASES = {
     "verra": settings.VERRA,
     "vcs": settings.VERRA,
-    settings.VERRA.lower(): settings.VERRA,
     "gs": settings.GOLD_STANDARD,
     "gold": settings.GOLD_STANDARD,
     "goldstandard": settings.GOLD_STANDARD,
     "gold-standard": settings.GOLD_STANDARD,
-    settings.GOLD_STANDARD.lower(): settings.GOLD_STANDARD,
     "cerc": settings.CERCARBONO,
     "cercarbono": settings.CERCARBONO,
     "ecoregistry": settings.CERCARBONO,
@@ -89,7 +93,6 @@ ALIASES = {
     "planvivo": settings.PLAN_VIVO,
     "plan-vivo": settings.PLAN_VIVO,
     "pvcl": settings.PLAN_VIVO,
-    settings.PLAN_VIVO.lower(): settings.PLAN_VIVO,
 }
 
 ALL = tuple(ADAPTERS)
@@ -135,20 +138,22 @@ def adapter_class(registry: str) -> type:
     return adapter_classes(registry)[0]
 
 
-def adapters(registry: str, **kwargs: Any) -> tuple[RegistryAdapter, ...]:
-    """Construct every adapter publishing `registry`."""
-    return tuple(cls(**kwargs) for cls in adapter_classes(registry))
+def adapters(registry: str, **kwargs: Any) -> Iterator[RegistryAdapter]:
+    """Construct every adapter publishing `registry`, one at a time.
 
-
-def adapter(registry: str, **kwargs: Any) -> RegistryAdapter:
-    """Construct the primary adapter. See `adapter_class`."""
-    return adapter_class(registry)(**kwargs)
+    A generator, not a tuple. Each constructor opens an `httpx.Client` — a
+    connection pool and an SSL context — so building all of them up front left
+    Plan Vivo's second client open for the whole of the first one's run, and
+    leaked it entirely if the first adapter raised or was cancelled. The GUI
+    does not exit between runs, so those accumulated.
+    """
+    for cls in adapter_classes(registry):
+        yield cls(**kwargs)
 
 
 __all__ = [
     "ALL",
     "RegistryAdapter",
-    "adapter",
     "adapter_class",
     "adapter_classes",
     "adapters",

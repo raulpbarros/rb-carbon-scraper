@@ -34,9 +34,15 @@ from . import db, excel, pipeline, settings
 app = typer.Typer(add_completion=False, help="Scrape carbon registries into SQLite.")
 console = Console()
 
+# Shared option definitions. Typer reads these as default values, so one
+# object per option is enough and every command that takes it spells it the
+# same way — `--verbose` alone appeared verbatim nine times.
 REGISTRY_OPTION = typer.Option(
     "all", "--registry", "-r", help="verra | gs | cercarbono | planvivo | all"
 )
+VERBOSE_OPTION = typer.Option(False, "--verbose", "-v")
+LIMIT_OPTION = typer.Option(None, help="Stop after N records per resource.")
+SKIP_TOTALS_OPTION = typer.Option(False, help="Skip the exact-totals pass.")
 
 
 def _setup_logging(verbose: bool) -> None:
@@ -90,7 +96,7 @@ def discover(
         "verra", "--registry", "-r", help="Which S&P registry to capture: verra | planvivo"
     ),
     headless: bool = typer.Option(True, help="Run the browser headless."),
-    verbose: bool = typer.Option(False, "--verbose", "-v"),
+    verbose: bool = VERBOSE_OPTION,
 ) -> None:
     """Watch a real S&P registry page and write down the API contract it uses.
 
@@ -120,7 +126,7 @@ def standards(
         "-r",
         help="A registry name, a bare S&P tenant code (UKLR, GCC), or `all`.",
     ),
-    verbose: bool = typer.Option(False, "--verbose", "-v"),
+    verbose: bool = VERBOSE_OPTION,
 ) -> None:
     """List an S&P registry's standards and their real `standardId`.
 
@@ -188,7 +194,7 @@ def sync(
     ),
     projects_only: bool = typer.Option(False, help="Skip the credit ledgers."),
     refresh: bool = typer.Option(False, help="Ignore the local response cache."),
-    verbose: bool = typer.Option(False, "--verbose", "-v"),
+    verbose: bool = VERBOSE_OPTION,
 ) -> None:
     """Scrape a registry into SQLite. Safe to re-run; writes are upserts."""
     _setup_logging(verbose)
@@ -205,7 +211,7 @@ def sync(
 
 def derive_cmd(
     registry: str = REGISTRY_OPTION,
-    verbose: bool = typer.Option(False, "--verbose", "-v"),
+    verbose: bool = VERBOSE_OPTION,
 ) -> None:
     """Apply config/derivation/*.yaml. No network."""
     _setup_logging(verbose)
@@ -217,7 +223,7 @@ def derive_cmd(
 @app.command()
 def export(
     registry: str = REGISTRY_OPTION,
-    verbose: bool = typer.Option(False, "--verbose", "-v"),
+    verbose: bool = VERBOSE_OPTION,
 ) -> None:
     """Write the next version of the spreadsheet from SQLite. No network.
 
@@ -232,9 +238,9 @@ def export(
 @app.command()
 def update(
     registry: str = REGISTRY_OPTION,
-    limit: Optional[int] = typer.Option(None, help="Stop after N records per resource."),
-    skip_totals: bool = typer.Option(False, help="Skip the exact-totals pass."),
-    verbose: bool = typer.Option(False, "--verbose", "-v"),
+    limit: Optional[int] = LIMIT_OPTION,
+    skip_totals: bool = SKIP_TOTALS_OPTION,
+    verbose: bool = VERBOSE_OPTION,
 ) -> None:
     """sync + totals + derive. A refresh, NOT a delivery — no spreadsheet.
 
@@ -257,9 +263,9 @@ def update(
 @app.command()
 def run(
     registry: str = REGISTRY_OPTION,
-    limit: Optional[int] = typer.Option(None, help="Stop after N records per resource."),
-    skip_totals: bool = typer.Option(False, help="Skip the exact-totals pass."),
-    verbose: bool = typer.Option(False, "--verbose", "-v"),
+    limit: Optional[int] = LIMIT_OPTION,
+    skip_totals: bool = SKIP_TOTALS_OPTION,
+    verbose: bool = VERBOSE_OPTION,
 ) -> None:
     """sync + totals + derive + export. The whole pipeline."""
     _setup_logging(verbose)
@@ -310,7 +316,7 @@ def totals(
     resource: str = typer.Option(
         "retirements", help="Ledger to total. Default is the one that needs it."
     ),
-    verbose: bool = typer.Option(False, "--verbose", "-v"),
+    verbose: bool = VERBOSE_OPTION,
 ) -> None:
     """Fetch EXACT per-project Verra totals straight from the API's SUM aggregate.
 
@@ -362,7 +368,7 @@ def slim_db(
         None, "--out", "-o", help="Where to write it. Default: dist/seed/carbon-seed.db"
     ),
     force: bool = typer.Option(False, "--force", help="Replace an existing file."),
-    verbose: bool = typer.Option(False, "--verbose", "-v"),
+    verbose: bool = VERBOSE_OPTION,
 ) -> None:
     """Write the database the installer ships. No network.
 

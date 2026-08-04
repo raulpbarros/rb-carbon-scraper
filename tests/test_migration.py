@@ -142,6 +142,70 @@ def test_migration_is_idempotent(legacy_db):
     assert leftovers == []
 
 
+def test_an_interrupted_migration_is_resumed_not_declared_done(legacy_db, monkeypatch):
+    """`executescript` COMMITs, so the rename is durable before any row moves.
+
+    Crash there and `projects` already has its `registry` column: a guard on
+    that column calls the migration finished and leaves every row of the
+    user's database orphaned in `*_pre_registry`, with nothing raised. The
+    resume point has to be the renamed tables themselves.
+    """
+    def die_after_the_rename(conn):
+        raise KeyboardInterrupt("power cut")
+
+    monkeypatch.setattr(db, "_copy_pre_registry_rows", die_after_the_rename)
+    with pytest.raises(KeyboardInterrupt):
+        db.connect(legacy_db)
+
+    conn = sqlite3.connect(legacy_db)
+    assert conn.execute("SELECT COUNT(*) FROM projects").fetchone()[0] == 0
+    assert (
+        conn.execute("SELECT COUNT(*) FROM projects_pre_registry").fetchone()[0] == 1
+    )
+    conn.close()
+
+    # The next connect finds the renamed tables and finishes the job.
+    monkeypatch.undo()
+    conn = db.connect(legacy_db)
+    try:
+        projects = db.all_projects(conn)
+        assert len(projects) == 1
+        assert dict(projects[0])["project_name"] == "Bundled Wind Power Project"
+        assert db.credit_totals(conn)[(settings.VERRA, 1728)]["retirements"] == 150
+    finally:
+        conn.close()
+
+    leftovers = sqlite3.connect(legacy_db).execute(
+        "SELECT name FROM sqlite_master WHERE name LIKE '%_pre_registry'"
+    ).fetchall()
+    assert leftovers == []
+
+
+def test_a_failed_copy_leaves_the_original_tables_for_the_retry(legacy_db, monkeypatch):
+    """A half-copy must roll back, not be committed as the new truth."""
+    real_columns = db._columns
+
+    def explode(conn, table):
+        if table == "runs":
+            raise sqlite3.OperationalError("disk I/O error")
+        return real_columns(conn, table)
+
+    monkeypatch.setattr(db, "_columns", explode)
+    with pytest.raises(sqlite3.OperationalError):
+        db.connect(legacy_db)
+    monkeypatch.undo()
+
+    conn = sqlite3.connect(legacy_db)
+    assert conn.execute("SELECT COUNT(*) FROM projects").fetchone()[0] == 0
+    conn.close()
+
+    conn = db.connect(legacy_db)
+    try:
+        assert len(db.all_projects(conn)) == 1
+    finally:
+        conn.close()
+
+
 def test_gold_standard_can_reuse_a_verra_project_id(legacy_db):
     """Registries number independently — id 1728 exists in both, distinctly."""
     conn = db.connect(legacy_db)

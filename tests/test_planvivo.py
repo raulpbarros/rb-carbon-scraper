@@ -27,12 +27,7 @@ from carbon_scraper.registries.platts import api as platts
 from carbon_scraper.registries.platts import discovery
 from carbon_scraper.registries.verra import api as verra
 
-FIXTURES = settings.FIXTURES_DIR
-
-
-def _load(name):
-    return json.loads((FIXTURES / name).read_text(encoding="utf-8"))
-
+from conftest import load_fixture as _load
 
 @pytest.fixture(scope="module")
 def projects():
@@ -49,19 +44,13 @@ def holdings():
     return _load("planvivo-holdings.json")["entities"]
 
 
-@pytest.fixture()
-def conn():
-    connection = db.connect(":memory:")
-    yield connection
-    connection.close()
-
-
 class FakeClient:
     """Serves the fixtures and records what was asked for. Never touches HTTP."""
 
     def __init__(self, payloads=None):
         self.payloads = payloads or {}
         self.calls = []
+        self.invalidated = []
 
     def post_json(self, url, body, *, headers=None, refresh=False):
         self.calls.append((url, body, headers or {}))
@@ -75,6 +64,9 @@ class FakeClient:
 
     def api_headers(self, config_url=None):
         return {"appkey": "public"}
+
+    def invalidate(self, method, url, **kwargs):
+        self.invalidated.append(url)
 
     def close(self):
         return None
@@ -105,6 +97,31 @@ def test_plan_vivo_sends_its_own_registry_and_standard_not_verras():
     assert verra.REGISTRY_HEADERS["registry"] == "VERRA"
     assert verra.REGISTRY_HEADERS["standardid"] == "150000000000001"
     assert verra.REGISTRY_HEADERS["standardacronym"] == "VCS"
+
+
+def test_no_projects_at_all_is_reported_as_a_wrong_standard_id(caplog):
+    """`totalEntities: 0` looks exactly like an empty registry, and is not.
+
+    No tenant on this platform publishes zero projects — an empty *ledger*
+    is a fact (JNR has four of them), an empty project list is a
+    misconfigured adapter. The wrong answer is also a 200, so it is cached
+    and would be replayed for 24 hours; the entry has to go with it.
+    """
+    client = FakeClient()  # every search answers totalEntities: 0
+    adapter = pv.PlanVivoAPI(client)
+    with caplog.at_level("ERROR"):
+        assert adapter.project_total() == 0
+    assert "published no projects at all" in caplog.text
+    assert "wrong standardId" in caplog.text
+    assert client.invalidated, "the 200 that said 'empty' is still in the cache"
+
+
+def test_a_registry_with_projects_says_nothing(projects, caplog):
+    client = FakeClient({"project": {"entities": projects, "totalEntities": 2}})
+    with caplog.at_level("ERROR"):
+        assert pv.PlanVivoAPI(client).project_total() == 2
+    assert client.invalidated == []
+    assert caplog.text == ""
 
 
 def test_the_two_platts_registries_do_not_share_an_identity():

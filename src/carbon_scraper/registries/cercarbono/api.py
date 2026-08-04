@@ -38,7 +38,6 @@ Início` / `Data de Término`; nothing else publishes the crediting period.
 
 from __future__ import annotations
 
-import hashlib
 import logging
 import threading
 from collections.abc import Iterator
@@ -46,6 +45,8 @@ from typing import Any
 
 from ... import db, settings
 from ...http_client import RegistryClient
+from ..base import ClientOwner, reconciled
+from ..text import hashed_id, joined, stated
 
 log = logging.getLogger(__name__)
 
@@ -74,13 +75,12 @@ PLACEHOLDER_PLACES = {"worldwide", "mundial"}
 
 
 def _stated(value: Any) -> str | None:
-    """Registry text, or None when the registry said it has none."""
-    if value is None:
-        return None
-    text = str(value).strip()
-    if not text or text.casefold() in NOT_STATED:
-        return None
-    return text
+    """Registry text, or None when the registry said it has none.
+
+    `collapse=False`: these values come out of JSON, where two spaces in a
+    row are the registry's own and not markup.
+    """
+    return stated(value, NOT_STATED, collapse=False)
 
 
 def _place(value: Any) -> str | None:
@@ -92,33 +92,17 @@ def _place(value: Any) -> str | None:
 
 
 def _joined(values: Any) -> str | None:
-    """Distinct values in first-seen order, joined.
-
-    Cercarbono repeats a sector once per verification, so a single-sector
-    project can list `Land use (AFOLU)` three times. Order is preserved rather
-    than sorted: the registry lists the primary entry first.
-    """
-    seen: list[str] = []
-    for value in values or ():
-        text = _stated(value)
-        if text and text not in seen:
-            seen.append(text)
-    return "; ".join(seen) or None
+    """Distinct values in first-seen order, joined."""
+    return joined(values, NOT_STATED, collapse=False)
 
 
-def serial_entity_id(serial: str) -> int:
-    """A stable numeric key for an issuance, which has no id of its own.
-
-    `credit_events` is keyed on an integer, and a serial is a string. Hashing
-    it gives a key that is identical on every run, which is what makes the
-    upsert idempotent — an incrementing counter would renumber every row each
-    time the feed order changed. 60 bits, so it fits SQLite's signed INTEGER
-    with room to spare.
-    """
-    return int(hashlib.sha1(serial.encode("utf-8")).hexdigest()[:15], 16)
+#: A stable numeric key for an issuance, which has no id of its own — a serial
+#: is a string and `credit_events` is keyed on an integer. See
+#: `registries.text.hashed_id`.
+serial_entity_id = hashed_id
 
 
-class CercarbonoAPI:
+class CercarbonoAPI(ClientOwner):
     """Talks to the public EcoRegistry API. Knows nothing about our database.
 
     Implements registries.base.RegistryAdapter.
@@ -134,8 +118,7 @@ class CercarbonoAPI:
         cancel: threading.Event | None = None,
         standard: str | None = None,
     ) -> None:
-        self.client = client or RegistryClient(cancel=cancel)
-        self._owns_client = client is None
+        self._bind_client(client, cancel)
         self.standard = standard or settings.CERCARBONO_STANDARD
         self._projects: list[dict[str, Any]] | None = None
         self._analytics: dict[int, dict[str, Any]] | None = None
@@ -143,16 +126,6 @@ class CercarbonoAPI:
         #: project_id -> issued total, as the registry itself states it.
         #: Filled while iterating projects; see iter_credit_totals.
         self._issued: dict[int, float] = {}
-
-    def close(self) -> None:
-        if self._owns_client:
-            self.client.close()
-
-    def __enter__(self) -> CercarbonoAPI:
-        return self
-
-    def __exit__(self, *exc: object) -> None:
-        self.close()
 
     # -- plumbing ----------------------------------------------------------
 
@@ -173,17 +146,21 @@ class CercarbonoAPI:
         return headers
 
     def get(self, path: str, *, refresh: bool = False) -> dict[str, Any]:
-        body = self.client.get_json(
-            f"{settings.CERCARBONO_API}/{path}",
-            headers=self._headers(),
-            refresh=refresh,
-        )
+        url = f"{settings.CERCARBONO_API}/{path}"
+        headers = self._headers()
+        body = self.client.get_json(url, headers=headers, refresh=refresh)
         if not isinstance(body, dict):
+            self.client.invalidate("GET", url, headers=headers)
             raise ValueError(f"{path} returned {type(body).__name__}, expected an object")
         # The platform reports application errors in a 200 body. An unnoticed
         # ERROR_401 here would look exactly like an empty registry.
         messages = body.get("codeMessages")
         if messages:
+            # A 200 is cacheable, so this refusal has just been written to
+            # disk and would be replayed for the next 24 hours. Drop it, or
+            # "fix the header and re-run" cannot work without --refresh —
+            # which is not what anyone reaches for when debugging a header.
+            self.client.invalidate("GET", url, headers=headers)
             raise ValueError(f"{path} refused the request: {messages}")
         return body
 
@@ -271,10 +248,17 @@ class CercarbonoAPI:
         """
         records = self.projects()
         analytics = self.analytics()
+        wanted = self.project_ids()
+        yielded: set[int] = set()
         seen = 0
         for record in records:
             project_id = db.int_or_none(record.get("id"))
             if project_id is None:
+                log.error(
+                    "A project on %s has no usable id and cannot be stored: %r",
+                    self.standard,
+                    record.get("code") or record,
+                )
                 continue
             detail = self.detail(project_id)
             raw = {
@@ -291,16 +275,24 @@ class CercarbonoAPI:
 
             yield row, raw
             seen += 1
+            yielded.add(project_id)
             if progress is not None:
                 progress(seen)
             if max_records is not None and seen >= max_records:
                 return
 
-        if seen < len(records):
+        # Compared as id sets, not as counts. There is no paging here and no
+        # published total to reconcile against, so the only honest check is
+        # that every project the standard's own list names came back out —
+        # counting `seen` against `len(records)` cannot see a project yielded
+        # twice under one id while another is dropped.
+        missing = wanted - yielded
+        if missing:
             log.error(
-                "INCOMPLETE: projects yielded %s of the %s the standard lists.",
-                seen,
-                len(records),
+                "INCOMPLETE: %s project(s) the standard lists never reached the "
+                "database: %s",
+                len(missing),
+                ", ".join(str(pid) for pid in sorted(missing)[:20]),
             )
 
     def iter_credits(
@@ -314,23 +306,17 @@ class CercarbonoAPI:
         else:
             raise ValueError(f"Cercarbono has no ledger named {resource!r}")
 
-        expected = self.count(resource)
-        seen = 0
-        for row in source:
-            yield row
-            seen += 1
-            if progress is not None:
-                progress(seen)
-            if max_records is not None and seen >= max_records:
-                return
-
-        if seen < expected:
-            log.error(
-                "INCOMPLETE: %s yielded %s of %s records the feed holds.",
-                resource,
-                seen,
-                expected,
-            )
+        # Both feeds arrive whole in one response, so there is no paging to
+        # come up short. What this compares is the raw rows the feed holds
+        # against the rows that survived normalisation — a serial with no
+        # reference is dropped, and this is what says so.
+        yield from reconciled(
+            source,
+            expected=self.count(resource),
+            progress=progress,
+            max_records=max_records,
+            label=f"{REGISTRY} {resource}",
+        )
 
     def _iter_issuances(self, wanted: set[int]) -> Iterator[dict[str, Any]]:
         for project_id, record in self.analytics().items():

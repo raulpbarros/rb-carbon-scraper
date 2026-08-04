@@ -19,17 +19,55 @@ from __future__ import annotations
 import logging
 import re
 from dataclasses import dataclass
-from datetime import datetime
 from typing import Any
 
 import yaml
 
-from . import settings
+from . import db, settings
 
 log = logging.getLogger(__name__)
 
 
 # -- rule engine -----------------------------------------------------------
+
+def _equals(text: str, value: Any) -> bool:
+    return text.strip().casefold() == str(value).strip().casefold()
+
+
+def _contains(text: str, value: Any) -> bool:
+    return str(value).casefold() in text.casefold()
+
+
+def _in(text: str, value: Any) -> bool:
+    return text.strip().casefold() in {str(v).strip().casefold() for v in value}
+
+
+def _any_of(text: str, value: Any) -> bool:
+    """A comma-separated field where any token matches."""
+    tokens = {t.strip().casefold() for t in re.split(r"[,;/]", text)}
+    return bool(tokens & {str(v).strip().casefold() for v in value})
+
+
+def _regex(text: str, value: Any) -> bool:
+    return re.search(str(value), text, re.I) is not None
+
+
+def _not_empty(text: str, value: Any) -> bool:
+    return True
+
+
+#: Operators that run against a *present* value. `is_empty` is not here: it is
+#: the one operator that has to see an absent value, so it is handled before
+#: the emptiness check rather than after it.
+_MATCHERS = {
+    "equals": _equals,
+    "contains": _contains,
+    "in": _in,
+    "any_of": _any_of,
+    "regex": _regex,
+    "not_empty": _not_empty,
+}
+
 
 @dataclass
 class Condition:
@@ -43,23 +81,10 @@ class Condition:
             return actual in (None, "")
         if actual in (None, ""):
             return False
-        text = str(actual)
-        if self.op == "equals":
-            return text.strip().casefold() == str(self.value).strip().casefold()
-        if self.op == "contains":
-            return str(self.value).casefold() in text.casefold()
-        if self.op == "in":
-            values = {str(v).strip().casefold() for v in self.value}
-            return text.strip().casefold() in values
-        if self.op == "any_of":
-            # e.g. a comma-separated field where any token matches
-            tokens = {t.strip().casefold() for t in re.split(r"[,;/]", text)}
-            return bool(tokens & {str(v).strip().casefold() for v in self.value})
-        if self.op == "regex":
-            return re.search(str(self.value), text, re.I) is not None
-        if self.op == "not_empty":
-            return True
-        raise ValueError(f"Unknown operator '{self.op}' in derivation rules")
+        # `_parse_conditions` has already rejected anything not in the table,
+        # so this is a lookup rather than a chain of seven string comparisons
+        # re-run for every condition of every rule of every project.
+        return _MATCHERS[self.op](str(actual), self.value)
 
 
 @dataclass
@@ -89,7 +114,10 @@ class RuleSet:
         return None
 
 
-_OPERATORS = {"equals", "contains", "in", "any_of", "regex", "not_empty", "is_empty"}
+#: Every operator a YAML rule may name. Derived from the dispatch table, so a
+#: new matcher cannot be added without becoming valid, or validated without
+#: being implemented.
+_OPERATORS = {*_MATCHERS, "is_empty"}
 
 
 def _parse_conditions(raw: list[dict[str, Any]] | None) -> list[Condition]:
@@ -106,6 +134,14 @@ def _parse_conditions(raw: list[dict[str, Any]] | None) -> list[Condition]:
 
 
 def load_rulesets(directory: Any = None) -> list[RuleSet]:
+    """Load every ruleset in `directory`.
+
+    Raises if it finds none. An empty list is not a degraded run, it is a
+    silent one: every classified column would come back blank, `derive` would
+    report success, and the sheet would build with the right shape and four
+    empty columns. That is the failure this codebase keeps meeting, so it
+    gets an exception rather than a warning nobody reads.
+    """
     directory = directory or settings.derivation_dir()
     rulesets: list[RuleSet] = []
     for path in sorted(directory.glob("*.yaml")):
@@ -130,21 +166,20 @@ def load_rulesets(directory: Any = None) -> list[RuleSet]:
                 note=spec.get("note", ""),
             )
         )
+    if not rulesets:
+        raise FileNotFoundError(
+            f"No derivation rulesets found in {directory}. Every classified "
+            "column would silently be blank; refusing to derive."
+        )
     return rulesets
 
 
 # -- computed values -------------------------------------------------------
 
-def _parse_date(value: Any) -> datetime | None:
-    if not value:
-        return None
-    text = str(value).replace("Z", "")
-    for fmt in ("%Y-%m-%dT%H:%M:%S", "%Y-%m-%dT%H:%M:%S.%f", "%Y-%m-%d"):
-        try:
-            return datetime.strptime(text, fmt)
-        except ValueError:
-            continue
-    return None
+#: `db.parse_date` under the name this module has always used for it. Shared,
+#: because `excel` reads the same stored columns: a date format that parses for
+#: `Data de Início` and not for `Duração` is a gap nobody would look for.
+_parse_date = db.parse_date
 
 
 def duration_years(row: dict[str, Any]) -> int | None:

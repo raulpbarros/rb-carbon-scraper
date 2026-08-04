@@ -23,7 +23,6 @@ import logging
 import re
 import shutil
 import sqlite3
-from collections.abc import Sequence
 from datetime import datetime
 from pathlib import Path
 from typing import Any
@@ -41,10 +40,12 @@ EXTRA_COLUMNS = ["Registry", "Status", "Project URL"]
 
 # Requested column -> projects table column, for the straight copies.
 # Every registry's adapter normalises onto these names, so one map serves all.
+# `Project ID` and `Standard` are deliberately NOT here. Both are handled by
+# their own branch in `build_rows`, which adds a fallback this map cannot
+# express, and both branches come first — entries here would read as the
+# authority on those columns while never being consulted.
 DIRECT_COLUMNS: dict[str, str] = {
-    "Project ID": "external_id",
     "Project Name": "project_name",
-    "Standard": "standard_name",
     "Tipo Macro de Projeto": "sectoral_scope",
     "Metodologia": "methodologies",
     "País": "country_name",
@@ -77,16 +78,11 @@ def load_credits_config() -> dict[str, Any]:
     return yaml.safe_load(path.read_text(encoding="utf-8")) or {}
 
 
-def _to_date(value: Any) -> datetime | None:
-    if not value:
-        return None
-    text = str(value).replace("Z", "")
-    for fmt in ("%Y-%m-%dT%H:%M:%S", "%Y-%m-%dT%H:%M:%S.%f", "%Y-%m-%d"):
-        try:
-            return datetime.strptime(text, fmt)
-        except ValueError:
-            continue
-    return None
+#: `db.parse_date` under the name this module has always used for it. Shared
+#: with `derive`, which reads the same stored columns: a date format that
+#: parses for `Data de Início` but not for `Duração` is a gap nobody would
+#: think to look for.
+_to_date = db.parse_date
 
 
 def _project_url(record: dict[str, Any]) -> str | None:
@@ -108,7 +104,7 @@ def _project_url(record: dict[str, Any]) -> str | None:
 
 
 def build_rows(
-    conn: sqlite3.Connection, registry: str | Sequence[str] | None = None
+    conn: sqlite3.Connection, registry: db.RegistryFilter = None
 ) -> tuple[list[str], list[dict[str, Any]]]:
     """Assemble one dict per project, keyed by the requested column names.
 
@@ -250,7 +246,7 @@ def write_xlsx(
     conn: sqlite3.Connection,
     path: Any = None,
     *,
-    registry: str | Sequence[str] | None = None,
+    registry: db.RegistryFilter = None,
     out_dir: Any = None,
 ) -> tuple[Path, int, Path | None]:
     """Write the next version of the spreadsheet.
@@ -306,7 +302,7 @@ def write_xlsx(
 
 
 def coverage_report(
-    conn: sqlite3.Connection, registry: str | Sequence[str] | None = None
+    conn: sqlite3.Connection, registry: db.RegistryFilter = None
 ) -> list[tuple[str, int, int]]:
     """(column, filled, total) — how complete each column actually is."""
     columns, rows = build_rows(conn, registry)
