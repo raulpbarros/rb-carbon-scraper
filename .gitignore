@@ -34,6 +34,10 @@ seed/
 # Per-machine tool state, not project code
 .claude/settings.local.json
 
+# The window's remembered checkboxes and output folder. Written under
+# USER_ROOT, which is the checkout in development.
+gui-state.json
+
 # OS
 Thumbs.db
 .DS_Store

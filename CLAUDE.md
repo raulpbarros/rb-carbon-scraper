@@ -8,10 +8,10 @@
 
 A scraper that builds a database of every carbon project across public
 registries and exports one formatted Excel sheet for the business team.
-Four registries are live: **Verra** (VCS **and** JNR), **Gold Standard**,
-**Cercarbono** and **Plan Vivo** (**V5 and V4**, on two different platforms);
-four more are planned. Adding one means writing an adapter, not touching the
-pipeline.
+Five registries are live: **Verra** (VCS **and** JNR), **Gold Standard**,
+**Cercarbono**, **Plan Vivo** (**V5 and V4**, on two different platforms) and
+**SocialCarbon**; three more are planned. Adding one means writing an adapter,
+not touching the pipeline.
 
 **A registry is not always one system, and not always one standard.**
 `registries.ADAPTERS` maps a registry to a *tuple* of adapters for exactly that
@@ -82,20 +82,20 @@ flag.
 
 ## Registries
 
-| | Verra VCS | Plan Vivo | Gold Standard | Cercarbono |
-|---|---|---|---|---|
-| Front end | `registry.verra.org` | `registry.spglobal.com/pvclimate` | `registry.goldstandard.org` | `registry.cercarbono.com` |
-| Backend | `prod-us.api.platts.com` (S&P) | **the same** | `public-api.goldstandard.org` | `api-front.ecoregistry.io` |
-| Shape | POST search, Elasticsearch behind it | **the same** | plain REST GET | plain REST GET |
-| Projects | ~5,200 | **2 — V5 only, see below** | 4,141 | 231 (CO2 standard) |
-| Credit records | ~305k retirements alone | 27 issuances + 10 holdings | ~183k blocks | 2,529 serials + 9,350 retirements |
-| Requests per sync | ~9,000 | **7** | ~7,300 | ~234 |
-| Contract doc | `docs/api-contract.md` | `docs/api-contract-planvivo.md` | `docs/api-contract-gs.md` | `docs/api-contract-cercarbono.md` |
-| `discover` needed | yes | no — the standards lookup was enough | no — plain HTTP was enough | no — plain HTTP plus a bundle read |
+| | Verra VCS | Plan Vivo | Gold Standard | Cercarbono | SocialCarbon |
+|---|---|---|---|---|---|
+| Front end | `registry.verra.org` | `registry.spglobal.com/pvclimate` | `registry.goldstandard.org` | `registry.cercarbono.com` | `registry.socialcarbon.org` |
+| Backend | `prod-us.api.platts.com` (S&P) | **the same** | `public-api.goldstandard.org` | `api-front.ecoregistry.io` | **the same host** — a Bubble.io app |
+| Shape | POST search, Elasticsearch behind it | **the same** | plain REST GET | plain REST GET | Bubble Data API, `cursor`/`limit` |
+| Projects | ~5,200 | **2 — V5 only, see below** | 4,141 | 231 (CO2 standard) | 19 |
+| Credit records | ~305k retirements alone | 27 issuances + 10 holdings | ~183k blocks | 2,529 serials + 9,350 retirements | 17 + 81 + 2 |
+| Requests per sync | ~9,000 | **7** | ~7,300 | ~234 | **4** |
+| Contract doc | `docs/api-contract.md` | `docs/api-contract-planvivo.md` | `docs/api-contract-gs.md` | `docs/api-contract-cercarbono.md` | `docs/api-contract-socialcarbon.md` |
+| `discover` needed | yes | no — the standards lookup was enough | no — plain HTTP was enough | no — plain HTTP plus a bundle read | no — the API is open and self-describing |
 
-All read via `--registry verra|planvivo|gs|cercarbono|all`. Verra and Plan Vivo
-share `registries/platts/api.py`; the others have their own sections and
-contract docs.
+All read via `--registry verra|planvivo|gs|cercarbono|socialcarbon|all`. Verra
+and Plan Vivo share `registries/platts/api.py`; the others have their own
+sections and contract docs.
 
 **Two of those registries are scraped by two adapters each**, and the counts
 above are only the S&P half:
@@ -297,6 +297,10 @@ these was a real afternoon:
 | Markit | a `<tr>` with plausible values | a malformed `style` attribute swallowed a data payload; it is not a record |
 | Markit | 35 project rows | 30 projects — merged cells and repeated ids |
 | Verra JNR | 5,247 projects, identical to VCS | the **cache key ignored headers**, so the second standard served the first one's responses |
+| SocialCarbon | 19 projects, 19 published references | **18 distinct** — two different projects publish `SOCIALCARBON-19`, and `-15` is missing |
+| SocialCarbon | an `asset` list of tokenised credit blocks | 17 of 22 mirror the issuances exactly; the other 5 are **Verra** credits deposited into the platform |
+| SocialCarbon | 17 issuances, all of them credits | they carry `Approved` / `Issuance complete`; an unset one is a **request**, not units |
+| Bubble.io | `limit=200` accepted, HTTP 200 | clamped to 100, `remaining` says so, nothing else does |
 
 Four rules for every new adapter, before writing a line of paging code:
 
@@ -572,6 +576,62 @@ bucket-by-`status` semantics, and any other name selects Verra's
 one-ledger-per-resource semantics. A new adapter picks its ledger names
 deliberately, not descriptively.
 
+## SocialCarbon
+
+Full contract in `docs/api-contract-socialcarbon.md`. A **Bubble.io
+application** with an open, unauthenticated Data API — no key, no browser
+`User-Agent` (verified with none at all), no Cloudflare, no `Origin` check.
+The friendliest target here and the smallest: **19 projects and three ledgers
+in four requests**, about a minute.
+
+```
+GET {api}/meta                                 the readable types
+GET {api}/obj/<type>?limit=100&cursor=<n>      {"response": {cursor, results, count, remaining}}
+```
+
+`count + remaining` is the registry's own total, restated on every page, and
+is what reconciliation reads. There is no header count and no count endpoint.
+
+- **`Project ID` is not unique and is not a key.** Two entirely different
+  projects publish `SOCIALCARBON-19` — a peatland programme in Poland and a
+  forest project in Brazil — and `SOCIALCARBON-15` is missing. 19 records, 18
+  references. This is the Markit trap **inverted**: there a repeated id was
+  one project and rows had to be merged, here merging would fuse two countries
+  into one row. `project_id` is `hashed_id(REGISTRY, _id)` off Bubble's own
+  record id, `external_id` is the duplicate reference as published, and
+  `extra.bubble_id` keeps the id the hash cannot be read back from.
+- **`asset` is not a ledger, and scraping it double-counts twice.** 17 of its
+  22 rows mirror the issuances to the identical 189,794 units; the other 5
+  read `"Standard": "VCS"`, carry no project link, and are Verra credits
+  deposited into the platform's tokenisation layer. For the same reason
+  SocialCarbon's **legacy-Markit rows** (`100000000000007`, where it is an
+  *additional certification* reading "No Established Standard") are not
+  ingested either. The Bubble registry is the current system.
+- **An issuance can be a request.** `Approved` and `Issuance complete` are the
+  registry's own flags. All 17 rows carry both today, so `iter_credit_totals`
+  states exactly what the rows sum to — it exists so the first pending request
+  does not quietly inflate an issued total. Every row is still stored; the
+  state lands in `credit_events.status`.
+- **`limit` clamps to 100 in silence.** Third registry to ignore a page size,
+  so `_fetch` advances on `remaining`, never on the row count it got back.
+- **Filters actually work.** Bubble validates `constraints` and answers a bad
+  field with HTTP 404 `Field not found`, not the whole index — the first
+  registry here that refuses a filter loudly. Nothing needs partitioning
+  anyway.
+- **`Retiree` is not a beneficiary.** It names the account that retired the
+  units (81/81); `Beneficiary` names the third party (20/81). Only the
+  structured field is read (user's decision, 2026-08-04) — the other 61 state
+  it as prose in `Notes`, which is stored whole in `reason` because
+  **`credit_events` keeps no raw payload**, only `projects` do. That column is
+  the only copy, and it is what makes the decision reversible.
+- **Two derivation gaps, both silent.** The bare `AFOLU` wording missed
+  `biome.yaml`'s `Land use \(AFOLU\)` gate (now `\bAFOLU\b`, blast radius
+  measured at zero existing rows), and
+  `Congo, Democratic Republic of the` is a *third* ISO inversion
+  `continent.yaml` did not carry.
+- Four readable types are account data (`billing`, `accountmanager`,
+  `organisationdetails`, `user`). Nothing asks for them and they are not read.
+
 ## Commands
 
 ```bash
@@ -588,6 +648,7 @@ verra sync -r verra               # ~5k projects + units, ~2.5 h
 verra sync -r cercarbono          # 231 projects + both ledgers, ~4 min (234 requests)
 verra sync -r planvivo            # BOTH systems: V5 on S&P (7 requests) and
                                   # V4 on Markit (~440), ~10 min in total
+verra sync -r socialcarbon        # the whole registry in 4 requests, ~1 min
 verra sync                        # every registry (-r defaults to `all`)
 verra totals                      # EXACT per-project Verra retirement totals
 verra derive                      # apply YAML rules -> derived columns
@@ -606,9 +667,10 @@ cd docker; docker compose run --rm sync      # the scrape, headless, off the des
 cd docker; docker compose run --rm publish   # the container's DB -> data/verra.db
 ```
 
-`-r` / `--registry` takes `verra`, `gs`, `cercarbono`, `planvivo` or `all`.
+`-r` / `--registry` takes `verra`, `gs`, `cercarbono`, `planvivo`,
+`socialcarbon` or `all`.
 `totals` is Verra-only — Gold Standard's whole credit stream pages cleanly,
-Cercarbono picks up its exact totals during `sync` through
+Cercarbono and SocialCarbon pick up their exact totals during `sync` through
 `iter_credit_totals`, and Plan Vivo's ledgers each fit in one request.
 `discover` and `standards` are S&P-only and refuse anything else.
 
@@ -649,14 +711,16 @@ or map them into a shared taxonomy without being asked.
 The consequence for derivation: a rule matching a sector has to know every
 registry's wording for it. `biome.yaml`'s `applies_when` gates the whole
 ruleset on
-`Agriculture Forestry|^A/R$|Land use \(AFOLU\)|Afforestation / Reforestation` —
-four vocabularies, and **one unrecognised wording means no biome for any row of
+`Agriculture Forestry|^A/R$|\bAFOLU\b|Afforestation / Reforestation|REDD|[Ff]orest|[Dd]eforestation` —
+six vocabularies, and **one unrecognised wording means no biome for any row of
 that registry, with nothing in the log to say so.** A new registry's wording
-belongs there before anything else.
+belongs there before anything else. SocialCarbon is why that reads `\bAFOLU\b`
+and not `Land use \(AFOLU\)`: it says the bare `AFOLU`, and the parenthesised
+alternative missed it silently.
 
 A second thing only Verra publishes: **`region_name`.** The continent-level
-biome bands read it, so Gold Standard, Cercarbono and Plan Vivo rows never
-reach them and fall through to the country-name rules. Adding a country band
+biome bands read it, so Gold Standard, Cercarbono, Plan Vivo and SocialCarbon
+rows never reach them and fall through to the country-name rules. Adding a country band
 (Miombo, Mesoamerica) therefore also refines the Verra rows that used to sit on
 the coarse continental one — check the blast radius with a before/after count
 on `project_derived` rather than assuming a new rule only touches new rows.
@@ -715,6 +779,29 @@ index — do not try to fill them from elsewhere:
 - `Continent` — 21 gaps, all `XZ` / "International" multi-country projects.
   There is no single continent for those.
 
+**SocialCarbon sources differently again**, measured over its full 19-project
+index on 2026-08-04:
+
+| Column | SocialCarbon |
+|---|---|
+| `Project ID` | the published `SOCIALCARBON-N` reference — **and it is not unique.** Two different projects publish `SOCIALCARBON-19`, `-15` is missing. The primary key is hashed from Bubble's `_id`; the sheet shows the duplicate as published |
+| `Tipo Macro de Projeto` | `Project Type`, untranslated: "Agriculture Forestry and Other Land Use" (17), "AFOLU" (1), "Harmful Algae Bloom Treatment" (1) |
+| `Total Credits Issued` | the `issuance` ledger, **counting only rows the registry marks `Approved` and `Issuance complete`** — an unapproved row is a request, not units. Stated through `iter_credit_totals` |
+| `Total Credits Retired` / `Cancelled` | real ledgers, 81 and 2 rows. Only 5 of 19 projects have any credits; the rest are blank, not zero |
+| `Metodologia` | `SCM0003`…`SCM0010-M1`, **19 of 19** |
+| `Continent` | derived from the country name — no ISO code is published anywhere |
+| `Yearly Ex Ante` | `Estimated Annual Emission Reductions`, 18 of 19 |
+
+**Deliberate blanks for SocialCarbon**, same index:
+
+- `Estado` / `Cidade` — no state or city field exists. The only location is a
+  free-text `Address` (14/19) plus a lat/lng pair, which go to `extra`.
+  Reading a state out of "XG3P+H8, South Africa" would be inventing one.
+- `Total Ex Ante` — not published; computed from the yearly figure.
+- `Additional Certification` — no equivalent. `CORSIA eligible` on an issuance
+  is market eligibility, exactly like Cercarbono's `elegible` list.
+- `country_code`, `region_name` — not published.
+
 **Known wrinkle:** under "retired = sold", `Total Credits Sold` and `Total Credits Retired` are the same number. Retirement beneficiary is stored anyway, and `config/credits.yaml` has a `sold_equals_retired` toggle that flips to a beneficiary-based split (retired for a named third party = sold) if the business confirms that is wanted. Do not change the default without being asked.
 
 ## Rules for working in this repo
@@ -765,6 +852,9 @@ src/carbon_scraper/
     planvivo/v4.py             Plan Vivo V4 — a MarkitPublicAPI subclass
     goldstandard/api.py        REST paging, header-based reconciliation
     cercarbono/api.py          three bulk feeds + per-project detail, CO2 filter
+    socialcarbon/api.py        Bubble Data API: cursor paging on `remaining`,
+                               keys hashed off Bubble's `_id` because the
+                               published reference is not unique
   gui/
     state.py                   what the window remembers. No Tk, no pipeline
     worker.py                  thread + queue + logging bridge. NO Tk import
@@ -815,6 +905,23 @@ same registry to the business, because the merge is what the sheet will show.
 Plan Vivo V4/V5 and Verra VCS/JNR are both merges the user asked for; what
 keeps them honest is that `standard_name` distinguishes the rows, so either
 can be split again with a query rather than a re-scrape.
+
+**Ask what else already holds these credits, before scraping and not after.**
+Every registry added so far has turned out to overlap another one somewhere:
+Cercarbono re-issues ex-BioCarbon projects, Verra CCBS co-certifies VCS
+projects, SocialCarbon appears on legacy Markit as an additional
+certification — and SocialCarbon's own `asset` feed re-states its issuances
+*and* carries deposited Verra credits. Two feeds that each look authoritative
+is the normal case, not the strange one. Reconciling a count proves nothing
+about this: both feeds reconcile perfectly and the sum is still twice the
+truth.
+
+**A published human reference is not a primary key until it is proven unique.**
+SocialCarbon publishes `SOCIALCARBON-N` on every project and repeats one across
+two unrelated projects; the legacy Markit view repeats an id across sub-projects
+of one master. Those two need *opposite* handling — merge there, keep apart
+here — and only looking at the rows tells you which. Check for duplicates in the
+first index you download.
 
 ## The GUI
 

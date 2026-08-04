@@ -93,10 +93,17 @@ rules:
   # against the live V4 index on 2026-07-29: exactly two names were missing,
   # and the rest of the inverted set is listed here so the next registry using
   # ISO's own spelling does not rediscover this.
+  #
+  # It did rediscover it. SocialCarbon, 2026-08-04, spells the DRC
+  # **"Congo, Democratic Republic of the"** — a *third* inversion, without the
+  # "the" this list already carries in "Congo, the Democratic Republic of the".
+  # One character of difference and an exact-match list sees a different
+  # country. Added below. The lesson stands: check a new registry's country
+  # spellings against these lists before believing the Continent column.
   - name: name-africa
     match:
       - field: country_name
-        in: ["Algeria", "Angola", "Benin", "Botswana", "Burkina Faso", "Burundi", "Cameroon", "Cape Verde", "Central African Republic", "Chad", "Congo", "Democratic Republic of the Congo", "Congo, the Democratic Republic of the", "Ivory Coast", "Côte d'Ivoire", "Djibouti", "Egypt", "Equatorial Guinea", "Eritrea", "Eswatini", "Ethiopia", "Gabon", "Gambia", "Ghana", "Guinea", "Guinea-Bissau", "Kenya", "Lesotho", "Liberia", "Libya", "Madagascar", "Malawi", "Mali", "Mauritania", "Mauritius", "Morocco", "Mozambique", "Namibia", "Niger", "Nigeria", "Rwanda", "Senegal", "Seychelles", "Sierra Leone", "Somalia", "South Africa", "South Sudan", "Sudan", "Tanzania", "Tanzania, United Republic of", "Togo", "Tunisia", "Uganda", "Zambia", "Zimbabwe"]
+        in: ["Algeria", "Angola", "Benin", "Botswana", "Burkina Faso", "Burundi", "Cameroon", "Cape Verde", "Central African Republic", "Chad", "Congo", "Democratic Republic of the Congo", "Congo, the Democratic Republic of the", "Congo, Democratic Republic of the", "Ivory Coast", "Côte d'Ivoire", "Djibouti", "Egypt", "Equatorial Guinea", "Eritrea", "Eswatini", "Ethiopia", "Gabon", "Gambia", "Ghana", "Guinea", "Guinea-Bissau", "Kenya", "Lesotho", "Liberia", "Libya", "Madagascar", "Malawi", "Mali", "Mauritania", "Mauritius", "Morocco", "Mozambique", "Namibia", "Niger", "Nigeria", "Rwanda", "Senegal", "Seychelles", "Sierra Leone", "Somalia", "South Africa", "South Sudan", "Sudan", "Tanzania", "Tanzania, United Republic of", "Togo", "Tunisia", "Uganda", "Zambia", "Zimbabwe"]
     value: "Africa"
 
   - name: name-europe

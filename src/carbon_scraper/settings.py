@@ -119,12 +119,14 @@ VERRA = "VERRA"
 GOLD_STANDARD = "GOLD_STANDARD"
 CERCARBONO = "CERCARBONO"
 PLAN_VIVO = "PLAN_VIVO"
+SOCIAL_CARBON = "SOCIAL_CARBON"
 
 REGISTRY_LABELS = {
     VERRA: "Verra VCS",
     GOLD_STANDARD: "Gold Standard",
     CERCARBONO: "Cercarbono",
     PLAN_VIVO: "Plan Vivo",
+    SOCIAL_CARBON: "SocialCarbon",
 }
 
 # Roughly how long a full sync of each registry takes, in minutes, measured on
@@ -150,6 +152,10 @@ SYNC_ESTIMATE_MINUTES = {
     # 15 rows at a time and ignores any `limit` asked of it — 5,034
     # retirements alone are 336 pages. Measured 2026-07-29 on a cold cache.
     PLAN_VIVO: 10,
+    # Four requests for the whole registry — 19 projects and three ledgers,
+    # each of which fits in one page. Measured 2026-08-04. Rounded up to a
+    # minute because zero would read as "nothing will happen".
+    SOCIAL_CARBON: 1,
 }
 
 # The exact-totals pass, on top of Verra's sync. One request per project with
@@ -295,17 +301,47 @@ CERCARBONO_HEADERS = {
     "lng": os.environ.get("CARBON_CERCARBONO_LANG", "en"),
 }
 
+# --- SocialCarbon ---------------------------------------------------------
+# A Bubble.io application with an open, unauthenticated Data API — no key, no
+# browser User-Agent needed, no Cloudflare in front of it. By some distance the
+# smallest and cheapest registry here: four requests for all of it. Measured
+# 2026-08-04; see docs/api-contract-socialcarbon.md.
+
+SOCIALCARBON_SITE = "https://registry.socialcarbon.org"
+SOCIALCARBON_API = f"{SOCIALCARBON_SITE}/api/1.1"
+
+# The Bubble app routes a project page off its own opaque record id, not off
+# the human `SOCIALCARBON-N` reference. The adapter always writes a
+# `detail_url`, so this template is only ever the fallback — and see the note
+# on PROJECT_DETAIL_URLS below for why that fallback cannot produce a working
+# link for this registry.
+SOCIALCARBON_PROJECT_DETAIL_URL = f"{SOCIALCARBON_SITE}/project_details/{{project_id}}"
+
+# Bubble's Data API clamps `limit` to 100 and says nothing about it: asking for
+# 200 against a 147-row type returns 100 with `remaining: 47` at HTTP 200.
+# Third registry here to silently ignore a page size (Gold Standard clamps
+# projects to 150; the Markit view ignores `limit` outright), so the pager
+# reads `remaining` rather than trusting it got what it asked for.
+SOCIALCARBON_PAGE_SIZE = 100
+
 # --- public project pages -------------------------------------------------
 # Used only as a fallback when an adapter did not store a `detail_url` on the
 # project row. A registry missing from this map gets a blank cell, never
 # another registry's URL — pointing a business user at the wrong registry's
 # page is worse than pointing them nowhere.
+#
+# SocialCarbon is the one entry that cannot actually serve as a fallback: its
+# `project_id` is a hash of Bubble's record id, because the registry publishes
+# a human reference that is not unique, so formatting the template with it
+# builds a URL that does not resolve. The adapter writes `detail_url` on every
+# row and a test pins that, which is what keeps the fallback unreachable.
 
 PROJECT_DETAIL_URLS = {
     VERRA: PROJECT_DETAIL_URL,
     GOLD_STANDARD: GS_PROJECT_DETAIL_URL,
     CERCARBONO: CERCARBONO_PROJECT_DETAIL_URL,
     PLAN_VIVO: PV_PROJECT_DETAIL_URL,
+    SOCIAL_CARBON: SOCIALCARBON_PROJECT_DETAIL_URL,
 }
 
 # --- shared HTTP ----------------------------------------------------------

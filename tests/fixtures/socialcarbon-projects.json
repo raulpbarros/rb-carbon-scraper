@@ -1,0 +1,900 @@
+{
+    "response": {
+        "cursor": 0,
+        "results": [
+            {
+                "Description": "Spekboom Net Zero (SNZ) is a large-scale carbon capture project in South Africa based on planting Portulacaria Afra (Spekboom) on selected available farmland. First phase of this project is on the order of 7,311 Ha with the potential of capturing over 100,000 tones CO2 per year for decades to come. This succulent plant captures CO2 from 15 to 29 tones/Ha/yr. using CAM Photosynthesis which can operate day or night with no CO2 \"leakage\" back into the atmosphere.\nSNZ’s mission is to offer an opportunity for Spekboom restoration supported and financed through the carbon markets. Voluntary carbon market is where verifiable voluntary carbon credits are traded. According to Bloomberg Webinar (2021) the demand for Carbon Capture Carbon Credits is now much greater than supply.  \n\nSouth African farmers are acutely aware of the devastation caused over the years by over grazing, soil erosion and very low rain amounts. Eligible farms may plant Spekboom truncheons in areas where Spekboom once flourished before animal grazing rates overtook Spekboom growth rates. These areas will be protected with a fence to keep animal grazing away during primary years of the plant’s growth. Spekboom in South Africa is typically found in Mediterranean and Arid-Subtropical biomes that overlap USDA hardness zones 9b to 13.   \nThis is a grouped project where additional landowners and farmers may participate over time in and ever-increasing amount. Spekboom Net Zero social and economic objectives begin with promoting decent work and increasing income of local workers and their families. Besides helping sequester CO2, as Spekboom grows it provides a pathway to improved biodiversity in the biome. \n\nThis is the right thing to do for South Africa. Carbon Farming will increase employment in Eastern Cape where unemployment is near 50%. Success of this project will spurn similar projects thus spreading these social and economic benefits throughout South Africa. The project is also expected to attract ecotourism. Estimated income to farmers at full growth may be around R 1.7 million per year per 1000 hectare of carbon capture land, for next 20 years, at least.  Actual income to farmers depends upon many factors such as truncheon survival rate, plant growth rate and market price for carbon credits.  \n\n",
+                "Project documents approved": true,
+                "Address": {
+                    "address": "XG3P+H8, South Africa",
+                    "lat": -33.0460625,
+                    "lng": 24.5358125
+                },
+                "Standard": "SOCIALCARBON",
+                "Total Project Area": 7311,
+                "Created Date": "2022-09-23T08:32:52.128Z",
+                "Crediting period end": "2033-01-31T22:00:00.000Z",
+                "Project Type": "Agriculture Forestry and Other Land Use",
+                "End Date": "2033-01-31T22:00:00.000Z",
+                "Methodology": "SCM0004",
+                "Start Date": "2023-01-31T22:00:00.000Z",
+                "verifier": "TBD",
+                "Crediting period start": "2023-01-31T22:00:00.000Z",
+                "Country": "South Africa",
+                "Estimated Annual Emission Reductions": null,
+                "Project Name": "Spekboom Regeneration and Carbon Sequestration",
+                "Project Status": "Listed",
+                "Created By": "1660319514524x624894049101856400",
+                "validator": "TBD",
+                "Project ID": "SOCIALCARBON-1",
+                "Latitude": -33.045952,
+                "Longitude": 24.53583,
+                "SDGs": [
+                    "1 - No Poverty",
+                    "2 - Zero Hunger",
+                    "3 - Good Health and Well-Being",
+                    "4 - Quality Education",
+                    "5 - Gender Equality",
+                    "8 - Decent Work and Economic Growth",
+                    "10 - Reduced Inequalities",
+                    "11 - Sustainable Cities and Communities",
+                    "13 - Climate Action",
+                    "15 - Life on Land"
+                ],
+                "Listed_Status_Approver": [
+                    "1663517825056x691160877335579300"
+                ],
+                "Photos": [
+                    "//260577d78d350b613f312580656ff794.cdn.bubble.io/f1748970566736x819342370771917600/IMG-20221024-WA0000.jpg",
+                    "//260577d78d350b613f312580656ff794.cdn.bubble.io/f1748970752496x465090390430723300/figure-31-portulacaria-afra-jacq-spekboom-tree-notice-the-skirt-of-rooted-branches.png",
+                    "//260577d78d350b613f312580656ff794.cdn.bubble.io/f1748970947641x942421693284018200/The-common-name-of-Spekboom-translates-to-bacon-tree-because-of-its-plump-round-leaves-which-can-be-eaten-raw-Picture-Henk-Kruger-African-News-Agency-ANA-Archives.jpg",
+                    "//260577d78d350b613f312580656ff794.cdn.bubble.io/f1748971021077x617111288982561200/Picture1.jpg"
+                ],
+                "Project Proponent(s)_TEXT": [
+                    "Spekboom Net Zero (Pty) Ltd"
+                ],
+                "Project Proponent(s)": [
+                    "1660319514524x624894049101856400"
+                ],
+                "_id": "1663921969278x388468748169510900"
+            },
+            {
+                "Description": "The Dongwe Community Carbon Project is based within the Kasempa and Mufumbwe Districts of the North Western Province, Zambia. Since starting the initiative, five Community Forest Management Groups (CFMGs) have been formally established. These CFMGs are responsible for managing the forests in their area (locally called Wards) and have legal  carbon ownership for the respective areas. This area currently covers an area of 454,303.90 Ha.\n\nZambia has an ever-increasing population resulting in a drastic increase in deforestation and land degradation. The objectives of D.C.C are to ensure that the impoverished local communities are offered long term, sustainable, alternative sources of revenue which in turn will help to protect and preserve the delicate ecosystem in which they reside. ",
+                "Project documents approved": false,
+                "Address": {
+                    "address": "V3RW+93G, Mufumbwe, Zambia",
+                    "lat": -13.1090625,
+                    "lng": 25.0952031
+                },
+                "Standard": "SOCIALCARBON",
+                "Total Project Area": 454304,
+                "Created Date": "2022-12-13T16:59:05.796Z",
+                "Crediting period end": "2033-02-01T00:00:00.000Z",
+                "Project Type": "Agriculture Forestry and Other Land Use",
+                "End Date": "2123-02-01T00:00:00.000Z",
+                "Methodology": "SCM0006",
+                "Start Date": "2023-02-01T00:00:00.000Z",
+                "verifier": "TBC",
+                "Crediting period start": "2023-02-01T00:00:00.000Z",
+                "Country": "Zambia",
+                "Estimated Annual Emission Reductions": 329945,
+                "Project Name": "Dongwe Community Carbon",
+                "Project Status": "Listed",
+                "Created By": "1670413542965x722009876446921000",
+                "validator": "TBC",
+                "Project ID": "SOCIALCARBON-2",
+                "Latitude": -13.10906025,
+                "Longitude": 25.095194,
+                "SDGs": [],
+                "Listed_Status_Approver": [
+                    "1663517825056x691160877335579300"
+                ],
+                "Photos": [],
+                "Project Proponent(s)_TEXT": [
+                    "Dongwe Community Carbon Limited"
+                ],
+                "Project Proponent(s)": [
+                    "1670413542965x722009876446921000"
+                ],
+                "_id": "1670950743930x283413918592270340"
+            },
+            {
+                "Description": "The main objective of the Cristalino Carbon Removal Project is to contribute to the removal of carbon from the atmosphere associated with the maintenance of managed primary formations and managed secondary formations, more specifically managed primary and secondary forest formations, in a project area of 6,513.09 hectares. \n\nThis area is located on a private property, named “Reserva Cristalino”, located between the municipalities of Alta Floresta and Novo Mundo, in the state of Mato Grosso, Brazil, southeast of the Amazon biome. In order to measure the carbon removals from the atmosphere, the Methodology for Carbon Removal in Private Conservation Areas V1.0 - SCM0003 was adopted, which presents a procedure to determine the annual removal of CO2 from the atmosphere by areas of native vegetation located in private properties. The contribution of this project is expected to be 111,718 tCO2e in carbon removals over the 10 year project lifetime (29-March-2022 to 28-March-2032), with an annual average of 9,202 tCO2e.",
+                "Project documents approved": true,
+                "Address": {
+                    "address": "C34X+QG, Alta Floresta - State of Mato Grosso, 78580-000, Brazil",
+                    "lat": -9.5930625,
+                    "lng": -55.9011875
+                },
+                "Standard": "SOCIALCARBON",
+                "Total Project Area": 6513,
+                "Created Date": "2023-04-03T17:30:16.089Z",
+                "Crediting period end": "2032-03-28T03:00:00.000Z",
+                "Project Type": "Agriculture Forestry and Other Land Use",
+                "End Date": "2032-03-28T03:00:00.000Z",
+                "Methodology": "SCM0003",
+                "Start Date": "2022-03-29T03:00:00.000Z",
+                "verifier": "KBS Certification Services Pvt. Ltd",
+                "Crediting period start": "2022-03-29T03:00:00.000Z",
+                "Country": "Brazil",
+                "Estimated Annual Emission Reductions": 9202,
+                "Project Name": "Cristalino Carbon Removal Project",
+                "Project Status": "Certified Project",
+                "Created By": "1678967533706x910628185353846700",
+                "validator": "KBS Certification Services Pvt. Ltd",
+                "Project ID": "SOCIALCARBON-3",
+                "Latitude": -9.5930555555556,
+                "Longitude": -55.901111111111,
+                "SDGs": [
+                    "4 - Quality Education",
+                    "6 - Clean Water and Sanitation",
+                    "8 - Decent Work and Economic Growth",
+                    "11 - Sustainable Cities and Communities",
+                    "13 - Climate Action",
+                    "15 - Life on Land"
+                ],
+                "Listed_Status_Approver": [
+                    "1663517825056x691160877335579300"
+                ],
+                "Photos": [
+                    "//260577d78d350b613f312580656ff794.cdn.bubble.io/f1726601555997x997848714021156100/dji_fly_20231212_123102_334_1702424985805_photo_optimized.jpg",
+                    "//260577d78d350b613f312580656ff794.cdn.bubble.io/f1726601590777x311599704690662900/dji_fly_20231212_114756_327_1702424995586_photo_optimized.jpg",
+                    "//260577d78d350b613f312580656ff794.cdn.bubble.io/f1726601644233x176659076084754400/WhatsApp%20Image%202024-01-15%20at%2017.09.31%20%282%29.jpeg",
+                    "//260577d78d350b613f312580656ff794.cdn.bubble.io/f1726601807567x949763634900849500/WhatsApp%20Image%202024-01-15%20at%2017.09.31.jpeg",
+                    "//260577d78d350b613f312580656ff794.cdn.bubble.io/f1726601816649x848218461623165800/WhatsApp%20Image%202024-01-15%20at%2017.09.30%20%282%29.jpeg"
+                ],
+                "Project Proponent(s)_TEXT": [
+                    "Jataí Capital e Conservação",
+                    "Cristalino Carbon Ltd"
+                ],
+                "Project Proponent(s)": [
+                    "1744199650654x818913866731954800",
+                    "1741631257768x681272400163816600"
+                ],
+                "_id": "1680543013475x118297393300242430"
+            },
+            {
+                "Description": "The Fazenda Cristal Conservation Project  is a AFOLU projects, more specifically to the Afforestation, Reforestation and Revegetation (ARR) project category and aims to promote conservation and assisted regeneration of managed primary and secondary formations of preserved native areas. The focus is to guarantee a full restoration of the vegetation with the purpose of increasing the potential storage of carbon in its area, targeting the reduction of the global warming effects along with social development. The property in evidence is named Fazenda Cristal and it is in the city of Corumbá, State of Mato Grosso do Sul, Brazil and it is fully covered by Pantanal biome. The point that currently makes Fazenda Cristal stand out from most of other properties in its region is a special concern about environmental aspects. There is an impetus for protecting its natural resources that has been occurring since 2020, mainly due to fire events that affected farms in the region this year, while the main evidence of conservation can be found in related document attached.",
+                "Project documents approved": true,
+                "Address": {
+                    "address": "FHJG+677 - Paiaguás, Corumbá - MS, Brazil",
+                    "lat": -17.5194625,
+                    "lng": -56.4243281
+                },
+                "Standard": "SOCIALCARBON",
+                "Total Project Area": 3931,
+                "Created Date": "2023-06-29T18:25:07.816Z",
+                "Crediting period end": "2030-05-15T03:00:00.000Z",
+                "Project Type": "Agriculture Forestry and Other Land Use",
+                "End Date": "2030-05-15T03:00:00.000Z",
+                "Methodology": "SCM0003",
+                "Start Date": "2020-05-16T03:00:00.000Z",
+                "verifier": "KBS Certification Services Pvt. Ltd",
+                "Crediting period start": "2020-05-16T03:00:00.000Z",
+                "Country": "Brazil",
+                "Estimated Annual Emission Reductions": 3963,
+                "Project Name": "Fazenda Cristal Conservation Project",
+                "Project Status": "Certified Project",
+                "Created By": "1677772220839x902760234058070300",
+                "validator": "KBS Certification Services Pvt. Ltd",
+                "Project ID": "SOCIALCARBON-4",
+                "Latitude": -17.51947,
+                "Longitude": -55.42434,
+                "SDGs": [
+                    "3 - Good Health and Well-Being",
+                    "4 - Quality Education",
+                    "8 - Decent Work and Economic Growth",
+                    "10 - Reduced Inequalities",
+                    "13 - Climate Action",
+                    "15 - Life on Land",
+                    "16 - Peace Justice and Strong Institutions"
+                ],
+                "Listed_Status_Approver": [
+                    "1663517825056x691160877335579300"
+                ],
+                "Photos": [
+                    "//260577d78d350b613f312580656ff794.cdn.bubble.io/f1720636769085x430519153157877840/20230214_082922.jpg",
+                    "//260577d78d350b613f312580656ff794.cdn.bubble.io/f1729006769814x502045322828207550/08230024.JPG",
+                    "//260577d78d350b613f312580656ff794.cdn.bubble.io/f1729006794530x898523094618650900/20230214_083316.jpg",
+                    "//260577d78d350b613f312580656ff794.cdn.bubble.io/f1729006810535x650067557043704000/20230215_081119.jpg"
+                ],
+                "Project Proponent(s)_TEXT": [
+                    "VERT ECOTECH SA"
+                ],
+                "Project Proponent(s)": [
+                    "1677772220839x902760234058070300"
+                ],
+                "_id": "1688063105941x728008407457202200"
+            },
+            {
+                "Description": "This project will increase soil organic content and provide a number of other agricultural benefits in the Prairie Provinces of Alberta, Saskatchewan, and Manitoba as well as in the Aspen Parkland region, which includes parts of the Prairie Provinces.  The project, which will remove 18,398,267 tCO2eq. over 10 years, will accomplish these GHG reductions through the implementation of new land management practices, including Crop Rotation, Cover cropping, Bio-stimulants, Subsurface Irrigation, Nanobubble aeration of water for Irrigation or Fertigation, Integrated Pollinator Strategies, Foliar applications, and Electro-culture.\n\nAll parcels of land within this project shall be located within the Prairie Provinces or in the Aspen Parkland biome within Alberta, Saskatchewan, Manitoba.  Aspen Parkland is segmented within traditional farmland areas of the north central North America.  The first two groupings of land parcels to be submitted and validated within the Aspen Parkland biome will be around Saskatoon, Saskatchewan (SK) and Dauphin, Manitoba (MB).\n",
+                "Project documents approved": true,
+                "Address": {
+                    "address": "953J6GJQ+3V",
+                    "lat": 51.2301875,
+                    "lng": -107.4603125
+                },
+                "Standard": "SOCIALCARBON",
+                "Total Project Area": 1000000,
+                "Created Date": "2023-07-17T15:14:53.773Z",
+                "Crediting period end": "2032-07-31T08:00:00.000Z",
+                "Project Type": "Agriculture Forestry and Other Land Use",
+                "End Date": "2122-07-31T08:00:00.000Z",
+                "Methodology": "SCM0005",
+                "Start Date": "2023-08-01T07:00:00.000Z",
+                "verifier": "Earthood Services Private Limited",
+                "Crediting period start": "2023-08-01T07:00:00.000Z",
+                "Country": "Canada",
+                "Estimated Annual Emission Reductions": 882163,
+                "Project Name": "Prairie Provinces & Aspen Parkland Project",
+                "Project Status": "Listed",
+                "Created By": "1687354017487x110177896194521230",
+                "validator": "Earthood Services Private Limited",
+                "Project ID": "SOCIALCARBON-5",
+                "Latitude": 51.23015,
+                "Longitude": -107.460354,
+                "SDGs": [],
+                "Listed_Status_Approver": [
+                    "1663517825056x691160877335579300"
+                ],
+                "Photos": [],
+                "Project Proponent(s)_TEXT": [
+                    "Continuum Carbon Services Canada"
+                ],
+                "Project Proponent(s)": [
+                    "1687354017487x110177896194521230"
+                ],
+                "_id": "1689606890996x669561731767337000"
+            },
+            {
+                "Description": "The Fazenda Paraíso Conservation and Carbon Removal project aims to promote conservation of managed primary and secondary formations of preserved native areas. The focus is to guarantee conservation and eventually a fully restoration of the vegetation with the purpose of protecting the potential yearly carbon storage on its area, improving biodiversity and socioeconomic aspects related, targeting the reduction of global warming effects. The property under analysis is named Fazenda Paraíso and it is located in the city of Corumbá, state of Mato Grosso do Sul, Brazil. Its total area is 20.210,93 hectares and it is fully covered by Pantanal biome. Fazenda Paraíso’s total area is approximately 20.000 hectares, with a Legal Reserve area close to 4.600 hectares, but exceptionally around 3.400 hectares of it is considered eligible to this project, which is expected to capture and storage around 6.000 tCO2e/year. The project seeks for renewal for a 99-year establishment, as the methodology suggests, with a total of 60.000 ton in 10 years.",
+                "Project documents approved": true,
+                "Address": {
+                    "address": "M5X4+3H9 - Paiaguás, Corumbá - MS, Brazil",
+                    "lat": -18.3023375,
+                    "lng": -56.8435156
+                },
+                "Standard": "SOCIALCARBON",
+                "Total Project Area": 3376,
+                "Created Date": "2023-07-24T19:49:35.175Z",
+                "Crediting period end": "2033-01-08T03:00:00.000Z",
+                "Project Type": "Agriculture Forestry and Other Land Use",
+                "End Date": "2033-01-08T03:00:00.000Z",
+                "Methodology": "SCM0003",
+                "Start Date": "2023-01-09T03:00:00.000Z",
+                "verifier": "KBS Certification Services Pvt. Ltd",
+                "Crediting period start": "2023-01-09T03:00:00.000Z",
+                "Country": "Brazil",
+                "Estimated Annual Emission Reductions": 4936,
+                "Project Name": "Fazenda Paraíso Conservation and Carbon Removal",
+                "Project Status": "Certified Design",
+                "Created By": "1677772220839x902760234058070300",
+                "validator": "KBS Certification Services Pvt. Ltd",
+                "Project ID": "SOCIALCARBON-6",
+                "Latitude": -17.302332,
+                "Longitude": -55.843523,
+                "SDGs": [
+                    "1 - No Poverty",
+                    "3 - Good Health and Well-Being",
+                    "9 - Industry Innovation and Infrastructure",
+                    "10 - Reduced Inequalities",
+                    "11 - Sustainable Cities and Communities",
+                    "12 - Responsible Consumption and Production",
+                    "13 - Climate Action",
+                    "15 - Life on Land"
+                ],
+                "Listed_Status_Approver": [
+                    "1663517825056x691160877335579300"
+                ],
+                "Photos": [
+                    "//260577d78d350b613f312580656ff794.cdn.bubble.io/f1723814663788x390422282113531900/WhatsApp%20Image%202024-08-16%20at%2010.23.54.jpeg",
+                    "//260577d78d350b613f312580656ff794.cdn.bubble.io/f1729007310989x713754201961142700/20240821_114702.jpg",
+                    "//260577d78d350b613f312580656ff794.cdn.bubble.io/f1729007322962x839539964887760600/IMG-20240822-WA0009.jpg",
+                    "//260577d78d350b613f312580656ff794.cdn.bubble.io/f1729007392933x678580738382064100/20230718_160207.jpg"
+                ],
+                "Project Proponent(s)_TEXT": [
+                    "VERT ECOTECH SA"
+                ],
+                "Project Proponent(s)": [
+                    "1677772220839x902760234058070300"
+                ],
+                "_id": "1690228172394x268666742984671230"
+            },
+            {
+                "Description": "The Fazenda J. Crestani Conservation Project is a AFOLU projects, more specifically to the Afforestation, Reforestation and Revegetation (ARR) project category and aims to promote conservation and assisted regeneration of managed primary and secondary formations of preserved native areas. The focus is to guarantee a fully conservation and restoration of the vegetation with the purpose of increasing the potential storage carbon on its area, targeting the reduction of the effects of global warming along with social development and fauna monitoring. Fazenda J. Crestani is located in the municipality of Feliz Natal – MT, with central geographic coordinate SIRGAS 2000 UTM, S21, Long: 696304.07 m E; Lat: 8604007.89 m S, Zone 21 L. According to the Rural Environmental Registry (RER – Cadastro Ambiental rural CAR in portuguese), the total area is 4,679.1632 ha, of which 3,751.8721ha are Legal Reserve Areas (LR - Reserva Legal RL in portuguese) registered as vectorized declared by the owner/possessor. The Permanent Preservation Area (APP) is contained within the LR and has 243.6016 ha.",
+                "Project documents approved": true,
+                "Address": {
+                    "address": "58V69RH4+7W",
+                    "lat": -12.6218125,
+                    "lng": -55.1926875
+                },
+                "Standard": "SOCIALCARBON",
+                "Total Project Area": 3747,
+                "Created Date": "2023-08-01T18:35:24.600Z",
+                "Crediting period end": "2030-09-29T03:00:00.000Z",
+                "Project Type": "Agriculture Forestry and Other Land Use",
+                "End Date": "2030-09-29T03:00:00.000Z",
+                "Methodology": "SCM0003",
+                "Start Date": "2020-09-30T03:00:00.000Z",
+                "verifier": "KBS Certification Services Pvt. Ltd",
+                "Crediting period start": "2020-09-30T03:00:00.000Z",
+                "Country": "Brazil",
+                "Estimated Annual Emission Reductions": 40188,
+                "Project Name": "Fazenda J. Crestani Conservation Project",
+                "Project Status": "Certified Project",
+                "Created By": "1677772220839x902760234058070300",
+                "validator": "KBS Certification Services Pvt. Ltd",
+                "Project ID": "SOCIALCARBON-7",
+                "Latitude": -12.621834,
+                "Longitude": -55.192739,
+                "SDGs": [
+                    "1 - No Poverty",
+                    "3 - Good Health and Well-Being",
+                    "8 - Decent Work and Economic Growth",
+                    "9 - Industry Innovation and Infrastructure",
+                    "10 - Reduced Inequalities",
+                    "11 - Sustainable Cities and Communities",
+                    "12 - Responsible Consumption and Production",
+                    "13 - Climate Action",
+                    "15 - Life on Land"
+                ],
+                "Listed_Status_Approver": [
+                    "1663517825056x691160877335579300"
+                ],
+                "Photos": [
+                    "//260577d78d350b613f312580656ff794.cdn.bubble.io/f1723814255931x875221116172046900/FOTOS-49%20%282%29.jpg",
+                    "//260577d78d350b613f312580656ff794.cdn.bubble.io/f1729007053816x751591876318522400/armadilha_fotografica_onca_pintada_Panthera_onca.png",
+                    "//260577d78d350b613f312580656ff794.cdn.bubble.io/f1729007077076x284723335168134200/drone_vegetacao_area_do_projeto_e_rio_tartaruga.JPG",
+                    "//260577d78d350b613f312580656ff794.cdn.bubble.io/f1729007091026x780200191089360500/drone_vegetacao_area_do_projeto02.jpg",
+                    "//260577d78d350b613f312580656ff794.cdn.bubble.io/f1729007100721x631136751044596900/drone_vegetacao_area_do_projeto_e_estrada.jpg"
+                ],
+                "Project Proponent(s)_TEXT": [
+                    "VERT ECOTECH SA"
+                ],
+                "Project Proponent(s)": [
+                    "1677772220839x902760234058070300"
+                ],
+                "_id": "1690914921728x889485784984584200"
+            },
+            {
+                "Description": "This programme is a grouped project focused on the mitigation of harmful algae blooms in inland lakes within the State of Utah, USA. The initial phase of the project is focused on the remediation of Matua Reservoir (~2 km2), which falls under the jurisdiction of Brigham City. The primary goal of this phase is to achieve a substantial reduction in carbon dioxide equivalent emissions (2,000-8,000 tCO2e) through strategic interventions that result in the sedimentation of algae bloom biomass. Successful implementation of this campaign is expected to lay the foundation for larger-scale initiatives across Utah, with active participation from local businesses through the trade of Carbon Credits. \nTo accomplish the established goals, BlueGreen Water Technologies will utilize its proprietary LakeGuard™ Technology for the assessment, monitoring, and treatment of the waterbody. ",
+                "Project documents approved": true,
+                "Address": {
+                    "address": "G338+MJ, Mantua, UT 84324, USA",
+                    "lat": 41.5041875,
+                    "lng": -111.9334375
+                },
+                "Standard": "SOCIALCARBON",
+                "Total Project Area": 224,
+                "Created Date": "2023-08-30T12:59:20.687Z",
+                "Crediting period end": "2023-12-30T22:00:00.000Z",
+                "Project Type": "Harmful Algae Bloom Treatment",
+                "End Date": "2023-12-30T22:00:00.000Z",
+                "Methodology": "SCM0007",
+                "Start Date": "2023-09-25T21:00:00.000Z",
+                "verifier": "Earthood Services Private Limited",
+                "Crediting period start": "2023-08-24T21:00:00.000Z",
+                "Country": "United States of America",
+                "Estimated Annual Emission Reductions": 4000,
+                "Project Name": "Utah Waterbodies Restoration Programme",
+                "Project Status": "Certified Project",
+                "Created By": "1692790093589x339960404396058000",
+                "validator": "Earthood Services Private Limited",
+                "Project ID": "SOCIALCARBON-8",
+                "Latitude": 41.504209111,
+                "Longitude": -111.933354,
+                "SDGs": [
+                    "3 - Good Health and Well-Being",
+                    "6 - Clean Water and Sanitation",
+                    "8 - Decent Work and Economic Growth",
+                    "13 - Climate Action",
+                    "15 - Life on Land",
+                    "17 - Partnerships for the Goals"
+                ],
+                "Listed_Status_Approver": [
+                    "1663517825056x691160877335579300"
+                ],
+                "Photos": [],
+                "Project Proponent(s)_TEXT": [
+                    "Bluegreen Water Technologies Ltd"
+                ],
+                "Project Proponent(s)": [
+                    "1692790093589x339960404396058000"
+                ],
+                "_id": "1693400358193x754855025125621800"
+            },
+            {
+                "Description": "This project works with the Indian farmers to help them adopt improved agricultural practices such as residue management and enhanced cropping practices that sequester carbon while increasing productivity. This region is largely composed of small and marginal farmers, with each farming just a few hectares of land. As a result, these farmers are highly susceptible to variabilities arising from markets and weather. Over the last century, agriculture in the region has undergone a dramatic shift towards intensification. Since the late 1940s, yields of all staple crops have seen a several-fold increase. This increase was necessary to feed a growing population, but at the same time, it led to an increase in the amount of synthetic fertilizer applied to farms, along with other unsustainable practices. An intensive agricultural process focused on maximizing yields every year has led to a gradual degradation of the soils of the region, resulting in CO2 emissions from the lost soil carbon. In this context, improved agricultural practices provide the opportunity and the power to reverse this land degradation and return carbon to the soil, creating carbon removals while improving overall soil health. In this project, farmers adopt a variety of improved agriculture practices. These practices are proven ways to increase soil organic carbon, and also enable farmers to improve their productivity: increases in soil organic carbon improve the ability of soils to store moisture and nutrients, and thus also help to increase yields. This project works towards helping farmers to surmount their barriers, while working with partners to create feasible and sustainable solutions that effect grass-roots behavior change. Furthermore, the financial benefits from carbon credits will provide a direct boost to the livelihoods of these farmers, many of whom are small and marginal farmers.",
+                "Project documents approved": true,
+                "Address": {
+                    "address": "M6JM+7W Surali Bale Bailu, Karnataka, India",
+                    "lat": 13.680770841,
+                    "lng": 75.234854868
+                },
+                "Standard": "SOCIALCARBON",
+                "Total Project Area": 200000,
+                "Created Date": "2023-09-27T03:53:06.065Z",
+                "Crediting period end": "2041-02-27T18:30:00.000Z",
+                "Project Type": "Agriculture Forestry and Other Land Use",
+                "End Date": "2051-02-27T18:30:00.000Z",
+                "Methodology": "SCM0005",
+                "Start Date": "2021-02-28T18:30:00.000Z",
+                "verifier": "4K Earth Science",
+                "Crediting period start": "2021-02-28T18:30:00.000Z",
+                "Country": "India",
+                "Estimated Annual Emission Reductions": 399890,
+                "Project Name": "Boomitra Unlocking Resilience through Vital Agricultural Regeneration and Adaptation in India",
+                "Project Status": "Certified Project",
+                "Created By": "1695138745905x751637999671910300",
+                "validator": "4K Earth Science",
+                "Project ID": "SOCIALCARBON-9",
+                "Latitude": 13.68077084070082,
+                "Longitude": 75.23485486826324,
+                "SDGs": [
+                    "1 - No Poverty",
+                    "2 - Zero Hunger",
+                    "3 - Good Health and Well-Being",
+                    "6 - Clean Water and Sanitation",
+                    "8 - Decent Work and Economic Growth",
+                    "13 - Climate Action",
+                    "15 - Life on Land"
+                ],
+                "Listed_Status_Approver": [
+                    "1663517825056x691160877335579300"
+                ],
+                "Photos": [],
+                "Project Proponent(s)_TEXT": [
+                    "Boomitra"
+                ],
+                "Project Proponent(s)": [
+                    "1695138745905x751637999671910300"
+                ],
+                "_id": "1695786784824x501444969412689900"
+            },
+            {
+                "Description": "The Kabompo Community Carbon (KCC) is a conservation project that has been designed to protect the local forests and biodiversity, whilst promoting sustainable development. Since starting the project, eight Community Forest Management Groups (CFMGs) have been formally established. These CFMGs are responsible for managing the forests in their areas and have legal carbon ownership for the respective areas.",
+                "Project documents approved": true,
+                "Address": {
+                    "address": "C537+W2, Kabompo, Zambia",
+                    "lat": -13.5951875,
+                    "lng": 24.1625625
+                },
+                "Standard": "SOCIALCARBON",
+                "Total Project Area": 513976,
+                "Created Date": "2023-11-28T10:43:13.739Z",
+                "Crediting period end": "2034-02-01T01:00:00.000Z",
+                "Project Type": "Agriculture Forestry and Other Land Use",
+                "End Date": "2074-02-01T01:00:00.000Z",
+                "Methodology": "SCM0006",
+                "Start Date": "2024-02-01T01:00:00.000Z",
+                "verifier": "TBC",
+                "Crediting period start": "2024-02-01T01:00:00.000Z",
+                "Country": "Zambia",
+                "Estimated Annual Emission Reductions": 436767,
+                "Project Name": "Kabompo Community Carbon",
+                "Project Status": "Listed",
+                "Created By": "1690386649567x669801470395805600",
+                "validator": "TBC",
+                "Project ID": "SOCIALCARBON-10",
+                "Latitude": -13.5951407,
+                "Longitude": 24.1626244,
+                "SDGs": [
+                    "1 - No Poverty",
+                    "2 - Zero Hunger",
+                    "3 - Good Health and Well-Being",
+                    "4 - Quality Education",
+                    "5 - Gender Equality",
+                    "6 - Clean Water and Sanitation",
+                    "8 - Decent Work and Economic Growth",
+                    "9 - Industry Innovation and Infrastructure",
+                    "10 - Reduced Inequalities",
+                    "11 - Sustainable Cities and Communities",
+                    "13 - Climate Action",
+                    "15 - Life on Land"
+                ],
+                "Listed_Status_Approver": [
+                    "1663517825056x691160877335579300"
+                ],
+                "Photos": [
+                    "//260577d78d350b613f312580656ff794.cdn.bubble.io/f1723537477276x842145329006441000/Picture1.jpg",
+                    "//260577d78d350b613f312580656ff794.cdn.bubble.io/f1723537487882x210588712639900900/Picture2.jpg",
+                    "//260577d78d350b613f312580656ff794.cdn.bubble.io/f1723537504077x793640187734267100/Picture6.jpg",
+                    "//260577d78d350b613f312580656ff794.cdn.bubble.io/f1723537514497x254836391325382180/Picture7.jpg",
+                    "//260577d78d350b613f312580656ff794.cdn.bubble.io/f1723537529496x832271891264700300/Picture3.jpg"
+                ],
+                "Project Proponent(s)_TEXT": [
+                    "Kabompo Community Carbon Ltd"
+                ],
+                "Project Proponent(s)": [
+                    "1690386649567x669801470395805600"
+                ],
+                "_id": "1701168193426x224493935412903940"
+            },
+            {
+                "Description": "BioMA Carbono is a grouped carbon project implemented in Brazil’s Atlantic Forest — one of the world’s most biodiverse and threatened ecosystems, now reduced to approximately 12% of its original extent. Highly fragmented and largely confined to private lands, the biome remains under continuous pressure from deforestation and degradation, particularly in mature forests, while secondary forests often face disturbances that limit their ecological recovery and full maturation. Despite these pressures, the Atlantic Forest remains a global biodiversity hotspot and plays a critical role in ecosystem services, including water regulation, climate stability, biodiversity maintenance and carbon storage.\n\nLaunched in 2023, the project promotes the conservation and restoration of native forests across private properties. As of 2025, it includes 86 properties across four Brazilian states, protecting over 11,000 hectares of native forest and offering strong potential for expansion over its 10-year crediting period. Designed as an inclusive and continuously expanding model, BioMA Carbono allows new properties to join throughout its lifetime, without entry fees, enabling small and medium-sized landholders to access the carbon market while scaling climate impact over time.\n\nBy combining avoided deforestation, improved forest management, and ecosystem restoration, the project generates high-integrity carbon credits aligned with leading nature-based solutions. It is expected to deliver more than 400,000 tCO₂e in net removals, providing measurable, science-based climate mitigation. Moreover, the project demonstrates robust additionality by going beyond legal compliance and overcoming financial and technical barriers. Developed under the SOCIALCARBON® Standard (SCM0006 and SCM0009), it applies recognised methodologies supported by a robust MRV system.\n\nTo ensure scalability and precision, BioMA Carbono adopts a digital MRV (d-MRV) approach, integrating remote sensing, geospatial analysis, and field data. A purpose-built algorithm and custom spatial model enable detailed characterisation of small forest fragments, strengthening both accuracy and inclusion. This technical framework ensures transparency, consistency, and robustness, fostering confidence in the environmental integrity of the credits generated.\n\nBeyond carbon, the project protects biodiversity, enhances ecosystem services, and supports sustainable land use. By generating an additional and predictable income stream, it strengthens local livelihoods and reduces pressure for land-use conversion. The project also conducts capacity-building workshops focused on sustainable forest management, low-impact agricultural practices, biodiversity conservation, and forest ecosystem services. These initiatives promote the recognition of native forests as valuable productive assets, supporting the long-term adoption of sustainable land-use practices by rural communities.\n\nAs a scalable, high-integrity nature-based solution, BioMA Carbono offers a credible opportunity to support climate mitigation while delivering tangible environmental and social impact.\n",
+                "Project documents approved": true,
+                "Address": {
+                    "address": "XRMV+RW Cunha, SP, Brazil",
+                    "lat": -23.015372,
+                    "lng": -45.155118
+                },
+                "Standard": "SOCIALCARBON",
+                "Total Project Area": 10985,
+                "Created Date": "2024-02-23T18:41:38.169Z",
+                "Crediting period end": "2033-07-30T03:00:00.000Z",
+                "Project Type": "Agriculture Forestry and Other Land Use",
+                "End Date": "2033-07-30T03:00:00.000Z",
+                "Methodology": "SCM0006",
+                "Start Date": "2023-08-01T03:00:00.000Z",
+                "verifier": "KBS Certification Services",
+                "Crediting period start": "2023-08-01T03:00:00.000Z",
+                "Country": "Brazil",
+                "Estimated Annual Emission Reductions": 47820,
+                "Project Name": "BioMA Carbono - Conserving Biodiversity in the Atlantic Forest",
+                "Project Status": "Certified Project",
+                "Created By": "1707902570793x668826710291109600",
+                "validator": "KBS Certification Services",
+                "Project ID": "SOCIALCARBON-11",
+                "Latitude": -23.015372,
+                "Longitude": -45.155118,
+                "SDGs": [
+                    "1 - No Poverty",
+                    "5 - Gender Equality",
+                    "8 - Decent Work and Economic Growth",
+                    "10 - Reduced Inequalities",
+                    "11 - Sustainable Cities and Communities",
+                    "13 - Climate Action",
+                    "15 - Life on Land"
+                ],
+                "Listed_Status_Approver": [
+                    "1663517825056x691160877335579300"
+                ],
+                "Photos": [],
+                "Project Proponent(s)_TEXT": [
+                    "C3 Ambiental Ltda"
+                ],
+                "Project Proponent(s)": [
+                    "1707902570793x668826710291109600"
+                ],
+                "_id": "1708713697338x490895703414145000"
+            },
+            {
+                "Description": "The Misitu Conservation Project (MCP) is a strategic initiative being implemented in Zambia's Northwestern Province, spanning the chiefdoms of Nyakaseya, Mwininyilamba, and Mukangala. Centered on Afforestation, Reforestation, and Revegetation (ARR), MCP aims to restore and sustainably manage 62,008 hectares of Miombo woodlands, an ecologically significant and resilient ecosystem renowned for its biodiversity. The project responds to Zambia’s alarming deforestation rate, estimated at 250,000 to 300,000 hectares annually, driven by unsustainable agricultural practices, timber extraction, illegal charcoal production, and fuelwood harvesting.\n\nAdopting the SCM0006 Methodology for the Conservation of Areas of Biodiversity Importance, MCP utilizes advanced technologies such as satellite imagery and drones for precise monitoring and evaluation. The project places a strong emphasis on community engagement, promoting livelihood activities such as beekeeping, poultry farming, piggery, and the cultivation of fast-growing trees and bamboo. These initiatives aim to reduce the dependency on native forests and promote sustainable land use practices.\n\nOver its 10-year period, MCP is expected to remove 1,318,703.50 tCO2e in greenhouse gases, making a substantial contribution to global climate change mitigation. MCP embodies a holistic approach to sustainable development, integrating environmental conservation with community empowerment to promote a harmonious coexistence between humanity and nature.\n",
+                "Project documents approved": true,
+                "Address": {
+                    "address": "4RMX+HP Faki Uzayriq, Sudan",
+                    "lat": 13.1339,
+                    "lng": 27.8493
+                },
+                "Standard": "SOCIALCARBON",
+                "Total Project Area": 62008,
+                "Created Date": "2024-04-23T10:34:17.708Z",
+                "Crediting period end": "2034-08-31T22:00:00.000Z",
+                "Project Type": "Agriculture Forestry and Other Land Use",
+                "End Date": "2034-08-31T22:00:00.000Z",
+                "Methodology": "SCM0006",
+                "Start Date": "2024-08-31T22:00:00.000Z",
+                "verifier": "EPIC Sustainability Services Private Limited",
+                "Crediting period start": "2024-08-31T22:00:00.000Z",
+                "Country": "Zambia",
+                "Estimated Annual Emission Reductions": 131870,
+                "Project Name": "Misitu Conservation Project (MCP)",
+                "Project Status": "Listed",
+                "Created By": "1713556140537x627337722610524200",
+                "validator": "EPIC Sustainability Services Private Limited",
+                "Project ID": "SOCIALCARBON-12",
+                "Latitude": -13.133911,
+                "Longitude": 27.8493,
+                "SDGs": [
+                    "1 - No Poverty",
+                    "2 - Zero Hunger",
+                    "3 - Good Health and Well-Being",
+                    "5 - Gender Equality",
+                    "6 - Clean Water and Sanitation",
+                    "7 - Affordable and Clean Energy",
+                    "8 - Decent Work and Economic Growth",
+                    "9 - Industry Innovation and Infrastructure",
+                    "11 - Sustainable Cities and Communities",
+                    "13 - Climate Action",
+                    "14 - Life Below Water",
+                    "15 - Life on Land",
+                    "17 - Partnerships for the Goals"
+                ],
+                "Listed_Status_Approver": [
+                    "1663517825056x691160877335579300"
+                ],
+                "Photos": [
+                    "//260577d78d350b613f312580656ff794.cdn.bubble.io/f1727347907860x356229807515001660/WhatsApp%20Image%202024-09-06%20at%2011.43.07_d01f7aec.jpg",
+                    "//260577d78d350b613f312580656ff794.cdn.bubble.io/f1727347931030x423136839255098500/WhatsApp%20Image%202024-08-07%20at%2012.58.27_9f2d7210.jpg",
+                    "//260577d78d350b613f312580656ff794.cdn.bubble.io/f1727347975791x447045931205457800/IMG-20240512-WA0005.jpg",
+                    "//260577d78d350b613f312580656ff794.cdn.bubble.io/f1727348064422x518311536680526900/WhatsApp%20Image%202024-09-06%20at%2022.47.32_4e637b0d.jpg",
+                    "//260577d78d350b613f312580656ff794.cdn.bubble.io/f1727348114141x102128720637539860/WhatsApp%20Image%202024-09-11%20at%2012.19.44_8b25a891.jpg"
+                ],
+                "Project Proponent(s)_TEXT": [
+                    "METALEX AFRICA LIMITED ZAMBIA"
+                ],
+                "Project Proponent(s)": [
+                    "1713556140537x627337722610524200"
+                ],
+                "_id": "1713868456883x885532309387739100"
+            },
+            {
+                "Description": "The main objective of the Amazonia Eco Timber Forest Conservation ARR Project is to contribute to the carbon removal from the atmosphere associated with the maintenance of managed primary forest formations and managed secondary forest formations, in a grouped project with a total area of forest preservation by 999.12 hectares. These areas are located on four private properties, named as Sítio Bom Viver, Fazenda Bom Destino, Sítio São Sebastião and Fazenda Vista Alegre, all located in the municipality of Nhamundá, in the north of the Amazonas state, Brazil, within the Amazon biome. In order to measure the carbon removals from the atmosphere, the Methodology for Carbon Removal in Private Conservation Areas V1.0 - SCM0003 was adopted, which presents a procedure to determine the annual removal of CO2 from the atmosphere by areas of native vegetation located in private properties. Economic pressures are the main factor behind deforestation in the Brazilian Amazon rainforest – and a recent investigation showed that 83.17% of deforestation is caused by consumption outside the Amazon – and almost 60% of it supplied the rest of Brazil and 23.49% were for international trade1. In the region of the properties in this project, there have been several outbreaks of deforestation over the years, mostly for the commercial purpose of selling native timber.",
+                "Project documents approved": true,
+                "Address": {
+                    "address": "PV6X+GJ Mocambo, Parintins - AM, Brazil",
+                    "lat": -2.28861111,
+                    "lng": -57.10083333
+                },
+                "Standard": "SOCIALCARBON",
+                "Total Project Area": 999,
+                "Created Date": "2024-08-16T13:01:25.922Z",
+                "Crediting period end": "2034-05-27T03:00:00.000Z",
+                "Project Type": "Agriculture Forestry and Other Land Use",
+                "End Date": "2034-05-27T03:00:00.000Z",
+                "Methodology": "SCM0003",
+                "Start Date": "2024-05-28T03:00:00.000Z",
+                "verifier": "Earthood Services Private Limited",
+                "Crediting period start": "2024-05-28T03:00:00.000Z",
+                "Country": "Brazil",
+                "Estimated Annual Emission Reductions": 18165,
+                "Project Name": "Amazonia Eco Timber Forest Conservation ARR Project",
+                "Project Status": "Listed",
+                "Created By": "1677772220839x902760234058070300",
+                "validator": "Earthood Services Private Limited",
+                "Project ID": "SOCIALCARBON-13",
+                "Latitude": -2.28861111,
+                "Longitude": -57.10083333,
+                "SDGs": [],
+                "Listed_Status_Approver": [
+                    "1663517825056x691160877335579300"
+                ],
+                "Photos": [
+                    "//260577d78d350b613f312580656ff794.cdn.bubble.io/f1729007959609x230076947454597380/20240725_163100.jpg",
+                    "//260577d78d350b613f312580656ff794.cdn.bubble.io/f1729007991320x424643734555421250/20240726_101201.jpg",
+                    "//260577d78d350b613f312580656ff794.cdn.bubble.io/f1729008007323x970922722315730400/DJI_0436.JPG",
+                    "//260577d78d350b613f312580656ff794.cdn.bubble.io/f1729008029004x926240191133006100/DJI_0526.JPG",
+                    "//260577d78d350b613f312580656ff794.cdn.bubble.io/f1729008038337x815497806847968500/DJI_0542.JPG"
+                ],
+                "Project Proponent(s)_TEXT": [
+                    "VERT ECOTECH SA"
+                ],
+                "Project Proponent(s)": [
+                    "1677772220839x902760234058070300"
+                ],
+                "_id": "1723813285039x533617661095444500"
+            },
+            {
+                "Description": "The Atlantic Forest, one of the most biodiverse biomes in the world, is facing centuries of degradation, with only approximately 12% (considering fragments larger than 3 hectares that are well-preserved) of its original coverage preserved. This situation threatens biodiversity, air and water quality, and the climate. To help reverse this situation, the Environmental and Life Preservation Association (Apremavi) and Tetra Pak launched the Conservador das Araucárias Project, whose purpose is to restore and conserve 7,000 hectares of native forests in the Atlantic Forest, particularly in the Araucaria Forest region. This initiative will promote large-scale actions, contributing to the environmental compliance of rural properties and protecting biodiversity and water resources.\n\nCO2 removal will occur through the development of tree vegetation, using different restoration, natural regeneration, and/or ecological enrichment techniques. The geographical scope includes ecosystems within the Atlantic Forest biome in Santa Catarina, Paraná, and São Paulo (Brazil). Activities will take place on rural properties owned by Apremavi or those of third parties who voluntarily agree to participate in the initiative. The process is based on partnerships to strengthen the collective vision of sustainability and conservation.\n\nThe Conservador das Araucárias Project was designed to contribute to mitigating the climate and biodiversity crises, with a primary focus on the Araucaria Forest – one of the most threatened forest formations of the Atlantic Forest biome on the planet. In general, within its distribution area, which once covered a substantial extent (approximately 200,000 km²) in southern and southeastern Brazil, very few remnants of the original vegetation remain (ranging from less than 1% to up to 5%), highly fragmented and in varying degrees of alteration. These areas have been replaced by small and medium-sized rural properties (1-150 hectares), where crops (short and long cycles) and/or low-productivity pastures, or urbanized areas, predominate.\n\nThe project estimates its installed capacity can remove 70,000 tons of CO2eq/year. The crediting period lasts 10 years, from February 22, 2022, to February 21, 2032.\n\nThe Conservador das Araucárias Project, a grouped project, will generate positive impacts in three dimensions:\n\nEnvironmental: The restoration of degraded areas and the improvement and conservation of forest remnants will contribute to the recovery of native vegetation, which provides food, shelter, and breeding grounds for local fauna. It also supports the maintenance and quality of the ecological flow of water resources and other ecosystem services. By employing ecological restoration techniques aimed at reintroducing elements that allow the vegetation to return to its original condition as much as possible, the project also facilitates the diversification of the landscape matrix, promoting a more harmonious balance between areas of direct human use and the natural regions.\n\nSocial: Restoration and monitoring activities require specialized knowledge and labor, generating opportunities for technical learning, employment, and income for local community groups, which will be prioritized in this initiative. Depending on the conditions and the landscape's potential, the project may also support the development of regional value chains, such as seedling production and eco-tourism.\n\nClimate: The carbon removed from the atmosphere through the project's activities will mitigate climate change. In addition to being a significant carbon sink, the developing forest also helps alleviate other impacts of climate change, such as improving microclimatic conditions, which provide greater thermal comfort in extreme heat situations.\n\nThe first instance of the project will be implemented in the municipalities of Atalanta, Painel, Papanduva, Santa Rosa de Lima/Rio Fortuna, Urubici, and Urupema in the state of Santa Catarina, as well as Ibaiti in Paraná.\nWith its goal of implementing actions across 7,000 hectares of Atlantic Forest, the Conservador das Araucárias Project will involve people and institutions in this large-scale challenge, aiming to create favorable conditions for a collective effort to address climate change and biodiversity loss.",
+                "Project documents approved": true,
+                "Address": {
+                    "address": "G5GV+Q6 Atalanta - State of Santa Catarina, Brazil",
+                    "lat": -27.473082,
+                    "lng": -49.806897
+                },
+                "Standard": "SOCIALCARBON",
+                "Total Project Area": 2580,
+                "Created Date": "2025-01-30T00:05:02.678Z",
+                "Crediting period end": "2032-02-21T03:00:00.000Z",
+                "Project Type": "Agriculture Forestry and Other Land Use",
+                "End Date": "2032-02-21T03:00:00.000Z",
+                "Methodology": "SCM0003, SCM0009",
+                "Start Date": "2022-02-22T03:00:00.000Z",
+                "verifier": "Earthood Services Private Limited",
+                "Crediting period start": "2022-02-22T03:00:00.000Z",
+                "Country": "Brazil",
+                "Estimated Annual Emission Reductions": 18815,
+                "Project Name": "Conservador das Araucárias",
+                "Project Status": "Listed",
+                "Created By": "1728477253649x805562132899845900",
+                "validator": "Earthood Services Private Limited",
+                "Project ID": "SOCIALCARBON-14",
+                "Latitude": -27.473082,
+                "Longitude": -49.806897,
+                "SDGs": [],
+                "Listed_Status_Approver": [
+                    "1663517825056x691160877335579300"
+                ],
+                "Photos": [],
+                "Project Proponent(s)_TEXT": [
+                    "Apremavi"
+                ],
+                "Project Proponent(s)": [
+                    "1728477253649x805562132899845900"
+                ],
+                "_id": "1738195502036x215629874417369100"
+            },
+            {
+                "Description": "The Congo Rainforest, located in Central Africa, is one of the world’s oldest and most extensive tropical forests, second only to the Amazon in size. Covering approximately 1.78 million km², it harbors exceptional biodiversity and plays a critical ecological role in global climate regulation. This vast rainforest extends across six African nations, with the Democratic Republic of the Congo (DRC) encompassing the largest share, around 107 million hectares of forested area.\nWithin this globally significant ecosystem, the Mai-Ndombe Concessions Conservation and Sustainable Development Grouped Project aims to conserve approximately 108,930 hectares of high-biodiversity tropical forest in the Mai-Ndombe province, across three forest concessions: Bokwankoso (35,720 ha), Lokolama 2 (37,200 ha), and Mbete-Nkoy (36,010 ha).\nThe project area lies within the Oshwe Territory of Mai-Ndombe Province, in the heart of the Congo Basin’s Cuvette Centrale, one of the planet’s largest continuous tropical forests. The landscape is characterized by flats, supporting dense humid forests that store high carbon stocks. The region experiences an equatorial humid climate with annual rainfall between 1,700 and 2,000 mm and temperatures averaging 25–30 °C, creating conditions for year-round vegetation growth.\nDespite its ecological richness, Mai-Ndombe faces mounting pressures from shifting cultivation, fuelwood and charcoal production, and small-scale logging, leading with forest loss. Local communities depend heavily on subsistence agriculture, fishing, and forest resources, with limited access to basic services and incomes below the national poverty line, underscoring the urgent need for sustainable livelihood alternatives and community-based conservation efforts.",
+                "Project documents approved": true,
+                "Address": null,
+                "Standard": "SOCIALCARBON",
+                "Total Project Area": 108930,
+                "Created Date": "2025-11-25T11:29:51.415Z",
+                "Crediting period end": "2036-01-01T03:00:00.000Z",
+                "Project Type": "AFOLU",
+                "End Date": "2073-01-01T03:00:00.000Z",
+                "Methodology": "SCM0006",
+                "Start Date": "2026-01-01T03:00:00.000Z",
+                "verifier": "TBC",
+                "Crediting period start": "2026-01-01T03:00:00.000Z",
+                "Country": "Congo, Democratic Republic of the",
+                "Estimated Annual Emission Reductions": 559225,
+                "Project Name": "The Mai-Ndombe Concessions Conservation and Sustainable Development Grouped Project",
+                "Project Status": "Listed",
+                "Created By": "admin_user_caf-website_live",
+                "validator": "TBC",
+                "Project ID": "SOCIALCARBON-16",
+                "Latitude": -2.393737785,
+                "Longitude": 19.60523235,
+                "SDGs": [],
+                "Listed_Status_Approver": [
+                    "1663517825056x691160877335579300"
+                ],
+                "Photos": [],
+                "Project Proponent(s)_TEXT": [
+                    "Hyphen Global Ag "
+                ],
+                "Project Proponent(s)": [
+                    "1761221130975x367813761756402370"
+                ],
+                "_id": "1764070191408x325872084891708740"
+            },
+            {
+                "Description": "The main objective of the “Cooperativa Agraria Carbon Removal Project” is to directly contribute to the mitigation of climate crisis through GHG removals from the atmosphere through the maintenance and conservation of managed primary and secondary forest formations. This project covers an area of 6,320.36 hectares of RL and APP of Atlantic Forest remnants located in Guarapuava, Pinhão and Inácio Martins municipalities in the central Paraná State, southern Brazil. ",
+                "Project documents approved": true,
+                "Address": null,
+                "Standard": "SOCIALCARBON",
+                "Total Project Area": 6320,
+                "Created Date": "2026-02-02T14:20:05.202Z",
+                "Crediting period end": "2034-06-09T03:00:00.000Z",
+                "Project Type": "Agriculture Forestry and Other Land Use",
+                "End Date": "2034-06-09T03:00:00.000Z",
+                "Methodology": "SCM0003",
+                "Start Date": "2024-06-10T03:00:00.000Z",
+                "verifier": "TBC",
+                "Crediting period start": "2024-06-10T03:00:00.000Z",
+                "Country": "Brazil",
+                "Estimated Annual Emission Reductions": 10544,
+                "Project Name": "Cooperativa Agraria Carbon Removal Project\n",
+                "Project Status": "Listed",
+                "Created By": "admin_user_caf-website_live",
+                "validator": "TBC",
+                "Project ID": "SOCIALCARBON-17",
+                "Latitude": -25.59122,
+                "Longitude": -51.48923,
+                "SDGs": [
+                    "13 - Climate Action",
+                    "15 - Life on Land"
+                ],
+                "Listed_Status_Approver": [
+                    "1663517825056x691160877335579300"
+                ],
+                "Photos": [],
+                "Project Proponent(s)_TEXT": [
+                    "GSS Carbono e Bioinovação Ltda"
+                ],
+                "Project Proponent(s)": [
+                    "1718901224084x699624683161499100"
+                ],
+                "_id": "1770042005152x667721500907960400"
+            },
+            {
+                "Description": "The grouped project “Aeco Peatland Restoration Program Latvia #1” aims to reduce greenhouse gas (GHG) emissions by rewetting drained peatlands situated on agricultural land across Latvia. Rewetting raises groundwater levels, slowing peat oxidation and thereby significantly lowering GHG emissions. The program applies site-specific rewetting measures adapted to local environmental conditions. Common interventions include closing drainage ditches, modifying pumping regimes, and constructing, rehabilitating, or adjusting sluices, dams, and dikes to better regulate water flow and manage water levels. Through these actions, the project contributes to climate change mitigation, ecosystem restoration and favours sustainable land use and biodiversity. The project areas are located on agricultural land, where drainage systems have led to significant GHG emissions. ",
+                "Project documents approved": true,
+                "Address": null,
+                "Standard": "SOCIALCARBON",
+                "Total Project Area": 492,
+                "Created Date": "2026-03-13T17:40:54.298Z",
+                "Crediting period end": "2035-10-01T00:00:00.000Z",
+                "Project Type": "Agriculture Forestry and Other Land Use",
+                "End Date": "2075-11-01T00:00:00.000Z",
+                "Methodology": "SCM0010",
+                "Start Date": "2025-09-30T23:00:00.000Z",
+                "verifier": "TBC",
+                "Crediting period start": "2025-09-30T23:00:00.000Z",
+                "Country": "Latvia",
+                "Estimated Annual Emission Reductions": 2718,
+                "Project Name": "Aeco Peatland Restoration Latvia #1",
+                "Project Status": "Listed",
+                "Created By": "admin_user_caf-website_live",
+                "validator": "TBC",
+                "Project ID": "SOCIALCARBON-18",
+                "Latitude": 56.9398,
+                "Longitude": 26.9242,
+                "SDGs": [],
+                "Listed_Status_Approver": [
+                    "1663517825056x691160877335579300"
+                ],
+                "Photos": [],
+                "Project Proponent(s)_TEXT": [
+                    "aeco GmbH"
+                ],
+                "Project Proponent(s)": [
+                    "1727269508137x934143812670493300"
+                ],
+                "_id": "1773423654292x760048670748834600"
+            },
+            {
+                "Description": "The grouped project reduces greenhouse gas emissions by rewetting drained peatlands located on agricultural land. By implementing rewetting measures, the grouped project halts peat oxidation through the raising of the water table. In some cases, if the water tables can be raised significantly, a part of a project activity instance may even be transformed into carbon sinks. The grouped project contributes to climate mitigation, ecosystem restoration, sustainable land use, and biodiversity enhancement.\n\nThe grouped project is located in Poland.\n\nThe first project activity instance is located 3km East of the village Juchowo in North-Western Poland with the following GPS coordinates: 53.668839° N, 16.530710° E.\n\nThe project activity sites are situated on agricultural land that is managed either extensively or intensively for farming. Prior to the project's implementation, the peatlands used for agriculture are drained, leading to significant carbon emissions. For the first project activity instance under this grouped project in Juchowo, the land was used intensively for agriculture, primarily as meadows and pastures, with mowing occurring two to three times per year. The meadows were also heavily drained with numerous ditches and channels.",
+                "Project documents approved": true,
+                "Address": null,
+                "Standard": "SOCIALCARBON",
+                "Total Project Area": 95,
+                "Created Date": "2026-05-15T16:28:53.173Z",
+                "Crediting period end": "2036-12-01T00:00:00.000Z",
+                "Project Type": "Agriculture Forestry and Other Land Use",
+                "End Date": "2076-12-01T00:00:00.000Z",
+                "Methodology": "SCM0010-M1",
+                "Start Date": "2026-12-01T00:00:00.000Z",
+                "verifier": "TBC",
+                "Crediting period start": "2026-12-01T00:00:00.000Z",
+                "Country": "Poland",
+                "Estimated Annual Emission Reductions": 2831,
+                "Project Name": "Aeco Peatland Restoration Program Poland #1",
+                "Project Status": "Listed",
+                "Created By": "admin_user_caf-website_live",
+                "validator": "TBC",
+                "Project ID": "SOCIALCARBON-19",
+                "Latitude": 52,
+                "Longitude": 19,
+                "SDGs": [
+                    "13 - Climate Action",
+                    "15 - Life on Land"
+                ],
+                "Listed_Status_Approver": [
+                    "1663517825056x691160877335579300"
+                ],
+                "Photos": [],
+                "Project Proponent(s)_TEXT": [
+                    "aeco GmbH"
+                ],
+                "Project Proponent(s)": [
+                    "1727269508137x934143812670493300"
+                ],
+                "_id": "1778862533130x540021803475798850"
+            },
+            {
+                "Description": "The Brazilian Atlantic Forest, one of the world’s most biodiverse ecosystems, once stretched over 1.5 million square kilometres along Brazil’s coast. Today, only about 12% of its original extent remains, making it one of the most threatened biomes on the planet (SOS Mata Atlântica, 2023). Despite its reduced area, it still harbours an estimated 20,000 plant species and over 2,000 vertebrate species, many of them endemic (Myers et al., 2000). The situation is particularly severe in southern Bahia state, where more than 95% of the Atlantic Forest has already been lost (Ribeiro et al., 2009). Conserving this forest is therefore critical for global biodiversity preservation and climate change mitigation, given its significant carbon storage capacity.\n\nThe Serra Bonita Project is a grouped conservation and carbon removal initiative. It is anchored by the Serra Bonita Reserve, which covers 3,200 hectares of largely intact forest and sits within a mosaic of smallholder lands that contain primary forest and cabruca (shade-grown cacao). The project is structured to consolidate an initial 20,000 hectares, combining the 3,200-hectare core reserve with 17,400 hectares of surrounding smallholder properties, and is designed to expand up to 50,000 hectares through future acquisitions and partnerships. This grouped design allows additional instances to be progressively included, providing a scalable framework.\n\nAlthough the Serra Bonita Reserve has maintained relatively high forest cover, limited funding has constrained its management capacity. Surrounding smallholder lands, meanwhile, face growing threats from selective logging, agricultural expansion, and wildlife trapping. With few financial or institutional incentives to conserve their forests, landowners often lack the means or motivation to protect them, leaving the broader landscape vulnerable to degradation.\n\nThe project addresses these pressures by creating financial incentives for conserving standing forests as well as traditional cabruca systems, which are themselves a critical habitat for species like the threatened Pink-legged Graveteiro (BirdLife International, 2023). Landowners are rewarded for maintaining native forest cover and sustainable agroforestry practices, while the project invests in the reserve to ensure permanent employment of rangers and community guards who strengthen protection, monitor forest conditions, and deter illegal logging and hunting. Conservation costs per hectare are currently high due to the small size of the core reserve, but will be reduced through management approaches similar to those successfully implemented by Fundación Jocotoco (a) whom we partner on projects in Ecuador, such as digital guard monitoring, integrated financial reporting, and expanded revenue streams from eco-tourism and for scientific research via grants. Most importantly, the planned expansion to 20,000 hectares will lower per-hectare costs and greatly increase the conservation impact.\n\nMethodologically, the project applies the SocialCarbon methodology for Areas of High Biodiversity Importance (SCM0006) in combination with the module for eddy covariance-based continuous quantification of greenhouse gas fluxes (SCD0003). In partnership with dMRV provider Hyphen Global AG, flux towers will be installed to provide continuous, site-specific data on removals of Greenhouse Gases, reducing uncertainty and enabling the issuance of removal credits based on measured results. This is complemented by advanced biodiversity monitoring, including AI-powered soundscape analysis and camera traps to track forest health, detect threats such as chainsaw activity or poaching, and generate species-level datasets to guide adaptive management.\n\nConservation outcomes focus on safeguarding habitat for highly threatened species, including the critically endangered Yellow-breasted Capuchin and Banded Cotinga, the endangered Golden-headed Lion Tamarin and Bahia Tyrannulet, and the vulnerable Wied’s Marmoset (IUCN, 2023). Targeted programs, such as enrichment planting and supplemental feeding trials, will be implemented where appropriate.\n\nBy expanding the conservation footprint from 3,200 hectares initially to 20,000 hectares in the medium term and up to 50,000 hectares over the longer term, the project reduces fragmentation, secures critical carbon stocks, and strengthens ecosystem services such as water regulation and climate resilience. It establishes a replicable model for other private reserves in the Atlantic Forest, aligning biodiversity protection, community benefits, and high-integrity carbon removals.\n\n\nContext note a: Fundación Jocotoco (FJ) is an Ecuadorian conservation organisation that has been highly successful in protecting some of the country’s most threatened ecosystems. InvestConservation partners with FJ on biodiversity projects in Ecuador. The organisation is led by Dr Martin Schaefer, who also serves as InvestConservation’s Conservation Director.\n",
+                "Project documents approved": true,
+                "Address": null,
+                "Standard": "SOCIALCARBON",
+                "Total Project Area": 3200,
+                "Created Date": "2026-07-27T15:01:52.842Z",
+                "Crediting period end": "2036-12-31T11:01:00.000Z",
+                "Project Type": "Agriculture Forestry and Other Land Use",
+                "End Date": "2086-12-31T11:00:00.000Z",
+                "Methodology": "SCM0006",
+                "Start Date": "2027-01-01T11:00:00.000Z",
+                "verifier": "TBC",
+                "Crediting period start": "2027-01-01T11:00:00.000Z",
+                "Country": "Brazil",
+                "Estimated Annual Emission Reductions": 29123,
+                "Project Name": "Serra Bonita - Carbon Removal Project ",
+                "Project Status": "Listed",
+                "Created By": "admin_user_caf-website_live",
+                "validator": "TBC",
+                "Project ID": "SOCIALCARBON-19",
+                "Latitude": -15.400933,
+                "Longitude": -39.566072,
+                "SDGs": [
+                    "13 - Climate Action",
+                    "15 - Life on Land"
+                ],
+                "Listed_Status_Approver": [
+                    "1775565590976x223517794319517020"
+                ],
+                "Photos": [],
+                "Project Proponent(s)_TEXT": [
+                    "Invest Conservation SA"
+                ],
+                "Project Proponent(s)": [
+                    "1755601463597x680123905815430000"
+                ],
+                "_id": "1785164512819x691324246891481500"
+            }
+        ],
+        "count": 19,
+        "remaining": 0
+    }
+}

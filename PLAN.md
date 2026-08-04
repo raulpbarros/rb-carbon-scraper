@@ -429,6 +429,14 @@ is a registry we are already half-scraping and did not know it.
 is 29 registries reachable by subclassing something that already works, and it
 is how 5e turned out to be an afternoon instead of a week.
 
+**Then check whether the registry is already reachable from another angle, and
+refuse it if it is.** SocialCarbon is on the legacy Markit list *and* has its
+own current system; ingesting both would have counted the same credits twice.
+Two of the four registries below have a known double-count risk (5a against
+Cercarbono's converted-in projects, 5d against Markit — now settled), and 5d
+turned out to carry a third one *inside its own API*. Ask what else already
+holds these credits before scraping, not after.
+
 - [ ] **5a BioCarbon** — ~~first check whether `BCCR` is BioCarbon~~ **it is
       not**: the S&P standards lookup names it "BC Carbon Registry", British
       Columbia (`140000000000001` / `BC`). Settled in Phase 2. Not on legacy
@@ -443,30 +451,54 @@ is how 5e turned out to be an afternoon instead of a week.
 - [ ] **5b Puro.earth** — server-rendered HTML; look for a JSON endpoint before
       writing a parser
 - [ ] **5c ACR** — APX ASP platform, form posts and HTML tables. Highest effort
-- [ ] **5d SocialCarbon** — ~~**blocked**: serves a parked CDN page~~
-      **unblocked, 2026-07-29.** `registry.socialcarbon.org` is not parked: it
-      is a **Bubble.io application with an open, unauthenticated Data API**,
-      run by Wilder Earth.
+- [x] **5d SocialCarbon — done, 2026-08-04.** ~~**blocked**: serves a parked
+      CDN page~~ ~~**unblocked, 2026-07-29**~~. `registry.socialcarbon.org` is
+      a **Bubble.io application with an open, unauthenticated Data API**, run
+      by Wilder Earth — no key, no browser `User-Agent` needed, no Cloudflare.
+      Contract in `docs/api-contract-socialcarbon.md`, adapter in
+      `registries/socialcarbon/`.
 
-      ```
-      GET https://registry.socialcarbon.org/api/1.1/meta
-      GET https://registry.socialcarbon.org/api/1.1/obj/project
-      ```
+      **19 projects, 17 issuances, 81 retirements, 2 cancellations — four
+      requests, about a minute.** The smallest and cheapest registry here, and
+      every count reconciled exactly on the first live run.
 
-      `meta` lists the readable types: `project`, `issuance`, `retirement`,
-      `transaction`, `cancellations`, `transfer`, `asset`, `assetlisting`,
-      `document`, `vvbs`. `obj/project` already returns real project records
-      as JSON with no key. That is a better contract than three of the four
-      registries already live.
+      What the plan expected and what was actually there:
 
-      Two things to establish before writing the adapter, both the usual
-      shape: Bubble's Data API pages with `cursor`/`limit` and states a
-      `remaining` count — **prove it narrows and reconcile against it** — and
-      SocialCarbon also appears on legacy Markit (`100000000000007`) as an
-      **additional certification**, where its rows read "No Established
-      Standard". Those are the same credits seen from another angle, so
-      **ingesting both would double-count**. The Bubble registry is the
-      current system and the one to use.
+      - **Paging is fine, filters are fine.** Bubble validates `constraints`
+        and answers a bogus field with **HTTP 404 `Field not found`** rather
+        than returning the whole index — the *first* registry in this project
+        that refuses a filter loudly. No partitioning is needed anyway.
+      - **`limit` clamps to 100 in silence** (asked 200 of a 147-row type, got
+        100 with `remaining: 47` at HTTP 200). Third registry to ignore a page
+        size, so the pager advances on `remaining`.
+      - **The double-count was real, and it was not only Markit.** As
+        anticipated, SocialCarbon's legacy-Markit rows
+        (`100000000000007`, "No Established Standard") are not ingested. What
+        the plan did not anticipate: the Bubble registry's own **`asset` list
+        double-counts too** — 17 of its 22 rows mirror the issuances to the
+        same 189,794 units, and the other 5 read `"Standard": "VCS"` and are
+        Verra credits deposited into the platform. `asset` is not scraped.
+
+      Three things the plan did not anticipate at all:
+
+      - **`Project ID` is not unique.** Two entirely different projects —
+        Poland and Brazil — both publish `SOCIALCARBON-19`, and
+        `SOCIALCARBON-15` is absent. 19 records, 18 references. This is the
+        Markit merge *inverted*: there a repeated id was one project and rows
+        had to be joined, here joining would fuse two countries into one row.
+        The key is hashed from Bubble's own `_id`; the duplicate reference is
+        published as-is and raised in `docs/field-mapping.md`.
+      - **An issuance can be a request.** `Approved` and `Issuance complete`
+        are the registry's own flags; all 17 rows carry both today, so
+        `iter_credit_totals` states exactly what the rows sum to. It exists so
+        the first pending request does not quietly inflate an issued total.
+      - **Two silent derivation gaps**, both measured. `biome.yaml`'s gate
+        carried `Land use \(AFOLU\)` and this registry says the bare
+        **`AFOLU`**, so one project would have had no biome and nothing in the
+        log; the gate is now `\bAFOLU\b`, blast radius **zero existing rows**.
+        And `continent.yaml` did not carry
+        **`Congo, Democratic Republic of the`** — a *third* ISO inversion,
+        differing from the one already listed by a single "the".
 - [x] **5e Plan Vivo V4 — done, 2026-07-29.** It was on the **legacy Markit
       Environmental Registry** (`mer.markit.com/br-reg/public`), the system
       S&P inherited with IHS Markit. 30 projects, 411 issuances, 442 holdings
@@ -592,7 +624,12 @@ fill rates and its deliberate blanks stated rather than filled.
    standard slug is `settings.CERCARBONO_STANDARD`, overridable via
    `CARBON_CERCARBONO_STANDARD`, if the business ever wants the others in a
    separate run.
-2. **SocialCarbon** — real registry URL needed.
+2. ~~**SocialCarbon** — real registry URL needed.~~ **Answered 2026-08-04:**
+   `registry.socialcarbon.org`, a Bubble.io app with an open Data API. Built
+   and reconciled; see 5d. What it left behind is a question for the business,
+   not for the code: **two different projects publish `SOCIALCARBON-19`** and
+   one reference is missing entirely, so the registry has no unique public
+   reference per project. Both rows ship, told apart by name and URL.
 2b. **Code signing** — Phase 4b routes around SmartScreen rather than removing
    the cause, and that works only as long as everyone does the unblock step.
    An Authenticode certificate ends the question: roughly USD 200-400/year for

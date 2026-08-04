@@ -1,0 +1,47 @@
+{
+    "response": {
+        "cursor": 0,
+        "results": [
+            {
+                "_id": "1756399955288x861826758908313600",
+                "Asset": "1747230671559x152383255025804400",
+                "Asset name": "Fazenda J. Crestani Conservation Project, 2020, 5/14/25",
+                "Asset Type": "SCU - Removal",
+                "Notes": "Cancellation to compensate for the October 2024 loss event",
+                "Project": "1690914921728x889485784984584200",
+                "Project type": "Agriculture Forestry and Other Land Use",
+                "Quantity": 10121,
+                "Standard": "SOCIALCARBON",
+                "txid": "015dc48b13d1d83731fd53e7de343a8e19c21e2cf7480ea0839378d98c47d9c24b4e558b2d3ed5916ad5b39f1d961d20527438b902791cf07389f1821b2524b5",
+                "Vintage": "2020",
+                "Created By": "1677772220839x902760234058070300",
+                "Created Date": "2025-08-28T16:52:37.855Z",
+                "Modified Date": "2025-08-28T16:52:37.884Z",
+                "Canceller": "VERT ECOTECH SA",
+                "Non-Permanence": true,
+                "Serial Numbers": "SCU-SOCIALCARBON-7-Brazil-2020-14052025145100-1-10121"
+            },
+            {
+                "_id": "1756400174057x619660129285963800",
+                "Asset": "1747230722351x498476330865290000",
+                "Asset name": "Fazenda J. Crestani Conservation Project, 2021, 5/14/25",
+                "Asset Type": "SCU - Removal",
+                "Notes": "Cancellation to compensate for the October 2024 loss event",
+                "Project": "1690914921728x889485784984584200",
+                "Project type": "Agriculture Forestry and Other Land Use",
+                "Quantity": 10024,
+                "Standard": "SOCIALCARBON",
+                "txid": "01b27ebeee6f78a235538d062c60b74f22329843f9475557157b48b779e7ca4a28e8c81f75ba44bc5b97452ba38da40c54617f1b62c73252894544c4b9bc67c7",
+                "Vintage": "2021",
+                "Created By": "1677772220839x902760234058070300",
+                "Created Date": "2025-08-28T16:56:16.022Z",
+                "Modified Date": "2025-08-28T16:56:16.031Z",
+                "Canceller": "VERT ECOTECH SA",
+                "Non-Permanence": true,
+                "Serial Numbers": "SCU-SOCIALCARBON-7-Brazil-2021-14052025145200-1-10024"
+            }
+        ],
+        "count": 2,
+        "remaining": 0
+    }
+}

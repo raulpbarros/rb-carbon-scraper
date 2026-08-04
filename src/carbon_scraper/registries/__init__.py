@@ -50,6 +50,12 @@ def _planvivo_v4() -> type:
     return PlanVivoV4API
 
 
+def _socialcarbon() -> type:
+    from .socialcarbon.api import SocialCarbonAPI
+
+    return SocialCarbonAPI
+
+
 #: registry identifier -> the adapters that publish it, in scrape order.
 #:
 #: A table rather than a chain of `if`s on purpose: the old fall-through
@@ -70,6 +76,7 @@ ADAPTERS: dict[str, tuple[Callable[[], type], ...]] = {
     settings.GOLD_STANDARD: (_goldstandard,),
     settings.CERCARBONO: (_cercarbono,),
     settings.PLAN_VIVO: (_planvivo, _planvivo_v4),
+    settings.SOCIAL_CARBON: (_socialcarbon,),
 }
 
 # --registry accepts either the stored value or a short alias.
@@ -93,6 +100,9 @@ ALIASES = {
     "planvivo": settings.PLAN_VIVO,
     "plan-vivo": settings.PLAN_VIVO,
     "pvcl": settings.PLAN_VIVO,
+    "sc": settings.SOCIAL_CARBON,
+    "socialcarbon": settings.SOCIAL_CARBON,
+    "social-carbon": settings.SOCIAL_CARBON,
 }
 
 ALL = tuple(ADAPTERS)

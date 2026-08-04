@@ -3,9 +3,9 @@
 Pulls every carbon project from the public carbon registries into a local
 database, then exports the spreadsheet the business asked for.
 
-Four registries are live: **Verra VCS**, **Gold Standard**, **Cercarbono** and
-**Plan Vivo** — 9,619 projects. They share one database and one spreadsheet;
-the `Registry` column tells the rows apart.
+Five registries are live: **Verra VCS**, **Gold Standard**, **Cercarbono**,
+**Plan Vivo** and **SocialCarbon** — 9,668 projects. They share one database
+and one spreadsheet; the `Registry` column tells the rows apart.
 
 Written for someone who has not built a scraper before — the sections below go
 in order. If you are here to *use* the tool rather than work on it, skip to
@@ -15,7 +15,7 @@ in order. If you are here to *use* the tool rather than work on it, skip to
 
 | File | What it is |
 |---|---|
-| `data/verra.db` | SQLite database. The source of truth: ~5,200 Verra projects plus the full Units ledger, 4,141 Gold Standard projects plus 182,989 credit blocks, 231 Cercarbono projects and 2 Plan Vivo. |
+| `data/verra.db` | SQLite database. The source of truth: ~5,200 Verra projects plus the full Units ledger, 4,141 Gold Standard projects plus 182,989 credit blocks, 231 Cercarbono projects, 32 Plan Vivo and 19 SocialCarbon. |
 | `out/carbon-projects_vN.xlsx` | The deliverable. A **new version every time** — see below. |
 
 The spreadsheet's columns are read from `assets/fields-asked.txt` at runtime.

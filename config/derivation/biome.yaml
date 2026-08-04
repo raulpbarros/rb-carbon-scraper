@@ -20,14 +20,14 @@
 column: "Bioma"
 
 applies_when:
-  # FIVE vocabularies for the same sector, all carried through untranslated in
+  # SIX vocabularies for the same sector, all carried through untranslated in
   # Tipo Macro: Verra's "Agriculture Forestry and Other Land Use", Gold
   # Standard's single type "A/R", Cercarbono's "Land use (AFOLU)", Plan Vivo
-  # V5's "Afforestation / Reforestation", and Plan Vivo V4's own set on the
+  # V5's "Afforestation / Reforestation", Plan Vivo V4's own set on the
   # legacy Markit registry — "REDD", "Forest", "Forest Restoration", "Improved
   # forest management", "Forest Conservation & Avoided Deforestation",
-  # "Reduced emissions from deforestation & degradation". Anything else stays
-  # blank.
+  # "Reduced emissions from deforestation & degradation" — and SocialCarbon's
+  # bare "AFOLU". Anything else stays blank.
   #
   # This gate is load-bearing and fails silently: one unrecognised wording
   # means NO biome for any row of that registry, with nothing in the log to
@@ -39,8 +39,15 @@ applies_when:
   # new ones catch, so this widens the gate for Plan Vivo V4 and for nothing
   # else. Measure again before widening it further — a country band added for
   # one registry has already been shown to move rows in three others.
+  #
+  # SocialCarbon, 2026-08-04: 17 of its 19 projects say "Agriculture Forestry
+  # and Other Land Use" and already matched. One says the bare **"AFOLU"**,
+  # which `Land use \(AFOLU\)` does NOT catch — it requires the parenthesised
+  # form — so that project would have had no biome and nothing in the log.
+  # `\bAFOLU\b` is the addition. The nineteenth says "Harmful Algae Bloom
+  # Treatment" and correctly stays out: it is not land use.
   - field: sectoral_scope
-    regex: "Agriculture Forestry|^A/R$|Land use \\(AFOLU\\)|Afforestation / Reforestation|REDD|[Ff]orest|[Dd]eforestation"
+    regex: "Agriculture Forestry|^A/R$|\\bAFOLU\\b|Afforestation / Reforestation|REDD|[Ff]orest|[Dd]eforestation"
 
 rules:
   # --- Brazil, by state (dominant biome) --------------------------------

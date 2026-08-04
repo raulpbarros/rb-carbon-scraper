@@ -5,7 +5,8 @@ document to review with the business** — it separates what the registries
 actually publish from what this tool infers.
 
 The sheet holds **every registry stacked in one tab**: Verra VCS, Gold Standard,
-Cercarbono and Plan Vivo. The `Registry` and `Standard` columns tell them apart.
+Cercarbono, Plan Vivo and SocialCarbon. The `Registry` and `Standard` columns
+tell them apart.
 The sections below give the source for each, because they are not the same.
 
 Four confidence levels:
@@ -358,6 +359,74 @@ The four standards deliberately left out, so nobody has to re-ask:
 | **SDVISTA** | SDG impact units, not tCO2e |
 | **PWRS** | plastic waste units, not tCO2e |
 | **S3S** (Scope 3) | publishes projects only, no credits |
+
+---
+
+## SocialCarbon — the same 22 columns, different sources, added 2026-08-04
+
+A small registry: **19 projects**, 17 issuances, 81 retirements and 2
+cancellations. It runs on a Bubble.io application with a fully open API, so the
+whole thing downloads in four requests and reconciles exactly.
+
+| Column | Source |
+|---|---|
+| `Project ID` | the published `SOCIALCARBON-N` reference — **see the warning below** |
+| `Project Name` | project record |
+| `Standard` | `SOCIALCARBON` on every row |
+| `Tipo Macro de Projeto` | the `Project Type` field, untranslated: "Agriculture Forestry and Other Land Use" (17), "AFOLU" (1), "Harmful Algae Bloom Treatment" (1) |
+| `Metodologia` | `SCM0003`…`SCM0010-M1`, published for **19 of 19** |
+| `Status` | `Listed` (12), `Certified Project` (6), `Certified Design` (1) |
+| `País` | published as a name; **no ISO code anywhere**, so `Continent` is derived from the name |
+| `Data de Início` / `Data de Término` | the crediting period, **19 of 19** |
+| `Yearly Ex Ante` | `Estimated Annual Emission Reductions`, **18 of 19** |
+| `Total Credits Issued` | the issuance ledger — 189,794 units across 5 projects |
+| `Total Credits Retired` / `Sold` | the retirement ledger — 67,991 units |
+| `Total Credits Cancelled` | a real ledger, 20,145 units on one project |
+| `Estado`, `Cidade` | **not published — blank.** There is no state or city field; the only location is a free-text address and a lat/lng pair |
+| `Total Ex Ante` | not published; computed from the yearly figure as everywhere else |
+| `Additional Certification` | **no equivalent field — blank.** `CORSIA eligible` on an issuance is market eligibility, not a co-certification |
+
+Only 5 of the 19 projects have credits at all; the other 14 are listed or
+certified but have issued nothing yet. Their credit columns are blank rather
+than zero.
+
+### Two projects share one Project ID — the registry's own collision
+
+**`SOCIALCARBON-19` is published by two completely different projects:**
+
+| `Project ID` | Project | Country | Methodology |
+|---|---|---|---|
+| `SOCIALCARBON-19` | Aeco Peatland Restoration Program Poland #1 | Poland | SCM0010-M1 |
+| `SOCIALCARBON-19` | Serra Bonita - Carbon Removal Project | Brazil | SCM0006 |
+
+`SOCIALCARBON-15` is missing entirely. So the registry's 19 projects carry only
+18 distinct references.
+
+**Both projects appear as separate rows in the sheet**, which is the honest
+outcome — they are different projects in different countries. Nothing has been
+merged and nothing renumbered: the duplicate is what the registry publishes.
+The two rows are told apart by `Project Name`, `País` and `Project URL`, which
+is unique per project.
+
+**If the business needs a unique reference per row, that is a question for
+SocialCarbon.** We are not inventing one.
+
+### Why the credits are not read from the registry's `asset` list
+
+SocialCarbon's platform also publishes an `asset` list of 22 tokenised blocks
+totalling 349,794 units, which looks like the obvious source for issued
+credits. It is not used, for two reasons:
+
+1. **17 of those 22 are the same 17 issuances**, summing to the identical
+   189,794 units. Counting both would double every issued figure.
+2. **5 of them are Verra credits** (160,000 units) deposited into
+   SocialCarbon's platform from another registry. They belong to Verra's rows,
+   and are already counted there.
+
+For the same reason, SocialCarbon's appearance on the legacy Markit registry —
+where it is recorded as an *additional certification* on other standards'
+projects — is not ingested either. Those are the same credits seen from a
+different angle.
 
 ---
 
