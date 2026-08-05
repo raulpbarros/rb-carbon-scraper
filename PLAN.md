@@ -34,13 +34,13 @@ PyInstaller one-folder inside an Inno Setup installer.
 | 4 — Packaging | ✅ | 20.8 MB shipped DB, EXE, per-user installer — 16.7 MB, no admin |
 | 4b — Distribution | 🔄 | portable ZIP + GitHub release; SmartScreen answered without signing |
 | 4c — Docker | ✅ | the ~16,500-request scrape, headless, off the desktop |
-| **5 — More registries** | **🔄** | **5a ✅, 5b ✅, 5d ✅, 5e ✅, Verra JNR ✅**; 5c open |
+| **5 — More registries** | **✅** | **5a ✅, 5b ✅, 5c ✅, 5d ✅, 5e ✅, Verra JNR ✅** |
 | 6 — Hardening | | incremental sync, `verra doctor` |
 
-**427 tests, green, offline.** Seven registries live and **nine standards
-across six platforms**: Verra VCS 5,245 + JNR 5, Gold Standard 4,141,
-Cercarbono 231, Puro.earth 118, BioCarbon 105, Plan Vivo V5 2 + V4 30,
-SocialCarbon 19 — **9,891 projects in one database**, every one carrying a
+**466 tests, green, offline.** Eight registries live and **ten standards
+across seven platforms**: Verra VCS 5,245 + JNR 5, Gold Standard 4,141, ACR
+994, Cercarbono 231, Puro.earth 118, BioCarbon 105, Plan Vivo V5 2 + V4 30,
+SocialCarbon 19 — **10,885 projects in one database**, every one carrying a
 derived Tipo Micro / Bioma / Durabilidade. Last delivery is
 `out/carbon-projects_v2.xlsx`; a `_v3` has still not been cut, because nobody
 has asked for one.
@@ -70,10 +70,15 @@ to put it on, because an unsigned installer is a build problem only until it
 meets someone else's machine — after that it is a trust problem, and that one
 is not fixed by building harder.
 
-What is left is one registry — **ACR (5c)**. Phase 5 adds it to a tool the
-business can already open, deliberately after and not before. Every other item
-on it is done, including the one it grew: the Plan Vivo adapter reached the V5
+**Phase 5 is finished.** ACR (5c) was the last name on the original list, and
+it was not where the plan said: it left the APX platform for **ICE
+GreenTrace**, which turned out to be a seventh platform — and one with a second
+tenant, ART, sitting there for whenever somebody wants it. Every item on the
+phase is done, including the one it grew: the Plan Vivo adapter reached the V5
 registry only, and V4 turned out to be a whole second platform.
+
+What is left is Phase 6, and the two open items in Phase 4b that need someone
+else's machine.
 
 ---
 
@@ -571,7 +576,89 @@ already holds these credits before scraping, not after.
       Building Elements is the exception and the one to review first. Blast
       radius of the new rules, measured against the real database before the
       change: **471 values added, 0 removed, 0 changed**, all of them Puro's
-- [ ] **5c ACR** — APX ASP platform, form posts and HTML tables. Highest effort
+- [x] **5c ACR — done, 2026-08-04.** ~~APX ASP platform, form posts and HTML
+      tables. Highest effort~~. **ACR is not on APX any more**, and that is the
+      finding the rest of it followed from. `acr2.apx.com` still answers — with
+      HTTP 200 and "You have reached an invalid page" for every path, including
+      the old report URLs, so a scraper written against the plan would have
+      found nothing and raised nothing. ACR's own public-reports page named the
+      new home in a single fetch: **ICE GreenTrace**. Contract in
+      `docs/api-contract-acr.md`, adapter in `registries/greentrace/` +
+      `registries/acr/`.
+
+      **994 projects, 3,359 issuance blocks, 10,725 retirements and 1,358
+      cancellations**, every count reconciled against the registry's own on a
+      full live sync (2026-08-05). Issued credits reconcile three ways — the
+      ledger, the project list's own per-project figure (994 of 994 agree), and
+      the whole holdings book, whose ACTIVE and INACTIVE parts equal issued
+      minus retired minus cancelled to the unit. Coverage: crediting period
+      994/994, Estado 992/994, Yearly Ex Ante 987/994, Tipo Micro 993/994,
+      Durabilidade 994/994.
+
+      What the plan expected and what was actually there:
+
+      - **No form posts against HTML, but form posts against JSON.** The site
+        is an ICE CMS app whose table component publishes its own contract in
+        the page: a `reportUrl`, and a chunk that shows it being called as
+        `POST {reportUrl}/results` with an
+        `application/x-www-form-urlencoded` body. The same criteria as a query
+        string or as JSON both return the generic HTTP 500 — as does a GET on
+        the `reportUrl` itself, which is not an endpoint at all.
+      - **It is a platform, the seventh.** GreenTrace serves ACR and **ART**
+        (Architecture for REDD+ Transactions, 30 projects), and ART is the same
+        API with one path segment changed — verified, not assumed. It has no
+        adapter and is a subclass away.
+      - **`max` clamps at 2000 in silence**, the fifth registry here to ignore
+        or clamp a page size. Paging advances on `offset` against the stated
+        `totalCount`, never on the row count that came back.
+
+      Four things the plan did not anticipate:
+
+      - **This registry bans rather than throttles.** A sync at the usual 1/s
+        reached ~93 requests and then took HTTP 429 with `Retry-After: 3600` on
+        every retry; a 20-request probe minutes later tripped the same rule.
+        Roughly 100 requests per ten minutes, and a sync needs ~1,005 because
+        only the per-project detail carries a crediting period. It now runs at
+        one request per seven seconds — about two hours. `RegistryClient` grew
+        a per-registry rate that takes the **minimum** of the adapter's and the
+        global one, so it can only ever be used to go slower, and the retry
+        path now honours a 429's own `Retry-After` up to a cap.
+      - **One URL is four ledgers, and the unfiltered view is all of them at
+        once.** `holdingStatus` selects the ledger *and* the key it answers
+        under. With no status the report returns the whole holdings book —
+        16,385 records summing to exactly the issued total, whose RETIRED and
+        CANCELED subsets are key-identical to the two ledgers. Ingesting it
+        would have restated both, which is SocialCarbon's `asset` trap again.
+      - **Most of its "cancellations" are conversions.** 1,166 of 1,358 read
+        "Convert to ARB Offset Credits" or "…Ecology…": the units leave for
+        California's or Washington's compliance registry and go on existing.
+        They are stored as the registry states them, with the reason on every
+        row, and raised in `docs/field-mapping.md` — it is the first thing to
+        agree with the business about this registry.
+      - **It publishes no country name at all.** An ISO code in the list, the
+        same code on the detail, and no country field in the report's own
+        filters. `País` is blank for all 994 (user's decision, 2026-08-04);
+        Continent derives from the code. `biome.yaml` gained an ISO-code band
+        as its last rule so that 351 forest projects are not blank for the sake
+        of a field name — blast radius against the real database measured at
+        **4 rows added, 0 changed**.
+
+      And one thing found by following this file's own rule — *ask what else
+      already holds these credits* — rather than by scraping: **two ACR
+      projects are also Verra projects.** `ACR0242` is `VCS 559` and
+      `ACR0388`/`ACR1192` are `VCS 573`, two mine-methane projects whose
+      crediting periods are consecutive rather than concurrent, so the tranches
+      are disjoint and both rows ship cross-linked. That is the **second**
+      known cross-registry duplicate in the database, after Cercarbono against
+      BioCarbon. ACR's own `hasAnotherCarbonProgram` flag (true on 16 of 994,
+      and naming no programme) is what pointed at them.
+
+      **The refusals are the operational story.** Reaching all 994 took three
+      attempts across two days: a 429 at 1/s, then a blanket
+      `401 "Invalid API Key"` on every route a few hundred requests into a
+      7-second-spaced run, which cleared after ~6.5 hours. The finished run
+      then re-ran from the response cache in **16 seconds**, which is what
+      makes "re-run it later" a real answer rather than a hopeful one
 - [x] **5d SocialCarbon — done, 2026-08-04.** ~~**blocked**: serves a parked
       CDN page~~ ~~**unblocked, 2026-07-29**~~. `registry.socialcarbon.org` is
       a **Bubble.io application with an open, unauthenticated Data API**, run

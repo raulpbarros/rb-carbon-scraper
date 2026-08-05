@@ -34,11 +34,31 @@ from . import db, excel, pipeline, settings
 app = typer.Typer(add_completion=False, help="Scrape carbon registries into SQLite.")
 console = Console()
 
+def _registry_choices() -> list[str]:
+    """Every registry, spelled the way `resolve()` accepts, in table order.
+
+    The stored identifier lowercased, which is the form `ALIASES` is keyed in
+    — `gold-standard`, not the shorter `gs`, because a help string is read
+    once and has to say which registry it means. A test pins that each of
+    these still resolves.
+    """
+    from . import registries
+
+    return [name.lower().replace("_", "-") for name in registries.ALL]
+
+
 # Shared option definitions. Typer reads these as default values, so one
 # object per option is enough and every command that takes it spells it the
 # same way — `--verbose` alone appeared verbatim nine times.
+# Built from the dispatch table rather than written out: the hand-written list
+# named four registries long after there were seven, so anyone reading `--help`
+# was told a registry did not exist. Aliases are what a user actually types, so
+# the short ones are what this shows.
 REGISTRY_OPTION = typer.Option(
-    "all", "--registry", "-r", help="verra | gs | cercarbono | planvivo | all"
+    "all",
+    "--registry",
+    "-r",
+    help=" | ".join([*_registry_choices(), "all"]),
 )
 VERBOSE_OPTION = typer.Option(False, "--verbose", "-v")
 LIMIT_OPTION = typer.Option(None, help="Stop after N records per resource.")

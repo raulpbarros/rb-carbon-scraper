@@ -1,0 +1,3091 @@
+{
+ "P2323C9VXD25": {
+  "projectDetail": {
+   "projectKey": "P2323C9VXD25",
+   "projectName": "Razorback IFM Project",
+   "projectDescription": "Weyerhaeuser Company owns and operates over 1.2 Million acres of timberland in Arkansas. This project will enroll a portion of those acres in an Improved Forest Management project to sequester more carbon than what would have occurred in the baseline scenario. Compared to the baseline, the project will provide a climate benefit through activities such as extended rotation ages and/or reduced harvest intensity. The property is SFI-certified and is primarily made up of loblolly pine forests and hardwood bottomlands.",
+   "projectStatus": "ACTIVE",
+   "projectListingStatus": "Registered",
+   "creditType": "NONE",
+   "creditingProgram": "ACR",
+   "registryCode": "ACR",
+   "registryKey": "ACR_REGISTRY",
+   "projectReferenceId": "ACR0885",
+   "hasAnotherCarbonProgram": false,
+   "hasAnotherEnvironmentalMarket": false,
+   "isPublic": true,
+   "isRegistryTransferred": false,
+   "isTribeAffiliated": false,
+   "projectCreationDate": "2023-06-20",
+   "projectRegistrationDate": null,
+   "projectStartDate": "2023-02-01",
+   "estimatedAnnualCredits": 40000,
+   "estimatedTotalCredits": 0,
+   "coverageArea": 56879,
+   "coverageAreaUnit": null,
+   "numberOfCohorts": 0,
+   "numberOfLandowners": 0,
+   "projectMethodologyMethodologyKey": "ACR0023",
+   "projectMethodologyName": "Improved Forest Management (IFM) on Non-Federal U.S. Forestlands",
+   "projectContactPersonFirstName": null,
+   "projectContactPersonFullName": null,
+   "projectContactPersonLastName": null,
+   "projectContactPersonEmail": null,
+   "projectContactPersonPhone": null,
+   "projectContactPersonTitle": null,
+   "projectMailingAddrLocName": null,
+   "projectMailingAddrLocAddressLine1": "220 Occidental Ave S",
+   "projectMailingAddrLocCity": "Seattle",
+   "projectMailingAddrLocCountry": "US",
+   "projectMailingAddrLocPostalCode": "98104",
+   "projectMailingAddrLocState": "WA",
+   "projectSiteLocName": null,
+   "projectSiteLocAddressLine1": null,
+   "projectSiteLocCity": null,
+   "projectSiteLocLatitude": 33.98965,
+   "projectSiteLocLongitude": -92.0856,
+   "projectSiteLocDescription": "Southeast Arkansas",
+   "projectSiteLocAdditionalStates": null,
+   "projectSiteLocCountry": "US",
+   "projectSiteLocPostalCode": null,
+   "projectSiteLocState": "ARKANSAS",
+   "projectTypeCode": "FC",
+   "projectTypeName": "Forest Carbon",
+   "owningProfileKey": "4003497037164707840:PROJECT_DEVELOPER",
+   "owningProfileCompanyId": "4003497037164707840",
+   "owningProfileProfileName": "Weyerhaeuser NR Company - Project Developer",
+   "owningProfileParticipantName": "Weyerhaeuser NR Company",
+   "owningProfileStatus": "ACTIVE",
+   "owningProfileIsRegistryProfile": false,
+   "projectOperatorName": null,
+   "projectOperatorIsRegistryProfile": null,
+   "projectDesigneeName": null,
+   "projectDesigneeProfileKey": null,
+   "projectDesigneeIsRegistryProfile": null,
+   "projectProponentName": null,
+   "projectProponentProfileKey": "4003497037164707840:PROJECT_DEVELOPER",
+   "projectProponentIsRegistryProfile": false,
+   "verifierProfileKey": "4003496956013314048:PROJECT_VVB",
+   "verifierCompanyId": "4003496956013314048",
+   "verifierProfileName": "S&A Carbon, LLC - Project VVB",
+   "verifierParticipantName": "S&A Carbon, LLC",
+   "verifierStatus": "ACTIVE",
+   "verifierIsRegistryProfile": false,
+   "validatorProfileKey": "4003496956013314048:PROJECT_VVB",
+   "validatorCompanyId": "4003496956013314048",
+   "validatorProfileName": "S&A Carbon, LLC - Project VVB",
+   "validatorParticipantName": "S&A Carbon, LLC",
+   "validatorStatus": "ACTIVE",
+   "validatorIsRegistryProfile": false,
+   "currentCreditingPeriodStartDate": "2023-02-01",
+   "currentCreditingPeriodEndDate": "2043-01-31",
+   "initialCreditingPeriodStartDate": "2023-02-01",
+   "initialCreditingPeriodEndDate": "2043-01-31",
+   "projectExtensionMap": {
+    "timingOfPublicDisplay": "LISTING",
+    "lastProjectStateChanged": "2025-07-22T00:00:00.000Z",
+    "lastProjectStatusChanged": "2025-07-22T00:00:00.000Z",
+    "conservationEasement": "false",
+    "conservationEasementStateOrJurisdiction": null
+   },
+   "projectHoldingsTotalQuantity": 433300,
+   "projectHoldingsTotalRetiredQuantity": 133073,
+   "projectHoldingsTotalReserveQuantity": 95344,
+   "website": null
+  },
+  "developerLink": {
+   "type": "link",
+   "url": "/acr/developer/4003497037164707840:PROJECT_DEVELOPER",
+   "method": "GET",
+   "params": [],
+   "label": "Weyerhaeuser NR Company - Project Developer"
+  },
+  "documents": {
+   "datasets": {
+    "publicDocuments": {
+     "rows": [
+      {
+       "name": "ACR885-RP2_VerificationOpinion_v3-20251027.pdf",
+       "title": "ACR885-RP2_VerificationOpinion_v3-20251027",
+       "type": "Verification Opinion",
+       "category": "Verification",
+       "uploadDate": "2025-10-27",
+       "uploadedBy": "S&A Carbon, LLC",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0885/document/ff9b33f2-96be-5535-bc12-532d791078a8/download",
+        "method": "GET",
+        "params": [],
+        "label": "ACR885-RP2_VerificationOpinion_v3-20251027.pdf"
+       }
+      },
+      {
+       "name": "ACR885-RP2_VerificationReport_v2.3-20251027.pdf",
+       "title": "ACR885-RP2_VerificationReport_v2.3-20251027",
+       "type": "Verification Report",
+       "category": "Verification",
+       "uploadDate": "2025-10-27",
+       "uploadedBy": "S&A Carbon, LLC",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0885/document/bbd3640a-b414-5758-9bd7-018afcaefc73/download",
+        "method": "GET",
+        "params": [],
+        "label": "ACR885-RP2_VerificationReport_v2.3-20251027.pdf"
+       }
+      },
+      {
+       "name": "ACR-Monitoring-Report-v5.1-Razorback_IFM_20251023.pdf",
+       "title": "ACR-Monitoring-Report-v5.1-Razorback_IFM_20251023",
+       "type": "Monitoring Report",
+       "category": "Verification",
+       "uploadDate": "2025-10-27",
+       "uploadedBy": "Weyerhaeuser NR Company",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0885/document/198dcf90-2731-5839-a47e-c74d8a379e5e/download",
+        "method": "GET",
+        "params": [],
+        "label": "ACR-Monitoring-Report-v5.1-Razorback_IFM_20251023.pdf"
+       }
+      },
+      {
+       "name": "RazorbackRP2AcreChange_20251023.pdf",
+       "title": "RazorbackRP2AcreChange_20251023",
+       "type": "Monitoring Report",
+       "category": "Verification",
+       "uploadDate": "2025-10-27",
+       "uploadedBy": "Weyerhaeuser NR Company",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0885/document/73a0c1f5-e423-5024-ad0f-c596e3bb63ca/download",
+        "method": "GET",
+        "params": [],
+        "label": "RazorbackRP2AcreChange_20251023.pdf"
+       }
+      },
+      {
+       "name": "Razorback RP2 ERT_20250909.pdf",
+       "title": "Razorback RP2 ERT_20250909",
+       "type": "Monitoring Report",
+       "category": "Verification",
+       "uploadDate": "2025-10-20",
+       "uploadedBy": "Weyerhaeuser NR Company",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0885/document/a7fa5854-818b-5412-92b2-a05963d8a9bb/download",
+        "method": "GET",
+        "params": [],
+        "label": "Razorback RP2 ERT_20250909.pdf"
+       }
+      },
+      {
+       "name": "Razorback ERT Actuals Monitoring Report_04032025.pdf",
+       "title": "Razorback ERT Actuals Monitoring Report_04032025",
+       "type": "Monitoring Report",
+       "category": "Verification",
+       "uploadDate": "2025-07-18",
+       "uploadedBy": "Weyerhaeuser NR Company",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0885/document/494e08ed-4bcd-5dc0-abb1-fc1f320f6d11/download",
+        "method": "GET",
+        "params": [],
+        "label": "Razorback ERT Actuals Monitoring Report_04032025.pdf"
+       }
+      },
+      {
+       "name": "Razorback_IFM_ACR_Monitoring_Report_06202025.pdf",
+       "title": "Razorback_IFM_ACR_Monitoring_Report_06202025",
+       "type": "Monitoring Report",
+       "category": "Verification",
+       "uploadDate": "2025-07-18",
+       "uploadedBy": "Weyerhaeuser NR Company",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0885/document/6c1f7c6e-1945-59ec-9ccb-05c16310dab0/download",
+        "method": "GET",
+        "params": [],
+        "label": "Razorback_IFM_ACR_Monitoring_Report_06202025.pdf"
+       }
+      },
+      {
+       "name": "Razorback SDG Report_06202025.pdf",
+       "title": "Razorback SDG Report_06202025",
+       "type": "GHG Project Plan",
+       "category": "Verification",
+       "uploadDate": "2025-07-18",
+       "uploadedBy": "Weyerhaeuser NR Company",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0885/document/d436f308-9c91-5158-b4ca-ad86ae3340da/download",
+        "method": "GET",
+        "params": [],
+        "label": "Razorback SDG Report_06202025.pdf"
+       }
+      },
+      {
+       "name": "Razorback ES Assessment.pdf",
+       "title": "Razorback E&S Assessment",
+       "type": "GHG Project Plan",
+       "category": "Verification",
+       "uploadDate": "2025-07-18",
+       "uploadedBy": "Weyerhaeuser NR Company",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0885/document/1ebe5cd9-87b6-5c83-94b4-d8cd72249f3c/download",
+        "method": "GET",
+        "params": [],
+        "label": "Razorback ES Assessment.pdf"
+       }
+      },
+      {
+       "name": "Razorback GHG Plan_06202025.pdf",
+       "title": "Razorback GHG Plan_06202025",
+       "type": "GHG Project Plan",
+       "category": "Verification",
+       "uploadDate": "2025-07-18",
+       "uploadedBy": "Weyerhaeuser NR Company",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0885/document/ebd07aee-7436-568e-8359-610db135f28e/download",
+        "method": "GET",
+        "params": [],
+        "label": "Razorback GHG Plan_06202025.pdf"
+       }
+      },
+      {
+       "name": "ACR885-RP1_Validation-Verification_Report_v3.6-20250717.pdf",
+       "title": "ACR885-RP1_Validation-Verification_Report_v3.6-20250717",
+       "type": "Validation Report",
+       "category": "Verification",
+       "uploadDate": "2025-07-18",
+       "uploadedBy": "S&A Carbon, LLC",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0885/document/790bf341-c234-5d5d-9242-7ec81abe57c0/download",
+        "method": "GET",
+        "params": [],
+        "label": "ACR885-RP1_Validation-Verification_Report_v3.6-20250717.pdf"
+       }
+      },
+      {
+       "name": "ACR885-RP1_Validation-Verification_Opinion_v5-20250717.pdf",
+       "title": "ACR885-RP1_Validation-Verification_Opinion_v5-20250717",
+       "type": "Verification Opinion",
+       "category": "Verification",
+       "uploadDate": "2025-07-18",
+       "uploadedBy": "S&A Carbon, LLC",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0885/document/c6c312f1-2fcd-5ed9-9c81-e87ba67f42ae/download",
+        "method": "GET",
+        "params": [],
+        "label": "ACR885-RP1_Validation-Verification_Opinion_v5-20250717.pdf"
+       }
+      },
+      {
+       "name": "ACR885-RP1_Validation-Verification_Report_v3.6-20250717.pdf",
+       "title": "ACR885-RP1_Validation-Verification_Report_v3.6-20250717",
+       "type": "Verification Report",
+       "category": "Verification",
+       "uploadDate": "2025-07-18",
+       "uploadedBy": "S&A Carbon, LLC",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0885/document/77b169c6-8c17-5921-a00a-4b4c0cbbd52c/download",
+        "method": "GET",
+        "params": [],
+        "label": "ACR885-RP1_Validation-Verification_Report_v3.6-20250717.pdf"
+       }
+      },
+      {
+       "name": "ACR-GHG-Project-Supplemental-Attestation-ACR885-Razorback.pdf",
+       "title": "ACR-GHG-Project-Supplemental-Attestation-ACR885-Razorback",
+       "type": "Project Listing",
+       "category": "Project Submittal",
+       "uploadDate": "2025-06-20",
+       "uploadedBy": "ACR",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0885/document/7c17c565-ce7e-5961-ba6f-ea24c93f7c84/download",
+        "method": "GET",
+        "params": [],
+        "label": "ACR-GHG-Project-Supplemental-Attestation-ACR885-Razorback.pdf"
+       }
+      },
+      {
+       "name": "Risk and Buffer Determination.xlsx",
+       "title": "Risk and Buffer Determination",
+       "type": "GHG Project Plan",
+       "category": "Verification",
+       "uploadDate": "2025-06-13",
+       "uploadedBy": "Weyerhaeuser NR Company",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0885/document/c710f5bb-05d0-5e33-bfa2-274220e3800d/download",
+        "method": "GET",
+        "params": [],
+        "label": "Risk and Buffer Determination.xlsx"
+       }
+      },
+      {
+       "name": "Razorback IFM ACR Listing Form.pdf",
+       "title": "Razorback IFM ACR Listing Form",
+       "type": "Project Listing",
+       "category": "Project Submittal",
+       "uploadDate": "2023-05-15",
+       "uploadedBy": "Weyerhaeuser NR Company",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0885/document/a4bf7a24-a71e-5ceb-b3c1-532d0701dc03/download",
+        "method": "GET",
+        "params": [],
+        "label": "Razorback IFM ACR Listing Form.pdf"
+       }
+      }
+     ],
+     "totalCount": 16
+    }
+   }
+  }
+ },
+ "P2323C9VVN24": {
+  "projectDetail": {
+   "projectKey": "P2323C9VVN24",
+   "projectName": "Green Diamond Resource Company Klamath East IFM",
+   "projectDescription": "The Klamath IFM East project area is in Klamath and Lake Counties in the proximity of Klamath Falls, Oregon. The project area contains approximately 450,000 acres.  Forest management is certified by the Sustainable Forestry Initiative. The project activity extends rotations beyond the economic optimum and will sequester carbon beyond all legal and regulatory requirements, as well as above and beyond common practice activities.",
+   "projectStatus": "TERMINATED",
+   "projectListingStatus": "N/A",
+   "creditType": "NONE",
+   "creditingProgram": "California Air Resources Board",
+   "registryCode": "ACR",
+   "registryKey": "ACR_REGISTRY",
+   "projectReferenceId": "ACR0273",
+   "hasAnotherCarbonProgram": false,
+   "hasAnotherEnvironmentalMarket": false,
+   "isPublic": true,
+   "isRegistryTransferred": false,
+   "isTribeAffiliated": false,
+   "projectCreationDate": "2015-10-13",
+   "projectRegistrationDate": null,
+   "projectStartDate": "2015-10-13",
+   "estimatedAnnualCredits": 200000,
+   "estimatedTotalCredits": 0,
+   "coverageArea": 402349,
+   "coverageAreaUnit": null,
+   "numberOfCohorts": 0,
+   "numberOfLandowners": 0,
+   "projectMethodologyMethodologyKey": "ACR0005",
+   "projectMethodologyName": "ARB Compliance Offset Protocol: U.S. Forest Projects",
+   "projectContactPersonFirstName": null,
+   "projectContactPersonFullName": null,
+   "projectContactPersonLastName": null,
+   "projectContactPersonEmail": null,
+   "projectContactPersonPhone": null,
+   "projectContactPersonTitle": null,
+   "projectMailingAddrLocName": null,
+   "projectMailingAddrLocAddressLine1": "1301 Fifth Avenue",
+   "projectMailingAddrLocCity": "Seattle",
+   "projectMailingAddrLocCountry": "US",
+   "projectMailingAddrLocPostalCode": "98101-2613",
+   "projectMailingAddrLocState": "WA",
+   "projectSiteLocName": null,
+   "projectSiteLocAddressLine1": null,
+   "projectSiteLocCity": null,
+   "projectSiteLocLatitude": 42.67289,
+   "projectSiteLocLongitude": -121.1839,
+   "projectSiteLocDescription": "Proximity of Klamath Falls",
+   "projectSiteLocAdditionalStates": null,
+   "projectSiteLocCountry": "US",
+   "projectSiteLocPostalCode": null,
+   "projectSiteLocState": "OREGON",
+   "projectTypeCode": "FC",
+   "projectTypeName": "Forest Carbon",
+   "owningProfileKey": "4003496955577106432:PROJECT_DEVELOPER",
+   "owningProfileCompanyId": "4003496955577106432",
+   "owningProfileProfileName": "Green Diamond Resource Company - Project Developer",
+   "owningProfileParticipantName": "Green Diamond Resource Company",
+   "owningProfileStatus": "ACTIVE",
+   "owningProfileIsRegistryProfile": false,
+   "projectOperatorName": null,
+   "projectOperatorIsRegistryProfile": false,
+   "projectDesigneeName": null,
+   "projectDesigneeProfileKey": null,
+   "projectDesigneeIsRegistryProfile": null,
+   "projectProponentName": null,
+   "projectProponentProfileKey": null,
+   "projectProponentIsRegistryProfile": null,
+   "verifierProfileKey": "4003496928674840576:PROJECT_VVB",
+   "verifierCompanyId": "4003496928674840576",
+   "verifierProfileName": "TÜV SÜD America, Inc. - Project VVB",
+   "verifierParticipantName": "TÜV SÜD America, Inc.",
+   "verifierStatus": "ACTIVE",
+   "verifierIsRegistryProfile": false,
+   "validatorProfileKey": null,
+   "validatorCompanyId": null,
+   "validatorProfileName": null,
+   "validatorParticipantName": null,
+   "validatorStatus": null,
+   "validatorIsRegistryProfile": null,
+   "currentCreditingPeriodStartDate": "2015-10-13",
+   "currentCreditingPeriodEndDate": "2040-10-12",
+   "initialCreditingPeriodStartDate": "2015-10-13",
+   "initialCreditingPeriodEndDate": "2040-10-12",
+   "projectExtensionMap": {
+    "timingOfPublicDisplay": "LISTING",
+    "complianceProjectId": "CAFR5233",
+    "lastProjectStateChanged": "2024-04-08T00:00:00.000Z",
+    "lastProjectStatusChanged": "2024-04-08T00:00:00.000Z",
+    "conservationEasement": "false",
+    "conservationEasementStateOrJurisdiction": null
+   },
+   "projectHoldingsTotalQuantity": 1149657,
+   "projectHoldingsTotalRetiredQuantity": 0,
+   "projectHoldingsTotalReserveQuantity": 0,
+   "website": null
+  },
+  "developerLink": {
+   "type": "link",
+   "url": "/acr/developer/4003496955577106432:PROJECT_DEVELOPER",
+   "method": "GET",
+   "params": [],
+   "label": "Green Diamond Resource Company - Project Developer"
+  },
+  "documents": {
+   "datasets": {
+    "publicDocuments": {
+     "rows": [
+      {
+       "name": "ACR273 Project Change of Status Memo.pdf",
+       "title": "ACR273 Project Change of Status Memo",
+       "type": "Other",
+       "category": "Other",
+       "uploadDate": "2024-04-08",
+       "uploadedBy": "ACR",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0273/document/2a45c90b-2bd7-5cf2-a6ac-09bd6ef69c46/download",
+        "method": "GET",
+        "params": [],
+        "label": "ACR273 Project Change of Status Memo.pdf"
+       }
+      },
+      {
+       "name": "CAFR5233-ACR273 Klamath East Reversal OVS 2023 03 15.pdf",
+       "title": "CAFR5233-ACR273 Klamath East Reversal OVS 2023 03 15",
+       "type": "Offset Verification Statement (OVS)",
+       "category": "Verification",
+       "uploadDate": "2023-03-27",
+       "uploadedBy": "TÜV SÜD America, Inc.",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0273/document/1491a4a5-406e-5e0b-8b10-635be3f92433/download",
+        "method": "GET",
+        "params": [],
+        "label": "CAFR5233-ACR273 Klamath East Reversal OVS 2023 03 15.pdf"
+       }
+      },
+      {
+       "name": "CAFR5233-ACR273 Klamath East RP6 OVS 2023 03 15.pdf",
+       "title": "CAFR5233-ACR273 Klamath East RP6 OVS 2023 03 15",
+       "type": "Offset Verification Statement (OVS)",
+       "category": "Verification",
+       "uploadDate": "2023-03-27",
+       "uploadedBy": "TÜV SÜD America, Inc.",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0273/document/0e998914-a5b6-5639-a1f7-01532556375b/download",
+        "method": "GET",
+        "params": [],
+        "label": "CAFR5233-ACR273 Klamath East RP6 OVS 2023 03 15.pdf"
+       }
+      },
+      {
+       "name": "ER_RP6_ChangeLog_V1-0_20230324.pdf",
+       "title": "ER_RP6_ChangeLog_V1-0_20230324",
+       "type": "Offset Project Data Report (OPDR)",
+       "category": "Verification",
+       "uploadDate": "2023-03-24",
+       "uploadedBy": "Green Diamond Resource Company",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0273/document/74479264-3341-5676-a761-c98d141204b9/download",
+        "method": "GET",
+        "params": [],
+        "label": "ER_RP6_ChangeLog_V1-0_20230324.pdf"
+       }
+      },
+      {
+       "name": "EC_RP6_OPDR_V1-4_20230313_signed.pdf",
+       "title": "EC_RP6_OPDR_V1-4_20230313_signed",
+       "type": "Offset Project Data Report (OPDR)",
+       "category": "Verification",
+       "uploadDate": "2023-03-15",
+       "uploadedBy": "Green Diamond Resource Company",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0273/document/ad468f07-8135-5334-9a63-c80ed51463a3/download",
+        "method": "GET",
+        "params": [],
+        "label": "EC_RP6_OPDR_V1-4_20230313_signed.pdf"
+       }
+      },
+      {
+       "name": "EC_RP6_OPDR_AppendixA_V1-0_20220912.xlsx",
+       "title": "EC_RP6_OPDR_AppendixA_V1-0_20220912",
+       "type": "Offset Project Data Report (OPDR)",
+       "category": "Verification",
+       "uploadDate": "2023-02-10",
+       "uploadedBy": "Green Diamond Resource Company",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0273/document/490ebb9e-6153-56de-a4ae-1e9877a2caf7/download",
+        "method": "GET",
+        "params": [],
+        "label": "EC_RP6_OPDR_AppendixA_V1-0_20220912.xlsx"
+       }
+      },
+      {
+       "name": "EC_RPR_CarbonEstimate_V1-3_20230110.pdf",
+       "title": "EC_RPR_CarbonEstimate_V1-3_20230110",
+       "type": "Notice of Forest Carbon Reversal",
+       "category": "Other",
+       "uploadDate": "2023-02-10",
+       "uploadedBy": "Green Diamond Resource Company",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0273/document/9205a0f3-76f4-5b82-aec6-a27c15d6783f/download",
+        "method": "GET",
+        "params": [],
+        "label": "EC_RPR_CarbonEstimate_V1-3_20230110.pdf"
+       }
+      },
+      {
+       "name": "CAFR5233-RP5_OVS_14July2021.pdf",
+       "title": "CAFR5233-RP5_OVS_14July2021",
+       "type": "Offset Verification Statement (OVS)",
+       "category": "Verification",
+       "uploadDate": "2021-07-15",
+       "uploadedBy": "S&A Carbon, LLC",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0273/document/467d4d71-a457-56d5-85cf-ddf91a4164dc/download",
+        "method": "GET",
+        "params": [],
+        "label": "CAFR5233-RP5_OVS_14July2021.pdf"
+       }
+      },
+      {
+       "name": "Klamath East IFM_OPDR_RP5_Version3_13July2021_GSsigned.pdf",
+       "title": "Klamath East IFM_OPDR_RP5_Version3_13July2021_GSsigned",
+       "type": "Offset Project Data Report (OPDR)",
+       "category": "Verification",
+       "uploadDate": "2021-07-15",
+       "uploadedBy": "Green Diamond Resource Company",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0273/document/e77fc5a3-da66-507c-a9b1-a52322f4ca05/download",
+        "method": "GET",
+        "params": [],
+        "label": "Klamath East IFM_OPDR_RP5_Version3_13July2021_GSsigned.pdf"
+       }
+      },
+      {
+       "name": "Appendix A_OPDR_RP5_Klamath East IFM_13July2021.xlsx",
+       "title": "Appendix A_OPDR_RP5_Klamath East IFM_13July2021",
+       "type": "Offset Project Data Report (OPDR)",
+       "category": "Verification",
+       "uploadDate": "2021-07-15",
+       "uploadedBy": "Green Diamond Resource Company",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0273/document/71db8a8e-7957-5d14-8cfb-9b6c1715b033/download",
+        "method": "GET",
+        "params": [],
+        "label": "Appendix A_OPDR_RP5_Klamath East IFM_13July2021.xlsx"
+       }
+      },
+      {
+       "name": "CAFR5233-RP4_OVS_v3-20201218.pdf",
+       "title": "CAFR5233-RP4_OVS_v3-20201218",
+       "type": "Offset Verification Statement (OVS)",
+       "category": "Verification",
+       "uploadDate": "2020-12-18",
+       "uploadedBy": "S&A Carbon, LLC",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0273/document/da5d1639-92d7-579c-bc69-7201c81d0504/download",
+        "method": "GET",
+        "params": [],
+        "label": "CAFR5233-RP4_OVS_v3-20201218.pdf"
+       }
+      },
+      {
+       "name": "Klamath East IFM_OPDR_RP4_Version_3_17Dec2020_signed.pdf",
+       "title": "Klamath East IFM_OPDR_RP4_Version_3_17Dec2020_signed",
+       "type": "Offset Project Data Report (OPDR)",
+       "category": "Verification",
+       "uploadDate": "2020-12-18",
+       "uploadedBy": "Green Diamond Resource Company",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0273/document/9bfa22bc-aa6d-5347-aa7b-2c47b88d8d23/download",
+        "method": "GET",
+        "params": [],
+        "label": "Klamath East IFM_OPDR_RP4_Version_3_17Dec2020_signed.pdf"
+       }
+      },
+      {
+       "name": "Appendix A_OPDR_RP4_Klamath East IFM_03April2020_rev_17Dec2020.xlsx",
+       "title": "Appendix A_OPDR_RP4_Klamath East IFM_03April2020_rev_17Dec2020",
+       "type": "Offset Project Data Report (OPDR)",
+       "category": "Verification",
+       "uploadDate": "2020-12-18",
+       "uploadedBy": "Green Diamond Resource Company",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0273/document/e5f149d4-9f84-5700-99d2-371e401b5240/download",
+        "method": "GET",
+        "params": [],
+        "label": "Appendix A_OPDR_RP4_Klamath East IFM_03April2020_rev_17Dec2020.xlsx"
+       }
+      },
+      {
+       "name": "CAFR5233-RP3_OVS_v2-20191220.pdf",
+       "title": "CAFR5233-RP3_OVS_v2-20191220",
+       "type": "Offset Verification Statement (OVS)",
+       "category": "Verification",
+       "uploadDate": "2019-12-20",
+       "uploadedBy": "S&A Carbon, LLC",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0273/document/cb957069-35dc-58a1-ad2a-26786c71deee/download",
+        "method": "GET",
+        "params": [],
+        "label": "CAFR5233-RP3_OVS_v2-20191220.pdf"
+       }
+      },
+      {
+       "name": "Klamath East IFM_OPDR_RP3_Version5_07Dec2019_signed.pdf",
+       "title": "Klamath East IFM_OPDR_RP3_Version5_07Dec2019_signed",
+       "type": "Offset Project Data Report (OPDR)",
+       "category": "Verification",
+       "uploadDate": "2019-12-13",
+       "uploadedBy": "Green Diamond Resource Company",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0273/document/6e521311-660e-581c-8147-8fcb6fdb707b/download",
+        "method": "GET",
+        "params": [],
+        "label": "Klamath East IFM_OPDR_RP3_Version5_07Dec2019_signed.pdf"
+       }
+      },
+      {
+       "name": "Appendix A_OPDR_RP3_Klamath East IFM_28May2019.xlsx",
+       "title": "Appendix A_OPDR_RP3_Klamath East IFM_28May2019",
+       "type": "Offset Project Data Report (OPDR)",
+       "category": "Verification",
+       "uploadDate": "2019-12-13",
+       "uploadedBy": "Green Diamond Resource Company",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0273/document/871f651c-ac71-5bb3-9c98-2acfe84f976c/download",
+        "method": "GET",
+        "params": [],
+        "label": "Appendix A_OPDR_RP3_Klamath East IFM_28May2019.xlsx"
+       }
+      },
+      {
+       "name": "CAFR5233_OVS_v2-20181221.pdf",
+       "title": "CAFR5233_OVS_v2-20181221",
+       "type": "Offset Verification Statement (OVS)",
+       "category": "Verification",
+       "uploadDate": "2018-12-21",
+       "uploadedBy": "S&A Carbon, LLC",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0273/document/897b7b63-e84d-5836-969a-9c0c53e60b59/download",
+        "method": "GET",
+        "params": [],
+        "label": "CAFR5233_OVS_v2-20181221.pdf"
+       }
+      },
+      {
+       "name": "Klamath East IFM_OPDR_RP2_Version 5.2_20Dec2018_Signed.pdf",
+       "title": "Klamath East IFM_OPDR_RP2_Version 5.2_20Dec2018_Signed",
+       "type": "Offset Project Data Report (OPDR)",
+       "category": "Verification",
+       "uploadDate": "2018-12-21",
+       "uploadedBy": "Green Diamond Resource Company",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0273/document/9c8aceef-b215-5104-81c1-59aa059748b4/download",
+        "method": "GET",
+        "params": [],
+        "label": "Klamath East IFM_OPDR_RP2_Version 5.2_20Dec2018_Signed.pdf"
+       }
+      },
+      {
+       "name": "CAFR5233_Verification Statement_v6-20181008.pdf",
+       "title": "CAFR5233_Verification Statement_v6-20181008",
+       "type": "Offset Verification Statement (OVS)",
+       "category": "Verification",
+       "uploadDate": "2018-10-08",
+       "uploadedBy": "S&A Carbon, LLC",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0273/document/a9ff0d56-c0d0-5b55-b807-d083fed0f9d1/download",
+        "method": "GET",
+        "params": [],
+        "label": "CAFR5233_Verification Statement_v6-20181008.pdf"
+       }
+      },
+      {
+       "name": "OPDR_GDRCo_Klamth East IFM_v6.0_26Sept2018.pdf",
+       "title": "OPDR_GDRCo_Klamth East IFM_v6.0_26Sept2018",
+       "type": "Offset Project Data Report (OPDR)",
+       "category": "Verification",
+       "uploadDate": "2018-10-03",
+       "uploadedBy": "Green Diamond Resource Company",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0273/document/e4883b83-9b80-5868-90e1-a1d5684b9d66/download",
+        "method": "GET",
+        "params": [],
+        "label": "OPDR_GDRCo_Klamth East IFM_v6.0_26Sept2018.pdf"
+       }
+      },
+      {
+       "name": "Project Boundary Layer.zip",
+       "title": "Project Boundary Layer",
+       "type": "Offset Project Data Report (OPDR)",
+       "category": "Verification",
+       "uploadDate": "2018-02-23",
+       "uploadedBy": "Green Diamond Resource Company",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0273/document/9fb82815-3434-5bf4-9d57-a1ab480d1d40/download",
+        "method": "GET",
+        "params": [],
+        "label": "Project Boundary Layer.zip"
+       }
+      },
+      {
+       "name": "Contours_40FT.zip",
+       "title": "Contours_40FT",
+       "type": "Offset Project Data Report (OPDR)",
+       "category": "Verification",
+       "uploadDate": "2017-10-09",
+       "uploadedBy": "Green Diamond Resource Company",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0273/document/8571e3ad-9d5e-55cf-ae75-d2953a1b078b/download",
+        "method": "GET",
+        "params": [],
+        "label": "Contours_40FT.zip"
+       }
+      },
+      {
+       "name": "GDRCo_Streams_and Lakes.zip",
+       "title": "GDRCo_Streams_and Lakes",
+       "type": "Offset Project Data Report (OPDR)",
+       "category": "Verification",
+       "uploadDate": "2017-10-09",
+       "uploadedBy": "Green Diamond Resource Company",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0273/document/aaae742f-c64a-5079-a7e8-989976b8cc13/download",
+        "method": "GET",
+        "params": [],
+        "label": "GDRCo_Streams_and Lakes.zip"
+       }
+      },
+      {
+       "name": "Lake County Deeds.zip",
+       "title": "Lake County Deeds",
+       "type": "Offset Project Data Report (OPDR)",
+       "category": "Verification",
+       "uploadDate": "2017-10-03",
+       "uploadedBy": "Green Diamond Resource Company",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0273/document/ca5cfe74-91cb-5ff8-90c3-7e684a47898f/download",
+        "method": "GET",
+        "params": [],
+        "label": "Lake County Deeds.zip"
+       }
+      },
+      {
+       "name": "Klamath County Deeds.zip",
+       "title": "Klamath County Deeds",
+       "type": "Offset Project Data Report (OPDR)",
+       "category": "Verification",
+       "uploadDate": "2017-10-03",
+       "uploadedBy": "Green Diamond Resource Company",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0273/document/35b35acf-2ecf-55ee-946c-d5f765c1a578/download",
+        "method": "GET",
+        "params": [],
+        "label": "Klamath County Deeds.zip"
+       }
+      },
+      {
+       "name": "SOP's Klamath East Carbon Cruise Protocols_FINAL_08_17_2016_V1.1_28Sept2017.docx",
+       "title": "SOP's Klamath East Carbon Cruise Protocols_FINAL_08_17_2016_V1.1_28Sept2017",
+       "type": "Offset Project Data Report (OPDR)",
+       "category": "Verification",
+       "uploadDate": "2017-10-03",
+       "uploadedBy": "Green Diamond Resource Company",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0273/document/355868ad-c02b-5534-a1af-30aa89e5ce8f/download",
+        "method": "GET",
+        "params": [],
+        "label": "SOP's Klamath East Carbon Cruise Protocols_FINAL_08_17_2016_V1.1_28Sept2017.docx"
+       }
+      },
+      {
+       "name": "Addendum to the Listing Application-Klamath IFM East_09_26_2015.pdf",
+       "title": "Addendum to the Listing Application-Klamath IFM East_09_26_2015",
+       "type": "Project Listing",
+       "category": "Project Submittal",
+       "uploadDate": "2015-09-27",
+       "uploadedBy": "Green Diamond Resource Company",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0273/document/73a13984-90cf-517c-b8dd-807cb8775077/download",
+        "method": "GET",
+        "params": [],
+        "label": "Addendum to the Listing Application-Klamath IFM East_09_26_2015.pdf"
+       }
+      },
+      {
+       "name": "GDRCo_Klamath EAST IFM_ARB Listing Doc_REVISED_09_26_2015_signed.pdf",
+       "title": "GDRCo_Klamath EAST IFM_ARB Listing Doc_REVISED_09_26_2015_signed",
+       "type": "Project Listing",
+       "category": "Project Submittal",
+       "uploadDate": "2015-09-27",
+       "uploadedBy": "Green Diamond Resource Company",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0273/document/4ace245a-ad47-57ea-b184-4227f1f9b16f/download",
+        "method": "GET",
+        "params": [],
+        "label": "GDRCo_Klamath EAST IFM_ARB Listing Doc_REVISED_09_26_2015_signed.pdf"
+       }
+      },
+      {
+       "name": "Attachment J_GDRCo_Klamath IFM East_REVISED_09_26_2015.pdf",
+       "title": "Attachment J_GDRCo_Klamath IFM East_REVISED_09_26_2015",
+       "type": "Project Listing",
+       "category": "Project Submittal",
+       "uploadDate": "2015-09-27",
+       "uploadedBy": "Green Diamond Resource Company",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0273/document/22adf9c7-b4d2-5e0e-b204-509889643ea6/download",
+        "method": "GET",
+        "params": [],
+        "label": "Attachment J_GDRCo_Klamath IFM East_REVISED_09_26_2015.pdf"
+       }
+      },
+      {
+       "name": "Attachment A_Deeds_GDRCo_Klamath IFM East.7z",
+       "title": "Attachment A_Deeds_GDRCo_Klamath IFM East",
+       "type": "Project Listing",
+       "category": "Project Submittal",
+       "uploadDate": "2015-09-23",
+       "uploadedBy": "Green Diamond Resource Company",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0273/document/16a63092-db36-5286-a89a-b859316eb9ae/download",
+        "method": "GET",
+        "params": [],
+        "label": "Attachment A_Deeds_GDRCo_Klamath IFM East.7z"
+       }
+      },
+      {
+       "name": "Attachment E_GIS Library_GDRCo_Klamath IFM East.7z",
+       "title": "Attachment E_GIS Library_GDRCo_Klamath IFM East",
+       "type": "Project Listing",
+       "category": "Project Submittal",
+       "uploadDate": "2015-09-23",
+       "uploadedBy": "Green Diamond Resource Company",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0273/document/031894d7-f2a7-591b-aaca-6d42db02ab5f/download",
+        "method": "GET",
+        "params": [],
+        "label": "Attachment E_GIS Library_GDRCo_Klamath IFM East.7z"
+       }
+      },
+      {
+       "name": "Attachment E_Maps_GDRCo_Klamath IFM East.7z",
+       "title": "Attachment E_Maps_GDRCo_Klamath IFM East",
+       "type": "Project Listing",
+       "category": "Project Submittal",
+       "uploadDate": "2015-09-23",
+       "uploadedBy": "Green Diamond Resource Company",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0273/document/c248d465-4d8b-5f30-a927-9aff4fb2a087/download",
+        "method": "GET",
+        "params": [],
+        "label": "Attachment E_Maps_GDRCo_Klamath IFM East.7z"
+       }
+      },
+      {
+       "name": "Attachment I_GDRCo_Klamath IFM East.pdf",
+       "title": "Attachment I_GDRCo_Klamath IFM East",
+       "type": "Project Listing",
+       "category": "Project Submittal",
+       "uploadDate": "2015-09-22",
+       "uploadedBy": "Green Diamond Resource Company",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0273/document/e5c9bd5a-9f65-580f-b248-a7a9d02aeee9/download",
+        "method": "GET",
+        "params": [],
+        "label": "Attachment I_GDRCo_Klamath IFM East.pdf"
+       }
+      },
+      {
+       "name": "Attachment H_GDRCo_Klamath IFM East.pdf",
+       "title": "Attachment H_GDRCo_Klamath IFM East",
+       "type": "Project Listing",
+       "category": "Project Submittal",
+       "uploadDate": "2015-09-22",
+       "uploadedBy": "Green Diamond Resource Company",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0273/document/4fc491d3-1b66-57f6-af98-6e80f9fe23b9/download",
+        "method": "GET",
+        "params": [],
+        "label": "Attachment H_GDRCo_Klamath IFM East.pdf"
+       }
+      },
+      {
+       "name": "Attachment G_GDRCo_Klamath IFM East.pdf",
+       "title": "Attachment G_GDRCo_Klamath IFM East",
+       "type": "Project Listing",
+       "category": "Project Submittal",
+       "uploadDate": "2015-09-22",
+       "uploadedBy": "Green Diamond Resource Company",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0273/document/48c6e7ba-3265-59d9-926d-462d7fbbc825/download",
+        "method": "GET",
+        "params": [],
+        "label": "Attachment G_GDRCo_Klamath IFM East.pdf"
+       }
+      },
+      {
+       "name": "Attachment F_GDRCo_Klamath IFM East.kmz",
+       "title": "Attachment F_GDRCo_Klamath IFM East",
+       "type": "Project Listing",
+       "category": "Project Submittal",
+       "uploadDate": "2015-09-22",
+       "uploadedBy": "Green Diamond Resource Company",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0273/document/69f63782-cf97-597a-b1db-06bc1e5e3eb6/download",
+        "method": "GET",
+        "params": [],
+        "label": "Attachment F_GDRCo_Klamath IFM East.kmz"
+       }
+      },
+      {
+       "name": "Attachment E_GIS_Directory_GDRCo_Klamath IFM East.docx",
+       "title": "Attachment E_GIS_Directory_GDRCo_Klamath IFM East",
+       "type": "Project Listing",
+       "category": "Project Submittal",
+       "uploadDate": "2015-09-22",
+       "uploadedBy": "Green Diamond Resource Company",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0273/document/202de0eb-c3c5-5bab-a1d1-045c95de002e/download",
+        "method": "GET",
+        "params": [],
+        "label": "Attachment E_GIS_Directory_GDRCo_Klamath IFM East.docx"
+       }
+      }
+     ],
+     "totalCount": 37
+    }
+   }
+  }
+ },
+ "P2423C9VR924": {
+  "projectDetail": {
+   "projectKey": "P2423C9VR924",
+   "projectName": "Wolf Lands Forest Carbon Project",
+   "projectDescription": "Wolf Lands Forest Carbon Project carbon project is approximately 11,275 acres of privately owned forestland in Richland County in Wisconsin, Ontonagon County in Michigan, and Lake and St. Louis Counties in Minnesota.",
+   "projectStatus": "ACTIVE",
+   "projectListingStatus": "Registered",
+   "creditType": "NONE",
+   "creditingProgram": "ACR",
+   "registryCode": "ACR",
+   "registryKey": "ACR_REGISTRY",
+   "projectReferenceId": "ACR0628",
+   "hasAnotherCarbonProgram": false,
+   "hasAnotherEnvironmentalMarket": false,
+   "isPublic": true,
+   "isRegistryTransferred": false,
+   "isTribeAffiliated": false,
+   "projectCreationDate": "2021-03-12",
+   "projectRegistrationDate": null,
+   "projectStartDate": "2020-05-20",
+   "estimatedAnnualCredits": 35000,
+   "estimatedTotalCredits": 0,
+   "coverageArea": 11275,
+   "coverageAreaUnit": null,
+   "numberOfCohorts": 0,
+   "numberOfLandowners": 0,
+   "projectMethodologyMethodologyKey": "ACR0023",
+   "projectMethodologyName": "Improved Forest Management (IFM) on Non-Federal U.S. Forestlands",
+   "projectContactPersonFirstName": null,
+   "projectContactPersonFullName": null,
+   "projectContactPersonLastName": null,
+   "projectContactPersonEmail": null,
+   "projectContactPersonPhone": null,
+   "projectContactPersonTitle": null,
+   "projectMailingAddrLocName": null,
+   "projectMailingAddrLocAddressLine1": "PO Box 247",
+   "projectMailingAddrLocCity": "Butler",
+   "projectMailingAddrLocCountry": "US",
+   "projectMailingAddrLocPostalCode": "53007",
+   "projectMailingAddrLocState": "WI",
+   "projectSiteLocName": null,
+   "projectSiteLocAddressLine1": null,
+   "projectSiteLocCity": null,
+   "projectSiteLocLatitude": 47.53671,
+   "projectSiteLocLongitude": -91.5877,
+   "projectSiteLocDescription": "Ontonagon, Richland, Lake and St. Louis Counties",
+   "projectSiteLocAdditionalStates": "WISCONSIN, MINNESOTA",
+   "projectSiteLocCountry": "US",
+   "projectSiteLocPostalCode": null,
+   "projectSiteLocState": "MICHIGAN",
+   "projectTypeCode": "FC",
+   "projectTypeName": "Forest Carbon",
+   "owningProfileKey": "4003497136896868352:PROJECT_DEVELOPER",
+   "owningProfileCompanyId": "4003497136896868352",
+   "owningProfileProfileName": "Wolf Lands, Inc. - Project Developer",
+   "owningProfileParticipantName": "Wolf Lands, Inc.",
+   "owningProfileStatus": "ACTIVE",
+   "owningProfileIsRegistryProfile": false,
+   "projectOperatorName": null,
+   "projectOperatorIsRegistryProfile": null,
+   "projectDesigneeName": null,
+   "projectDesigneeProfileKey": null,
+   "projectDesigneeIsRegistryProfile": null,
+   "projectProponentName": null,
+   "projectProponentProfileKey": "4003497136896868352:PROJECT_DEVELOPER",
+   "projectProponentIsRegistryProfile": false,
+   "verifierProfileKey": "4003496986388463616:PROJECT_VVB",
+   "verifierCompanyId": "4003496986388463616",
+   "verifierProfileName": "Aster Global Environmental Solutions - Project VVB",
+   "verifierParticipantName": "Aster Global Environmental Solutions",
+   "verifierStatus": "ACTIVE",
+   "verifierIsRegistryProfile": false,
+   "validatorProfileKey": "4003496986388463616:PROJECT_VVB",
+   "validatorCompanyId": "4003496986388463616",
+   "validatorProfileName": "Aster Global Environmental Solutions - Project VVB",
+   "validatorParticipantName": "Aster Global Environmental Solutions",
+   "validatorStatus": "ACTIVE",
+   "validatorIsRegistryProfile": false,
+   "currentCreditingPeriodStartDate": "2020-05-20",
+   "currentCreditingPeriodEndDate": "2040-05-19",
+   "initialCreditingPeriodStartDate": "2020-05-20",
+   "initialCreditingPeriodEndDate": "2040-05-19",
+   "projectExtensionMap": {
+    "timingOfPublicDisplay": "LISTING",
+    "lastProjectStateChanged": "2023-05-04T00:00:00.000Z",
+    "lastProjectStatusChanged": "2023-05-04T00:00:00.000Z",
+    "conservationEasement": "false",
+    "conservationEasementStateOrJurisdiction": null
+   },
+   "projectHoldingsTotalQuantity": 230942,
+   "projectHoldingsTotalRetiredQuantity": 165062,
+   "projectHoldingsTotalReserveQuantity": 49184,
+   "website": null
+  },
+  "developerLink": {
+   "type": "link",
+   "url": "/acr/developer/4003497136896868352:PROJECT_DEVELOPER",
+   "method": "GET",
+   "params": [],
+   "label": "Wolf Lands, Inc. - Project Developer"
+  },
+  "documents": {
+   "datasets": {
+    "publicDocuments": {
+     "rows": [
+      {
+       "name": "21080.03_ACR_Validation_and_Verification_Opinion_07072026-_signed.pdf",
+       "title": "21080.03 ACR Validation and Verification Opinion 07072026- signed",
+       "type": "Verification Opinion",
+       "category": "VVB Verification Opinion Docs",
+       "uploadDate": "2026-07-08",
+       "uploadedBy": "Aster Global Environmental Solutions",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0628/document/74ded771-718d-4a81-b4a9-cad4cea56be9/download",
+        "method": "GET",
+        "params": [],
+        "label": "21080.03_ACR_Validation_and_Verification_Opinion_07072026-_signed.pdf"
+       }
+      },
+      {
+       "name": "21080.03_SIG_Wolflands_ACR_Annual_RP4_Report_V5_20260707.pdf",
+       "title": "21080.03_SIG_Wolflands ACR Annual RP4 Report V5_20260707",
+       "type": "Verification Report",
+       "category": "VVB Verification Report Docs",
+       "uploadDate": "2026-07-07",
+       "uploadedBy": "Aster Global Environmental Solutions",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0628/document/c5138033-3676-4473-be28-2ec4e9d56fda/download",
+        "method": "GET",
+        "params": [],
+        "label": "21080.03_SIG_Wolflands_ACR_Annual_RP4_Report_V5_20260707.pdf"
+       }
+      },
+      {
+       "name": "WolfLands_ACR628_MR_RP4_SIGNED_2026.06.05.pdf",
+       "title": "WolfLands_ACR628_MR_RP4_SIGNED_2026.06.05",
+       "type": "Monitoring Report",
+       "category": "Monitoring Report",
+       "uploadDate": "2026-07-01",
+       "uploadedBy": "Wolf Lands, Inc.",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0628/document/471fba36-3d7b-4791-a7f7-d4070afb314b/download",
+        "method": "GET",
+        "params": [],
+        "label": "WolfLands_ACR628_MR_RP4_SIGNED_2026.06.05.pdf"
+       }
+      },
+      {
+       "name": "21080.02_Sig Wolflands ACR628_VerOpinion V5 - signed.pdf",
+       "title": "21080.02_Sig Wolflands ACR628_VerOpinion V5 - signed",
+       "type": "Verification Opinion",
+       "category": "Verification",
+       "uploadDate": "2025-04-09",
+       "uploadedBy": "Aster Global Environmental Solutions",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0628/document/cd36be33-9360-5fd3-a578-38031a0e0060/download",
+        "method": "GET",
+        "params": [],
+        "label": "21080.02_Sig Wolflands ACR628_VerOpinion V5 - signed.pdf"
+       }
+      },
+      {
+       "name": "21080.02_SIG Wolflands_ACR628_VerReport_V5 Final.pdf",
+       "title": "21080.02_SIG Wolflands_ACR628_VerReport_V5 Final",
+       "type": "Verification Report",
+       "category": "Verification",
+       "uploadDate": "2025-04-09",
+       "uploadedBy": "Aster Global Environmental Solutions",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0628/document/f5e187f8-88d7-5b5d-a044-623f4e50941b/download",
+        "method": "GET",
+        "params": [],
+        "label": "21080.02_SIG Wolflands_ACR628_VerReport_V5 Final.pdf"
+       }
+      },
+      {
+       "name": "WolfLands_RP3_ACR-SDG-Cont-Report-v1.0-2024.09.04.pdf",
+       "title": "WolfLands_RP3_ACR-SDG-Cont-Report-v1.0-2024.09.04",
+       "type": "GHG Project Plan",
+       "category": "Verification",
+       "uploadDate": "2025-03-24",
+       "uploadedBy": "Wolf Lands, Inc.",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0628/document/19d2d6b6-bb82-56b2-8138-20f9e4664625/download",
+        "method": "GET",
+        "params": [],
+        "label": "WolfLands_RP3_ACR-SDG-Cont-Report-v1.0-2024.09.04.pdf"
+       }
+      },
+      {
+       "name": "Wolflands_ACR628_SocialEnvReport_V1.1_2024.11.07.pdf",
+       "title": "Wolflands_ACR628_Social&EnvReport_V1.1_2024.11.07",
+       "type": "GHG Project Plan",
+       "category": "Verification",
+       "uploadDate": "2025-03-14",
+       "uploadedBy": "Wolf Lands, Inc.",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0628/document/52fc1ca7-d06d-5d5f-a5e9-a734969b07d6/download",
+        "method": "GET",
+        "params": [],
+        "label": "Wolflands_ACR628_SocialEnvReport_V1.1_2024.11.07.pdf"
+       }
+      },
+      {
+       "name": "WolfLands_ACR628_MR+Appx_RP3_2025.03.13_Signed.pdf",
+       "title": "WolfLands_ACR628_MR+Appx_RP3_2025.03.13_Signed",
+       "type": "Monitoring Report",
+       "category": "Verification",
+       "uploadDate": "2025-03-14",
+       "uploadedBy": "Wolf Lands, Inc.",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0628/document/5b5d420d-0991-5d22-83ac-fb03294bccb5/download",
+        "method": "GET",
+        "params": [],
+        "label": "WolfLands_ACR628_MR+Appx_RP3_2025.03.13_Signed.pdf"
+       }
+      },
+      {
+       "name": "21080.01_SIG Wolflands_ACR628_VerOpinion_ V2.2_20240822.pdf",
+       "title": "21080.01_SIG Wolflands_ACR628_VerOpinion_ V2.2_20240822",
+       "type": "Verification Opinion",
+       "category": "Verification",
+       "uploadDate": "2024-08-22",
+       "uploadedBy": "Aster Global Environmental Solutions",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0628/document/4cda7484-1325-5384-8544-5687b18b3935/download",
+        "method": "GET",
+        "params": [],
+        "label": "21080.01_SIG Wolflands_ACR628_VerOpinion_ V2.2_20240822.pdf"
+       }
+      },
+      {
+       "name": "21080.01_SIG Wolflands_ACR628_VerReport_V2.2_20240822.pdf",
+       "title": "21080.01_SIG Wolflands_ACR628_VerReport_V2.2_20240822",
+       "type": "Verification Report",
+       "category": "Verification",
+       "uploadDate": "2024-08-22",
+       "uploadedBy": "Aster Global Environmental Solutions",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0628/document/0e084b3e-92f2-54e7-9859-0c7094c4b155/download",
+        "method": "GET",
+        "params": [],
+        "label": "21080.01_SIG Wolflands_ACR628_VerReport_V2.2_20240822.pdf"
+       }
+      },
+      {
+       "name": "Wolflands ACR-Multi-Site-Design-Document-v1.1_2024.08.21.pdf",
+       "title": "Wolflands ACR-Multi-Site-Design-Document-v1.1_2024.08.21",
+       "type": "GHG Project Plan",
+       "category": "Verification",
+       "uploadDate": "2024-08-21",
+       "uploadedBy": "Wolf Lands, Inc.",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0628/document/e427a248-38da-5c1e-8c48-7cf73ad2f215/download",
+        "method": "GET",
+        "params": [],
+        "label": "Wolflands ACR-Multi-Site-Design-Document-v1.1_2024.08.21.pdf"
+       }
+      },
+      {
+       "name": "21080.00_SIG WolfLands_ACR ValVer_Report_V2.1_20230503.pdf",
+       "title": "21080.00_SIG WolfLands_ACR ValVer_Report_V2.1_20230503",
+       "type": "Verification Report",
+       "category": "Verification",
+       "uploadDate": "2023-05-03",
+       "uploadedBy": "Aster Global Environmental Solutions",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0628/document/9b17cd9b-2331-5814-a4c6-73955c76c3f3/download",
+        "method": "GET",
+        "params": [],
+        "label": "21080.00_SIG WolfLands_ACR ValVer_Report_V2.1_20230503.pdf"
+       }
+      },
+      {
+       "name": "21080.00_SIG WolfLands_ACR ValVer_Report_V2.1_20230503.pdf",
+       "title": "21080.00_SIG WolfLands_ACR ValVer_Report_V2.1_20230503",
+       "type": "Validation Report",
+       "category": "Verification",
+       "uploadDate": "2023-05-03",
+       "uploadedBy": "Aster Global Environmental Solutions",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0628/document/ed43feec-4a08-58de-bab1-c65037b66fb6/download",
+        "method": "GET",
+        "params": [],
+        "label": "21080.00_SIG WolfLands_ACR ValVer_Report_V2.1_20230503.pdf"
+       }
+      },
+      {
+       "name": "Wolf Lands Forest Carbon Project _GHG Plan_20230501.pdf",
+       "title": "Wolf Lands Forest Carbon Project _GHG Plan_20230501",
+       "type": "GHG Project Plan",
+       "category": "Verification",
+       "uploadDate": "2023-05-01",
+       "uploadedBy": "Spatial Informatics Group",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0628/document/7c48dcd7-0a6c-54ec-9b71-332fee21142b/download",
+        "method": "GET",
+        "params": [],
+        "label": "Wolf Lands Forest Carbon Project _GHG Plan_20230501.pdf"
+       }
+      },
+      {
+       "name": "21080.00_SIG Wolflands_ACR628_VerStatement_V2_20230419.pdf",
+       "title": "21080.00_SIG Wolflands_ACR628_VerStatement_V2_20230419",
+       "type": "Verification Opinion",
+       "category": "Verification",
+       "uploadDate": "2023-04-20",
+       "uploadedBy": "Aster Global Environmental Solutions",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0628/document/02ba1905-8ed5-5599-8d7e-356f390f8a86/download",
+        "method": "GET",
+        "params": [],
+        "label": "21080.00_SIG Wolflands_ACR628_VerStatement_V2_20230419.pdf"
+       }
+      },
+      {
+       "name": "WolfLand_listing form_SIGNED.pdf",
+       "title": "WolfLand_listing form_SIGNED",
+       "type": "Project Listing",
+       "category": "Project Submittal",
+       "uploadDate": "2021-03-08",
+       "uploadedBy": "Spatial Informatics Group",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0628/document/f372688a-7439-5085-ad50-a0dd40509238/download",
+        "method": "GET",
+        "params": [],
+        "label": "WolfLand_listing form_SIGNED.pdf"
+       }
+      }
+     ],
+     "totalCount": 16
+    }
+   }
+  }
+ },
+ "P2423C9VS323": {
+  "projectDetail": {
+   "projectKey": "P2423C9VS323",
+   "projectName": "Advanced Refrigeration - ARS2023013",
+   "projectDescription": "This aggregated project includes one new-construction cold storage facility in Georgia, and the retrofit of four retail locations in Florida and South Carolina. The refrigerants used are R-717 at the cold storage facility and R-449A at the grocery retail locations.",
+   "projectStatus": "COMPLETED",
+   "projectListingStatus": "N/A",
+   "creditType": "NONE",
+   "creditingProgram": "ACR",
+   "registryCode": "ACR",
+   "registryKey": "ACR_REGISTRY",
+   "projectReferenceId": "ACR1187",
+   "hasAnotherCarbonProgram": false,
+   "hasAnotherEnvironmentalMarket": false,
+   "isPublic": true,
+   "isRegistryTransferred": false,
+   "isTribeAffiliated": false,
+   "projectCreationDate": "2025-07-25",
+   "projectRegistrationDate": null,
+   "projectStartDate": "2024-09-10",
+   "estimatedAnnualCredits": 3765,
+   "estimatedTotalCredits": 0,
+   "coverageArea": 0,
+   "coverageAreaUnit": null,
+   "numberOfCohorts": 0,
+   "numberOfLandowners": 0,
+   "projectMethodologyMethodologyKey": "ACR0009",
+   "projectMethodologyName": "Advanced Refrigeration Systems",
+   "projectContactPersonFirstName": null,
+   "projectContactPersonFullName": null,
+   "projectContactPersonLastName": null,
+   "projectContactPersonEmail": null,
+   "projectContactPersonPhone": null,
+   "projectContactPersonTitle": null,
+   "projectMailingAddrLocName": null,
+   "projectMailingAddrLocAddressLine1": "170 S Poplar Rd",
+   "projectMailingAddrLocCity": "Lake Forest",
+   "projectMailingAddrLocCountry": "US",
+   "projectMailingAddrLocPostalCode": "60045",
+   "projectMailingAddrLocState": "IL",
+   "projectSiteLocName": null,
+   "projectSiteLocAddressLine1": null,
+   "projectSiteLocCity": null,
+   "projectSiteLocLatitude": 33.99121,
+   "projectSiteLocLongitude": -83.93723,
+   "projectSiteLocDescription": "Dacula, GA",
+   "projectSiteLocAdditionalStates": null,
+   "projectSiteLocCountry": "US",
+   "projectSiteLocPostalCode": null,
+   "projectSiteLocState": "US-FL, US-SC, US-GA",
+   "projectTypeCode": "REF",
+   "projectTypeName": "Refrigerants",
+   "owningProfileKey": "4003497026704113664:PROJECT_DEVELOPER",
+   "owningProfileCompanyId": "4003497026704113664",
+   "owningProfileProfileName": "Therm Solutions Inc. - Project Developer",
+   "owningProfileParticipantName": "Therm Solutions Inc.",
+   "owningProfileStatus": "ACTIVE",
+   "owningProfileIsRegistryProfile": false,
+   "projectOperatorName": null,
+   "projectOperatorIsRegistryProfile": null,
+   "projectDesigneeName": null,
+   "projectDesigneeProfileKey": null,
+   "projectDesigneeIsRegistryProfile": null,
+   "projectProponentName": null,
+   "projectProponentProfileKey": "4003497026704113664:PROJECT_DEVELOPER",
+   "projectProponentIsRegistryProfile": false,
+   "verifierProfileKey": "4003496928674840576:PROJECT_VVB",
+   "verifierCompanyId": "4003496928674840576",
+   "verifierProfileName": "TÜV SÜD America, Inc. - Project VVB",
+   "verifierParticipantName": "TÜV SÜD America, Inc.",
+   "verifierStatus": "ACTIVE",
+   "verifierIsRegistryProfile": false,
+   "validatorProfileKey": "4003496928674840576:PROJECT_VVB",
+   "validatorCompanyId": "4003496928674840576",
+   "validatorProfileName": "TÜV SÜD America, Inc. - Project VVB",
+   "validatorParticipantName": "TÜV SÜD America, Inc.",
+   "validatorStatus": "ACTIVE",
+   "validatorIsRegistryProfile": false,
+   "currentCreditingPeriodStartDate": "2024-09-10",
+   "currentCreditingPeriodEndDate": "2034-09-09",
+   "initialCreditingPeriodStartDate": "2024-09-10",
+   "initialCreditingPeriodEndDate": "2034-09-09",
+   "projectExtensionMap": {
+    "timingOfPublicDisplay": "LISTING",
+    "lastProjectStateChanged": "2026-07-31T13:13:15.981Z",
+    "lastProjectStatusChanged": "2026-07-31T20:12:30.588Z",
+    "conservationEasement": "false",
+    "conservationEasementStateOrJurisdiction": null
+   },
+   "projectHoldingsTotalQuantity": 47249,
+   "projectHoldingsTotalRetiredQuantity": 0,
+   "projectHoldingsTotalReserveQuantity": 0,
+   "website": null
+  },
+  "developerLink": {
+   "type": "link",
+   "url": "/acr/developer/4003497026704113664:PROJECT_DEVELOPER",
+   "method": "GET",
+   "params": [],
+   "label": "Therm Solutions Inc. - Project Developer"
+  },
+  "documents": {
+   "datasets": {
+    "publicDocuments": {
+     "rows": [
+      {
+       "name": "ValVer_Opinion_-_ACR1187_ARS2023013_7.30.2026_-_signed.pdf",
+       "title": "ValVer Opinion - ACR1187 ARS2023013 7.30.2026 - signed",
+       "type": "Verification Opinion",
+       "category": "VVB Verification Opinion Docs",
+       "uploadDate": "2026-07-30",
+       "uploadedBy": "TÜV SÜD America, Inc.",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR1187/document/52bd147b-d59a-40c7-a58b-30b20639daae/download",
+        "method": "GET",
+        "params": [],
+        "label": "ValVer_Opinion_-_ACR1187_ARS2023013_7.30.2026_-_signed.pdf"
+       }
+      },
+      {
+       "name": "ValVer_Report_-_ACR1187_ARS2023013_Final_7.30.2026_-_signed.pdf",
+       "title": "ValVer Report - ACR1187 ARS2023013 Final 7.30.2026 - signed",
+       "type": "Verification Report",
+       "category": "VVB Verification Report Docs",
+       "uploadDate": "2026-07-30",
+       "uploadedBy": "TÜV SÜD America, Inc.",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR1187/document/6340b4d5-faa9-4e6b-8053-16fa1098d6de/download",
+        "method": "GET",
+        "params": [],
+        "label": "ValVer_Report_-_ACR1187_ARS2023013_Final_7.30.2026_-_signed.pdf"
+       }
+      },
+      {
+       "name": "ACR1187_Project_Plan_Rev_9.pdf",
+       "title": "ACR1187 Project Plan Rev 9",
+       "type": "GHG Project Plan",
+       "category": "GHG Project Plan",
+       "uploadDate": "2026-07-15",
+       "uploadedBy": "Therm Solutions Inc.",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR1187/document/1a4acc7c-a1e7-4d8f-a00a-795db9fbdf9b/download",
+        "method": "GET",
+        "params": [],
+        "label": "ACR1187_Project_Plan_Rev_9.pdf"
+       }
+      },
+      {
+       "name": "ACR1187-Monitoring-Report-v5.1-2024-10-11_Rev_5.pdf",
+       "title": "ACR1187-Monitoring-Report-v5.1-2024-10-11 Rev 5",
+       "type": "Monitoring Report",
+       "category": "Monitoring Report",
+       "uploadDate": "2026-07-15",
+       "uploadedBy": "Therm Solutions Inc.",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR1187/document/7f00a3f2-5434-4f96-bff5-0b11156bc2ee/download",
+        "method": "GET",
+        "params": [],
+        "label": "ACR1187-Monitoring-Report-v5.1-2024-10-11_Rev_5.pdf"
+       }
+      },
+      {
+       "name": "ACR1187-GHG-Project-Listing-Form-v3.1-2024-10-11 Rev 1.pdf",
+       "title": "ACR1187-GHG-Project-Listing-Form-v3.1-2024-10-11 Rev 1",
+       "type": "Project Listing",
+       "category": "Project Submittal",
+       "uploadDate": "2025-06-27",
+       "uploadedBy": "Therm Solutions Inc.",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR1187/document/a75685aa-fca6-5bd3-b4d8-8fa75b9a670d/download",
+        "method": "GET",
+        "params": [],
+        "label": "ACR1187-GHG-Project-Listing-Form-v3.1-2024-10-11 Rev 1.pdf"
+       }
+      }
+     ],
+     "totalCount": 5
+    }
+   }
+  }
+ },
+ "P2323C9VVW22": {
+  "projectDetail": {
+   "projectKey": "P2323C9VVW22",
+   "projectName": "Advanced Refrigeration - ARS2025005",
+   "projectDescription": "This project includes a total of nine retail locations. The project activities at all retail locations are the retrofits of large commercial refrigeration systems with the lower-GWP refrigerants R-448A and R-449A, to replace higher-GWP refrigerants. Project locations are in the states of IA, IL, MO, and NE.",
+   "projectStatus": "COMPLETED",
+   "projectListingStatus": "Registered",
+   "creditType": "NONE",
+   "creditingProgram": "ACR",
+   "registryCode": "ACR",
+   "registryKey": "ACR_REGISTRY",
+   "projectReferenceId": "ACR1202",
+   "hasAnotherCarbonProgram": false,
+   "hasAnotherEnvironmentalMarket": false,
+   "isPublic": true,
+   "isRegistryTransferred": false,
+   "isTribeAffiliated": false,
+   "projectCreationDate": "2025-08-29",
+   "projectRegistrationDate": null,
+   "projectStartDate": "2024-04-01",
+   "estimatedAnnualCredits": 5756,
+   "estimatedTotalCredits": 0,
+   "coverageArea": 0,
+   "coverageAreaUnit": null,
+   "numberOfCohorts": 0,
+   "numberOfLandowners": 0,
+   "projectMethodologyMethodologyKey": "ACR0009",
+   "projectMethodologyName": "Advanced Refrigeration Systems",
+   "projectContactPersonFirstName": null,
+   "projectContactPersonFullName": null,
+   "projectContactPersonLastName": null,
+   "projectContactPersonEmail": null,
+   "projectContactPersonPhone": null,
+   "projectContactPersonTitle": null,
+   "projectMailingAddrLocName": null,
+   "projectMailingAddrLocAddressLine1": "170 S. Poplar Dr.",
+   "projectMailingAddrLocCity": "Lake Forest",
+   "projectMailingAddrLocCountry": "US",
+   "projectMailingAddrLocPostalCode": "60045",
+   "projectMailingAddrLocState": "IL",
+   "projectSiteLocName": null,
+   "projectSiteLocAddressLine1": null,
+   "projectSiteLocCity": null,
+   "projectSiteLocLatitude": 41.01517,
+   "projectSiteLocLongitude": -92.43992,
+   "projectSiteLocDescription": null,
+   "projectSiteLocAdditionalStates": null,
+   "projectSiteLocCountry": "US",
+   "projectSiteLocPostalCode": null,
+   "projectSiteLocState": "US-IA, US-IL, US-MO, US-NE",
+   "projectTypeCode": "REF",
+   "projectTypeName": "Refrigerants",
+   "owningProfileKey": "4003497026704113664:PROJECT_DEVELOPER",
+   "owningProfileCompanyId": "4003497026704113664",
+   "owningProfileProfileName": "Therm Solutions Inc. - Project Developer",
+   "owningProfileParticipantName": "Therm Solutions Inc.",
+   "owningProfileStatus": "ACTIVE",
+   "owningProfileIsRegistryProfile": false,
+   "projectOperatorName": null,
+   "projectOperatorIsRegistryProfile": null,
+   "projectDesigneeName": null,
+   "projectDesigneeProfileKey": null,
+   "projectDesigneeIsRegistryProfile": null,
+   "projectProponentName": null,
+   "projectProponentProfileKey": "4003497026704113664:PROJECT_DEVELOPER",
+   "projectProponentIsRegistryProfile": false,
+   "verifierProfileKey": "4003496927794036736:PROJECT_VVB",
+   "verifierCompanyId": "4003496927794036736",
+   "verifierProfileName": "First Environment, Inc. - Project VVB",
+   "verifierParticipantName": "First Environment, Inc.",
+   "verifierStatus": "ACTIVE",
+   "verifierIsRegistryProfile": false,
+   "validatorProfileKey": "4003496927794036736:PROJECT_VVB",
+   "validatorCompanyId": "4003496927794036736",
+   "validatorProfileName": "First Environment, Inc. - Project VVB",
+   "validatorParticipantName": "First Environment, Inc.",
+   "validatorStatus": "ACTIVE",
+   "validatorIsRegistryProfile": false,
+   "currentCreditingPeriodStartDate": "2024-04-01",
+   "currentCreditingPeriodEndDate": "2034-03-31",
+   "initialCreditingPeriodStartDate": "2024-04-01",
+   "initialCreditingPeriodEndDate": "2034-03-31",
+   "projectExtensionMap": {
+    "timingOfPublicDisplay": "LISTING",
+    "lastProjectStateChanged": "2026-06-24T23:55:28.307Z",
+    "lastProjectStatusChanged": "2026-06-24T23:12:29.941Z",
+    "conservationEasement": "false",
+    "conservationEasementStateOrJurisdiction": null
+   },
+   "projectHoldingsTotalQuantity": 8959,
+   "projectHoldingsTotalRetiredQuantity": 0,
+   "projectHoldingsTotalReserveQuantity": 0,
+   "website": "https://therm.cool"
+  },
+  "developerLink": {
+   "type": "link",
+   "url": "/acr/developer/4003497026704113664:PROJECT_DEVELOPER",
+   "method": "GET",
+   "params": [],
+   "label": "Therm Solutions Inc. - Project Developer"
+  },
+  "documents": {
+   "datasets": {
+    "publicDocuments": {
+     "rows": [
+      {
+       "name": "ACR1202_-_VV_Opinion.pdf",
+       "title": "ACR1202 - V&V Opinion",
+       "type": "Verification Opinion",
+       "category": "VVB Verification Opinion Docs",
+       "uploadDate": "2026-06-03",
+       "uploadedBy": "First Environment, Inc.",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR1202/document/a6581e9d-eb65-4c29-bd47-770126c419d0/download",
+        "method": "GET",
+        "params": [],
+        "label": "ACR1202_-_VV_Opinion.pdf"
+       }
+      },
+      {
+       "name": "ACR1202_-_VV_Report.pdf",
+       "title": "ACR1202 - V&V Report",
+       "type": "Verification Report",
+       "category": "VVB Verification Report Docs",
+       "uploadDate": "2026-06-03",
+       "uploadedBy": "First Environment, Inc.",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR1202/document/43f5ca0d-1165-4866-aa02-1b5060c851cc/download",
+        "method": "GET",
+        "params": [],
+        "label": "ACR1202_-_VV_Report.pdf"
+       }
+      },
+      {
+       "name": "ACR1202-Monitoring-Report-v5.1-2024-10-11_Rev_4_Combined_-_6.3.26_1.pdf",
+       "title": "ACR1202-Monitoring-Report-v5.1-2024-10-11 Rev 4",
+       "type": "Monitoring Report",
+       "category": "Monitoring Report",
+       "uploadDate": "2026-06-03",
+       "uploadedBy": "Therm Solutions Inc.",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR1202/document/c9fe2752-dbd8-4294-bbf9-ac22e594fcb9/download",
+        "method": "GET",
+        "params": [],
+        "label": "ACR1202-Monitoring-Report-v5.1-2024-10-11_Rev_4_Combined_-_6.3.26_1.pdf"
+       }
+      },
+      {
+       "name": "ACR1202_Project_Plan_Rev_7_Combined_-_6.3.26_1.pdf",
+       "title": "ACR1202 Project Plan Rev 7",
+       "type": "GHG Project Plan",
+       "category": "GHG Project Plan",
+       "uploadDate": "2026-06-03",
+       "uploadedBy": "Therm Solutions Inc.",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR1202/document/efbce42e-72d2-4187-a0b0-bd3df77c32f1/download",
+        "method": "GET",
+        "params": [],
+        "label": "ACR1202_Project_Plan_Rev_7_Combined_-_6.3.26_1.pdf"
+       }
+      },
+      {
+       "name": "ACR1202 Giant Eagle Kwik Trip Lineage USCS-GHG-Project-Listing-Form-v3.1-2024-10-11.pdf",
+       "title": "ACR1202 Giant Eagle, Kwik Trip, Lineage, USCS-GHG-Project-Listing-Form-v3.1-2024-10-11",
+       "type": "Project Listing",
+       "category": "Project Submittal",
+       "uploadDate": "2025-08-19",
+       "uploadedBy": "Therm Solutions Inc.",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR1202/document/c8e6700a-c21b-5f00-9120-8ec4f54a8881/download",
+        "method": "GET",
+        "params": [],
+        "label": "ACR1202 Giant Eagle Kwik Trip Lineage USCS-GHG-Project-Listing-Form-v3.1-2024-10-11.pdf"
+       }
+      }
+     ],
+     "totalCount": 5
+    }
+   }
+  }
+ },
+ "P2323C9VU222": {
+  "projectDetail": {
+   "projectKey": "P2323C9VU222",
+   "projectName": "Anew - Northern Algoma Forest Project",
+   "projectDescription": "The project area covers 94,000 acres just off the northeast shore of Lake Superior in the Algoma District of Ontario. The forest is composed of hardwood and softwood species such as maple, poplar, white pine, cedar, white birch, jack pine, and balsam fir. By committing to maintain forest CO2 stocks through sustainable management, the project will provide significant climate benefits through carbon sequestration.",
+   "projectStatus": "ACTIVE",
+   "projectListingStatus": "Listed",
+   "creditType": "NONE",
+   "creditingProgram": "ACR",
+   "registryCode": "ACR",
+   "registryKey": "ACR_REGISTRY",
+   "projectReferenceId": "ACR0838",
+   "hasAnotherCarbonProgram": false,
+   "hasAnotherEnvironmentalMarket": false,
+   "isPublic": true,
+   "isRegistryTransferred": false,
+   "isTribeAffiliated": false,
+   "projectCreationDate": "2023-07-27",
+   "projectRegistrationDate": null,
+   "projectStartDate": "2022-10-22",
+   "estimatedAnnualCredits": 129600,
+   "estimatedTotalCredits": 0,
+   "coverageArea": 94000,
+   "coverageAreaUnit": null,
+   "numberOfCohorts": 0,
+   "numberOfLandowners": 0,
+   "projectMethodologyMethodologyKey": "ACR0022",
+   "projectMethodologyName": "Improved Forest Management (IFM) on Canadian Forestlands",
+   "projectContactPersonFirstName": null,
+   "projectContactPersonFullName": null,
+   "projectContactPersonLastName": null,
+   "projectContactPersonEmail": null,
+   "projectContactPersonPhone": null,
+   "projectContactPersonTitle": null,
+   "projectMailingAddrLocName": null,
+   "projectMailingAddrLocAddressLine1": "840 7 Ave SW",
+   "projectMailingAddrLocCity": "Calgary",
+   "projectMailingAddrLocCountry": "CA",
+   "projectMailingAddrLocPostalCode": "T2P 3G2",
+   "projectMailingAddrLocState": "AB",
+   "projectSiteLocName": null,
+   "projectSiteLocAddressLine1": null,
+   "projectSiteLocCity": null,
+   "projectSiteLocLatitude": 48.12135,
+   "projectSiteLocLongitude": -84.7949,
+   "projectSiteLocDescription": "Wawa",
+   "projectSiteLocAdditionalStates": null,
+   "projectSiteLocCountry": "CA",
+   "projectSiteLocPostalCode": null,
+   "projectSiteLocState": "ONTARIO",
+   "projectTypeCode": "FC",
+   "projectTypeName": "Forest Carbon",
+   "owningProfileKey": "4003496914590367744:PROJECT_DEVELOPER",
+   "owningProfileCompanyId": "4003496914590367744",
+   "owningProfileProfileName": "Anew Carbon Development, LLC - Project Developer",
+   "owningProfileParticipantName": "Anew Carbon Development, LLC",
+   "owningProfileStatus": "ACTIVE",
+   "owningProfileIsRegistryProfile": false,
+   "projectOperatorName": null,
+   "projectOperatorIsRegistryProfile": null,
+   "projectDesigneeName": null,
+   "projectDesigneeProfileKey": null,
+   "projectDesigneeIsRegistryProfile": null,
+   "projectProponentName": null,
+   "projectProponentProfileKey": null,
+   "projectProponentIsRegistryProfile": null,
+   "verifierProfileKey": "4003496929111048192:PROJECT_VVB",
+   "verifierCompanyId": "4003496929111048192",
+   "verifierProfileName": "SCS Global Services (Scientific Certification Systems) - Project VVB",
+   "verifierParticipantName": "SCS Global Services (Scientific Certification Systems)",
+   "verifierStatus": "ACTIVE",
+   "verifierIsRegistryProfile": false,
+   "validatorProfileKey": "4003496929111048192:PROJECT_VVB",
+   "validatorCompanyId": "4003496929111048192",
+   "validatorProfileName": "SCS Global Services (Scientific Certification Systems) - Project VVB",
+   "validatorParticipantName": "SCS Global Services (Scientific Certification Systems)",
+   "validatorStatus": "ACTIVE",
+   "validatorIsRegistryProfile": false,
+   "currentCreditingPeriodStartDate": "2022-10-22",
+   "currentCreditingPeriodEndDate": "2042-10-21",
+   "initialCreditingPeriodStartDate": "2022-10-22",
+   "initialCreditingPeriodEndDate": "2042-10-21",
+   "projectExtensionMap": {
+    "timingOfPublicDisplay": "LISTING",
+    "lastProjectStateChanged": "2023-07-27T02:49:00.000Z",
+    "lastProjectStatusChanged": "2023-07-27T00:00:00.000Z",
+    "conservationEasement": "false",
+    "conservationEasementStateOrJurisdiction": null
+   },
+   "projectHoldingsTotalQuantity": 0,
+   "projectHoldingsTotalRetiredQuantity": 0,
+   "projectHoldingsTotalReserveQuantity": 0,
+   "website": null
+  },
+  "developerLink": {
+   "type": "link",
+   "url": "/acr/developer/4003496914590367744:PROJECT_DEVELOPER",
+   "method": "GET",
+   "params": [],
+   "label": "Anew Carbon Development, LLC - Project Developer"
+  },
+  "documents": {
+   "datasets": {
+    "publicDocuments": {
+     "rows": [
+      {
+       "name": "NorthernAlgoma_ListingForm_7_04_23.pdf",
+       "title": "NorthernAlgoma_ListingForm_7_04_23",
+       "type": "Project Listing",
+       "category": "Project Submittal",
+       "uploadDate": "2023-07-19",
+       "uploadedBy": "Anew Carbon Development, LLC",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0838/document/a8590396-4b49-5a63-82a4-be468118cffb/download",
+        "method": "GET",
+        "params": [],
+        "label": "NorthernAlgoma_ListingForm_7_04_23.pdf"
+       }
+      }
+     ],
+     "totalCount": 1
+    }
+   }
+  }
+ },
+ "P2423C9VNN25": {
+  "projectDetail": {
+   "projectKey": "P2423C9VNN25",
+   "projectName": "Advanced Refrigeration - ARS2025006",
+   "projectDescription": "This project is for one, new construction, cold storage location utilizing ultra-low GWP R-717 (Ammonia). The Project location is in Guadalajara, Jalisco, Mexico.",
+   "projectStatus": "COMPLETED",
+   "projectListingStatus": "N/A",
+   "creditType": "NONE",
+   "creditingProgram": "ACR",
+   "registryCode": "ACR",
+   "registryKey": "ACR_REGISTRY",
+   "projectReferenceId": "ACR1203",
+   "hasAnotherCarbonProgram": false,
+   "hasAnotherEnvironmentalMarket": false,
+   "isPublic": true,
+   "isRegistryTransferred": false,
+   "isTribeAffiliated": false,
+   "projectCreationDate": "2025-09-11",
+   "projectRegistrationDate": null,
+   "projectStartDate": "2025-12-03",
+   "estimatedAnnualCredits": 9176,
+   "estimatedTotalCredits": 0,
+   "coverageArea": 0,
+   "coverageAreaUnit": null,
+   "numberOfCohorts": 0,
+   "numberOfLandowners": 0,
+   "projectMethodologyMethodologyKey": "ACR0009",
+   "projectMethodologyName": "Advanced Refrigeration Systems",
+   "projectContactPersonFirstName": null,
+   "projectContactPersonFullName": null,
+   "projectContactPersonLastName": null,
+   "projectContactPersonEmail": null,
+   "projectContactPersonPhone": null,
+   "projectContactPersonTitle": null,
+   "projectMailingAddrLocName": null,
+   "projectMailingAddrLocAddressLine1": "170 S. Poplar Dr.",
+   "projectMailingAddrLocCity": "Lake Forest",
+   "projectMailingAddrLocCountry": "US",
+   "projectMailingAddrLocPostalCode": "60045",
+   "projectMailingAddrLocState": "IL",
+   "projectSiteLocName": null,
+   "projectSiteLocAddressLine1": null,
+   "projectSiteLocCity": null,
+   "projectSiteLocLatitude": 20.48574,
+   "projectSiteLocLongitude": -103.2549,
+   "projectSiteLocDescription": "Guadalajara",
+   "projectSiteLocAdditionalStates": null,
+   "projectSiteLocCountry": "MX",
+   "projectSiteLocPostalCode": null,
+   "projectSiteLocState": "JALISCO",
+   "projectTypeCode": "REF",
+   "projectTypeName": "Refrigerants",
+   "owningProfileKey": "4003497026704113664:PROJECT_DEVELOPER",
+   "owningProfileCompanyId": "4003497026704113664",
+   "owningProfileProfileName": "Therm Solutions Inc. - Project Developer",
+   "owningProfileParticipantName": "Therm Solutions Inc.",
+   "owningProfileStatus": "ACTIVE",
+   "owningProfileIsRegistryProfile": false,
+   "projectOperatorName": null,
+   "projectOperatorIsRegistryProfile": null,
+   "projectDesigneeName": null,
+   "projectDesigneeProfileKey": null,
+   "projectDesigneeIsRegistryProfile": null,
+   "projectProponentName": null,
+   "projectProponentProfileKey": null,
+   "projectProponentIsRegistryProfile": null,
+   "verifierProfileKey": "4003496927794036736:PROJECT_VVB",
+   "verifierCompanyId": "4003496927794036736",
+   "verifierProfileName": "First Environment, Inc. - Project VVB",
+   "verifierParticipantName": "First Environment, Inc.",
+   "verifierStatus": "ACTIVE",
+   "verifierIsRegistryProfile": false,
+   "validatorProfileKey": "4003496927794036736:PROJECT_VVB",
+   "validatorCompanyId": "4003496927794036736",
+   "validatorProfileName": "First Environment, Inc. - Project VVB",
+   "validatorParticipantName": "First Environment, Inc.",
+   "validatorStatus": "ACTIVE",
+   "validatorIsRegistryProfile": false,
+   "currentCreditingPeriodStartDate": "2025-12-03",
+   "currentCreditingPeriodEndDate": "2035-12-02",
+   "initialCreditingPeriodStartDate": "2025-12-03",
+   "initialCreditingPeriodEndDate": "2035-12-02",
+   "projectExtensionMap": {
+    "timingOfPublicDisplay": "LISTING",
+    "lastProjectStateChanged": "2026-05-24T00:00:00.000Z",
+    "lastProjectStatusChanged": "2026-05-24T00:00:00.000Z",
+    "conservationEasement": "false",
+    "conservationEasementStateOrJurisdiction": null
+   },
+   "projectHoldingsTotalQuantity": 39047,
+   "projectHoldingsTotalRetiredQuantity": 0,
+   "projectHoldingsTotalReserveQuantity": 0,
+   "website": "therm.cool"
+  },
+  "developerLink": {
+   "type": "link",
+   "url": "/acr/developer/4003497026704113664:PROJECT_DEVELOPER",
+   "method": "GET",
+   "params": [],
+   "label": "Therm Solutions Inc. - Project Developer"
+  },
+  "documents": {
+   "datasets": {
+    "publicDocuments": {
+     "rows": [
+      {
+       "name": "ACR1203 - VV Opinion.pdf",
+       "title": "ACR1203 - V&V Opinion",
+       "type": "Verification Opinion",
+       "category": "Verification",
+       "uploadDate": "2026-04-09",
+       "uploadedBy": "First Environment, Inc.",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR1203/document/102bff7e-a6dd-5c33-a6da-fa62af4bba94/download",
+        "method": "GET",
+        "params": [],
+        "label": "ACR1203 - VV Opinion.pdf"
+       }
+      },
+      {
+       "name": "ACR1203 - VV Report.pdf",
+       "title": "ACR1203 - V&V Report",
+       "type": "Validation Report",
+       "category": "Verification",
+       "uploadDate": "2026-04-09",
+       "uploadedBy": "First Environment, Inc.",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR1203/document/7fc6de35-c5ac-5cd6-9dcd-c85120842906/download",
+        "method": "GET",
+        "params": [],
+        "label": "ACR1203 - VV Report.pdf"
+       }
+      },
+      {
+       "name": "ACR1203 - VV Report.pdf",
+       "title": "ACR1203 - V&V Report",
+       "type": "Verification Report",
+       "category": "Verification",
+       "uploadDate": "2026-04-09",
+       "uploadedBy": "First Environment, Inc.",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR1203/document/cf9e21ff-b970-58ef-bb8d-ecfc0149d2a5/download",
+        "method": "GET",
+        "params": [],
+        "label": "ACR1203 - VV Report.pdf"
+       }
+      },
+      {
+       "name": "ACR1203 Project Plan Rev 7.pdf",
+       "title": "ACR1203 Project Plan Rev 7",
+       "type": "GHG Project Plan",
+       "category": "Verification",
+       "uploadDate": "2026-04-08",
+       "uploadedBy": "Therm Solutions Inc.",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR1203/document/7c204100-bb57-55ab-8eb7-19ad82cc69a0/download",
+        "method": "GET",
+        "params": [],
+        "label": "ACR1203 Project Plan Rev 7.pdf"
+       }
+      },
+      {
+       "name": "ACR 1203 Monitoring Report Rev 4.pdf",
+       "title": "ACR 1203 Monitoring Report Rev 4",
+       "type": "Monitoring Report",
+       "category": "Verification",
+       "uploadDate": "2026-03-23",
+       "uploadedBy": "Therm Solutions Inc.",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR1203/document/853ea520-441a-5cc5-947b-ee5e4de7c826/download",
+        "method": "GET",
+        "params": [],
+        "label": "ACR 1203 Monitoring Report Rev 4.pdf"
+       }
+      },
+      {
+       "name": "ACR1203 Gala Foods Grade A Key Foods Kwik Trip PFG USCS ShopRite-GHG-Project-Listing-Form-v3.1-2024-10-11 Rev 2.pdf",
+       "title": "ACR1203 Gala Foods, Grade A, Key Foods, Kwik Trip, PFG, USCS, ShopRite-GHG-Project-Listing-Form-v3.1-2024-10-11 Rev 2",
+       "type": "Project Listing",
+       "category": "Project Submittal",
+       "uploadDate": "2025-09-10",
+       "uploadedBy": "Therm Solutions Inc.",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR1203/document/f23140ec-c305-5681-9c58-085c7d52a68a/download",
+        "method": "GET",
+        "params": [],
+        "label": "ACR1203 Gala Foods Grade A Key Foods Kwik Trip PFG USCS ShopRite-GHG-Project-Listing-Form-v3.1-2024-10-11 Rev 2.pdf"
+       }
+      }
+     ],
+     "totalCount": 6
+    }
+   }
+  }
+ },
+ "P2423C9VUY22": {
+  "projectDetail": {
+   "projectKey": "P2423C9VUY22",
+   "projectName": "Destruction of Legacy Ozone-Depleting Substances from Refrigeration Systems in Israel",
+   "projectDescription": "This project effectively reduces environmental risks from legacy refrigerants, aligning with global climate action and making a positive contribution to the Sustainable Development Goals from the United Nations. Project protects the ozone layer through the safe destruction of ozone-depleting refrigerants, mainly R11 and R12, with traces of other ACR's methodology eligible refrigerants. These potent high Global Warming Potential GHGs, sourced from obsolete refrigeration systems, present considerable environmental hazards if not managed appropriately. The refrigerant gases are collected at a facility operated by Electra Recycling and All Trade, with destruction activities conducted at the ECOSOL facility in Neot-Hovav, Israel, operating under the Montreal Protocol's TEAP standards. Oporto Carbon owns carbon rights and oversees project registration, while Recycling Electra and All Trade jointly manage collection and recycling processes. D13C acts as the marketer of the credits generated.",
+   "projectStatus": "ACTIVE",
+   "projectListingStatus": "Listed",
+   "creditType": "NONE",
+   "creditingProgram": "ACR",
+   "registryCode": "ACR",
+   "registryKey": "ACR_REGISTRY",
+   "projectReferenceId": "ACR1168",
+   "hasAnotherCarbonProgram": false,
+   "hasAnotherEnvironmentalMarket": false,
+   "isPublic": true,
+   "isRegistryTransferred": false,
+   "isTribeAffiliated": false,
+   "projectCreationDate": "2025-06-11",
+   "projectRegistrationDate": null,
+   "projectStartDate": "2024-09-08",
+   "estimatedAnnualCredits": 200000,
+   "estimatedTotalCredits": 0,
+   "coverageArea": 0,
+   "coverageAreaUnit": null,
+   "numberOfCohorts": 0,
+   "numberOfLandowners": 0,
+   "projectMethodologyMethodologyKey": "ACR0017",
+   "projectMethodologyName": "Destruction of Ozone Depleting Substances (ODS) from International Sources",
+   "projectContactPersonFirstName": null,
+   "projectContactPersonFullName": null,
+   "projectContactPersonLastName": null,
+   "projectContactPersonEmail": null,
+   "projectContactPersonPhone": null,
+   "projectContactPersonTitle": null,
+   "projectMailingAddrLocName": null,
+   "projectMailingAddrLocAddressLine1": "aviluv@oporto-carbon.com",
+   "projectMailingAddrLocCity": "Tel Aviv",
+   "projectMailingAddrLocCountry": "IL",
+   "projectMailingAddrLocPostalCode": "4481300",
+   "projectMailingAddrLocState": "Israel",
+   "projectSiteLocName": null,
+   "projectSiteLocAddressLine1": null,
+   "projectSiteLocCity": null,
+   "projectSiteLocLatitude": 31.13517,
+   "projectSiteLocLongitude": 34.7911,
+   "projectSiteLocDescription": "Electro Recycling Address: Sha'ar Hanegev Industrial Zone Sderot, Southern District, Israel. Near the Sha'ar HaNegev Regional Council. Latitude: 31.5142465 , Longitude: 34.5933079",
+   "projectSiteLocAdditionalStates": null,
+   "projectSiteLocCountry": "IL",
+   "projectSiteLocPostalCode": null,
+   "projectSiteLocState": "Israel",
+   "projectTypeCode": "ODS",
+   "projectTypeName": "Ozone Depleting Substances",
+   "owningProfileKey": "4003497173177597952:PROJECT_DEVELOPER",
+   "owningProfileCompanyId": "4003497173177597952",
+   "owningProfileProfileName": "Oporto Carbon Ltd. - Project Developer",
+   "owningProfileParticipantName": "Oporto Carbon Ltd.",
+   "owningProfileStatus": "ACTIVE",
+   "owningProfileIsRegistryProfile": false,
+   "projectOperatorName": null,
+   "projectOperatorIsRegistryProfile": null,
+   "projectDesigneeName": null,
+   "projectDesigneeProfileKey": null,
+   "projectDesigneeIsRegistryProfile": null,
+   "projectProponentName": null,
+   "projectProponentProfileKey": "4003497173177597952:PROJECT_DEVELOPER",
+   "projectProponentIsRegistryProfile": false,
+   "verifierProfileKey": "4003497166651260928:PROJECT_VVB",
+   "verifierCompanyId": "4003497166651260928",
+   "verifierProfileName": "OmnexFuturepast - Project VVB",
+   "verifierParticipantName": "OmnexFuturepast",
+   "verifierStatus": "ACTIVE",
+   "verifierIsRegistryProfile": false,
+   "validatorProfileKey": "4003497166651260928:PROJECT_VVB",
+   "validatorCompanyId": "4003497166651260928",
+   "validatorProfileName": "OmnexFuturepast - Project VVB",
+   "validatorParticipantName": "OmnexFuturepast",
+   "validatorStatus": "ACTIVE",
+   "validatorIsRegistryProfile": false,
+   "currentCreditingPeriodStartDate": "2024-09-08",
+   "currentCreditingPeriodEndDate": "2034-09-07",
+   "initialCreditingPeriodStartDate": "2024-09-08",
+   "initialCreditingPeriodEndDate": "2034-09-07",
+   "projectExtensionMap": {
+    "timingOfPublicDisplay": "LISTING",
+    "lastProjectStateChanged": "2025-06-11T13:35:00.000Z",
+    "lastProjectStatusChanged": "2025-06-11T00:00:00.000Z",
+    "conservationEasement": "false",
+    "conservationEasementStateOrJurisdiction": null
+   },
+   "projectHoldingsTotalQuantity": 0,
+   "projectHoldingsTotalRetiredQuantity": 0,
+   "projectHoldingsTotalReserveQuantity": 0,
+   "website": null
+  },
+  "developerLink": {
+   "type": "link",
+   "url": "/acr/developer/4003497173177597952:PROJECT_DEVELOPER",
+   "method": "GET",
+   "params": [],
+   "label": "Oporto Carbon Ltd. - Project Developer"
+  },
+  "documents": {
+   "datasets": {
+    "publicDocuments": {
+     "rows": [
+      {
+       "name": "ACR_Listing_Form_Oporot_inksign.pdf",
+       "title": "ACR_Listing_Form_Oporot_inksign",
+       "type": "Project Listing",
+       "category": "Project Submittal",
+       "uploadDate": "2025-06-11",
+       "uploadedBy": "Oporto Carbon Ltd.",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR1168/document/51a14ca5-9458-563b-88b0-441266f73b31/download",
+        "method": "GET",
+        "params": [],
+        "label": "ACR_Listing_Form_Oporot_inksign.pdf"
+       }
+      }
+     ],
+     "totalCount": 1
+    }
+   }
+  }
+ },
+ "P2423C9VPA22": {
+  "projectDetail": {
+   "projectKey": "P2423C9VPA22",
+   "projectName": "Tradewater - Middle East 3",
+   "projectDescription": "The Project involves the collection and destruction of R-12 refrigerant. The material is aggregated and delivered to a Montreal Protocol-compliant facility for destruction.",
+   "projectStatus": "COMPLETED",
+   "projectListingStatus": "N/A",
+   "creditType": "NONE",
+   "creditingProgram": "ACR",
+   "registryCode": "ACR",
+   "registryKey": "ACR_REGISTRY",
+   "projectReferenceId": "ACR1215",
+   "hasAnotherCarbonProgram": false,
+   "hasAnotherEnvironmentalMarket": false,
+   "isPublic": true,
+   "isRegistryTransferred": false,
+   "isTribeAffiliated": false,
+   "projectCreationDate": "2025-10-14",
+   "projectRegistrationDate": null,
+   "projectStartDate": "2025-11-21",
+   "estimatedAnnualCredits": 145284,
+   "estimatedTotalCredits": 0,
+   "coverageArea": 0,
+   "coverageAreaUnit": null,
+   "numberOfCohorts": 0,
+   "numberOfLandowners": 0,
+   "projectMethodologyMethodologyKey": "ACR0017",
+   "projectMethodologyName": "Destruction of Ozone Depleting Substances (ODS) from International Sources",
+   "projectContactPersonFirstName": null,
+   "projectContactPersonFullName": null,
+   "projectContactPersonLastName": null,
+   "projectContactPersonEmail": null,
+   "projectContactPersonPhone": null,
+   "projectContactPersonTitle": null,
+   "projectMailingAddrLocName": null,
+   "projectMailingAddrLocAddressLine1": "1016 W Jackson Blvd 1007",
+   "projectMailingAddrLocCity": "Chicago",
+   "projectMailingAddrLocCountry": "US",
+   "projectMailingAddrLocPostalCode": "60607",
+   "projectMailingAddrLocState": "IL",
+   "projectSiteLocName": null,
+   "projectSiteLocAddressLine1": null,
+   "projectSiteLocCity": null,
+   "projectSiteLocLatitude": 52.38333,
+   "projectSiteLocLongitude": 7.9194,
+   "projectSiteLocDescription": "Bramsche",
+   "projectSiteLocAdditionalStates": null,
+   "projectSiteLocCountry": "DE",
+   "projectSiteLocPostalCode": null,
+   "projectSiteLocState": "Lower Saxony",
+   "projectTypeCode": "ODS",
+   "projectTypeName": "Ozone Depleting Substances",
+   "owningProfileKey": "4003496963521118208:PROJECT_DEVELOPER",
+   "owningProfileCompanyId": "4003496963521118208",
+   "owningProfileProfileName": "Tradewater, LLC - Project Developer",
+   "owningProfileParticipantName": "Tradewater, LLC",
+   "owningProfileStatus": "ACTIVE",
+   "owningProfileIsRegistryProfile": false,
+   "projectOperatorName": null,
+   "projectOperatorIsRegistryProfile": null,
+   "projectDesigneeName": null,
+   "projectDesigneeProfileKey": null,
+   "projectDesigneeIsRegistryProfile": null,
+   "projectProponentName": null,
+   "projectProponentProfileKey": null,
+   "projectProponentIsRegistryProfile": null,
+   "verifierProfileKey": "4003496937046671360:PROJECT_VVB",
+   "verifierCompanyId": "4003496937046671360",
+   "verifierProfileName": "SES, Inc. - Project VVB",
+   "verifierParticipantName": "SES, Inc.",
+   "verifierStatus": "ACTIVE",
+   "verifierIsRegistryProfile": false,
+   "validatorProfileKey": "4003496937046671360:PROJECT_VVB",
+   "validatorCompanyId": "4003496937046671360",
+   "validatorProfileName": "SES, Inc. - Project VVB",
+   "validatorParticipantName": "SES, Inc.",
+   "validatorStatus": "ACTIVE",
+   "validatorIsRegistryProfile": false,
+   "currentCreditingPeriodStartDate": "2025-11-21",
+   "currentCreditingPeriodEndDate": "2035-11-20",
+   "initialCreditingPeriodStartDate": "2025-11-21",
+   "initialCreditingPeriodEndDate": "2035-11-20",
+   "projectExtensionMap": {
+    "timingOfPublicDisplay": "LISTING",
+    "lastProjectStateChanged": "2026-04-11T00:00:00.000Z",
+    "lastProjectStatusChanged": "2026-04-11T00:00:00.000Z",
+    "conservationEasement": "false",
+    "conservationEasementStateOrJurisdiction": null
+   },
+   "projectHoldingsTotalQuantity": 154904,
+   "projectHoldingsTotalRetiredQuantity": 1680,
+   "projectHoldingsTotalReserveQuantity": 0,
+   "website": null
+  },
+  "developerLink": {
+   "type": "link",
+   "url": "/acr/developer/4003496963521118208:PROJECT_DEVELOPER",
+   "method": "GET",
+   "params": [],
+   "label": "Tradewater, LLC - Project Developer"
+  },
+  "documents": {
+   "datasets": {
+    "publicDocuments": {
+     "rows": [
+      {
+       "name": "Validation  Verification Report_Tradewater-Middle East 3_03-04-26 v2.pdf",
+       "title": "Validation & Verification Report_Tradewater-Middle East 3_03-04-26 v2",
+       "type": "Verification Report",
+       "category": "Verification",
+       "uploadDate": "2026-03-04",
+       "uploadedBy": "SES, Inc.",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR1215/document/30b60ae5-9095-577b-978c-a0b33583523b/download",
+        "method": "GET",
+        "params": [],
+        "label": "Validation  Verification Report_Tradewater-Middle East 3_03-04-26 v2.pdf"
+       }
+      },
+      {
+       "name": "Validation  Verification Report_Tradewater-Middle East 3_03-04-26 v2.pdf",
+       "title": "Validation & Verification Report_Tradewater-Middle East 3_03-04-26 v2",
+       "type": "Validation Report",
+       "category": "Verification",
+       "uploadDate": "2026-03-04",
+       "uploadedBy": "SES, Inc.",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR1215/document/e879a06f-c3f7-5a40-9370-3bd08716d5bb/download",
+        "method": "GET",
+        "params": [],
+        "label": "Validation  Verification Report_Tradewater-Middle East 3_03-04-26 v2.pdf"
+       }
+      },
+      {
+       "name": "ACR Validation and Verification Opinion_Tradewater-Middle East 3-ACR1215_03-04-26.pdf",
+       "title": "ACR Validation and Verification Opinion_Tradewater-Middle East 3-ACR1215_03-04-26",
+       "type": "Verification Opinion",
+       "category": "Verification",
+       "uploadDate": "2026-03-04",
+       "uploadedBy": "SES, Inc.",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR1215/document/f81109a7-cbbd-56c8-a321-4637ccf55326/download",
+        "method": "GET",
+        "params": [],
+        "label": "ACR Validation and Verification Opinion_Tradewater-Middle East 3-ACR1215_03-04-26.pdf"
+       }
+      },
+      {
+       "name": "GHGPP_ME3_VApp_03032026 - signed.pdf",
+       "title": "GHGPP_ME3_VApp_03032026 - signed",
+       "type": "GHG Project Plan",
+       "category": "Verification",
+       "uploadDate": "2026-03-03",
+       "uploadedBy": "Tradewater, LLC",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR1215/document/f17edcf7-06b1-5649-a091-29f9ed606a0a/download",
+        "method": "GET",
+        "params": [],
+        "label": "GHGPP_ME3_VApp_03032026 - signed.pdf"
+       }
+      },
+      {
+       "name": "MR_ME3_VApp_03032026 - signed.pdf",
+       "title": "MR_ME3_VApp_03032026 - signed",
+       "type": "Monitoring Report",
+       "category": "Verification",
+       "uploadDate": "2026-03-03",
+       "uploadedBy": "Tradewater, LLC",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR1215/document/dcce1d58-dda0-56a0-9002-8e8951b75b18/download",
+        "method": "GET",
+        "params": [],
+        "label": "MR_ME3_VApp_03032026 - signed.pdf"
+       }
+      },
+      {
+       "name": "GHG Project Listing Form - signed.pdf",
+       "title": "GHG Project Listing Form - signed",
+       "type": "Project Listing",
+       "category": "Project Submittal",
+       "uploadDate": "2025-09-30",
+       "uploadedBy": "Tradewater, LLC",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR1215/document/bd05d309-d0b7-59c0-88f9-8e24fa860e54/download",
+        "method": "GET",
+        "params": [],
+        "label": "GHG Project Listing Form - signed.pdf"
+       }
+      }
+     ],
+     "totalCount": 6
+    }
+   }
+  }
+ },
+ "P2423C9VXH23": {
+  "projectDetail": {
+   "projectKey": "P2423C9VXH23",
+   "projectName": "Alliance Dairy",
+   "projectDescription": "The Alliance Dairy Project is a dairy digester system that was built to capture the biogas from dairy manure, the majority of which would have been stored in an uncovered anaerobic lagoon and in long-term solids storage under aerobic conditions prior to project implementation. The biogas that is captured from the digester system is used to generate electricity through one generator. Any excess biogas not combusted by the gen-sets is combusted in an open flare. Biogas produced by the digester is monitored continuously using thermal mass flowmeters.",
+   "projectStatus": "TERMINATED",
+   "projectListingStatus": "N/A",
+   "creditType": "NONE",
+   "creditingProgram": "California Air Resources Board",
+   "registryCode": "ACR",
+   "registryKey": "ACR_REGISTRY",
+   "projectReferenceId": "ACR0234",
+   "hasAnotherCarbonProgram": false,
+   "hasAnotherEnvironmentalMarket": false,
+   "isPublic": true,
+   "isRegistryTransferred": false,
+   "isTribeAffiliated": false,
+   "projectCreationDate": "2015-02-05",
+   "projectRegistrationDate": null,
+   "projectStartDate": "2013-01-01",
+   "estimatedAnnualCredits": 10000,
+   "estimatedTotalCredits": 0,
+   "coverageArea": 0,
+   "coverageAreaUnit": null,
+   "numberOfCohorts": 0,
+   "numberOfLandowners": 0,
+   "projectMethodologyMethodologyKey": "ACR0001",
+   "projectMethodologyName": "ARB Compliance Offset Protocol: Capturing and Destroying Methane from Manure Management Systems",
+   "projectContactPersonFirstName": null,
+   "projectContactPersonFullName": null,
+   "projectContactPersonLastName": null,
+   "projectContactPersonEmail": null,
+   "projectContactPersonPhone": null,
+   "projectContactPersonTitle": null,
+   "projectMailingAddrLocName": null,
+   "projectMailingAddrLocAddressLine1": "235 Montgomery Street",
+   "projectMailingAddrLocCity": "San Francisco",
+   "projectMailingAddrLocCountry": "US",
+   "projectMailingAddrLocPostalCode": "94104",
+   "projectMailingAddrLocState": "CA",
+   "projectSiteLocName": null,
+   "projectSiteLocAddressLine1": null,
+   "projectSiteLocCity": null,
+   "projectSiteLocLatitude": 29.58504,
+   "projectSiteLocLongitude": -82.8611,
+   "projectSiteLocDescription": "Trenton",
+   "projectSiteLocAdditionalStates": null,
+   "projectSiteLocCountry": "US",
+   "projectSiteLocPostalCode": null,
+   "projectSiteLocState": "FLORIDA",
+   "projectTypeCode": "LWM",
+   "projectTypeName": "Livestock Waste Management",
+   "owningProfileKey": "4003496954251706368:PROJECT_DEVELOPER",
+   "owningProfileCompanyId": "4003496954251706368",
+   "owningProfileProfileName": "3Degrees Group, Inc. - Project Developer",
+   "owningProfileParticipantName": "3Degrees Group, Inc.",
+   "owningProfileStatus": "ACTIVE",
+   "owningProfileIsRegistryProfile": false,
+   "projectOperatorName": "Alliance Dairies",
+   "projectOperatorIsRegistryProfile": null,
+   "projectDesigneeName": null,
+   "projectDesigneeProfileKey": "4003496954251706368:PROJECT_DEVELOPER",
+   "projectDesigneeIsRegistryProfile": false,
+   "projectProponentName": null,
+   "projectProponentProfileKey": null,
+   "projectProponentIsRegistryProfile": null,
+   "verifierProfileKey": null,
+   "verifierCompanyId": null,
+   "verifierProfileName": null,
+   "verifierParticipantName": null,
+   "verifierStatus": null,
+   "verifierIsRegistryProfile": null,
+   "validatorProfileKey": null,
+   "validatorCompanyId": null,
+   "validatorProfileName": null,
+   "validatorParticipantName": null,
+   "validatorStatus": null,
+   "validatorIsRegistryProfile": null,
+   "currentCreditingPeriodStartDate": "2024-11-06",
+   "currentCreditingPeriodEndDate": "2034-11-05",
+   "initialCreditingPeriodStartDate": "2014-11-06",
+   "initialCreditingPeriodEndDate": "2024-11-05",
+   "projectExtensionMap": {
+    "timingOfPublicDisplay": "LISTING",
+    "complianceProjectId": "CALS5134",
+    "lastProjectStateChanged": "2025-03-07T00:00:00.000Z",
+    "lastProjectStatusChanged": "2025-03-07T00:00:00.000Z",
+    "conservationEasement": "false",
+    "conservationEasementStateOrJurisdiction": null
+   },
+   "projectHoldingsTotalQuantity": 84219,
+   "projectHoldingsTotalRetiredQuantity": 0,
+   "projectHoldingsTotalReserveQuantity": 0,
+   "website": null
+  },
+  "developerLink": {
+   "type": "link",
+   "url": "/acr/developer/4003496954251706368:PROJECT_DEVELOPER",
+   "method": "GET",
+   "params": [],
+   "label": "3Degrees Group, Inc. - Project Developer"
+  },
+  "documents": {
+   "datasets": {
+    "publicDocuments": {
+     "rows": [
+      {
+       "name": "ARB Project Change of Status Memo_ACR234.pdf",
+       "title": "ARB Project Change of Status Memo_ACR234",
+       "type": "Other",
+       "category": "Other",
+       "uploadDate": "2025-03-07",
+       "uploadedBy": "ACR",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0234/document/9d822a59-756e-58ed-995a-102aa7173a5a/download",
+        "method": "GET",
+        "params": [],
+        "label": "ARB Project Change of Status Memo_ACR234.pdf"
+       }
+      },
+      {
+       "name": "OVS Alliance Dairy 20RP Updated 9-24-21.pdf",
+       "title": "OVS Alliance Dairy 20RP Updated 9-24-21",
+       "type": "Offset Verification Statement (OVS)",
+       "category": "Verification",
+       "uploadDate": "2021-09-24",
+       "uploadedBy": "SES, Inc.",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0234/document/a580f2ac-79a8-593a-bc8c-dc1d20da4969/download",
+        "method": "GET",
+        "params": [],
+        "label": "OVS Alliance Dairy 20RP Updated 9-24-21.pdf"
+       }
+      },
+      {
+       "name": "opdrlivestock_alliance_CALS5134_20210903.pdf",
+       "title": "opdrlivestock_alliance_CALS5134_20210903",
+       "type": "Offset Project Data Report (OPDR)",
+       "category": "Verification",
+       "uploadDate": "2021-09-03",
+       "uploadedBy": "Camco Offsets I, LLC",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0234/document/9086956a-3daa-5a3b-9d11-e031d27c8eab/download",
+        "method": "GET",
+        "params": [],
+        "label": "opdrlivestock_alliance_CALS5134_20210903.pdf"
+       }
+      },
+      {
+       "name": "ovstate - Alliance Dairy_r2a.pdf",
+       "title": "ovstate - Alliance Dairy_r2a",
+       "type": "Offset Verification Statement (OVS)",
+       "category": "Verification",
+       "uploadDate": "2020-08-28",
+       "uploadedBy": "Agri-Waste Technology, Inc.",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0234/document/6101ad6a-b4be-5144-9b43-ac205c1c5ca1/download",
+        "method": "GET",
+        "params": [],
+        "label": "ovstate - Alliance Dairy_r2a.pdf"
+       }
+      },
+      {
+       "name": "CALS5134_OPDR_RP5_20200827.pdf",
+       "title": "CALS5134_OPDR_RP5_20200827",
+       "type": "Offset Project Data Report (OPDR)",
+       "category": "Verification",
+       "uploadDate": "2020-08-27",
+       "uploadedBy": "Camco Offsets I, LLC",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0234/document/edfd2834-df8a-50ca-91ba-105d830574c6/download",
+        "method": "GET",
+        "params": [],
+        "label": "CALS5134_OPDR_RP5_20200827.pdf"
+       }
+      },
+      {
+       "name": "OVS Alliance Dairy 18RP Revised 04-15-19.pdf",
+       "title": "OVS Alliance Dairy 18RP Revised 04-15-19",
+       "type": "Offset Verification Statement (OVS)",
+       "category": "Verification",
+       "uploadDate": "2019-04-15",
+       "uploadedBy": "SES, Inc.",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0234/document/719b8d38-9f83-5c5c-834b-1a48c8e4daed/download",
+        "method": "GET",
+        "params": [],
+        "label": "OVS Alliance Dairy 18RP Revised 04-15-19.pdf"
+       }
+      },
+      {
+       "name": "CALS5134_OPDR_RP4_20190412.pdf",
+       "title": "CALS5134_OPDR_RP4_20190412",
+       "type": "Offset Project Data Report (OPDR)",
+       "category": "Verification",
+       "uploadDate": "2019-04-12",
+       "uploadedBy": "Camco Offsets I, LLC",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0234/document/58f1bee8-b35b-5bab-90d4-846c2d857938/download",
+        "method": "GET",
+        "params": [],
+        "label": "CALS5134_OPDR_RP4_20190412.pdf"
+       }
+      },
+      {
+       "name": "ovstate-Alliance-r1.pdf",
+       "title": "ovstate-Alliance-r1",
+       "type": "Offset Verification Statement (OVS)",
+       "category": "Verification",
+       "uploadDate": "2018-11-20",
+       "uploadedBy": "Agri-Waste Technology, Inc.",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0234/document/62937d8f-18c7-5959-9b49-b72400b23ac8/download",
+        "method": "GET",
+        "params": [],
+        "label": "ovstate-Alliance-r1.pdf"
+       }
+      },
+      {
+       "name": "opdrlivestock_Alliance_20180920.pdf",
+       "title": "opdrlivestock_Alliance_20180920",
+       "type": "Offset Project Data Report (OPDR)",
+       "category": "Verification",
+       "uploadDate": "2018-09-20",
+       "uploadedBy": "Camco Offsets I, LLC",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0234/document/a69dcf34-4b65-5176-ab06-5e0fa36c6eba/download",
+        "method": "GET",
+        "params": [],
+        "label": "opdrlivestock_Alliance_20180920.pdf"
+       }
+      },
+      {
+       "name": "ACR234-Alliance - 2015-2016 Offset Verification Statement-Rev.2.pdf",
+       "title": "ACR234-Alliance - 2015-2016 Offset Verification Statement-Rev.2",
+       "type": "Offset Verification Statement (OVS)",
+       "category": "Verification",
+       "uploadDate": "2017-04-06",
+       "uploadedBy": "GHD Limited",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0234/document/1b9aa47b-bf07-57ce-9454-c9278fcbb673/download",
+        "method": "GET",
+        "params": [],
+        "label": "ACR234-Alliance - 2015-2016 Offset Verification Statement-Rev.2.pdf"
+       }
+      },
+      {
+       "name": "opdrlivestock_alliance_20170303.pdf",
+       "title": "opdrlivestock_alliance_20170303",
+       "type": "Offset Project Data Report (OPDR)",
+       "category": "Verification",
+       "uploadDate": "2017-03-03",
+       "uploadedBy": "Camco Offsets I, LLC",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0234/document/eda8230a-e217-5a21-829c-28313be3ba66/download",
+        "method": "GET",
+        "params": [],
+        "label": "opdrlivestock_alliance_20170303.pdf"
+       }
+      },
+      {
+       "name": "OVS-Alliance-r1.pdf",
+       "title": "OVS-Alliance-r1",
+       "type": "Offset Verification Statement (OVS)",
+       "category": "Verification",
+       "uploadDate": "2016-09-27",
+       "uploadedBy": "Agri-Waste Technology, Inc.",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0234/document/b0d919d5-55f0-5136-803a-dc973e1c9bb5/download",
+        "method": "GET",
+        "params": [],
+        "label": "OVS-Alliance-r1.pdf"
+       }
+      },
+      {
+       "name": "Alliance OPDR RP1 20160920.pdf",
+       "title": "Alliance OPDR RP1 20160920",
+       "type": "Offset Project Data Report (OPDR)",
+       "category": "Verification",
+       "uploadDate": "2016-09-20",
+       "uploadedBy": "Camco Offsets I, LLC",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0234/document/ac9f9aed-3280-50a7-a4b3-47e945e63056/download",
+        "method": "GET",
+        "params": [],
+        "label": "Alliance OPDR RP1 20160920.pdf"
+       }
+      },
+      {
+       "name": "Alliance_ARBListingForm_v2.pdf",
+       "title": "Alliance_ARBListingForm_v2",
+       "type": "Project Listing",
+       "category": "Project Submittal",
+       "uploadDate": "2015-01-09",
+       "uploadedBy": "Camco Offsets I, LLC",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0234/document/9206d3c8-ede6-58e1-a2db-6bf58336a2ea/download",
+        "method": "GET",
+        "params": [],
+        "label": "Alliance_ARBListingForm_v2.pdf"
+       }
+      }
+     ],
+     "totalCount": 14
+    }
+   }
+  }
+ },
+ "P2423C9VXD24": {
+  "projectDetail": {
+   "projectKey": "P2423C9VXD24",
+   "projectName": "CO Orphan Well P&A CS-24-01",
+   "projectDescription": "Five orphaned oil and gas wells carrying the official orphaned status/designation at the state level were identified in Adams County, CO as continuously leaking methane from the wellhead. Pre-plugging leak rates will be quantified, after which Carbon Shield will plug and abandon each well per the Colorado ECMC rules and regulations providing permanent abatement of the fugitive emissions. Post-plugging measurements will then be collected to confirm that emissions from the plugged wells have been fully abated.",
+   "projectStatus": "ACTIVE",
+   "projectListingStatus": "Listed",
+   "creditType": "NONE",
+   "creditingProgram": "ACR",
+   "registryCode": "ACR",
+   "registryKey": "ACR_REGISTRY",
+   "projectReferenceId": "ACR1010",
+   "hasAnotherCarbonProgram": false,
+   "hasAnotherEnvironmentalMarket": false,
+   "isPublic": true,
+   "isRegistryTransferred": false,
+   "isTribeAffiliated": false,
+   "projectCreationDate": "2024-03-28",
+   "projectRegistrationDate": null,
+   "projectStartDate": "2025-03-18",
+   "estimatedAnnualCredits": 18500,
+   "estimatedTotalCredits": 0,
+   "coverageArea": 0,
+   "coverageAreaUnit": null,
+   "numberOfCohorts": 0,
+   "numberOfLandowners": 0,
+   "projectMethodologyMethodologyKey": "ACR0026",
+   "projectMethodologyName": "Plugging Orphan Oil and Gas Wells in the U.S. and Canada",
+   "projectContactPersonFirstName": null,
+   "projectContactPersonFullName": null,
+   "projectContactPersonLastName": null,
+   "projectContactPersonEmail": null,
+   "projectContactPersonPhone": null,
+   "projectContactPersonTitle": null,
+   "projectMailingAddrLocName": null,
+   "projectMailingAddrLocAddressLine1": "5200 DTC Parkway",
+   "projectMailingAddrLocCity": "Greenwood Village",
+   "projectMailingAddrLocCountry": "US",
+   "projectMailingAddrLocPostalCode": "80111",
+   "projectMailingAddrLocState": "CO",
+   "projectSiteLocName": null,
+   "projectSiteLocAddressLine1": null,
+   "projectSiteLocCity": null,
+   "projectSiteLocLatitude": 39.7945,
+   "projectSiteLocLongitude": -104.4074,
+   "projectSiteLocDescription": "Adams County",
+   "projectSiteLocAdditionalStates": null,
+   "projectSiteLocCountry": "US",
+   "projectSiteLocPostalCode": null,
+   "projectSiteLocState": "COLORADO",
+   "projectTypeCode": "ORW",
+   "projectTypeName": "Orphaned Wells",
+   "owningProfileKey": "4003497115875016704:PROJECT_DEVELOPER",
+   "owningProfileCompanyId": "4003497115875016704",
+   "owningProfileProfileName": "Carbon Shield LLC - Project Developer",
+   "owningProfileParticipantName": "Carbon Shield LLC",
+   "owningProfileStatus": "ACTIVE",
+   "owningProfileIsRegistryProfile": false,
+   "projectOperatorName": null,
+   "projectOperatorIsRegistryProfile": null,
+   "projectDesigneeName": null,
+   "projectDesigneeProfileKey": null,
+   "projectDesigneeIsRegistryProfile": null,
+   "projectProponentName": null,
+   "projectProponentProfileKey": "4003497115875016704:PROJECT_DEVELOPER",
+   "projectProponentIsRegistryProfile": false,
+   "verifierProfileKey": "4003496927794036736:PROJECT_VVB",
+   "verifierCompanyId": "4003496927794036736",
+   "verifierProfileName": "First Environment, Inc. - Project VVB",
+   "verifierParticipantName": "First Environment, Inc.",
+   "verifierStatus": "ACTIVE",
+   "verifierIsRegistryProfile": false,
+   "validatorProfileKey": "4003496927794036736:PROJECT_VVB",
+   "validatorCompanyId": "4003496927794036736",
+   "validatorProfileName": "First Environment, Inc. - Project VVB",
+   "validatorParticipantName": "First Environment, Inc.",
+   "validatorStatus": "ACTIVE",
+   "validatorIsRegistryProfile": false,
+   "currentCreditingPeriodStartDate": "2025-03-18",
+   "currentCreditingPeriodEndDate": "2045-03-31",
+   "initialCreditingPeriodStartDate": "2025-03-18",
+   "initialCreditingPeriodEndDate": "2045-03-31",
+   "projectExtensionMap": {
+    "timingOfPublicDisplay": "LISTING",
+    "lastProjectStateChanged": "2024-03-28T21:28:00.000Z",
+    "lastProjectStatusChanged": "2024-03-28T00:00:00.000Z",
+    "conservationEasement": "false",
+    "conservationEasementStateOrJurisdiction": null
+   },
+   "projectHoldingsTotalQuantity": 0,
+   "projectHoldingsTotalRetiredQuantity": 0,
+   "projectHoldingsTotalReserveQuantity": 0,
+   "website": "www.carbon-shield.com"
+  },
+  "developerLink": {
+   "type": "link",
+   "url": "/acr/developer/4003497115875016704:PROJECT_DEVELOPER",
+   "method": "GET",
+   "params": [],
+   "label": "Carbon Shield LLC - Project Developer"
+  },
+  "documents": {
+   "datasets": {
+    "publicDocuments": {
+     "rows": [
+      {
+       "name": "ACR GHG Project Listing Form_Carbon Shield_CO Orphan Well PA CS-24-01.pdf",
+       "title": "ACR GHG Project Listing Form_Carbon Shield_CO Orphan Well P&A CS-24-01",
+       "type": "Project Listing",
+       "category": "Project Submittal",
+       "uploadDate": "2024-03-28",
+       "uploadedBy": "Carbon Shield LLC",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR1010/document/426ba02c-ed32-54ba-b62b-59498938ed84/download",
+        "method": "GET",
+        "params": [],
+        "label": "ACR GHG Project Listing Form_Carbon Shield_CO Orphan Well PA CS-24-01.pdf"
+       }
+      }
+     ],
+     "totalCount": 1
+    }
+   }
+  }
+ },
+ "P2423C9VQB23": {
+  "projectDetail": {
+   "projectKey": "P2423C9VQB23",
+   "projectName": "Whirlpool HFO Ottawa 659",
+   "projectDescription": "This project quantifies the GHG emissions reductions from Whirlpool Corporation's transition from high GWP blowing agents to low GWP blowing agents at the Ottawa, OH manufacturing facility",
+   "projectStatus": "COMPLETED",
+   "projectListingStatus": "N/A",
+   "creditType": "NONE",
+   "creditingProgram": "ACR",
+   "registryCode": "ACR",
+   "registryKey": "ACR_REGISTRY",
+   "projectReferenceId": "ACR0659",
+   "hasAnotherCarbonProgram": false,
+   "hasAnotherEnvironmentalMarket": false,
+   "isPublic": true,
+   "isRegistryTransferred": false,
+   "isTribeAffiliated": false,
+   "projectCreationDate": "2021-08-31",
+   "projectRegistrationDate": null,
+   "projectStartDate": "2020-01-01",
+   "estimatedAnnualCredits": 421733,
+   "estimatedTotalCredits": 0,
+   "coverageArea": 0,
+   "coverageAreaUnit": null,
+   "numberOfCohorts": 0,
+   "numberOfLandowners": 0,
+   "projectMethodologyMethodologyKey": "ACR0029",
+   "projectMethodologyName": "Transition to Advanced Formulation Blowing Agents in Foam Manufacturing and Use",
+   "projectContactPersonFirstName": null,
+   "projectContactPersonFullName": null,
+   "projectContactPersonLastName": null,
+   "projectContactPersonEmail": null,
+   "projectContactPersonPhone": null,
+   "projectContactPersonTitle": null,
+   "projectMailingAddrLocName": null,
+   "projectMailingAddrLocAddressLine1": "2000 North M-63",
+   "projectMailingAddrLocCity": "Benton Harbor",
+   "projectMailingAddrLocCountry": "US",
+   "projectMailingAddrLocPostalCode": "49022",
+   "projectMailingAddrLocState": "MI",
+   "projectSiteLocName": null,
+   "projectSiteLocAddressLine1": null,
+   "projectSiteLocCity": null,
+   "projectSiteLocLatitude": 40.99976,
+   "projectSiteLocLongitude": -84.0398,
+   "projectSiteLocDescription": "Ottawa",
+   "projectSiteLocAdditionalStates": null,
+   "projectSiteLocCountry": "US",
+   "projectSiteLocPostalCode": null,
+   "projectSiteLocState": "OHIO",
+   "projectTypeCode": "IPE",
+   "projectTypeName": "Industrial Process Emissions",
+   "owningProfileKey": "4003496970835984384:PROJECT_DEVELOPER",
+   "owningProfileCompanyId": "4003496970835984384",
+   "owningProfileProfileName": "WHIRLPOOL CORPORATION - Project Developer",
+   "owningProfileParticipantName": "WHIRLPOOL CORPORATION",
+   "owningProfileStatus": "ACTIVE",
+   "owningProfileIsRegistryProfile": false,
+   "projectOperatorName": null,
+   "projectOperatorIsRegistryProfile": null,
+   "projectDesigneeName": null,
+   "projectDesigneeProfileKey": null,
+   "projectDesigneeIsRegistryProfile": null,
+   "projectProponentName": null,
+   "projectProponentProfileKey": null,
+   "projectProponentIsRegistryProfile": null,
+   "verifierProfileKey": "4003496927794036736:PROJECT_VVB",
+   "verifierCompanyId": "4003496927794036736",
+   "verifierProfileName": "First Environment, Inc. - Project VVB",
+   "verifierParticipantName": "First Environment, Inc.",
+   "verifierStatus": "ACTIVE",
+   "verifierIsRegistryProfile": false,
+   "validatorProfileKey": "4003496927794036736:PROJECT_VVB",
+   "validatorCompanyId": "4003496927794036736",
+   "validatorProfileName": "First Environment, Inc. - Project VVB",
+   "validatorParticipantName": "First Environment, Inc.",
+   "validatorStatus": "ACTIVE",
+   "validatorIsRegistryProfile": false,
+   "currentCreditingPeriodStartDate": "2020-01-01",
+   "currentCreditingPeriodEndDate": "2033-12-31",
+   "initialCreditingPeriodStartDate": "2020-01-01",
+   "initialCreditingPeriodEndDate": "2033-12-31",
+   "projectExtensionMap": {
+    "timingOfPublicDisplay": "COI",
+    "lastProjectStateChanged": "2024-12-30T00:00:00.000Z",
+    "lastProjectStatusChanged": "2024-12-30T00:00:00.000Z",
+    "conservationEasement": "false",
+    "conservationEasementStateOrJurisdiction": null
+   },
+   "projectHoldingsTotalQuantity": 421733,
+   "projectHoldingsTotalRetiredQuantity": 26358,
+   "projectHoldingsTotalReserveQuantity": 0,
+   "website": null
+  },
+  "developerLink": {
+   "type": "link",
+   "url": "/acr/developer/4003496970835984384:PROJECT_DEVELOPER",
+   "method": "GET",
+   "params": [],
+   "label": "WHIRLPOOL CORPORATION - Project Developer"
+  },
+  "documents": {
+   "datasets": {
+    "publicDocuments": {
+     "rows": [
+      {
+       "name": "ACR656ACR657ACR658ACR659ACR6660ACR661ACR662 Validation Report Addendum.pdf",
+       "title": "ACR656,ACR657,ACR658,ACR659,ACR6660,ACR661,ACR662 Validation Report Addendum",
+       "type": "Validation Report",
+       "category": "Verification",
+       "uploadDate": "2022-06-14",
+       "uploadedBy": "First Environment, Inc.",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0659/document/82db5853-748f-5d96-ba8e-68b477af0225/download",
+        "method": "GET",
+        "params": [],
+        "label": "ACR656ACR657ACR658ACR659ACR6660ACR661ACR662 Validation Report Addendum.pdf"
+       }
+      },
+      {
+       "name": "ACR656ACR657ACR658ACR659ACR6660ACR661ACR662 Verification Report Addendum.pdf",
+       "title": "ACR656,ACR657,ACR658,ACR659,ACR6660,ACR661,ACR662 Verification Report Addendum",
+       "type": "Verification Report",
+       "category": "Verification",
+       "uploadDate": "2022-06-14",
+       "uploadedBy": "First Environment, Inc.",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0659/document/bbc2392a-dacb-5462-ba93-7b17dcaefbd8/download",
+        "method": "GET",
+        "params": [],
+        "label": "ACR656ACR657ACR658ACR659ACR6660ACR661ACR662 Verification Report Addendum.pdf"
+       }
+      },
+      {
+       "name": "ACR656ACR657ACR658ACR659ACR660ACR661ACR662 Verification Statement Addendum.pdf",
+       "title": "ACR656,ACR657,ACR658,ACR659,ACR660,ACR661,ACR662 Verification Statement Addendum",
+       "type": "Verification Opinion",
+       "category": "Verification",
+       "uploadDate": "2022-06-14",
+       "uploadedBy": "First Environment, Inc.",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0659/document/a2c9e8a0-0cd1-55d2-a625-856f3626e053/download",
+        "method": "GET",
+        "params": [],
+        "label": "ACR656ACR657ACR658ACR659ACR660ACR661ACR662 Verification Statement Addendum.pdf"
+       }
+      },
+      {
+       "name": "ACR 658  659 Second Issuance Project Plan.pdf",
+       "title": "ACR 658 & 659 Second Issuance Project Plan",
+       "type": "GHG Project Plan",
+       "category": "Verification",
+       "uploadDate": "2022-06-08",
+       "uploadedBy": "WHIRLPOOL CORPORATION",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0659/document/35e106fe-e020-5b04-b829-dc4df97103ec/download",
+        "method": "GET",
+        "params": [],
+        "label": "ACR 658  659 Second Issuance Project Plan.pdf"
+       }
+      },
+      {
+       "name": "ACR 658  659 Project Plan (1).pdf",
+       "title": "ACR 658 & 659 Project Plan (1)",
+       "type": "GHG Project Plan",
+       "category": "Verification",
+       "uploadDate": "2022-02-17",
+       "uploadedBy": "WHIRLPOOL CORPORATION",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0659/document/a306a88a-e61b-5daf-b785-17f90f694da1/download",
+        "method": "GET",
+        "params": [],
+        "label": "ACR 658  659 Project Plan (1).pdf"
+       }
+      },
+      {
+       "name": "ACR656ACR657ACR658ACR659ACR660ACR661ACR662 Verification Statement.pdf",
+       "title": "ACR656,ACR657,ACR658,ACR659,ACR660,ACR661,ACR662 Verification Statement",
+       "type": "Verification Opinion",
+       "category": "Verification",
+       "uploadDate": "2022-02-16",
+       "uploadedBy": "First Environment, Inc.",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0659/document/b2845d17-3b4e-5743-af32-bf08f8ad3a15/download",
+        "method": "GET",
+        "params": [],
+        "label": "ACR656ACR657ACR658ACR659ACR660ACR661ACR662 Verification Statement.pdf"
+       }
+      },
+      {
+       "name": "ACR656ACR657ACR658ACR659ACR6660ACR661ACR662 Validation Report.pdf",
+       "title": "ACR656,ACR657,ACR658,ACR659,ACR6660,ACR661,ACR662 Validation Report",
+       "type": "Validation Report",
+       "category": "Verification",
+       "uploadDate": "2022-02-16",
+       "uploadedBy": "First Environment, Inc.",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0659/document/972bc3e9-5860-5500-84e4-6f1b6924625e/download",
+        "method": "GET",
+        "params": [],
+        "label": "ACR656ACR657ACR658ACR659ACR6660ACR661ACR662 Validation Report.pdf"
+       }
+      },
+      {
+       "name": "ACR656ACR657ACR658ACR659ACR660ACR661ACR662 Verification Report.pdf",
+       "title": "ACR656,ACR657,ACR658,ACR659,ACR660,ACR661,ACR662 Verification Report",
+       "type": "Verification Report",
+       "category": "Verification",
+       "uploadDate": "2022-02-16",
+       "uploadedBy": "First Environment, Inc.",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0659/document/a6c37208-1d6a-52b9-9c08-733dd7c0e6cd/download",
+        "method": "GET",
+        "params": [],
+        "label": "ACR656ACR657ACR658ACR659ACR660ACR661ACR662 Verification Report.pdf"
+       }
+      },
+      {
+       "name": "ACR 659 Project Listing Form.docx",
+       "title": "ACR 659 Project Listing Form",
+       "type": "Project Listing",
+       "category": "Project Submittal",
+       "uploadDate": "2021-08-13",
+       "uploadedBy": "WHIRLPOOL CORPORATION",
+       "download": {
+        "type": "link",
+        "url": "/api/greentraceservice/v1/project/registry/ACR/project/ACR0659/document/11da4c21-18a1-5baf-a2a1-07808cbccd08/download",
+        "method": "GET",
+        "params": [],
+        "label": "ACR 659 Project Listing Form.docx"
+       }
+      }
+     ],
+     "totalCount": 9
+    }
+   }
+  }
+ }
+}

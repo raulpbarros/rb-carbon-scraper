@@ -76,12 +76,22 @@ class ClientOwner:
     client: Any
     _owns_client: bool
 
+    #: Requests per second, where this registry asks for fewer than the
+    #: default. `RegistryClient` takes the minimum of this and
+    #: `settings.REQUESTS_PER_SECOND`, so an adapter can only ever slow itself
+    #: down — ACR is behind a Cloudflare rule that bans for an hour at ~100
+    #: requests in ten minutes, and there is no version of "make it faster"
+    #: that ends well.
+    requests_per_second: float | None = None
+
     def _bind_client(
         self,
         client: RegistryClient | None,
         cancel: threading.Event | None = None,
     ) -> None:
-        self.client = client or RegistryClient(cancel=cancel)
+        self.client = client or RegistryClient(
+            cancel=cancel, requests_per_second=self.requests_per_second
+        )
         # An injected client belongs to the caller — closing it here would
         # shut a connection pool the pipeline is still paging through.
         self._owns_client = client is None

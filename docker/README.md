@@ -1,8 +1,10 @@
 # Running the scraper in Docker
 
 The long half of this project is headless: `verra sync` is ~9,000 requests and
-about 2.5 hours for Verra, ~7,300 and about 2 hours for Gold Standard. None of
-it needs a window. Putting that in a container gets it off the desktop, keeps
+about 2.5 hours for Verra, ~7,300 and about 2 hours for Gold Standard, and
+~1,005 and about 2 hours for ACR — which is slow for a different reason, being
+the one registry that answers too many requests with an hour-long ban rather
+than with a queue. None of it needs a window. Putting that in a container gets it off the desktop, keeps
 the ~1 GB response cache and the ~215 MB database out of the checkout, and
 makes a refresh one command that is safe to interrupt.
 

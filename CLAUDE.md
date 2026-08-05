@@ -8,9 +8,10 @@
 
 A scraper that builds a database of every carbon project across public
 registries and exports one formatted Excel sheet for the business team.
-Seven registries are live: **Verra** (VCS **and** JNR), **Gold Standard**,
+Eight registries are live: **Verra** (VCS **and** JNR), **Gold Standard**,
 **Cercarbono**, **Plan Vivo** (**V5 and V4**, on two different platforms),
-**SocialCarbon**, **BioCarbon** and **Puro.earth**; one more is planned.
+**SocialCarbon**, **BioCarbon**, **Puro.earth** and **ACR** (the American
+Carbon Registry). That is every registry on the original list.
 Adding one means writing an adapter, not touching the pipeline.
 
 **A registry is not always one system, and not always one standard.**
@@ -93,8 +94,19 @@ flag.
 | Contract doc | `docs/api-contract.md` | `docs/api-contract-planvivo.md` | `docs/api-contract-gs.md` | `docs/api-contract-cercarbono.md` | `docs/api-contract-socialcarbon.md` | `docs/api-contract-biocarbon.md` | `docs/api-contract-puro.md` |
 | `discover` needed | yes | no — the standards lookup was enough | no — plain HTTP was enough | no — plain HTTP plus a bundle read | no — the API is open and self-describing | no — the key and the routes are in the bundle | no — the data ships in the page |
 
+| | ACR |
+|---|---|
+| Front end | `greentrace.ice.com/acr` |
+| Backend | `greentrace.ice.com/api/greentraceservice/v1` — **ICE GreenTrace**, a platform serving ACR and ART |
+| Shape | ICE CMS "report centre": `POST {reportUrl}/results`, **form-encoded** |
+| Projects | 994 |
+| Credit records | 3,358 issuance blocks + 10,724 retirements + 1,358 cancellations |
+| Requests per sync | ~1,005 — **at one request per seven seconds**, see below |
+| Contract doc | `docs/api-contract-acr.md` |
+| `discover` needed | no — the site's own CMS config and one JS chunk are the contract |
+
 All read via
-`--registry verra|planvivo|gs|cercarbono|socialcarbon|biocarbon|puro|all`.
+`--registry verra|planvivo|gs|cercarbono|socialcarbon|biocarbon|puro|acr|all`.
 Verra
 and Plan Vivo share `registries/platts/api.py`; the others have their own
 sections and contract docs.
@@ -107,8 +119,30 @@ above are only the S&P half:
 | Verra | `verra/jnr.py` — JNR, a second standard on the same S&P tenant | 5 projects, **no credits at all** |
 | Plan Vivo | `planvivo/v4.py` — V4, on the **legacy Markit registry** | 30 projects, 411 issuances, 442 holdings, **5,034 retirements** |
 
-Planned, in `PLAN.md` order: **ACR**. Everything else on the original list is
-live.
+Nothing is planned: ACR was the last name on the original list.
+
+**ACR is the only registry here that bans rather than throttles.** GreenTrace
+sits behind a Cloudflare rate-limiting rule — roughly 100 requests in ten
+minutes earns HTTP 429 with `Retry-After: 3600`, and every retry inside that
+hour earns the same. A sync needs ~1,005 requests, because only the
+per-project detail carries a crediting period, so it runs at
+`settings.ACR_REQUESTS_PER_SECOND` (one request per seven seconds, ~2 hours).
+An adapter may declare `requests_per_second` and `RegistryClient` takes the
+**minimum** of that and the global setting: it is a lever for going slower and
+cannot be used to go faster. A 429's own `Retry-After` is honoured up to
+`settings.MAX_RETRY_AFTER`, past which the run fails and is resumed from the
+cache — which is safe, because every write is an idempotent upsert.
+
+**And there is a second, harder refusal behind the 429.** After a few hundred
+requests even at one every seven seconds, every API route starts answering
+`401 {"message": "Invalid API Key"}` — while the site's own page stays
+byte-identical and still ships no key of any kind. It is not a credential we
+are missing and not a contract that changed; it is the platform declining to
+answer this client, and it clears on its own. `greentrace.GreenTraceBlocked`
+says so in the exception, because "401 Unauthorized" sends the next person
+hunting for a key that does not exist. **A full ACR sync may therefore take
+more than one sitting** — re-running continues from the response cache. The
+answers this does *not* have are a higher rate and a different address.
 
 ### Adding a registry hosted on S&P Platts
 
@@ -312,6 +346,18 @@ these was a real afternoon:
 | Puro | `countryCode: "NA"` — a placeholder | **Namibia.** Three adapters here strip `na` as "not stated"; reusing one deletes a real country |
 | Puro | 1,519 retirements, so 1,519 rows | **2,099** — a retirement draws from several facilities at once, and the bundle is what names one |
 | Puro | 20 issuances flagged withdrawn | a label with **no quantity**, and the registry's own issued total counts them in full |
+| ACR | `acr2.apx.com`, the host every older note names | dead — HTTP 200 and "You have reached an invalid page" for **every** path. ACR moved to ICE GreenTrace |
+| ACR | the `reportUrl` the page publishes | not an endpoint. A GET on it is HTTP 500 `No static resource`; `/results` and `/criteria` are the endpoints |
+| ACR | criteria sent as a query string, or as JSON | the same generic 500. **Only a form body works** |
+| ACR | `max=20000`, HTTP 200, rows returned | clamped to 2000 in silence — fifth registry to ignore a page size |
+| ACR | one credit URL, so one ledger | four, selected by `holdingStatus`, and **the dataset key changes with it** |
+| ACR | the unfiltered credit view — 16,385 "holdings" | the whole book. Its RETIRED and CANCELED rows **are** the two ledgers; ingesting it double-counts both |
+| ACR | `issuanceQuantity` on every issuance row | the **parent event's** total, repeated across its blocks: 604M against a true 379M |
+| ACR | 1,358 cancellations | 1,166 of them are **conversions** to the ARB or Ecology compliance registries, not credits destroyed |
+| ACR | `projectSiteLocState` | three vocabularies — `OHIO`, `US-CA`, `Lower Saxony` — and multi-state values mix them in one string |
+| ACR | a country column | an ISO code and **no name anywhere**: not in the list, not on the detail, not in the report's own filters |
+| ACR | 1 req/s, the setting every other registry is happy with | a Cloudflare 429 at ~100 requests per ten minutes, with `Retry-After: 3600` |
+| ACR | `401 "Invalid API Key"` on every route, mid-sync | **not a key we are missing.** The site's page is byte-identical and carries none; it is the platform declining to answer us, and it clears with time |
 
 Four rules for every new adapter, before writing a line of paging code:
 
@@ -800,6 +846,9 @@ verra sync -r planvivo            # BOTH systems: V5 on S&P (7 requests) and
 verra sync -r socialcarbon        # the whole registry in 4 requests, ~1 min
 verra sync -r biocarbon           # 105 projects + three ledgers, ~5 min (225 requests)
 verra sync -r puro                # 118 projects + both ledgers, ~4 min (121 requests)
+verra sync -r acr                 # 994 projects + three ledgers, ~2 h — 1,005
+                                  # requests at ONE PER SEVEN SECONDS, because
+                                  # this registry bans rather than throttles
 verra sync                        # every registry (-r defaults to `all`)
 verra totals                      # EXACT per-project Verra retirement totals
 verra derive                      # apply YAML rules -> derived columns
@@ -819,11 +868,12 @@ cd docker; docker compose run --rm publish   # the container's DB -> data/verra.
 ```
 
 `-r` / `--registry` takes `verra`, `gs`, `cercarbono`, `planvivo`,
-`socialcarbon`, `biocarbon`, `puro` or `all`.
+`socialcarbon`, `biocarbon`, `puro`, `acr` or `all`.
 `totals` is Verra-only — Gold Standard's whole credit stream pages cleanly,
 Cercarbono, SocialCarbon, BioCarbon and Puro pick up their exact totals during
-`sync` through `iter_credit_totals`, and Plan Vivo's ledgers each fit in one
-request.
+`sync` through `iter_credit_totals`, ACR's ledgers agree with its own
+per-project figures on all 994 projects, and Plan Vivo's ledgers each fit in
+one request.
 `discover` and `standards` are S&P-only and refuse anything else.
 
 `sync`, `derive` and `export` are separate on purpose: fixing a classification rule must never require re-scraping a registry.
@@ -896,6 +946,17 @@ Adding a country band
 (Miombo, Mesoamerica) therefore also refines the Verra rows that used to sit on
 the coarse continental one — check the blast radius with a before/after count
 on `project_derived` rather than assuming a new rule only touches new rows.
+
+**And a registry can publish neither.** ACR states an ISO country *code* and no
+name at all, so every band in `biome.yaml` missed all 994 of its rows —
+including 352 forest projects, which would have made its Bioma blank for the
+wrong reason. `north-america-temperate-by-code` is the answer: an ISO-code band,
+**last in the file** so any country-name or region rule still wins, measured at
+**4 rows added and 0 changed** across the seven existing registries. Its 351
+matches are ACR's US and Canadian forests. That is the pattern for the next
+registry that publishes a code and no name — a band at the end, and a
+before/after count on the real database, never a guess about who else it
+touches.
 
 **Plan Vivo V4 sources differently from V5**, because it is a different
 platform. Measured over the full 30-project index on 2026-07-29:
@@ -1026,6 +1087,43 @@ GHG index on 2026-08-04:
   projects. Blank for all 118, correctly.
 - `status`, `region_name`, `afolu_names` — not published.
 
+**ACR sources differently again**, measured over its full 994-project index on
+2026-08-04:
+
+| Column | ACR |
+|---|---|
+| `Project ID` | the published `ACR1275` reference, unique across all 994 — checked — and its **numeric part** is the primary key. The API's own routes take a different id (`P2423FTH4Z22`), which goes to `extra` and is what the project link is built from: a link built from the reference answers HTTP 200 with a shell that renders an error |
+| `Standard` | **"American Carbon Registry", asserted.** What is published per project is a `creditingProgram` — ACR (612), California Air Resources Board (356), Washington Department of Ecology (26) — which is the compliance programme the credits serve, not the standard |
+| `Tipo Macro de Projeto` | `projectType`, untranslated: "Forest Carbon" (352), "Ozone Depleting Substances" (201), "Refrigerants" (134), "Coal Mine Methane" (91), "Industrial Process Emissions" (88), and twelve more |
+| `Metodologia` | the protocol name, 994 of 994 — and the **only** thing that separates 352 "Forest Carbon" projects into improved management, reforestation and avoided conversion |
+| `Tipo Micro` | derivation layer, keyed on the protocol name, 993 of 994 |
+| `Continent` | derived from the ISO country code, 994 of 994 — the Gold Standard path |
+| `Total Credits Issued` | the issuance ledger, 379,674,647 — agreeing with the project list's own `issuedCredits` on **all 994 projects** |
+| `Total Credits Cancelled` | the cancellation ledger, 187,414,534 — of which 1,166 rows of 1,358 are **conversions** to the ARB or Ecology compliance registries, not credits destroyed. The column reports the registry's own figure (user's decision, 2026-08-04); the reason is on every row, so a split is a query |
+
+**Deliberate blanks for ACR**, same index:
+
+- `País` — **no country name is published anywhere**: the list states an ISO
+  code, the detail states the same code, and the report's own filter list
+  offers no country field. The first registry here with that gap. Filling it
+  means introducing a code-to-name table, which is a decision about the
+  deliverable rather than something the registry published, and the answer was
+  **blank (user's decision, 2026-08-04)**. The code is stored, so a later
+  change of mind is a `derive` change and not a re-scrape.
+- `Cidade` — the field exists and is null throughout. The lat/long pair goes
+  to `extra`.
+- `Total Ex Ante` — `estimatedTotalCredits` is the number **0** on every
+  project sampled, which is not the same as an estimate of nothing. `excel`
+  computes the total from the yearly figure instead.
+- `Additional Certification` — no equivalent. `hasAnotherCarbonProgram` and
+  `hasAnotherEnvironmentalMarket` are booleans with no name attached and go to
+  `extra`, where a double-count check can read them.
+- `region_name`, `afolu_names` — not published.
+- `Bioma` for 9 land-use rows — 5 "Agricultural Land Management" and 4
+  "Wetland Restoration". The only North American band available names a
+  *forest*; labelling a restored wetland as temperate forest is worse than the
+  blank.
+
 **Known wrinkle:** under "retired = sold", `Total Credits Sold` and `Total Credits Retired` are the same number. Retirement beneficiary is stored anyway, and `config/credits.yaml` has a `sold_equals_retired` toggle that flips to a beneficiary-based split (retired for a named third party = sold) if the business confirms that is wanted. Do not change the default without being asked.
 
 ## Rules for working in this repo
@@ -1085,6 +1183,12 @@ src/carbon_scraper/
     puro/api.py                Puro.earth: no API at all. Bundles rather than
                                transactions, and the only registry that
                                publishes a durability of its own
+    greentrace/api.py          the ICE GREENTRACE PLATFORM: form-posted
+                               report paging, the silent 2000-row clamp, the
+                               dataset key that changes with the filter.
+                               Serves ACR and ART
+    acr/api.py                 ACR's identity, the fields it populates, and
+                               the rate this registry has to be read at
     puro/flight.py             the Next.js RSC payload reader — joins the
                                `__next_f.push` stream, then decodes. Stdlib
                                only, and the Puro half of markit/tables.py
@@ -1121,11 +1225,19 @@ tests, and derivation rules that key on whatever field it publishes. Nothing in
 `db`, `derive`, `excel` or the GUI should need to change — the GUI builds its
 checkboxes from `REGISTRY_LABELS`.
 
-**Check both platform tables first.** `verra standards -r all` names every S&P
-tenant in eight GETs, and `docs/api-contract-markit.md` lists the 21
-programmes on the legacy Markit view. Between them that is 29 registries
-reachable by subclassing something that already works. Cracking a new site is
-the last resort, not the first move.
+**Check the platform tables first.** `verra standards -r all` names every S&P
+tenant in eight GETs, `docs/api-contract-markit.md` lists the 21 programmes on
+the legacy Markit view, and `docs/api-contract-acr.md` lists the two ICE
+GreenTrace tenants — ACR, which has an adapter, and **ART** (Architecture for
+REDD+ Transactions, 30 projects), which does not and is one subclass away.
+Between them that is 31 registries reachable by subclassing something that
+already works. Cracking a new site is the last resort, not the first move.
+
+**And check that the site an older note names is still the site.** ACR was
+filed for a year as "APX ASP platform, form posts and HTML tables". `acr2.apx.com`
+still answers — with HTTP 200 and "You have reached an invalid page" for every
+path, which a scraper reads as an empty registry rather than a moved one. The
+registry's own public-reports page named the new host in one fetch.
 
 **Then check whether the site is shipping the data in its own HTML.** Puro was
 filed as "server-rendered HTML, look for a JSON endpoint before writing a
@@ -1164,8 +1276,20 @@ neither row is a copy of the other and **both ship**, cross-linked through
 `extra.also_registered_as` (user's decision, 2026-08-04). The linkage is
 published only from Cercarbono's side, in its own `converted_from_link`, which
 is why the BioCarbon adapter carries a measured table rather than reading one.
-It is the only known duplicate project in the database, and it is what stops
-"sum every registry's `Total Credits Issued`" being a safe query.
+
+**And a second one, found the same way, 2026-08-05.** ACR publishes a
+`hasAnotherCarbonProgram` flag — true on 16 of its 994 projects — and never
+says which programme. Checking those names against the database (rare name
+tokens plus country, because matching on "wind" or "wastewater" invents pairs
+by the hundred) found two mine-methane projects that **Verra also publishes**:
+`ACR0242` is `VCS 559` and `ACR0388`/`ACR1192` are `VCS 573`. Their crediting
+periods are *consecutive* rather than concurrent — Verra 2008-2018, ACR
+2018-2027 — so the tranches are disjoint, neither row restates the other, and
+both ship cross-linked through `acr.ALSO_REGISTERED_AS`.
+
+Two known duplicates now, and together they are what stops "sum every
+registry's `Total Credits Issued`" being a safe query. Both were found by
+asking the question before scraping rather than after.
 
 **A published human reference is not a primary key until it is proven unique.**
 SocialCarbon publishes `SOCIALCARBON-N` on every project and repeats one across

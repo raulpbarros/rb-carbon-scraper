@@ -213,3 +213,24 @@ rules:
     match:
       - { field: region_name, regex: "Oceania|Australia" }
     value: "Oceania (bioma não determinado)"
+
+  # --- ISO-code bands, for the registries that publish no country name ------
+  # ACR states `US` and stops: no country name anywhere in its API, and
+  # `region_name` is Verra's alone. Every rule above therefore misses all 994
+  # of its rows, including 352 forest projects — so its Bioma would be blank
+  # for the whole registry, and blank for the wrong reason. Puro's is blank
+  # because it certifies no land use at all; this one would be blank because
+  # of a field name.
+  #
+  # Last in the file on purpose: a country-name or region band is more
+  # specific and must win. This only ever fires where nothing else did.
+  #
+  # Blast radius measured against the real database on 2026-08-04, before and
+  # after the change: **4 rows added, 0 changed, 0 removed** — four Gold
+  # Standard A/R projects in the US and Canada that had no biome at all. No
+  # existing row moves. Measure again before widening it: a band added for one
+  # registry has already been shown to move rows in three others.
+  - name: north-america-temperate-by-code
+    match:
+      - { field: country_code, regex: "^(US|CA)$" }
+    value: "Floresta Temperada Norte-Americana"

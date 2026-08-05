@@ -121,6 +121,44 @@ rules:
     match: [{ field: methodologies, regex: "BCR0004|BCR0007|BCR0012" }]
     value: "Média (25-100 anos) — estoque biológico, reversível"
 
+  # --- ACR's protocol names ------------------------------------------------
+  # ACR's forest half is 352 projects under one `projectType`, so the band has
+  # to come from the protocol name — the same split project_type.yaml makes.
+  # The values are the existing ones, reused deliberately: an ACR improved-
+  # management project and a Verra IFM project store carbon the same way, and
+  # a new wording must never quietly become a new band.
+  #
+  # Everything else this registry certifies is an avoided emission — destroyed
+  # ODS banks, captured mine methane, plugged wells, reclaimed refrigerants —
+  # and reaches the emission-reduction rules at the bottom of this file
+  # through its `projectType`. There is no carbon store to reverse, which is
+  # what that band says.
+  - name: acr-forest-stock
+    match:
+      - field: methodologies
+        regex: "Improved Forest Management \\(IFM\\)|Active Conservation and Sustainable Management|Compliance Offset Protocol: U\\.S\\. Forest Projects|Climate Action Reserve Forest Project Protocol"
+    value: "Média (25-100 anos) — estoque florestal, reversível"
+
+  - name: acr-wetland-restoration-removal
+    match:
+      - field: methodologies
+        regex: "Restoration of Pocosin Wetlands|Restoration of California Deltaic"
+    value: "Média (25-100 anos) — estoque biológico, reversível"
+
+  - name: acr-avoided-grassland-conversion
+    match: [{ field: methodologies, regex: "Avoided Conversion of Grasslands" }]
+    value: "Média — uso da terra, reversível"
+
+  - name: acr-agricultural-soil
+    match:
+      - field: methodologies
+        regex: "Reduced Use of Fertilizer|Rice Management Systems"
+    value: "Curta (10-40 anos) — carbono no solo, reversível"
+
+  - name: acr-enhanced-oil-recovery
+    match: [{ field: methodologies, regex: "Enhanced Oil Recovery" }]
+    value: "Longa (>1000 anos) — armazenamento geológico"
+
   - name: afolu-generic
     # Verra's wording, Cercarbono's, and the two that state the acronym on its
     # own or inside a longer phrase — SocialCarbon's bare "AFOLU" and
@@ -177,6 +215,42 @@ rules:
   - name: pv4-forest-unspecified
     match: [{ field: sectoral_scope, equals: "Forest" }]
     value: "Média — uso da terra, reversível"
+
+  # --- ACR project types ---------------------------------------------------
+  # The rows the protocol rules above did not answer. `equals` / `in` against
+  # ACR's own 17-value list, so they cannot reach another registry.
+  #
+  # "Forest Carbon" lands on the land-use band rather than a forest-stock one:
+  # by the time a row reaches here its protocol was not one of the named
+  # forest protocols, so which kind of forest project it is has not been
+  # established. `Wetland Restoration` is a biological store either way.
+  - name: acr-forest-carbon-unspecified
+    match: [{ field: sectoral_scope, equals: "Forest Carbon" }]
+    value: "Média — uso da terra, reversível"
+
+  - name: acr-wetland-restoration-type
+    match: [{ field: sectoral_scope, equals: "Wetland Restoration" }]
+    value: "Média (25-100 anos) — estoque biológico, reversível"
+
+  - name: acr-agricultural-land-management-type
+    match: [{ field: sectoral_scope, equals: "Agricultural Land Management" }]
+    value: "Curta (10-40 anos) — carbono no solo, reversível"
+
+  - name: acr-emission-reduction
+    match:
+      - field: sectoral_scope
+        in:
+          - "Ozone Depleting Substances"
+          - "Refrigerants"
+          - "Coal Mine Methane"
+          - "Orphaned Wells"
+          - "Industrial Process Emissions"
+          - "Industrial Gas Substitution"
+          - "Landfill Gas Capture & Combustion"
+          - "Livestock Waste Management"
+          - "Wastewater Treatment"
+          - "Fuel Switching"
+    value: "Permanente — redução de emissões (sem estoque reversível)"
 
   # --- Gold Standard project types ----------------------------------------
   # Gold Standard has no AFOLU sub-type codes, so its rows are read from the

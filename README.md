@@ -3,10 +3,10 @@
 Pulls every carbon project from the public carbon registries into a local
 database, then exports the spreadsheet the business asked for.
 
-Seven registries are live: **Verra VCS**, **Gold Standard**, **Cercarbono**,
-**Plan Vivo**, **SocialCarbon**, **BioCarbon** and **Puro.earth** — 9,891
-projects. They share one database and one spreadsheet; the `Registry` column
-tells the rows apart.
+Eight registries are live: **Verra VCS**, **Gold Standard**, **Cercarbono**,
+**Plan Vivo**, **SocialCarbon**, **BioCarbon**, **Puro.earth** and the
+**American Carbon Registry** — 10,885 projects. They share one database and one
+spreadsheet; the `Registry` column tells the rows apart.
 
 Written for someone who has not built a scraper before — the sections below go
 in order. If you are here to *use* the tool rather than work on it, skip to
@@ -16,7 +16,7 @@ in order. If you are here to *use* the tool rather than work on it, skip to
 
 | File | What it is |
 |---|---|
-| `data/verra.db` | SQLite database. The source of truth: ~5,200 Verra projects plus the full Units ledger, 4,141 Gold Standard projects plus 182,989 credit blocks, 231 Cercarbono projects, 118 Puro.earth, 105 BioCarbon, 32 Plan Vivo and 19 SocialCarbon. |
+| `data/verra.db` | SQLite database. The source of truth: ~5,200 Verra projects plus the full Units ledger, 4,141 Gold Standard projects plus 182,989 credit blocks, 994 ACR projects plus 15,440 credit records, 231 Cercarbono projects, 118 Puro.earth, 105 BioCarbon, 32 Plan Vivo and 19 SocialCarbon. |
 | `out/carbon-projects_vN.xlsx` | The deliverable. A **new version every time** — see below. |
 
 The spreadsheet's columns are read from `assets/fields-asked.txt` at runtime.
@@ -175,7 +175,13 @@ One registry at a time, with `-r verra` or `-r gs`:
 verra sync -r gs --projects-only   # 4,141 Gold Standard projects, ~1 min
 verra sync -r gs                   # + 182,989 credit blocks, ~2 h
 verra sync -r verra                # ~5,200 projects + Units ledgers, ~2.5 h
+verra sync -r acr                  # 994 ACR projects + 3 ledgers, ~2 h
 ```
+
+ACR takes two hours for a thousand projects because it is behind a rate-limit
+rule that **bans rather than throttles**: about a hundred requests inside ten
+minutes earns an hour-long refusal. It is scraped at one request every seven
+seconds for that reason. Do not raise it.
 
 `verra totals` is Verra-only and is not optional there. The retirements ledger has 305k rows and cannot
 be paged reliably (see [CLAUDE.md](CLAUDE.md) — the API silently ignores some

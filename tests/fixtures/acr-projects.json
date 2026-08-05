@@ -1,0 +1,419 @@
+{
+ "datasets": {
+  "projects": {
+   "rows": [
+    {
+     "details": {
+      "type": "link",
+      "url": "/acr/projects/registry/ACR_REGISTRY/project/P2323C9VXD25",
+      "method": "GET",
+      "params": [],
+      "label": "Razorback IFM Project"
+     },
+     "developerLink": {
+      "type": "link",
+      "url": "/acr/developer/4003497037164707840:PROJECT_DEVELOPER",
+      "method": "GET",
+      "params": [],
+      "label": "Weyerhaeuser NR Company"
+     },
+     "projectId": "ACR0885",
+     "projectKey": "P2323C9VXD25",
+     "projectName": "Razorback IFM Project",
+     "projectStatus": "ACTIVE",
+     "projectMethodology": "Improved Forest Management (IFM) on Non-Federal U.S. Forestlands",
+     "projectType": "Forest Carbon",
+     "projectDeveloper": "Weyerhaeuser NR Company",
+     "projectDeveloperProfileKey": "4003497037164707840:PROJECT_DEVELOPER",
+     "creditingProgram": "ACR",
+     "country": "US",
+     "issuedCredits": 433300,
+     "projectExtensionMap": {
+      "timingOfPublicDisplay": "LISTING",
+      "lastProjectStateChanged": "2025-07-22T00:00:00.000Z",
+      "lastProjectStatusChanged": "2025-07-22T00:00:00.000Z",
+      "conservationEasement": "false",
+      "conservationEasementStateOrJurisdiction": null
+     }
+    },
+    {
+     "details": {
+      "type": "link",
+      "url": "/acr/projects/registry/ACR_REGISTRY/project/P2323C9VVN24",
+      "method": "GET",
+      "params": [],
+      "label": "Green Diamond Resource Company Klamath East IFM"
+     },
+     "developerLink": {
+      "type": "link",
+      "url": "/acr/developer/4003496955577106432:PROJECT_DEVELOPER",
+      "method": "GET",
+      "params": [],
+      "label": "Green Diamond Resource Company"
+     },
+     "projectId": "ACR0273",
+     "projectKey": "P2323C9VVN24",
+     "projectName": "Green Diamond Resource Company Klamath East IFM",
+     "projectStatus": "TERMINATED",
+     "projectMethodology": "ARB Compliance Offset Protocol: U.S. Forest Projects",
+     "projectType": "Forest Carbon",
+     "projectDeveloper": "Green Diamond Resource Company",
+     "projectDeveloperProfileKey": "4003496955577106432:PROJECT_DEVELOPER",
+     "creditingProgram": "California Air Resources Board",
+     "country": "US",
+     "issuedCredits": 1149657,
+     "projectExtensionMap": {
+      "timingOfPublicDisplay": "LISTING",
+      "complianceProjectId": "CAFR5233",
+      "lastProjectStateChanged": "2024-04-08T00:00:00.000Z",
+      "lastProjectStatusChanged": "2024-04-08T00:00:00.000Z",
+      "conservationEasement": "false",
+      "conservationEasementStateOrJurisdiction": null
+     }
+    },
+    {
+     "details": {
+      "type": "link",
+      "url": "/acr/projects/registry/ACR_REGISTRY/project/P2423C9VR924",
+      "method": "GET",
+      "params": [],
+      "label": "Wolf Lands Forest Carbon Project"
+     },
+     "developerLink": {
+      "type": "link",
+      "url": "/acr/developer/4003497136896868352:PROJECT_DEVELOPER",
+      "method": "GET",
+      "params": [],
+      "label": "Wolf Lands, Inc."
+     },
+     "projectId": "ACR0628",
+     "projectKey": "P2423C9VR924",
+     "projectName": "Wolf Lands Forest Carbon Project",
+     "projectStatus": "ACTIVE",
+     "projectMethodology": "Improved Forest Management (IFM) on Non-Federal U.S. Forestlands",
+     "projectType": "Forest Carbon",
+     "projectDeveloper": "Wolf Lands, Inc.",
+     "projectDeveloperProfileKey": "4003497136896868352:PROJECT_DEVELOPER",
+     "creditingProgram": "ACR",
+     "country": "US",
+     "issuedCredits": 230942,
+     "projectExtensionMap": {
+      "timingOfPublicDisplay": "LISTING",
+      "lastProjectStateChanged": "2023-05-04T00:00:00.000Z",
+      "lastProjectStatusChanged": "2023-05-04T00:00:00.000Z",
+      "conservationEasement": "false",
+      "conservationEasementStateOrJurisdiction": null
+     }
+    },
+    {
+     "details": {
+      "type": "link",
+      "url": "/acr/projects/registry/ACR_REGISTRY/project/P2423C9VS323",
+      "method": "GET",
+      "params": [],
+      "label": "Advanced Refrigeration - ARS2023013"
+     },
+     "developerLink": {
+      "type": "link",
+      "url": "/acr/developer/4003497026704113664:PROJECT_DEVELOPER",
+      "method": "GET",
+      "params": [],
+      "label": "Therm Solutions Inc."
+     },
+     "projectId": "ACR1187",
+     "projectKey": "P2423C9VS323",
+     "projectName": "Advanced Refrigeration - ARS2023013",
+     "projectStatus": "COMPLETED",
+     "projectMethodology": "Advanced Refrigeration Systems",
+     "projectType": "Refrigerants",
+     "projectDeveloper": "Therm Solutions Inc.",
+     "projectDeveloperProfileKey": "4003497026704113664:PROJECT_DEVELOPER",
+     "creditingProgram": "ACR",
+     "country": "US",
+     "issuedCredits": 47249,
+     "projectExtensionMap": {
+      "timingOfPublicDisplay": "LISTING",
+      "lastProjectStateChanged": "2026-07-31T13:13:15.981Z",
+      "lastProjectStatusChanged": "2026-07-31T20:12:30.588Z",
+      "conservationEasement": "false",
+      "conservationEasementStateOrJurisdiction": null
+     }
+    },
+    {
+     "details": {
+      "type": "link",
+      "url": "/acr/projects/registry/ACR_REGISTRY/project/P2323C9VVW22",
+      "method": "GET",
+      "params": [],
+      "label": "Advanced Refrigeration - ARS2025005"
+     },
+     "developerLink": {
+      "type": "link",
+      "url": "/acr/developer/4003497026704113664:PROJECT_DEVELOPER",
+      "method": "GET",
+      "params": [],
+      "label": "Therm Solutions Inc."
+     },
+     "projectId": "ACR1202",
+     "projectKey": "P2323C9VVW22",
+     "projectName": "Advanced Refrigeration - ARS2025005",
+     "projectStatus": "COMPLETED",
+     "projectMethodology": "Advanced Refrigeration Systems",
+     "projectType": "Refrigerants",
+     "projectDeveloper": "Therm Solutions Inc.",
+     "projectDeveloperProfileKey": "4003497026704113664:PROJECT_DEVELOPER",
+     "creditingProgram": "ACR",
+     "country": "US",
+     "issuedCredits": 8959,
+     "projectExtensionMap": {
+      "timingOfPublicDisplay": "LISTING",
+      "lastProjectStateChanged": "2026-06-24T23:55:28.307Z",
+      "lastProjectStatusChanged": "2026-06-24T23:12:29.941Z",
+      "conservationEasement": "false",
+      "conservationEasementStateOrJurisdiction": null
+     }
+    },
+    {
+     "details": {
+      "type": "link",
+      "url": "/acr/projects/registry/ACR_REGISTRY/project/P2323C9VU222",
+      "method": "GET",
+      "params": [],
+      "label": "Anew - Northern Algoma Forest Project"
+     },
+     "developerLink": {
+      "type": "link",
+      "url": "/acr/developer/4003496914590367744:PROJECT_DEVELOPER",
+      "method": "GET",
+      "params": [],
+      "label": "Anew Carbon Development, LLC"
+     },
+     "projectId": "ACR0838",
+     "projectKey": "P2323C9VU222",
+     "projectName": "Anew - Northern Algoma Forest Project",
+     "projectStatus": "ACTIVE",
+     "projectMethodology": "Improved Forest Management (IFM) on Canadian Forestlands",
+     "projectType": "Forest Carbon",
+     "projectDeveloper": "Anew Carbon Development, LLC",
+     "projectDeveloperProfileKey": "4003496914590367744:PROJECT_DEVELOPER",
+     "creditingProgram": "ACR",
+     "country": "CA",
+     "issuedCredits": 0,
+     "projectExtensionMap": {
+      "timingOfPublicDisplay": "LISTING",
+      "lastProjectStateChanged": "2023-07-27T02:49:00.000Z",
+      "lastProjectStatusChanged": "2023-07-27T00:00:00.000Z",
+      "conservationEasement": "false",
+      "conservationEasementStateOrJurisdiction": null
+     }
+    },
+    {
+     "details": {
+      "type": "link",
+      "url": "/acr/projects/registry/ACR_REGISTRY/project/P2423C9VNN25",
+      "method": "GET",
+      "params": [],
+      "label": "Advanced Refrigeration - ARS2025006"
+     },
+     "developerLink": {
+      "type": "link",
+      "url": "/acr/developer/4003497026704113664:PROJECT_DEVELOPER",
+      "method": "GET",
+      "params": [],
+      "label": "Therm Solutions Inc."
+     },
+     "projectId": "ACR1203",
+     "projectKey": "P2423C9VNN25",
+     "projectName": "Advanced Refrigeration - ARS2025006",
+     "projectStatus": "COMPLETED",
+     "projectMethodology": "Advanced Refrigeration Systems",
+     "projectType": "Refrigerants",
+     "projectDeveloper": "Therm Solutions Inc.",
+     "projectDeveloperProfileKey": "4003497026704113664:PROJECT_DEVELOPER",
+     "creditingProgram": "ACR",
+     "country": "MX",
+     "issuedCredits": 39047,
+     "projectExtensionMap": {
+      "timingOfPublicDisplay": "LISTING",
+      "lastProjectStateChanged": "2026-05-24T00:00:00.000Z",
+      "lastProjectStatusChanged": "2026-05-24T00:00:00.000Z",
+      "conservationEasement": "false",
+      "conservationEasementStateOrJurisdiction": null
+     }
+    },
+    {
+     "details": {
+      "type": "link",
+      "url": "/acr/projects/registry/ACR_REGISTRY/project/P2423C9VUY22",
+      "method": "GET",
+      "params": [],
+      "label": "Destruction of Legacy Ozone-Depleting Substances from Refrigeration Systems in Israel"
+     },
+     "developerLink": {
+      "type": "link",
+      "url": "/acr/developer/4003497173177597952:PROJECT_DEVELOPER",
+      "method": "GET",
+      "params": [],
+      "label": "Oporto Carbon Ltd."
+     },
+     "projectId": "ACR1168",
+     "projectKey": "P2423C9VUY22",
+     "projectName": "Destruction of Legacy Ozone-Depleting Substances from Refrigeration Systems in Israel",
+     "projectStatus": "ACTIVE",
+     "projectMethodology": "Destruction of Ozone Depleting Substances (ODS) from International Sources",
+     "projectType": "Ozone Depleting Substances",
+     "projectDeveloper": "Oporto Carbon Ltd.",
+     "projectDeveloperProfileKey": "4003497173177597952:PROJECT_DEVELOPER",
+     "creditingProgram": "ACR",
+     "country": "IL",
+     "issuedCredits": 0,
+     "projectExtensionMap": {
+      "timingOfPublicDisplay": "LISTING",
+      "lastProjectStateChanged": "2025-06-11T13:35:00.000Z",
+      "lastProjectStatusChanged": "2025-06-11T00:00:00.000Z",
+      "conservationEasement": "false",
+      "conservationEasementStateOrJurisdiction": null
+     }
+    },
+    {
+     "details": {
+      "type": "link",
+      "url": "/acr/projects/registry/ACR_REGISTRY/project/P2423C9VPA22",
+      "method": "GET",
+      "params": [],
+      "label": "Tradewater - Middle East 3"
+     },
+     "developerLink": {
+      "type": "link",
+      "url": "/acr/developer/4003496963521118208:PROJECT_DEVELOPER",
+      "method": "GET",
+      "params": [],
+      "label": "Tradewater, LLC"
+     },
+     "projectId": "ACR1215",
+     "projectKey": "P2423C9VPA22",
+     "projectName": "Tradewater - Middle East 3",
+     "projectStatus": "COMPLETED",
+     "projectMethodology": "Destruction of Ozone Depleting Substances (ODS) from International Sources",
+     "projectType": "Ozone Depleting Substances",
+     "projectDeveloper": "Tradewater, LLC",
+     "projectDeveloperProfileKey": "4003496963521118208:PROJECT_DEVELOPER",
+     "creditingProgram": "ACR",
+     "country": "DE",
+     "issuedCredits": 154904,
+     "projectExtensionMap": {
+      "timingOfPublicDisplay": "LISTING",
+      "lastProjectStateChanged": "2026-04-11T00:00:00.000Z",
+      "lastProjectStatusChanged": "2026-04-11T00:00:00.000Z",
+      "conservationEasement": "false",
+      "conservationEasementStateOrJurisdiction": null
+     }
+    },
+    {
+     "details": {
+      "type": "link",
+      "url": "/acr/projects/registry/ACR_REGISTRY/project/P2423C9VXH23",
+      "method": "GET",
+      "params": [],
+      "label": "Alliance Dairy"
+     },
+     "developerLink": {
+      "type": "link",
+      "url": "/acr/developer/4003496954251706368:PROJECT_DEVELOPER",
+      "method": "GET",
+      "params": [],
+      "label": "3Degrees Group, Inc."
+     },
+     "projectId": "ACR0234",
+     "projectKey": "P2423C9VXH23",
+     "projectName": "Alliance Dairy",
+     "projectStatus": "TERMINATED",
+     "projectMethodology": "ARB Compliance Offset Protocol: Capturing and Destroying Methane from Manure Management Systems",
+     "projectType": "Livestock Waste Management",
+     "projectDeveloper": "3Degrees Group, Inc.",
+     "projectDeveloperProfileKey": "4003496954251706368:PROJECT_DEVELOPER",
+     "creditingProgram": "California Air Resources Board",
+     "country": "US",
+     "issuedCredits": 84219,
+     "projectExtensionMap": {
+      "timingOfPublicDisplay": "LISTING",
+      "complianceProjectId": "CALS5134",
+      "lastProjectStateChanged": "2025-03-07T00:00:00.000Z",
+      "lastProjectStatusChanged": "2025-03-07T00:00:00.000Z",
+      "conservationEasement": "false",
+      "conservationEasementStateOrJurisdiction": null
+     }
+    },
+    {
+     "details": {
+      "type": "link",
+      "url": "/acr/projects/registry/ACR_REGISTRY/project/P2423C9VXD24",
+      "method": "GET",
+      "params": [],
+      "label": "CO Orphan Well P&A CS-24-01"
+     },
+     "developerLink": {
+      "type": "link",
+      "url": "/acr/developer/4003497115875016704:PROJECT_DEVELOPER",
+      "method": "GET",
+      "params": [],
+      "label": "Carbon Shield LLC"
+     },
+     "projectId": "ACR1010",
+     "projectKey": "P2423C9VXD24",
+     "projectName": "CO Orphan Well P&A CS-24-01",
+     "projectStatus": "ACTIVE",
+     "projectMethodology": "Plugging Orphan Oil and Gas Wells in the U.S. and Canada",
+     "projectType": "Orphaned Wells",
+     "projectDeveloper": "Carbon Shield LLC",
+     "projectDeveloperProfileKey": "4003497115875016704:PROJECT_DEVELOPER",
+     "creditingProgram": "ACR",
+     "country": "US",
+     "issuedCredits": 0,
+     "projectExtensionMap": {
+      "timingOfPublicDisplay": "LISTING",
+      "lastProjectStateChanged": "2024-03-28T21:28:00.000Z",
+      "lastProjectStatusChanged": "2024-03-28T00:00:00.000Z",
+      "conservationEasement": "false",
+      "conservationEasementStateOrJurisdiction": null
+     }
+    },
+    {
+     "details": {
+      "type": "link",
+      "url": "/acr/projects/registry/ACR_REGISTRY/project/P2423C9VQB23",
+      "method": "GET",
+      "params": [],
+      "label": "Whirlpool HFO Ottawa 659"
+     },
+     "developerLink": {
+      "type": "link",
+      "url": "/acr/developer/4003496970835984384:PROJECT_DEVELOPER",
+      "method": "GET",
+      "params": [],
+      "label": "WHIRLPOOL CORPORATION"
+     },
+     "projectId": "ACR0659",
+     "projectKey": "P2423C9VQB23",
+     "projectName": "Whirlpool HFO Ottawa 659",
+     "projectStatus": "COMPLETED",
+     "projectMethodology": "Transition to Advanced Formulation Blowing Agents in Foam Manufacturing and Use",
+     "projectType": "Industrial Process Emissions",
+     "projectDeveloper": "WHIRLPOOL CORPORATION",
+     "projectDeveloperProfileKey": "4003496970835984384:PROJECT_DEVELOPER",
+     "creditingProgram": "ACR",
+     "country": "US",
+     "issuedCredits": 421733,
+     "projectExtensionMap": {
+      "timingOfPublicDisplay": "COI",
+      "lastProjectStateChanged": "2024-12-30T00:00:00.000Z",
+      "lastProjectStatusChanged": "2024-12-30T00:00:00.000Z",
+      "conservationEasement": "false",
+      "conservationEasementStateOrJurisdiction": null
+     }
+    }
+   ],
+   "totalCount": 12
+  }
+ }
+}

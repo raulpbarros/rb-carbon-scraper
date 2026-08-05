@@ -168,3 +168,107 @@ def test_invalidate_is_a_no_op_when_nothing_is_cached(cache_dir):
         client.invalidate("GET", "https://example.invalid/never-asked")
     finally:
         client.close()
+
+
+# -- form bodies -----------------------------------------------------------
+
+
+def test_a_form_body_is_part_of_the_cache_key():
+    """ICE GreenTrace posts its paging offset and its ledger selector in a form.
+
+    Two calls to one URL that differ only in that body are two different
+    questions — the same shape as the `standardid` header that once served
+    Verra JNR its VCS responses.
+    """
+    url = "https://example.invalid/report/results"
+    first = http_client._cache_key("POST", url, None, None, {"offset": 0})
+    second = http_client._cache_key("POST", url, None, None, {"offset": 2000})
+    ledger = http_client._cache_key(
+        "POST", url, None, None, {"offset": 0, "holdingStatus": "RETIRED"}
+    )
+    assert len({first, second, ledger}) == 3
+
+
+def test_adding_form_bodies_did_not_move_every_existing_key():
+    """A ~1 GB cache of seven registries must survive the feature that needed none of it."""
+    without = http_client._cache_key("GET", "https://example.invalid/x", None, None)
+    explicitly_none = http_client._cache_key(
+        "GET", "https://example.invalid/x", None, None, None
+    )
+    assert without == explicitly_none
+
+
+def test_a_form_post_sends_the_form_content_type(cache_dir):
+    """The shared client header says JSON and wins over what httpx would infer.
+
+    GreenTrace answers a form body sent as `application/json` with the same
+    generic HTTP 500 it gives an unmapped path.
+    """
+    seen: dict[str, object] = {}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        seen["content_type"] = request.headers.get("content-type")
+        seen["body"] = request.content
+        return httpx.Response(200, json={"datasets": {}})
+
+    client = http_client.RegistryClient()
+    client._client = httpx.Client(transport=httpx.MockTransport(handler))
+    try:
+        client.post_form("https://example.invalid/results", {"offset": 0, "max": 2000})
+    finally:
+        client.close()
+
+    assert seen["content_type"] == "application/x-www-form-urlencoded"
+    assert b"offset=0" in seen["body"]
+
+
+# -- politeness ------------------------------------------------------------
+
+
+def test_a_429_retry_after_is_honoured_up_to_the_cap(monkeypatch):
+    """Cloudflare answers a tripped rate limit with `Retry-After: 3600`.
+
+    Retrying after two seconds because the exponential curve says so is how a
+    rate-limited scrape becomes a blocked one. The cap is what stops the other
+    failure — an hour asleep inside a GUI run, indistinguishable from a hang.
+    """
+    slept: list[float] = []
+    monkeypatch.setattr(settings, "MAX_RETRY_AFTER", 120.0)
+    monkeypatch.setattr(settings, "MAX_RETRIES", 2)
+    monkeypatch.setattr(http_client, "_sleep", lambda s, c: slept.append(s))
+
+    client = http_client.RegistryClient()
+    client._client = httpx.Client(
+        transport=httpx.MockTransport(
+            lambda request: httpx.Response(429, headers={"Retry-After": "3600"})
+        )
+    )
+    try:
+        with pytest.raises(http_client.RetryableStatus):
+            client.request("GET", "https://example.invalid/limited", use_cache=False)
+    finally:
+        client.close()
+
+    # The rate limiter sleeps here too, so the assertion is about the retry
+    # wait specifically: the cap, and nothing shorter that could only have come
+    # from the exponential curve.
+    assert 120.0 in slept
+    assert [s for s in slept if s > 1.0] == [120.0]
+
+
+def test_a_retryable_status_without_a_retry_after_uses_the_backoff(monkeypatch):
+    slept: list[float] = []
+    monkeypatch.setattr(settings, "MAX_RETRIES", 2)
+    monkeypatch.setattr(http_client, "_sleep", lambda s, c: slept.append(s))
+
+    client = http_client.RegistryClient()
+    client._client = httpx.Client(
+        transport=httpx.MockTransport(lambda request: httpx.Response(503))
+    )
+    try:
+        with pytest.raises(http_client.RetryableStatus):
+            client.request("GET", "https://example.invalid/broken", use_cache=False)
+    finally:
+        client.close()
+
+    assert slept and slept[0] < settings.MAX_RETRY_AFTER

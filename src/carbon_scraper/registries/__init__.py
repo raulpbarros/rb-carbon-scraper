@@ -68,6 +68,12 @@ def _puro() -> type:
     return PuroAPI
 
 
+def _acr() -> type:
+    from .acr.api import ACRAPI
+
+    return ACRAPI
+
+
 #: registry identifier -> the adapters that publish it, in scrape order.
 #:
 #: A table rather than a chain of `if`s on purpose: the old fall-through
@@ -91,6 +97,7 @@ ADAPTERS: dict[str, tuple[Callable[[], type], ...]] = {
     settings.SOCIAL_CARBON: (_socialcarbon,),
     settings.BIOCARBON: (_biocarbon,),
     settings.PURO: (_puro,),
+    settings.ACR: (_acr,),
 }
 
 # --registry accepts either the stored value or a short alias.
@@ -127,6 +134,13 @@ ALIASES = {
     "puro-earth": settings.PURO,
     "puroearth": settings.PURO,
     "corc": settings.PURO,
+    "acr": settings.ACR,
+    "american-carbon-registry": settings.ACR,
+    "americancarbonregistry": settings.ACR,
+    # The platform, which today has exactly one tenant here. ART is the other
+    # one it serves and has no adapter, so this alias is deliberately not
+    # `greentrace means every tenant`.
+    "greentrace": settings.ACR,
 }
 
 ALL = tuple(ADAPTERS)

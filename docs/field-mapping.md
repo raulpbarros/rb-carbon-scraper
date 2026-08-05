@@ -667,6 +667,153 @@ being placed in a biome on the strength of a country name.
 
 ---
 
+## American Carbon Registry — the same 22 columns, different sources, added 2026-08-04
+
+**994 projects**, 3,359 issuance blocks, 10,725 retirements and 1,358
+cancellations, on **ICE GreenTrace** (`greentrace.ice.com/acr`), all four
+reconciled against the registry's own counts on 2026-08-05. ACR left the APX
+platform; the old `acr2.apx.com` host still answers, and answers "You have
+reached an invalid page" to everything.
+
+(The ledger counts moved by one row each between 2026-08-04 and 2026-08-05 —
+this registry issues and retires daily. Figures here are what it published on
+the later date.)
+
+It is the most US-centric registry here — 923 of 994 projects are in the United
+States — and the only one where a large share of the credits serve a
+**compliance** programme rather than the voluntary market: 356 projects are
+listed for the California Air Resources Board and 26 for Washington's
+Department of Ecology.
+
+| Column | Source |
+|---|---|
+| `Project ID` | the published `ACR1275` reference. Unique across all 994 — checked — and its numeric part is the primary key. The API's own routes use a different id (`P2423FTH4Z22`), which is kept in `extra` and is what the project link is built from |
+| `Project Name` | project record |
+| `Standard` | **"American Carbon Registry", asserted.** What the registry publishes per project is a `creditingProgram` — ACR, California Air Resources Board, Washington Department of Ecology — which is the compliance programme the credits serve, not the standard. It is kept in `extra` |
+| `Tipo Macro de Projeto` | `projectType`, untranslated: "Forest Carbon" (352), "Ozone Depleting Substances" (201), "Refrigerants" (134), "Coal Mine Methane" (91), "Industrial Process Emissions" (88), "Transport / Fleet Efficiency" (36), and eleven more |
+| `Metodologia` | the protocol name, **994 of 994** — "Improved Forest Management (IFM) on Non-Federal U.S. Forestlands", "ARB Compliance Offset Protocol: …" |
+| `Tipo Micro de Projeto` | derivation layer, keyed on the **protocol name**: 993 of 994 classified |
+| `Durabilidade` | derivation layer, 994 of 994 |
+| `Bioma` | derivation layer, 351 of 994 — see below |
+| `Continent` | derived from the ISO country code, published 994 of 994 — the Gold Standard path |
+| `País` | **not published — blank.** See below. This is the first registry here that publishes no country name at all |
+| `Estado` | the detail's `projectSiteLocState`, **992 of 994** — and in three vocabularies at once, see below |
+| `Cidade` | **not published — blank.** The field exists in the schema and is null throughout (0 of 994). A lat/long pair is published and kept in `extra` |
+| `Data de Início` / `Data de Término` | the crediting period, from the per-project detail — **994 of 994** |
+| `Yearly Ex Ante` | `estimatedAnnualCredits`, **987 of 994** |
+| `Total Ex Ante` | **not published.** `estimatedTotalCredits` is the number 0 on all 994, so the total is computed from the yearly figure rather than stored as a zero that would read as "none estimated" |
+| `Total Credits Issued` | the issuance ledger, **379,804,555** units across 798 projects |
+| `Total Credits Retired` / `Sold` | the retirement ledger, **57,360,608** units across 371 projects |
+| `Total Credits Cancelled` | the cancellation ledger, **187,414,534** units across 315 projects — and mostly not what that word suggests. See below |
+| `Additional Certification` | **no equivalent field — blank.** The registry states two booleans, `hasAnotherCarbonProgram` and `hasAnotherEnvironmentalMarket`, with no name attached; both are kept in `extra` |
+
+The issued figure is confirmed twice: summed from the ledger, and read from the
+project list's own `issuedCredits`. **They agreed on all 994 projects** when
+both were read in the same pass. A third check holds too — the registry's whole holdings book (16,385 records) sums to
+exactly the same number, and its ACTIVE and INACTIVE parts
+(89,712,900 + 45,186,629) equal issued minus retired minus cancelled to the
+unit.
+
+### `Total Credits Cancelled` here mostly means "moved to a compliance registry"
+
+| Reason the registry states | Rows |
+|---|---:|
+| Convert to ARB Offset Credits | 1,152 |
+| Removal from Registry | 162 |
+| Compensation for Intentional Reversal | 21 |
+| Convert to Ecology Offset Credits | 14 |
+| Compensation for Unintentional Reversal | 9 |
+
+1,166 of the 1,358 cancellations are units leaving ACR for California's or
+Washington's compliance registry, where they continue to exist as ARB or
+Ecology offsets. They are **not** destroyed credits, and they are the bulk of
+the 187 million in that column.
+
+They are stored as cancellations because that is what this registry calls them,
+and **the column reports the registry's own figure — user's decision,
+2026-08-04**, so ACR's numbers tie back to its public reports. The reason is on
+every row, so a split — "cancelled" against "converted out" — stays a query
+and not a re-scrape.
+
+### `País` is blank for all 994, and that is a gap in the registry, not in us
+
+The project list states `country: "US"`, the detail states the same ISO code,
+and the report's own filter list offers no country field at all. There is no
+country *name* anywhere in the API or on the site.
+
+`Continent` is unaffected — it derives from the code, 994 of 994. Filling
+`País` would mean introducing an ISO-code-to-name table, which is a decision
+about the deliverable rather than something the registry published: **the cell
+stays blank, user's decision, 2026-08-04.** The code is in the database
+(`projects.country_code`), so adding the table later is a `derive` change and
+not a re-scrape.
+
+### `Estado` carries three vocabularies, one of them mixed
+
+The registry's own field states, in the same column:
+
+* uppercase US state names — `OHIO`, `WEST VIRGINIA` (792 of the 798 projects
+  that appear in the issuance ledger);
+* ISO 3166-2 subdivision codes — `US-CA`;
+* ordinary-case names outside the US — `ONTARIO`, `Israel`, `Lower Saxony`,
+  `JALISCO`;
+
+and a multi-state project joins them with commas, mixing forms inside one
+value: `MISSOURI, US-GA, US-IN, US-TX, US-WI`.
+
+Carried through as published, like every registry's vocabulary here.
+
+### Bioma covers the forests and stops
+
+351 of the 994 rows get a biome, all of them
+"Floresta Temperada Norte-Americana" — the US and Canadian forest projects,
+placed by a new ISO-code band in `biome.yaml` (measured blast radius on the
+existing registries: 4 Gold Standard rows added, nothing changed).
+
+Nine land-use rows stay blank on purpose: 5 "Agricultural Land Management" and
+4 "Wetland Restoration". The only North American band available names a
+*forest*, and labelling a restored wetland as temperate forest would be worse
+than the blank. One Forest Carbon project outside the US and Canada is blank
+for the same reason — there is no band for its country, and none was invented.
+
+### Two things this registry publishes that nobody asked for
+
+Both are kept in `extra` because they are what a double-count check reads
+first:
+
+* `complianceProjectId` — the id the same project carries in the ARB or
+  Ecology programme. 359 projects have one.
+* `hasAnotherCarbonProgram` / `hasAnotherEnvironmentalMarket` — the registry's
+  own double-registration flags, true on **16** and **15** of 994.
+
+### Two ACR projects are also Verra projects
+
+The flag above says a project is registered elsewhere and never says where.
+Checking those 16 names against the 9,891 projects already in the database
+found two:
+
+| ACR | Verra | ACR credits | Verra credits |
+|---|---|---:|---:|
+| `ACR0242` Cambria 33 Abandoned Mine Methane, PA, **2018 → 2027** | `VCS 559`, PA, **2008 → 2018** | 221,141 issued | 234,591 issued, 127,527 retired |
+| `ACR0388` Corinth Abandoned Mine Methane, IL, **2026 → 2035** (and `ACR1192`, **2015 → 2024**) | `VCS 573`, IL, **2010 → 2019** | 1,185,666 issued | 610,404 issued, 119,948 retired |
+
+**The crediting periods are consecutive, so the credit tranches are disjoint** —
+neither row restates the other's units. Both rows ship, cross-linked through
+`extra.also_registered_as`, which is the shape already agreed for Cercarbono's
+`CDC-106`/`CDC-107` against BioCarbon. That makes **two** known cross-registry
+duplicates in this database, and both are the reason "sum every registry's
+Total Credits Issued" is not a safe query.
+
+Worth knowing when reading these two rows: every ACR unit for both projects was
+**converted out to ARB** — their issuance and cancellation totals are the same
+number.
+
+One project is registered twice *inside* ACR: Corinth is `ACR0388` and
+`ACR1192`, two crediting periods of one mine. Different ids, different
+methodologies, and nothing is merged.
+
+---
+
 ## Data-quality note: why retirement totals come from a different route
 
 Three of the four Units ledgers download completely and reconcile exactly

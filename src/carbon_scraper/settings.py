@@ -122,6 +122,7 @@ PLAN_VIVO = "PLAN_VIVO"
 SOCIAL_CARBON = "SOCIAL_CARBON"
 BIOCARBON = "BIOCARBON"
 PURO = "PURO"
+ACR = "ACR"
 
 REGISTRY_LABELS = {
     VERRA: "Verra VCS",
@@ -131,6 +132,7 @@ REGISTRY_LABELS = {
     SOCIAL_CARBON: "SocialCarbon",
     BIOCARBON: "BioCarbon",
     PURO: "Puro.earth",
+    ACR: "American Carbon Registry",
 }
 
 # Roughly how long a full sync of each registry takes, in minutes, measured on
@@ -169,6 +171,17 @@ SYNC_ESTIMATE_MINUTES = {
     # requests, but the pages are large: 5.2 MB for the retirement feed and
     # ~900 KB per detail page, about 120 MB in all. Measured 2026-08-05.
     PURO: 4,
+    # Four ledger requests carry every credit record (the retirement feed is
+    # 10,724 rows at 2000 a page) and one request carries all 994 projects —
+    # but the crediting period, the state and the ex-ante estimate are only on
+    # the per-project detail, so that is 994 more. ~1,005 requests, and about
+    # 100 MB: a retirement page is ~16 MB because every row carries its CORSIA
+    # and SDG label objects.
+    #
+    # Two hours for that, not seventeen minutes, because this registry is
+    # behind a Cloudflare rate-limiting rule and is scraped at one request per
+    # seven seconds. See ACR_REQUESTS_PER_SECOND. Measured 2026-08-04.
+    ACR: 120,
 }
 
 # The exact-totals pass, on top of Verra's sync. One request per project with
@@ -406,6 +419,57 @@ PURO_PROJECT_DETAIL_URL = f"{PURO_SITE}/projects/{{project_id}}"
 #: projects) and never names the standard itself; the version goes to `extra`.
 PURO_STANDARD_NAME = "Puro Standard"
 
+# --- ACR, on ICE GreenTrace -----------------------------------------------
+# The American Carbon Registry left the APX ASP platform: `acr2.apx.com` now
+# answers "You have reached an invalid page" at HTTP 200 for every path, and
+# ACR's own site links to **ICE GreenTrace** instead. Measured 2026-08-04; see
+# docs/api-contract-acr.md.
+#
+# **GreenTrace is a platform, not a registry**, the fourth one here. Its home
+# page offers two: ACR and ART (Architecture for REDD+ Transactions, 30
+# projects), served by the identical API with one path segment changed. That is
+# why the code lives in `registries/greentrace/` and `registries/acr/` is
+# identity only — the same shape as platts/verra and markit/planvivo.
+
+GREENTRACE_SITE = "https://greentrace.ice.com"
+GREENTRACE_API = f"{GREENTRACE_SITE}/api/greentraceservice/v1"
+
+# The registry keys the platform publishes. Only ACR is ingested; ART is named
+# because "check the platform table first" is the cheapest question to answer,
+# and this is where the answer for GreenTrace lives.
+ACR_REGISTRY_KEY = "ACR_REGISTRY"
+ART_REGISTRY_KEY = "ART_REGISTRY"
+
+# The site is an ICE CMS app whose report component is configured with a
+# `reportUrl` and calls `{reportUrl}/results`. **The reportUrl itself is not an
+# endpoint**: a GET on it returns HTTP 500 `No static resource …`, which reads
+# like a server fault and is a path that was never mapped.
+GREENTRACE_REPORT_RESULTS = "results"
+GREENTRACE_REPORT_CRITERIA = "criteria"
+
+# `max` is honoured up to 2000 and silently clamped above it: asking 20000 of a
+# 3,358-row ledger returns 2000 rows with `totalCount: 3358` at HTTP 200. Fifth
+# registry here to clamp a page size without saying so, so the pager advances on
+# `offset` against `totalCount` and never on the row count it got back.
+GREENTRACE_PAGE_SIZE = 2000
+
+# **Keyed on the project *key* (`P2423FTH4Z22`), not on the reference id.**
+# `…/project/ACR1275` returns HTTP 200 and a CMS shell that renders an error,
+# while the API behind it 404s — so the wrong id here produces a link that
+# looks fine in the sheet and is broken when a business user clicks it. The
+# adapter writes `detail_url` on every row from the key, exactly as
+# SocialCarbon's does; this template is only ever reached if it did not.
+ACR_PROJECT_DETAIL_URL = (
+    f"{GREENTRACE_SITE}/acr/projects/registry/{ACR_REGISTRY_KEY}/project/{{project_id}}"
+)
+
+# Asserted by the adapter. Every project here is an ACR project; what the
+# registry publishes per project is a `creditingProgram` (ACR, California Air
+# Resources Board, Washington Department of Ecology), which is the compliance
+# programme the credits serve and not the standard they were certified under.
+# That goes to `extra`.
+ACR_STANDARD_NAME = "American Carbon Registry"
+
 # --- public project pages -------------------------------------------------
 # Used only as a fallback when an adapter did not store a `detail_url` on the
 # project row. A registry missing from this map gets a blank cell, never
@@ -426,6 +490,7 @@ PROJECT_DETAIL_URLS = {
     SOCIAL_CARBON: SOCIALCARBON_PROJECT_DETAIL_URL,
     BIOCARBON: BIOCARBON_PROJECT_DETAIL_URL,
     PURO: PURO_PROJECT_DETAIL_URL,
+    ACR: ACR_PROJECT_DETAIL_URL,
 }
 
 # --- shared HTTP ----------------------------------------------------------
@@ -451,6 +516,23 @@ BROWSER_HEADERS = {
 REQUESTS_PER_SECOND = float(os.environ.get("VERRA_RPS", "1.0"))
 REQUEST_TIMEOUT = float(os.environ.get("VERRA_TIMEOUT", "60"))
 MAX_RETRIES = int(os.environ.get("VERRA_RETRIES", "4"))
+
+# The longest a 429's own `Retry-After` will be honoured before the attempt is
+# given up on. Cloudflare's rate-limit response asks for 3600 seconds, and an
+# hour asleep inside a GUI run is indistinguishable from a hang — the run
+# fails instead, and re-running it resumes from the response cache because
+# every database write is an idempotent upsert.
+MAX_RETRY_AFTER = float(os.environ.get("VERRA_MAX_RETRY_AFTER", "120"))
+
+# Per-registry politeness, for the registries that ask for less than 1/s. An
+# adapter may only ever go **slower** than REQUESTS_PER_SECOND: RegistryClient
+# takes the minimum of the two, so this cannot be used to speed a scrape up.
+#
+# ACR is behind a Cloudflare rate-limiting rule, measured 2026-08-04: ~100
+# requests inside ten minutes earn a 429 with `Retry-After: 3600`, and a sync
+# needs ~1,005 because the crediting period is only on the per-project detail.
+# 1 request per 7 seconds keeps a full sweep under that rule.
+ACR_REQUESTS_PER_SECOND = float(os.environ.get("CARBON_ACR_RPS", "0.14"))
 
 
 #: Set once `ensure_dirs()` has done its work. Three modules call it — `db`,

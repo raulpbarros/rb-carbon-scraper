@@ -96,18 +96,20 @@ IDENTITY_HEADERS = ("registry", "standardid", "standardacronym", "language", "pl
 
 
 def _cache_key(
-    method: str, url: str, body: Any, headers: Any = None
+    method: str, url: str, body: Any, headers: Any = None, form: Any = None
 ) -> str:
     identity = {
         name: value
         for name, value in (headers or {}).items()
         if name.lower() in IDENTITY_HEADERS
     }
-    raw = json.dumps(
-        {"m": method.upper(), "u": url, "b": body, "h": identity},
-        sort_keys=True,
-        default=str,
-    )
+    payload: dict[str, Any] = {"m": method.upper(), "u": url, "b": body, "h": identity}
+    # Added only when there is a form body, so the ~1 GB of entries written
+    # before form posts existed still hash to the same key. A new key here for
+    # every registry would mean re-scraping all seven to warm the cache again.
+    if form is not None:
+        payload["f"] = form
+    raw = json.dumps(payload, sort_keys=True, default=str)
     return hashlib.sha256(raw.encode()).hexdigest()[:32]
 
 
@@ -157,7 +159,33 @@ def _write_cache(path: Path, payload: dict[str, Any]) -> None:
 
 
 class RetryableStatus(Exception):
-    """Raised for status codes worth retrying (429 / 5xx)."""
+    """Raised for status codes worth retrying (429 / 5xx).
+
+    Carries the server's own `Retry-After`, where it sent one. A 429 is the
+    only response that knows how long to wait, and guessing shorter than it
+    asked is how a rate-limited scrape turns into a banned one.
+    """
+
+    def __init__(self, message: str, retry_after: float | None = None) -> None:
+        super().__init__(message)
+        self.retry_after = retry_after
+
+
+def _retry_after_seconds(response: httpx.Response) -> float | None:
+    """`Retry-After` in seconds, if the server sent a usable one.
+
+    Only the delta-seconds form is read. The HTTP-date form is legal and no
+    registry here has ever sent one; parsing a date wrong would produce a wait
+    of hours or of nothing, and both are worse than falling back to the
+    ordinary backoff.
+    """
+    raw = response.headers.get("Retry-After")
+    if not raw:
+        return None
+    try:
+        return max(0.0, float(raw.strip()))
+    except ValueError:
+        return None
 
 
 class RegistryClient:
@@ -172,10 +200,20 @@ class RegistryClient:
         *,
         timeout: float | None = None,
         cancel: threading.Event | None = None,
+        requests_per_second: float | None = None,
     ) -> None:
         settings.ensure_dirs()
         self._cancel = cancel
-        self._limiter = RateLimiter(settings.REQUESTS_PER_SECOND, cancel)
+        # Per registry, because politeness is not one number: ICE GreenTrace
+        # sits behind a Cloudflare rate-limiting rule that answers the ~100th
+        # request in ten minutes with a 429 and `Retry-After: 3600`, and ACR
+        # needs ~1,005 requests. Every other registry here is happy at 1/s and
+        # keeps it. This is a limit an adapter may only lower.
+        self._limiter = RateLimiter(
+            min(requests_per_second or settings.REQUESTS_PER_SECOND,
+                settings.REQUESTS_PER_SECOND),
+            cancel,
+        )
         self._client = httpx.Client(
             timeout=timeout or settings.REQUEST_TIMEOUT,
             follow_redirects=True,
@@ -252,6 +290,7 @@ class RegistryClient:
         url: str,
         *,
         json_body: Any = None,
+        form_body: dict[str, Any] | None = None,
         params: dict[str, Any] | None = None,
         headers: dict[str, str] | None = None,
         use_cache: bool = True,
@@ -263,6 +302,7 @@ class RegistryClient:
             httpx.URL(url).copy_merge_params(params or {}).__str__(),
             json_body,
             headers,
+            form_body,
         )
         path = _cache_path(key)
         caching = use_cache and not cache_disabled()
@@ -279,7 +319,7 @@ class RegistryClient:
                         request=httpx.Request(method, url),
                     )
 
-        response = self._send(method, url, json_body, params, headers)
+        response = self._send(method, url, json_body, params, headers, form_body)
 
         if caching and response.status_code < 400:
             _write_cache(
@@ -313,6 +353,7 @@ class RegistryClient:
         url: str,
         *,
         json_body: Any = None,
+        form_body: dict[str, Any] | None = None,
         params: dict[str, Any] | None = None,
         headers: dict[str, str] | None = None,
     ) -> None:
@@ -331,6 +372,7 @@ class RegistryClient:
             httpx.URL(url).copy_merge_params(params or {}).__str__(),
             json_body,
             headers,
+            form_body,
         )
         _cache_path(key).unlink(missing_ok=True)
 
@@ -341,6 +383,7 @@ class RegistryClient:
         json_body: Any,
         params: dict[str, Any] | None,
         headers: dict[str, str] | None,
+        form_body: dict[str, Any] | None = None,
     ) -> httpx.Response:
         """Send with backoff, built per call rather than at import time.
 
@@ -349,14 +392,35 @@ class RegistryClient:
         takes our cancellable sleep. `Cancelled` is deliberately not in the
         retryable set, so it propagates out of the loop at once.
         """
+        backoff = wait_exponential(multiplier=1.5, min=2, max=45)
+
+        def wait(retry_state: Any) -> float:
+            """Backoff, but never shorter than a 429 asked for.
+
+            Cloudflare answers a tripped rate-limit rule with
+            `Retry-After: 3600`, and retrying after 2 seconds because the
+            exponential curve says so is how a rate-limited scrape becomes a
+            blocked one. Capped at `settings.MAX_RETRY_AFTER` because an hour
+            asleep inside a GUI run is indistinguishable from a hang — past
+            the cap the attempt is spent, the run fails, and re-running it
+            resumes from the cache. Every write is an idempotent upsert.
+            """
+            exception = retry_state.outcome.exception() if retry_state.outcome else None
+            asked = getattr(exception, "retry_after", None)
+            if asked:
+                return min(float(asked), settings.MAX_RETRY_AFTER)
+            return backoff(retry_state)
+
         retrying = Retrying(
             stop=stop_after_attempt(settings.MAX_RETRIES),
-            wait=wait_exponential(multiplier=1.5, min=2, max=45),
+            wait=wait,
             retry=retry_if_exception_type((httpx.TransportError, RetryableStatus)),
             reraise=True,
             sleep=lambda seconds: _sleep(seconds, self._cancel),
         )
-        return retrying(self._send_once, method, url, json_body, params, headers)
+        return retrying(
+            self._send_once, method, url, json_body, params, headers, form_body
+        )
 
     def _send_once(
         self,
@@ -365,6 +429,7 @@ class RegistryClient:
         json_body: Any,
         params: dict[str, Any] | None,
         headers: dict[str, str] | None,
+        form_body: dict[str, Any] | None = None,
     ) -> httpx.Response:
         self.raise_if_cancelled()
         self._limiter.wait()
@@ -375,11 +440,26 @@ class RegistryClient:
         # overrides a shared header has to actually override it.
         merged = httpx.Headers(self._client.headers)
         merged.update(headers or {})
+        if form_body is not None and not (headers or {}).get("Content-Type"):
+            # The shared client header says `application/json`, and it wins over
+            # the one httpx would infer from `data=`. ICE GreenTrace answers a
+            # form body sent under that content type with the same generic HTTP
+            # 500 it gives an unmapped path, so this is set here rather than
+            # left to each caller to remember.
+            merged["Content-Type"] = "application/x-www-form-urlencoded"
         response = self._client.request(
-            method.upper(), url, json=json_body, params=params, headers=merged
+            method.upper(),
+            url,
+            json=json_body,
+            data=form_body,
+            params=params,
+            headers=merged,
         )
         if response.status_code == 429 or response.status_code >= 500:
-            raise RetryableStatus(f"{response.status_code} from {url}")
+            raise RetryableStatus(
+                f"{response.status_code} from {url}",
+                _retry_after_seconds(response),
+            )
         return response
 
     def get_json(self, url: str, **kwargs: Any) -> Any:
@@ -411,5 +491,19 @@ class RegistryClient:
 
     def post_json(self, url: str, json_body: Any, **kwargs: Any) -> Any:
         response = self.request("POST", url, json_body=json_body, **kwargs)
+        response.raise_for_status()
+        return response.json()
+
+    def post_form(self, url: str, form_body: dict[str, Any], **kwargs: Any) -> Any:
+        """POST an `application/x-www-form-urlencoded` body, returning JSON.
+
+        For ICE GreenTrace, whose report API is a JSON service that reads its
+        criteria from a form body and nothing else: the same criteria sent as a
+        query string or as JSON both return HTTP 500. The form body is part of
+        the cache key, because it carries the paging offset and the ledger
+        selector — two calls to one URL returning different ledgers is the
+        `standardid` trap in another costume.
+        """
+        response = self.request("POST", url, form_body=form_body, **kwargs)
         response.raise_for_status()
         return response.json()

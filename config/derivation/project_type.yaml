@@ -140,6 +140,112 @@ rules:
     match: [{ field: methodologies, regex: "NTC 6208|land use" }]
     value: "AFOLU (subtipo não informado)"
 
+  # --- ACR's protocol names ----------------------------------------------
+  # ACR publishes no AFOLU sub-type code either, and its `projectType` is too
+  # coarse for the forest half of the registry: 352 projects read "Forest
+  # Carbon", covering improved management, reforestation, avoided conversion
+  # and wetland restoration alike. The protocol name is what separates them,
+  # and it is stated on 994 of 994.
+  #
+  # These key on strings no other registry publishes ("ARB Compliance Offset
+  # Protocol", "ECY Compliance Offset Protocol", "Improved Forest Management
+  # (IFM) on …"), so they cannot reach another registry's rows. Measured
+  # against the live index on 2026-08-04.
+  - name: acr-improved-forest-management
+    match:
+      - field: methodologies
+        regex: "Improved Forest Management \\(IFM\\)|Active Conservation and Sustainable Management"
+    value: "Manejo Florestal Melhorado (IFM)"
+
+  # The compliance forest protocols cover reforestation, improved management
+  # AND avoided conversion under one name, and the registry states nothing
+  # finer. The generic AFOLU value says exactly that instead of picking one.
+  - name: acr-compliance-forest-protocol
+    match:
+      - field: methodologies
+        regex: "Compliance Offset Protocol: U\\.S\\. Forest Projects|Climate Action Reserve Forest Project Protocol"
+    value: "AFOLU (subtipo não informado)"
+
+  - name: acr-avoided-grassland-conversion
+    match:
+      - field: methodologies
+        regex: "Avoided Conversion of Grasslands"
+    value: "Conservação de Pastagens e Campos (ACoGS)"
+
+  - name: acr-wetland-restoration
+    match:
+      - field: methodologies
+        regex: "Restoration of Pocosin Wetlands|Restoration of California Deltaic"
+    value: "Restauração e Conservação de Áreas Úmidas (WRC)"
+
+  - name: acr-agricultural-land-management
+    match:
+      - field: methodologies
+        regex: "Reduced Use of Fertilizer|Rice Management Systems"
+    value: "Manejo Agrícola de Terras (ALM)"
+
+  # Destruction of ODS banks, and the foam/blowing-agent transitions that sit
+  # in the same programme. An avoided emission, not a removal — see
+  # durability.yaml.
+  - name: acr-ozone-depleting-substances
+    match:
+      - field: methodologies
+        regex: "Ozone Depleting Substances"
+    value: "Destruição de Substâncias Destruidoras da Camada de Ozônio (ODS)"
+
+  # The foam blowing-agent transitions belong here and **not** with the ODS
+  # destruction protocols: all 82 of them are "Industrial Process Emissions"
+  # in the registry's own vocabulary, and what they avoid is high-GWP
+  # fluorinated blowing agent, not an ozone-depleting bank. Filing them as ODS
+  # contradicted the registry's own type as well as the chemistry.
+  - name: acr-refrigerants
+    match:
+      - field: methodologies
+        regex: "Reclaimed HFC Refrigerants|Advanced Refrigeration Systems|Advanced Formulation Blowing Agents"
+    value: "Refrigerantes e Gases Fluorados (HFC)"
+
+  - name: acr-mine-methane
+    match:
+      - field: methodologies
+        regex: "Mine Methane Capture|Methane from Coal and Trona Mines"
+    value: "Metano de Minas de Carvão"
+
+  - name: acr-orphan-wells
+    match:
+      - field: methodologies
+        regex: "Plugging Orphan Oil and Gas Wells"
+    value: "Tamponamento de Poços Órfãos"
+
+  - name: acr-landfill-gas
+    match:
+      - field: methodologies
+        regex: "Landfill Gas Destruction|Landfill Gas Combustion"
+    value: "Gás de Aterro Sanitário"
+
+  - name: acr-manure-management
+    match:
+      - field: methodologies
+        regex: "Methane from Manure Management Systems"
+    value: "Pecuária e Manejo de Dejetos"
+
+  - name: acr-vehicle-efficiency
+    match:
+      - field: methodologies
+        regex: "Anti-Idling Technologies|Truck Stop Electrification|Improved Efficiency of Vehicle Fleet"
+    value: "Eficiência Energética no Transporte"
+
+  - name: acr-enhanced-oil-recovery
+    match:
+      - field: methodologies
+        regex: "Enhanced Oil Recovery"
+    value: "Captura e Armazenamento de Carbono"
+
+  - name: acr-pneumatic-controllers
+    match:
+      - field: methodologies
+        regex: "High-Bleed Pneumatic Controllers"
+    value: "Emissões Fugitivas"
+
   # --- Methodology-specific, where the scope alone is too coarse ---------
   - name: methodology-cookstoves
     match: [{ field: methodologies, regex: "AMS-II\\.G|VMR0006|VMR0013" }]
@@ -318,6 +424,77 @@ rules:
   - name: pv4-forest-unspecified
     match: [{ field: sectoral_scope, equals: "Forest" }]
     value: "AFOLU (subtipo não informado)"
+
+  # --- ACR project types -------------------------------------------------
+  # ACR states a `projectType` from a closed list of 17 values, which the
+  # adapter carries into `sectoral_scope` untranslated. These are the rows the
+  # protocol rules above did not already answer — a project whose protocol is
+  # one of the handful ACR does not name in its own vocabulary.
+  #
+  # `equals` against short exact values, like the Gold Standard and Plan Vivo
+  # blocks: they cannot reach a Verra or Cercarbono row, whose scopes are long
+  # descriptive strings. They sit above the generic fallbacks so that
+  # "Renewable Energy" is not read by `contains: Energy` rules that mean
+  # something narrower.
+  #
+  # Deliberately absent: "Fuel Switching" (2 projects). There is no value in
+  # this vocabulary for it and inventing one is a business decision, so the
+  # cell stays blank — the correct failure, per the note at the top.
+  - name: acr-forest-carbon
+    match: [{ field: sectoral_scope, equals: "Forest Carbon" }]
+    value: "AFOLU (subtipo não informado)"
+
+  - name: acr-type-ods
+    match: [{ field: sectoral_scope, equals: "Ozone Depleting Substances" }]
+    value: "Destruição de Substâncias Destruidoras da Camada de Ozônio (ODS)"
+
+  - name: acr-type-refrigerants
+    match: [{ field: sectoral_scope, equals: "Refrigerants" }]
+    value: "Refrigerantes e Gases Fluorados (HFC)"
+
+  - name: acr-type-coal-mine-methane
+    match: [{ field: sectoral_scope, equals: "Coal Mine Methane" }]
+    value: "Metano de Minas de Carvão"
+
+  - name: acr-type-orphaned-wells
+    match: [{ field: sectoral_scope, equals: "Orphaned Wells" }]
+    value: "Tamponamento de Poços Órfãos"
+
+  - name: acr-type-landfill-gas
+    match:
+      - field: sectoral_scope
+        equals: "Landfill Gas Capture & Combustion"
+    value: "Gás de Aterro Sanitário"
+
+  - name: acr-type-industrial-process
+    match:
+      - field: sectoral_scope
+        in: ["Industrial Process Emissions", "Industrial Gas Substitution"]
+    value: "Emissões de Processos Industriais"
+
+  - name: acr-type-wetland-restoration
+    match: [{ field: sectoral_scope, equals: "Wetland Restoration" }]
+    value: "Restauração e Conservação de Áreas Úmidas (WRC)"
+
+  - name: acr-type-agricultural-land-management
+    match: [{ field: sectoral_scope, equals: "Agricultural Land Management" }]
+    value: "Manejo Agrícola de Terras (ALM)"
+
+  - name: acr-type-wastewater
+    match: [{ field: sectoral_scope, equals: "Wastewater Treatment" }]
+    value: "Tratamento de Efluentes"
+
+  - name: acr-type-renewable-energy
+    match: [{ field: sectoral_scope, equals: "Renewable Energy" }]
+    value: "Energia Renovável"
+
+  - name: acr-type-energy-efficiency
+    match: [{ field: sectoral_scope, equals: "Energy Efficiency" }]
+    value: "Eficiência Energética"
+
+  - name: acr-type-transport
+    match: [{ field: sectoral_scope, equals: "Transport / Fleet Efficiency" }]
+    value: "Eficiência Energética no Transporte"
 
   # --- Sectoral-scope fallbacks -----------------------------------------
   - name: scope-energy-industries
