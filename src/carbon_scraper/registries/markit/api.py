@@ -69,9 +69,9 @@ from typing import Any
 
 from ... import db, settings
 from ...http_client import RegistryClient, RetryableStatus
+from .. import tables
 from ..base import ClientOwner, reconciled
 from ..text import hashed_id, stated
-from . import tables
 
 log = logging.getLogger(__name__)
 

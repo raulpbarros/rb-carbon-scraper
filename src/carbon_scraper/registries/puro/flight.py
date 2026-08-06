@@ -12,7 +12,7 @@ retirement page splits its stream across dozens of pushes and the split lands
 mid-object, so **every push has to be joined before anything is decoded** —
 scanning the pushes one at a time finds a truncated object and gives up.
 
-This module is the Puro equivalent of `markit/tables.py`: the part that knows
+This module is the Puro equivalent of `registries/tables.py`: the part that knows
 about the delivery format, kept away from the part that knows what the fields
 mean. Standard library only — the payload is JSON, not markup, so no parser is
 needed beyond `json`.

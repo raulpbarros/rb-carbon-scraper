@@ -1,25 +1,35 @@
-# PLAN — from developer CLI to an installable app across 8 registries
+# PLAN — from developer CLI to a GUI across 10 registries
 
-Two things are changing at once:
+**2026-08-05 — the installed-app plan is abandoned.** User decided against
+building/shipping a signed installer: distribution is the GitHub repo link
+itself, handed to the boss directly. A colleague clones the repo and runs it
+from source (README, "Run it from the source") — `pip install -e .`, then
+either `carbon-gui` or the CLI. Phase 4 (Packaging) and 4b (Distribution) are
+closed as **superseded**, below — not reworked toward this, and not deleted;
+the code still exists and still passes its tests, it is just no longer the
+target. The GUI itself is unaffected and stays the everyday way to run this.
+
+Two things changed along the way:
 
 - **More registries.** Verra, Gold Standard, Cercarbono, Plan Vivo,
-  SocialCarbon, BioCarbon and Puro.earth are live. ACR was added during
-  scoping and is what remains; Plan Vivo V4 was added during Phase 4, the
-  live Plan Vivo adapter having turned out to cover only the V5 registry.
-  Nine in total. Phase 5 keeps each independently droppable.
-- **A different user.** The deliverable stops being a spreadsheet a developer
-  mails out and becomes a Windows application the business team installs: tick
-  the registries, pick a folder, press a button.
+  SocialCarbon, BioCarbon, Puro.earth, ACR and **CAR** are live — CAR added
+  after ACR, because ACR's dead old host named the platform CAR is still on.
+  Ten in total. Phase 5 keeps each independently droppable.
+- **A different user.** The deliverable stopped being a spreadsheet a
+  developer mails out and became a GUI a colleague runs from a checkout: tick
+  the registries, pick a folder, press a button — same interaction, no
+  installer underneath it.
 
-The hard part is not the GUI. It is that the pipeline assumes a writable repo
-checkout at a path derived from `__file__` — false under PyInstaller and under
-any non-editable install — and that a full scrape of eight registries is a
-working day of wall-clock time. Phase 0 fixes the first; the shipped-database
-model in Phase 4 fixes the second.
+The hard part was never the GUI. It was that the pipeline assumed a writable
+repo checkout at a path derived from `__file__` — false under PyInstaller and
+under any non-editable install — and that a full scrape of nine-then-ten
+registries is a working day of wall-clock time. Phase 0 fixed the first; the
+shipped-database model from Phase 4 still fixes the second, and still applies
+to a from-source checkout via `seed/carbon-seed.db` — see README.
 
 **Settled decisions** (do not re-open without a reason): ship a prebuilt
 database so export is instant and scraping is an explicit opt-in; Tkinter/ttk;
-PyInstaller one-folder inside an Inno Setup installer.
+**distribute by repo link and "run from source", not a built installer.**
 
 ---
 
@@ -31,26 +41,30 @@ PyInstaller one-folder inside an Inno Setup installer.
 | 1 — Cercarbono | ✅ | 231 projects, live and reconciled |
 | 2 — Plan Vivo | ✅ | Verra adapter generalised to `platts/`; 2 projects, reconciled |
 | 3 — Tkinter GUI | ✅ | `carbon-gui` — checkboxes, folder picker, two buttons, Cancel |
-| 4 — Packaging | ✅ | 20.8 MB shipped DB, EXE, per-user installer — 16.7 MB, no admin |
-| 4b — Distribution | 🔄 | portable ZIP + GitHub release; SmartScreen answered without signing |
+| 4 — Packaging | 🛑 superseded | built and working — 20.8 MB shipped DB, EXE, per-user installer — but not the distribution path anymore |
+| 4b — Distribution | 🛑 superseded | was portable ZIP + GitHub release; replaced by repo link + "run from source" |
 | 4c — Docker | ✅ | the ~16,500-request scrape, headless, off the desktop |
-| **5 — More registries** | **✅** | **5a ✅, 5b ✅, 5c ✅, 5d ✅, 5e ✅, Verra JNR ✅** |
+| **5 — More registries** | **✅** | **5a ✅, 5b ✅, 5c ✅, 5d ✅, 5e ✅, 5f ✅, Verra JNR ✅** |
 | 6 — Hardening | | incremental sync, `verra doctor` |
 
-**466 tests, green, offline.** Eight registries live and **ten standards
-across seven platforms**: Verra VCS 5,245 + JNR 5, Gold Standard 4,141, ACR
-994, Cercarbono 231, Puro.earth 118, BioCarbon 105, Plan Vivo V5 2 + V4 30,
-SocialCarbon 19 — **10,885 projects in one database**, every one carrying a
-derived Tipo Micro / Bioma / Durabilidade. Last delivery is
-`out/carbon-projects_v2.xlsx`; a `_v3` has still not been cut, because nobody
-has asked for one.
+**619 tests, green, offline.** Nine registries live and **eleven standards
+across eight platforms**: Verra VCS 5,245 + JNR 5, Gold Standard 4,141,
+**CAR 1,277**, ACR 994, Cercarbono 231, Puro.earth 118, BioCarbon 105,
+Plan Vivo V5 2 + V4 30, SocialCarbon 19 — **12,162 projects in one database**,
+every one carrying a derived Tipo Micro / Durabilidade (Bioma only where the
+project is land use). Last delivery is `out/carbon-projects_v2.xlsx`; a `_v3`
+has still not been cut, because nobody has asked for one.
 
-**One project is now known to be in two registries.** BioCarbon's
-`BCR-CO-319-14-002`/`-005` are Cercarbono's `CDC-106`/`CDC-107` — the same
-projects, different credit tranches, and both rows ship cross-linked (user's
-decision, 2026-08-04). It is the only overlap found so far, and it is the one
-thing that stops "sum every registry's Total Credits Issued" being a safe
-query. See `docs/field-mapping.md`.
+**Three overlaps between registries are now known, and the third is a
+different animal.** BioCarbon's `BCR-CO-319-14-002`/`-005` are Cercarbono's
+`CDC-106`/`CDC-107`, and `ACR0242`/`ACR0388` are Verra's `VCS 559`/`573` — both
+pairs are *different tranches* of one physical project, so both rows ship
+cross-linked (user's decision, 2026-08-04). **CAR's `CAR400`/`CAR498` against
+Verra's 1528/1527 are not**: CAR states the conversion itself, Verra's entire
+issued figure for both is exactly what CAR says it converted, and CAR cancels
+nothing — so 50,000 tCO2e are counted twice and nothing is subtracted to hide
+it. Together they are what stops "sum every registry's Total Credits Issued"
+being a safe query. See `docs/field-mapping.md`.
 
 **The "0 projects retiring more than they issued" invariant no longer holds,
 and that is a finding rather than a regression.** Six Plan Vivo V4 projects
@@ -59,26 +73,25 @@ retire more than the registry publishes as issued — Sofala most starkly at
 directly rather than inferred from a gap. Nothing is back-computed to make the
 arithmetic close. See `docs/field-mapping.md`.
 
-**There is now an installer.** `.\build.ps1` produces
-`dist/installer/CarbonRegistryScraper-0.2.0-setup.exe`, which installs per-user
-with no admin rights and carries a 20.8 MB database, so `Export Excel` works on
-a machine that has never scraped anything and has no Python on it.
-
-**And a way to hand it over.** Phase 4b adds
-`dist/portable/CarbonRegistryScraper-0.2.0-portable.zip` and a GitHub release
-to put it on, because an unsigned installer is a build problem only until it
-meets someone else's machine — after that it is a trust problem, and that one
-is not fixed by building harder.
+**An installer exists and works, and is no longer the plan.** `.\build.ps1`
+still produces `dist/installer/CarbonRegistryScraper-0.2.0-setup.exe` — installs
+per-user, no admin rights, carries a 20.8 MB database — but the user decided
+against handing that to the boss. The hand-over is the repo link instead:
+clone it, `pip install -e .`, `carbon-gui`. Phase 4b's ZIP-plus-GitHub-release
+plan is dropped for the same reason — there is nothing to sign or unblock
+when nothing is downloaded as an executable in the first place.
 
 **Phase 5 is finished.** ACR (5c) was the last name on the original list, and
 it was not where the plan said: it left the APX platform for **ICE
 GreenTrace**, which turned out to be a seventh platform — and one with a second
 tenant, ART, sitting there for whenever somebody wants it. Every item on the
-phase is done, including the one it grew: the Plan Vivo adapter reached the V5
-registry only, and V4 turned out to be a whole second platform.
+phase is done, including the two it grew: the Plan Vivo adapter reached the V5
+registry only and V4 turned out to be a whole second platform, and the host ACR
+*left* turned out to still be serving **CAR** (5f), which nobody had put on the
+list at all.
 
-What is left is Phase 6, and the two open items in Phase 4b that need someone
-else's machine.
+What is left is Phase 6. Phase 4b's open items (code signing, staleness
+threshold) are closed as moot — see "Open questions" below.
 
 ---
 
@@ -303,9 +316,50 @@ other button), two exports produced `_v1` then `_v2` with `_v1` byte-identical
 afterwards, and a live Cercarbono sync cancelled in 0.6 s leaving a readable
 database. The real `out/` and `data/` were never touched.
 
+### 3b — The visual pass ✅ (2026-08-05)
+
+Same behaviour, same seams, a designed surface: `gui/theme.py` (palette, fonts,
+ttk styles, DPI, icon), a header band carrying the headline and the "data as of"
+trust line, ledger rows that double as the progress display, ranked buttons, a
+collapsed log, and `assets/app.ico` from `packaging/make_icon.py`.
+
+**Every defect below was found by opening the window and looking at it**, not
+by reading the code — which is the whole argument for doing that here:
+
+- **The packaged app was blurry on every screen above 100%.** No process-level
+  DPI awareness, so Windows rendered at 96 DPI and upscaled the bitmap. Invisible
+  on a development box at 100% and unfixable after `tk.Tk()` exists.
+- **The window opened smaller than its own layout**, clipping the right of every
+  ledger row and the folder block off the bottom. `minsize` does not prevent it;
+  an explicit `geometry` does.
+- **And then the opposite**: opening the log pushed the window past a 1080-line
+  screen at 150%, and clamping it squeezed the log *and its own toggle* out of
+  view. The button moved into the body so only the log carries the row weight.
+- **`indicatorsize` does not scale with the screen**, so the tick boxes were a
+  third of their apparent size — and clam draws a **cross** in a ticked box.
+  Both fixed by taking the indicator out of the layout and using a `☑` glyph.
+- **A 12-character count column silently truncated `305,144 / 305,144`** into
+  `305,144 / 30`, which reads as a smaller number rather than a cut one.
+- The screenshots that showed all of this were themselves wrong twice over:
+  a stale process from before the edits, then a capture that was not DPI-aware
+  and returned a 150%-scaled crop of the window. **Check the tool before
+  believing what it says about the thing** — the same rule as every registry
+  count in CLAUDE.md.
+
+**Verified:** 507 tests green, all offline, none opening a window. The window
+was then opened for real and driven through both its idle and mid-scrape states
+with fake progress, and each defect above re-checked against a screenshot.
+
 ---
 
-## Phase 4 — PyInstaller, Inno Setup, shipped database ✅
+## Phase 4 — PyInstaller, Inno Setup, shipped database ✅, superseded 2026-08-05
+
+**Superseded, not deleted.** Built and verified as below; the user then
+decided against handing the boss an installer at all — the repo link is the
+delivery now (see top of file). Nothing here is wrong, it is just not the
+path taken. `db.export_slim()` / `verra slim-db` still matter: the
+"run from source" route in the README still uses a shipped `seed/carbon-seed.db`
+so a checkout doesn't force a from-scratch scrape.
 
 - [x] `db.export_slim()` + `verra slim-db`: `projects`, `credit_totals`,
       `project_derived`, `runs` only. **214.8 MB → 20.8 MB, 91% smaller**, and
@@ -368,7 +422,14 @@ Three things the plan did not anticipate:
 
 ---
 
-## Phase 4b — Getting it to the business team, unsigned
+## Phase 4b — Getting it to the business team, unsigned — superseded 2026-08-05
+
+**Superseded.** The two checklist items below (cut a GitHub release, verify on
+a clean machine) are dropped, not merely deferred: the user chose repo-link
+distribution instead of chasing SmartScreen/AV on an unsigned EXE. The rest of
+this phase's work (ZIP packing, READ-ME, README's "run from source" section)
+stays, because "run from source" is now the *only* route, not a fallback for
+people without a terminal.
 
 Phase 4 built an installer. It cannot be *sent*: it is unsigned, so the first
 person to double-click it meets SmartScreen's "Windows protected your PC" with
@@ -409,21 +470,21 @@ Two routes, both free, both off the existing public repo:
       database into the checkout
 - [x] Tests: the `.iss` version pinned to `pyproject.toml`'s, and the READ-ME
       pinned to `build.ps1` still copying it in
-- [ ] Cut `v0.2.0` on GitHub with the ZIP, the installer and `carbon-seed.db`
-- [ ] **Verify on a machine that is not this one** — download through a
-      browser, which is the only way to get a real Mark of the Web, then
-      unblock → extract → run and confirm no prompt appears. Once *without*
-      unblocking too, so the READ-ME describes the real dialog
+- [~] Cut `v0.2.0` on GitHub with the ZIP, the installer and `carbon-seed.db`
+      — **dropped.** No release is being cut; the boss gets a repo link.
+- [~] **Verify on a machine that is not this one** — **dropped**, moot once
+      nothing is downloaded as an executable.
 
-**The claim this cannot check from here is antivirus.** Corporate AV
-heuristically quarantines unsigned PyInstaller executables often enough that it
-has to be observed rather than assumed, and unblocking does nothing about it.
-If it happens, the source route stops being the alternative and becomes the
-plan. Same shape as every other trap in this repo: a build that finished clean
-says nothing about what happens on the other machine.
+**The antivirus question is now academic rather than open.** Corporate AV
+heuristically quarantining an unsigned PyInstaller EXE was the risk that made
+"run from source" the documented fallback. It has become the plan by user
+choice, not because the risk was confirmed — so the source route needs to
+actually work for a non-technical boss, which is the thing to check now
+instead.
 
-**The installer stays.** It is built, it works, and someone will want a
-Start-menu entry. It is the second link in the release, not the first.
+**The installer still exists** (`build.ps1` still builds it) but is no longer
+being sent anywhere. Reopen this phase only if the user decides they want a
+Start-menu entry after all.
 
 ---
 
@@ -436,11 +497,14 @@ rules. The GUI checkbox appears on its own.
 **5e is not like the others.** It is not a registry nobody has looked at — it
 is a registry we are already half-scraping and did not know it.
 
-**Before writing any new adapter, check the two platform tables.**
-`verra standards -r all` names every S&P tenant in eight GETs, and
-`docs/api-contract-markit.md` lists the 21 programmes on legacy Markit. That
-is 29 registries reachable by subclassing something that already works, and it
-is how 5e turned out to be an afternoon instead of a week.
+**Before writing any new adapter, check the four platform tables.**
+`verra standards -r all` names every S&P tenant in eight GETs,
+`docs/api-contract-markit.md` lists the 21 programmes on legacy Markit,
+`docs/api-contract-acr.md` lists the two ICE GreenTrace tenants and
+`docs/api-contract-car.md` the Xpansiv/APX ones. That is 32 registries
+reachable by subclassing something that already works, and it is how 5e turned
+out to be an afternoon instead of a week — and how 5f turned out to exist at
+all.
 
 **Then check whether the site ships the data in its own HTML**, before going
 looking for an API. 5b was filed as "server-rendered HTML, find a JSON
@@ -539,7 +603,7 @@ already holds these credits before scraping, not after.
         `Next-Router-State-Tree` each return the same prerendered HTML, and no
         API host appears in any of the 15 client chunks. The data is fetched
         server-side. `flight.py` reads it out of the `__next_f.push` stream —
-        stdlib only, the Puro half of what `markit/tables.py` is for Markit.
+        stdlib only, the Puro half of what `registries/tables.py` is for Markit.
         **The pushes must be joined before decoding**: the 5.2 MB retirement
         page splits mid-object.
       - **No paging, no filtering, no key, no `Origin` check.** The friendliest
@@ -750,6 +814,74 @@ already holds these credits before scraping, not after.
         usual check — but `name=N'hambita` returns *Mikoko Pamoja* rows. Only
         checking *which* rows came back caught it.
 
+- [x] **5f Climate Action Reserve — done, 2026-08-05.** Not on the original
+      list at all. It was found by reading 5c's own finding: ACR *left*
+      `acr2.apx.com`, and the platform it left is still serving somebody —
+      **Xpansiv/APX**, the eighth platform here, whose largest offset tenant is
+      the Climate Action Reserve. Contract in `docs/api-contract-car.md`,
+      adapter in `registries/apx/` + `registries/car/`.
+
+      **1,277 projects, 5,173 issuance rows, 11,047 retirements and 2,277
+      cancellations**, every count reconciled against the registry's own
+      printed total on a full live sync. Issued credits reconcile twice — the
+      ledger, and the project list's own per-project figure, which agree on
+      **all 901 projects that have issued anything, to the unit**. Coverage
+      after the fixes below: Tipo Micro 1,277/1,277, Durabilidade 1,277/1,277,
+      Estado 1,277/1,277, Data de Início 1,274/1,277.
+
+      What the platform turned out to be:
+
+      - **A bulk CSV export, unauthenticated.** `POST rptdownload.asp` returns
+        a whole report in one request, so all three ledgers — 18,497 rows —
+        cost **8 requests**. No other registry here is that cheap.
+      - **And a 1,277-request fan-out anyway**, because the crediting period is
+        published only on the per-project page. 99.4% of the sync is that, so
+        `--projects-only` saves almost nothing — the opposite shape from every
+        other registry.
+      - **A CSRF token that is not in the form it belongs to**, appended by
+        script a second after load, per *session* — and a POST without it
+        answers HTTP 200 with the site's **home page**, which parses as an
+        empty report. `APXRefused` says so rather than letting a caller read it
+        as a registry with no records.
+      - Sixth registry to ignore a page size; second to clamp a past-the-end
+        page instead of ending; a CSV whose embedded quotes are not doubled, so
+        13 retirement rows have one field too many and `csv.reader` says
+        nothing.
+
+      Three things the plan could not have anticipated, because CAR was not in
+      it:
+
+      - **It sends Windows-1252 and declares no charset anywhere.** No
+        `Content-Type` charset, no `<meta>`, no BOM — so httpx assumes UTF-8
+        and replaces every accent. `STATE OF MÉXICO` arrived as
+        `STATE OF <?>XICO` at HTTP 200 with nothing in the log, on a registry
+        that is **38% Mexican**, and it is not repairable afterwards. Fixed in
+        `http_client.decoded` (declared charset → UTF-8 *strictly* → the
+        platform's measured fallback) and re-run from the response cache, which
+        stores raw bytes. Four fixtures had been captured through the damage
+        and were repaired against a correctly decoded copy of the same source;
+        a test now fails if any carries a replacement character.
+      - **It is the one registry that does not write ISO dates**, and storing
+        `10/7/2018` as published left `Data de Início`, `Data de Término` and
+        `Duração` blank on all 1,277 rows while the sync reconciled perfectly.
+        **`verra coverage` is what caught it**, which is the argument for
+        running it at the end of every registry rather than at the start of the
+        next one. Converted in the adapter, month-first measured rather than
+        assumed, and deliberately not added to `db.DATE_FORMATS` where it would
+        misread the first registry that writes day-first.
+      - **A third cross-registry overlap, and the first of its kind.** The
+        registry states it itself — `Offset Credits Converted to VCUs`, on 2 of
+        5,173 rows — and both are Verra projects whose *entire* issued figure
+        is that converted quantity. Same units, both books, nothing netted out.
+        See the note above and `docs/field-mapping.md`.
+
+      **Climate Forward** (36 projects) is the other offset tenant on this
+      platform, was checked rather than assumed — identical module, forms and
+      field names — and is **not** ingested: its units are ex-ante forecasts,
+      which is a business decision rather than a scraping one. The remaining
+      `*.apx.com` tenants are renewable-energy and fuel certificates and are
+      not tCO2e
+
 - [x] **Verra JNR — done, 2026-07-29.** Not in the original plan. The
       `standards -r all` sweep showed the Verra tenant publishes **six**
       standards and the scraper read one. JNR is tCO2e and comparable, so it
@@ -838,29 +970,18 @@ fill rates and its deliberate blanks stated rather than filled.
    not for the code: **two different projects publish `SOCIALCARBON-19`** and
    one reference is missing entirely, so the registry has no unique public
    reference per project. Both rows ship, told apart by name and URL.
-2b. **Code signing** — Phase 4b routes around SmartScreen rather than removing
-   the cause, and that works only as long as everyone does the unblock step.
-   An Authenticode certificate ends the question: roughly USD 200-400/year for
-   an OV certificate, which since June 2023 must live on a hardware token
-   (so it also has to be plugged into whichever machine runs `build.ps1`). An
-   EV certificate additionally buys immediate SmartScreen reputation rather
-   than reputation earned over downloads. Worth it if this ever ships outside
-   the team; a decision about money, not about code. **A self-signed
-   certificate is not a substitute** — it has to be installed into Trusted
-   Publishers on every machine, which needs admin rights and is exactly the
-   IT ticket the per-user install was designed to avoid.
-3. **Shipped-database freshness** — how stale may the bundled data be before a
-   new installer is cut? Half-answered in Phase 3: the window now shows **"Data
-   as of &lt;date&gt;"** at the top, deliberately the *oldest* registry rather
-   than the newest, since a sheet is only as current as its stalest source. So
-   the staleness is visible rather than assumed. What is still yours to decide
-   is the threshold at which a new installer gets cut.
-
-   Phase 4 narrowed it further rather than answering it: `build.ps1` rebuilds
-   the shipped database from `data/verra.db` on every run, so an installer is
-   never older than the build that produced it — but nothing forces that
-   database to be fresh. **Run `verra status` before `build.ps1`**; the dates
-   it prints are the dates the business will read.
+2b. ~~**Code signing**~~ — **closed 2026-08-05, moot.** No installer is being
+   sent, so there is nothing to sign or route around. Reopens only if the
+   user decides to distribute a built EXE again.
+3. **Shipped-database freshness** — still open, but reframed: it is no longer
+   "how stale before a new installer is cut", it is how stale before someone
+   regenerates `seed/carbon-seed.db` for the boss's checkout to adopt. The
+   window still shows **"Data as of &lt;date&gt;"** at the top, deliberately
+   the *oldest* registry rather than the newest, since a sheet is only as
+   current as its stalest source — so the staleness is visible rather than
+   assumed. The threshold for "time to re-scrape and re-seed" is still yours
+   to decide. **Run `verra status`** before cutting a new seed database; the
+   dates it prints are the dates the boss will read.
 
 5. **Plan Vivo V4** — see 5e. Not a question about how to build something, a
    question about what the sheet currently claims: two rows are presented as
@@ -874,3 +995,28 @@ fill rates and its deliberate blanks stated rather than filled.
    them. If the business wants them reported separately, the class is already
    stored in `credit_events.unit_type` — a `config/credits.yaml` change, not a
    re-scrape. Raised 2026-07-28; see `docs/field-mapping.md`.
+
+6. **Climate Action Reserve — three questions, all about the sheet rather than
+   the scrape.** Raised 2026-08-05; see `docs/field-mapping.md`.
+
+   a. **`Total Credits Cancelled` is 90% conversions.** 2,056 of its 2,277
+      cancellations — 122.3M of 124.2M units — are credits leaving for
+      California's ARB or Washington's Ecology programme, where they go on
+      existing. ACR's identical situation was settled on 2026-08-04 as "report
+      the registry's own figure, keep the reason on every row"; the same answer
+      is assumed here and is worth confirming, because it is a larger share of
+      a larger number.
+
+   b. **The Mexican highlands have no Bioma.** 395 projects — Sierra Madre
+      pine-oak, a temperate conifer forest — sit on "México (bioma não
+      determinado)", because the only temperate band in the file is named
+      *Norte-Americana*. Either that value covers them or a Sierra Madre band
+      is added; both are decisions about the deliverable, and neither registry
+      publishes anything finer than the state. The tropical states (90) are
+      already placed.
+
+   c. **50,000 tCO2e are counted twice**, in CAR and in Verra, because CAR
+      converted them into VCUs and neither registry nets them out. Both
+      published figures stand today and the link is stored. Whether the sheet
+      should subtract is the business's call — as it is for the two other
+      known overlaps, which do *not* have this problem.

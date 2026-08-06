@@ -74,6 +74,12 @@ def _acr() -> type:
     return ACRAPI
 
 
+def _car() -> type:
+    from .car.api import CARAPI
+
+    return CARAPI
+
+
 #: registry identifier -> the adapters that publish it, in scrape order.
 #:
 #: A table rather than a chain of `if`s on purpose: the old fall-through
@@ -98,6 +104,7 @@ ADAPTERS: dict[str, tuple[Callable[[], type], ...]] = {
     settings.BIOCARBON: (_biocarbon,),
     settings.PURO: (_puro,),
     settings.ACR: (_acr,),
+    settings.CAR: (_car,),
 }
 
 # --registry accepts either the stored value or a short alias.
@@ -141,6 +148,16 @@ ALIASES = {
     # one it serves and has no adapter, so this alias is deliberately not
     # `greentrace means every tenant`.
     "greentrace": settings.ACR,
+    "car": settings.CAR,
+    "reserve": settings.CAR,
+    "climate-action-reserve": settings.CAR,
+    "climateactionreserve": settings.CAR,
+    # The platform, which today has exactly one tenant here. Climate Forward is
+    # the other offset tenant it serves and has no adapter — its units are
+    # ex-ante forecasts rather than issued offsets — so this alias is
+    # deliberately not `apx means every tenant`. ACR was on this platform once
+    # and left; `acr` above points at GreenTrace, which is where it is now.
+    "apx": settings.CAR,
 }
 
 ALL = tuple(ADAPTERS)

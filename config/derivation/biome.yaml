@@ -46,8 +46,34 @@ applies_when:
   # form — so that project would have had no biome and nothing in the log.
   # `\bAFOLU\b` is the addition. The nineteenth says "Harmful Algae Bloom
   # Treatment" and correctly stays out: it is not land use.
+  #
+  # Climate Action Reserve, 2026-08-05: 674 of its 1,277 projects already
+  # passed on `[Ff]orest` alone — "Forestry - MX" (485), "Improved Forest
+  # Management - ARB Compliance" (141), "Reforestation - ARB Compliance". The
+  # wording that missed is **`Avoided Grassland Conversion`** (39 projects),
+  # which is land use and matches none of the alternatives above. `Grassland`
+  # is the addition, and it is added **together with the `na-grassland` band
+  # below** — widening the gate on its own would have sent all 39 to
+  # `north-america-temperate-by-code` and labelled a Montana prairie a
+  # temperate forest, which is the mistake CLAUDE.md records ACR avoiding by
+  # leaving the cell blank. A gate word with no band that answers it correctly
+  # is worse than the blank.
+  #
+  # Two more CAR wordings are land use and are deliberately **left out**, for
+  # exactly that reason: `Soil Enrichment` (cropland soil carbon) and the bare
+  # `Avoided Conversion` (the registry states nothing finer, so which kind of
+  # land is not established). No band here answers either correctly, and the
+  # only one they would reach names a forest. ACR's `Agricultural Land
+  # Management` and `Wetland Restoration` rows are blank for the same reason
+  # and by the same decision.
+  #
+  # Blast radius of `Grassland`, measured against the real database on
+  # 2026-08-05 before the change: **zero**. No project in any existing
+  # registry has a `sectoral_scope` containing it — Verra and ACR both state
+  # avoided grassland conversion in `afolu_names` and `methodologies`
+  # instead, neither of which this gate reads.
   - field: sectoral_scope
-    regex: "Agriculture Forestry|^A/R$|\\bAFOLU\\b|Afforestation / Reforestation|REDD|[Ff]orest|[Dd]eforestation"
+    regex: "Agriculture Forestry|^A/R$|\\bAFOLU\\b|Afforestation / Reforestation|REDD|[Ff]orest|[Dd]eforestation|Grassland"
 
 rules:
   # --- Brazil, by state (dominant biome) --------------------------------
@@ -214,6 +240,30 @@ rules:
       - { field: region_name, regex: "Oceania|Australia" }
     value: "Oceania (bioma não determinado)"
 
+  # --- North American grassland, named by the activity ---------------------
+  # **The one rule in this file that reads what the project does rather than
+  # only where it is**, and it is here because the alternative was worse.
+  # Climate Action Reserve's Grassland Protocol certifies the avoided
+  # conversion of *native* grassland to cropland, in the US and Canadian Great
+  # Plains — so the project type states the biome as directly as a location
+  # field would, and more precisely than the country code can. Without it the
+  # 39 projects would fall through to `north-america-temperate-by-code` and be
+  # labelled a temperate forest, which they are not.
+  #
+  # It sits above the ISO-code bands so it wins over them, and below every
+  # country-name and region rule so those still win over it. Keyed on the
+  # country code as well as the wording, because "grassland" outside North
+  # America is a different biome and this value would be wrong for it — a
+  # project that is neither US nor CA stays blank rather than being placed.
+  #
+  # Blast radius, measured against the real database on 2026-08-05: **zero**.
+  # No existing project states a grassland wording in `sectoral_scope`.
+  - name: na-grassland
+    match:
+      - { field: sectoral_scope, regex: "Grassland" }
+      - { field: country_code, regex: "^(US|CA)$" }
+    value: "Pradarias Norte-Americanas (campos temperados)"
+
   # --- ISO-code bands, for the registries that publish no country name ------
   # ACR states `US` and stops: no country name anywhere in its API, and
   # `region_name` is Verra's alone. Every rule above therefore misses all 994
@@ -234,3 +284,73 @@ rules:
     match:
       - { field: country_code, regex: "^(US|CA)$" }
     value: "Floresta Temperada Norte-Americana"
+
+  # Climate Action Reserve is the second registry to state a code and no name,
+  # and **Mexico is where that costs the most**: 485 of its 674 land-use
+  # projects are `Forestry - MX`, the single largest group of land-use projects
+  # the registry has. Every country band above matches a country *name*, so all
+  # 485 reached nothing at all and would have come out blank, silently — the
+  # failure CLAUDE.md describes, at 38% of a registry.
+  #
+  # The value says the country and admits the biome is not established,
+  # exactly as `br-unknown-state` and `co-unknown-department` do. Mexico spans
+  # temperate pine-oak forest in Oaxaca and Durango and tropical forest in
+  # Campeche and Quintana Roo, and CAR publishes the state on every row — so
+  # state-level bands are available here and are the obvious refinement. They
+  # are deliberately **not** guessed now: the state distribution across those
+  # 485 projects has not been measured, and this file's own history is that a
+  # band added on an assumption moves rows in three registries nobody checked.
+  # Measure it against the real database once the first full CAR sync has
+  # landed, then split this rule.
+  #
+  # Blast radius measured against the real database on 2026-08-05, before and
+  # after, over all 9,891 projects in the seven registries then loaded:
+  # **3 rows added, 0 changed, 0 removed** — two Gold Standard projects and one
+  # BioCarbon project that state `MX` as a code, pass the land-use gate and had
+  # no biome at all. No existing row moves: Verra's 47 Mexican projects publish
+  # a `region_name` and are answered by `latam-tropical` further up, which is
+  # what "a name or region rule still wins" means here. (ACR's rows were still
+  # being written by a live sync at the time and are not in that count; it
+  # publishes no `MX` project, so this rule cannot reach it.)
+  # **The state split this rule asked for, measured.** The note below said to
+  # measure the state distribution once the first full CAR sync had landed and
+  # then split. It landed on 2026-08-05 and the 491 Mexican projects are:
+  # Chihuahua 67, Durango 64, Hidalgo 59, State of México 52, Oaxaca 45,
+  # Michoacán 45, Quintana Roo 39, Jalisco 36, Campeche 28, Puebla 13,
+  # Veracruz 13, Guerrero 7, Aguascalientes 6, Yucatán 5, Chiapas 3,
+  # Tabasco 3, Distrito Federal 2, and one each in Querétaro, Tlaxcala,
+  # Morelos and Coahuila.
+  #
+  # Only **half** of that split is made here, and the half that is not is the
+  # point. The Yucatán peninsula and the Gulf states are the Selva Maya and
+  # its tropical surroundings — one biome, unambiguous, and **already in this
+  # file's vocabulary**, so 90 projects move onto an existing value with no
+  # new wording invented for them. (91 projects are in those states; the
+  # extra one is a Yucatán *livestock* project, which the land-use gate at the
+  # top of this file correctly keeps out.)
+  #
+  # The other 394 stay "not determined" deliberately. They are the highlands —
+  # Sierra Madre pine-oak — which is a *temperate conifer* biome, and the only
+  # temperate value here is called "Norte-Americana". Whether a Michoacán
+  # community forest should read that, or a new Sierra Madre band, is a
+  # question about the deliverable rather than something either registry
+  # published: Oaxaca and Guerrero straddle both zones, and CAR states a state
+  # and nothing finer. Raised in `docs/field-mapping.md` instead of guessed —
+  # the same call ACR's blank `País` and the wetland rows got.
+  #
+  # Blast radius, measured against the real database on 2026-08-05:
+  # **90 rows changed, 0 added, 0 removed**, all of them CAR's. No other
+  # registry is reachable: this pair needs a `country_code` *and* a Mexican
+  # state, and Verra's 47 Mexican projects publish neither — they carry a
+  # `region_name` and are answered by `latam-tropical` further up.
+  - name: mx-selva-maya
+    match:
+      - { field: country_code, regex: "^MX$" }
+      - field: state_province
+        regex: "QUINTANA ROO|CAMPECHE|YUCAT.N|CHIAPAS|TABASCO|VERACRUZ"
+    value: "Floresta Tropical Mesoamericana"
+
+  - name: mexico-by-code
+    match:
+      - { field: country_code, regex: "^MX$" }
+    value: "México (bioma não determinado)"

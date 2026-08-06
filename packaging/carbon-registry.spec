@@ -73,6 +73,10 @@ exe = EXE(
     # to LOG_DIR/gui.log instead.
     console=False,
     disable_windowed_traceback=False,
+    # The taskbar and Explorer icon. Without it an unsigned EXE arrives
+    # wearing PyInstaller's default, which is one more reason for the person
+    # it was built for to distrust the download.
+    icon=str(bundle.ICON) if bundle.ICON.exists() else None,
 )
 
 coll = COLLECT(

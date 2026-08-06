@@ -21,8 +21,8 @@ import pytest
 from carbon_scraper import db, settings
 from carbon_scraper.http_client import RetryableStatus
 from carbon_scraper.registries import ADAPTERS, adapter_class, adapter_classes
+from carbon_scraper.registries import tables
 from carbon_scraper.registries.markit import api as markit
-from carbon_scraper.registries.markit import tables
 from carbon_scraper.registries.planvivo import api as pv5
 from carbon_scraper.registries.planvivo.v4 import PlanVivoV4API
 

@@ -1,0 +1,832 @@
+	
+<SCRIPT language="JavaScript">
+    function addhiddenCsrfInputToQTable() {
+        setTimeout(function () {
+            const elements = document.querySelectorAll("[id='xxxx2']");
+
+			for (var i = 0; i < elements.length; i++) {
+                if (elements[i].querySelectorAll(":scope > [name='c16e']").length == 0) {
+                    const hiddenInput = document.createElement('input');
+                    hiddenInput.setAttribute('type', "hidden");
+                    hiddenInput.setAttribute('name', "c16e");
+                    hiddenInput.setAttribute('value', 'cde72a6cfa7f72b986a8cba1aa01e181');
+                    elements[i].appendChild(hiddenInput);
+				}
+            }
+        }, 1000);		
+	}
+
+    window.addEventListener('load', function () {
+        addhiddenCsrfInputToQTable();
+    });
+
+</SCRIPT>
+
+
+
+
+
+<SCRIPT language="javascript">
+    //---timer start here
+    var timeInSecs
+    var timerID = null
+    var runningTimer = false
+    var delay = 1000
+
+    function InitializeScriptTimer(sec)
+    {
+        //--Set the timer in seconds--
+        timeInSecs = sec
+         StopPageClock()
+        StartPageTimer()
+    }
+
+    function StopPageClock()
+    {
+        if(runningTimer)
+            clearTimeout(timerID)
+        runningTimer = false
+    }
+
+    function StartPageTimer()
+    {
+        if (timeInSecs == 600)
+        {
+            StopPageClock()
+            modalWin(timeInSecs)
+            InitializeScriptTimer(1800);
+        }
+        else
+        {
+            timeInSecs = timeInSecs - 1
+            runningTimer = true
+            timerID = self.setTimeout("StartPageTimer()", delay)
+
+        }
+        return;
+    }
+
+    function modalWin(sec)
+    {
+        if (window.showModalDialog)
+        {
+           window.showModalDialog("/myModule/include/displayWarning.asp?t="+ timeInSecs,"Warning","dialogWidth:550px;dialogHeight:240px;status:no;center:yes;dialogTop:285;dialogLeft:275");
+        }
+        else
+        {
+           window.open('/myModule/include/displayWarning.asp?t="+ timeInSecs','Warning','width=550,height=240,toolbar=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,modal=yes');
+        }
+    }
+</script>
+<script language="javascript">
+var defaultEmptyOK = false
+function isDigit (c)
+{   return ((c >= "0") && (c <= "9"))
+}
+
+function isEmpty(s)
+{   return ((s == null) || (s.length == 0))
+}
+
+function isInteger (s)
+
+{   var i;
+
+    if (isEmpty(s)) 
+       if (isInteger.arguments.length == 1) return defaultEmptyOK;
+       else return (isInteger.arguments[1] == true);
+
+    // Search through string's characters one by one
+    // until we find a non-numeric character.
+    // When we do, return false; if we don't, return true.
+
+    for (i = 0; i < s.length; i++)
+    {   
+        // Check that current character is number.
+        var c = s.charAt(i);
+
+        if (!isDigit(c)) return false;
+    }
+
+    // All characters are numbers.
+    return true;
+}
+
+function validate_input(total_column) {	
+	var str = document.form1.sortby.value;
+	while ( str != "") {
+		if ( str.indexOf(",") == -1 ) { 
+			if ( str > total_column || str <= 0 || isInteger(str) == false  ) {
+				alert("The column number " + str + " doesn't exist, please re-enter!")
+				return false
+			}	
+			else 
+				return true
+		}	
+		else {			
+			if ( str.substring(0,str.indexOf(",")) > total_column || str.substring(0,str.indexOf(",")) <= 0 || isInteger(str.substring(0,str.indexOf(","))) == false  )	{		
+				alert("The column number " +str.substring(0,str.indexOf(",")) + " doesn't exist, please re-enter!")
+				return false
+			}			
+			else 
+				str = str.substring(str.indexOf(",")+1)			
+		}			
+	}	
+    return false  
+}
+
+function PrintVersion(title) 
+{
+	document.xxxx2.action="rpt_prn.asp?title=" +title
+	document.xxxx2.submit();
+	return false;
+}
+</script>
+
+
+
+
+<SCRIPT language="javascript">
+function iUtils_onCancel(){
+	window.location = "/myModule/mypage.asp";
+}
+
+function iUtils_checkDblQuotes(element){
+	var allItem, i;
+	var a = '"';
+	allItem = element;
+	if (allItem != null){
+		if (allItem.length != null) {
+			for (i=0; i< allItem.length; i++){
+			var s = allItem[i].value;
+				if (s.indexOf(a) != -1){
+					alert("The input data can not contain the " + '"' + " character.");
+					return false;
+				}
+			}
+		}
+	}
+	return true;
+}
+</SCRIPT>
+
+
+<LINK rel="stylesheet" href="/Css/main.css" type="text/css">
+<HTML>
+
+<SCRIPT language="JavaScript">
+
+function onQuantityView(riid,peid,count)
+{
+  if (count == 1)
+    window.location = "/mymodule/rpt/CertificateInfo.asp?riId=" + riid;
+  else
+    window.location = "/myModule/rpt/myrpt.asp?r=203&peid=" + peid;
+}
+
+function fnProjectStatusTypes() {
+    window.open('ProjectStatusTypes.asp', 'ProjectStatusTypes', 'height=300px,width=750px,toolbar=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=no ,modal=yes');
+}
+
+</SCRIPT>
+
+<HEAD>
+
+</HEAD>
+<BODY>
+
+
+
+	<div class="headerBarSection">
+		<div class="left">
+			&nbsp;&nbsp;&nbsp;<a href="/mymodule/mypage.asp" title="View Home Page"><img  src="/images/logo.gif"></a>
+		</div>
+		<div class="right">
+			&nbsp;
+		</div>
+	</div>
+
+    <div class="infoBarSection">
+	    <div class="left">
+		    <a href='/mymodule/mypage.asp' title="Home">Home</a></span>
+	    </div>
+	    <!--div class="right">
+		    <a href="/mymodule/myhelp.asp?id=/myModule/rpt/myrpt.asp" target="myHelp" title="View Help">Help</a>
+	    </div-->
+    </div>
+
+	<script language="javascript">
+		function downloadnow(iFormatType) {
+			var hdnFormatType = eval("frmDownload.FormatType");
+			switch(iFormatType)
+			{
+				case 1: hdnFormatType.value = "csv"; break;
+				case 2: hdnFormatType.value = "txt"; break;
+				case 3: hdnFormatType.value = "pdf"; break;
+			}
+
+			frmDownload.submit ();
+		}
+
+		function printnow() {
+			window.open("","PrintPreview","width=800px, resizable=yes, height=300, top=" + (window.screenTop + 50) + ", scrollbars=yes, status=no"); 
+			frmPrint.target = "PrintPreview"    
+			frmPrint.action = "/myModule/include/print.asp?printid=" + 0;
+			frmPrint.submit ();
+		}
+
+		function pdfnow() {
+			frmPrint.action = "/myModule/include/print.asp?printid=" + 1;
+			frmPrint.target = ""    
+			frmPrint.submit ();
+		}
+
+		function ReportExportRequestnow() {
+			window.open("","PrintPreview","width=800px, resizable=yes, height=600, top=" + (window.screenTop + 50) + ", scrollbars=yes, status=no"); 
+		    frmPrint.target = "PrintPreview"
+			frmPrint.action = "/myModule/include/ReportExportRequest.asp";
+			frmPrint.submit ();
+		}
+	</script>
+	
+	<script language="javascript">
+		function requery() {
+			alert('requery');
+		}
+
+		function searchnow() {
+			window.open ("","SearchReport","height=100, width=345, top=" + (window.screenTop + 50) +", left=" + (window.screenLeft + window.document.body.clientWidth/2 - 150) + ", resizable=yes, scrollbars=yes, status=no "); 
+			
+			frmSearch.action = "/myModule/include/search.asp";
+			frmSearch.submit ();
+		}
+
+		function removesearch() {
+			frmRequery.X999mydata.value = "";
+			frmRequery.IsSearch.value    = "";
+			frmRequery.InProcess.value = "";
+			frmRequery.submit();
+		}
+		
+	</script>
+	<FORM id="frmRequery" name="frmRequery" METHOD="POST" onsubmit="requery();">
+		<input type="hidden" name="c16e" value="cde72a6cfa7f72b986a8cba1aa01e181">
+	<INPUT type="hidden" id="ParametersOriginal"    name="ParametersOriginal"    value = "">
+	
+		<input type="hidden" name="Project&#32;ID" value="">
+		<input type="hidden" name="Compliance&#32;Program&#32;ID" value="">
+		<input type="hidden" name="ARB&#32;ID" value="">
+		<input type="hidden" name="WA&#32;ECO" value="">
+		<input type="hidden" name="Cooperative&#47;&#32;Aggregate&#32;ID" value="">
+		<input type="hidden" name="ahID" value="">
+		<input type="hidden" name="Project&#32;Developer" value="">
+		<input type="hidden" name="ProjectOwnerAhID" value="">
+		<input type="hidden" name="Project&#32;Owner" value="">
+		<input type="hidden" name="FacilityName" value="">
+		<input type="hidden" name="Offset&#32;Project&#32;Operator" value="">
+		<input type="hidden" name="Authorized&#32;Project&#32;Designee" value="">
+		<input type="hidden" name="Verification&#32;Body" value="">
+		<input type="hidden" name="Project&#32;Type" value="">
+		<input type="hidden" name="Status" value="">
+		<input type="hidden" name="Compliance&#32;Program&#32;Status" value="">
+		<input type="hidden" name="ARB&#32;Project&#32;Status" value="">
+		<input type="hidden" name="WA&#32;ECO&#32;Project&#32;Status" value="">
+		<input type="hidden" name="Project&#32;Site&#32;Location" value="">
+		<input type="hidden" name="Project&#32;Site&#32;State" value="">
+		<input type="hidden" name="Project&#32;Site&#32;Country" value="">
+		<input type="hidden" name="Additional&#32;Certification&#40;s&#41;" value="">
+		<input type="hidden" name="SDG&#32;Impact" value="">
+		<input type="hidden" name="Project&#32;Notes" value="">
+		<input type="hidden" name="riQuantity" value="">
+		<input type="hidden" name="Project&#32;Listed&#32;Date" value="">
+		<input type="hidden" name="Project&#32;Registered&#32;Date" value="">
+		<input type="hidden" name="Documents" value="">
+		<input type="hidden" name="Data" value="">
+		<input type="hidden" name="Project&#32;Website" value="">
+		<input type="hidden" name="fiID" value="">
+		<input type="hidden" name="hasIssuance" value="">
+		<input type="hidden" name="Numberoffiles" value="">
+		<input type = "hidden" name = "X999mydata"     value = "Stamp&#95;0" />
+		<input type = "hidden" name = "myWHERE"     value = "" />
+        <input type = "hidden" name = "myFilter"     value = "" />				
+		<input type = "hidden" name = "X999tablenumber" value = "2" />
+		<input type = "hidden" name = "X999csv"         value = "" />
+		<input type = "hidden" name = "X999sort"        value = "" />
+		<input type = "hidden" name = "X999action"      value = "search" />
+		<input type = "hidden" name = "X999actionfield" value = "" />
+		<input type = "hidden" name = "X999field"       value = "" />
+		<input type = "hidden" name = "X999paging"      value = "" />
+		<input type = "hidden" name = "X999whichpage"   value = "" />
+		<input type = "hidden" name = "InProcess"	    value = "" />
+		<input type = "hidden" name = "Length"          value = "7" />		
+		<INPUT type = "hidden" name = "IsSearch"        value = "Yes">
+	</FORM>
+	
+	<FORM id="frmSearch" name="frmSearch" Target="SearchReport"  ACTION="/myModule/include/search.asp" METHOD="POST">
+		<input type="hidden" name="c16e" value="cde72a6cfa7f72b986a8cba1aa01e181">
+		<INPUT type="hidden" id="Data"          name="Data"          value = "Stamp&#95;0">
+		<INPUT type="hidden" id="Title"         name="Title"         value = "Projects">
+		<INPUT type="hidden" id="SortOrder"     name="SortOrder"     value = "">
+		<INPUT type="hidden" id="Exclude"       name="Exclude"       value = "&#44;fiID&#44;ahID&#44;Numberoffiles&#44;hasIssuance&#44;ProjectOwnerAhID&#44;ARB&#32;ID&#44;WA&#32;ECO&#44;ARB&#32;Project&#32;Status&#44;WA&#32;ECO&#32;Project&#32;Status&#44;">
+		<INPUT type="hidden" id="YesNo"         name="YesNo"         value = "">
+		<INPUT type="hidden" id="Columns"       name="Columns"       value = "all&#44;FacilityName&#44;Documents&#44;Data&#44;riQuantity&#44;SDG&#32;Impact&#44;Project&#32;Developer&#44;Project&#32;Owner&#44;Project&#32;Listed&#32;Date&#44;Project&#32;Registered&#32;Date">
+		<INPUT type="hidden" id="Masks"         name="Masks"         value = "&#124;&#124;&#124;&#124;&#124;&#124;&#124;&#124;MM&#47;DD&#47;YYYY&#124;MM&#47;DD&#47;YYYY">
+		<INPUT type="hidden" id="SearchFields"  name="SearchFields"  value = "">
+		<INPUT type="hidden" id="ReplaceFields" name="ReplaceFields" value = "No">
+		<INPUT type="hidden" id="Headings"      name="Headings"      value = "&#44;Project&#32;Name&#44;&#44;&#44;Total&#32;Number&#32;of&#32;Offset&#32;Credits&#32;Registered&#32;&#44;&#44;&#44;&#44;&#44;">
+		<INPUT type="hidden" id="Parameters"    name="Parameters"    value = "">
+		<INPUT type="hidden" id="ParametersOriginal"    name="ParametersOriginal"    value = "">
+		
+	</FORM>
+	
+	<FORM id="frmPrint" name="frmPrint" ACTION="/myModule/include/print.asp" METHOD="POST">
+		<input type="hidden" name="c16e" value="cde72a6cfa7f72b986a8cba1aa01e181">
+		<INPUT type="hidden" name="myFilter" value="">			
+		<INPUT type="hidden" id="FontSize"   name="FontSize"   value = "5pt">
+		<INPUT type="hidden" id="Data"       name="Data"        value = "Stamp&#95;0">
+		<INPUT type="hidden" id="Title"      name="Title"      value = "Projects">
+		<INPUT type="hidden" id="Exclude"    name="Exclude"    value = "&#44;fiID&#44;ahID&#44;Numberoffiles&#44;hasIssuance&#44;ProjectOwnerAhID&#44;ARB&#32;ID&#44;WA&#32;ECO&#44;ARB&#32;Project&#32;Status&#44;WA&#32;ECO&#32;Project&#32;Status&#44;">
+		<INPUT type="hidden" id="Align"      name="Align"      value = "&#44;&#44;&#44;&#44;right&#44;&#44;&#44;&#44;&#44;">
+		<INPUT type="hidden" id="ColWidth"   name="ColWidth"   value = "&#44;&#44;&#44;&#44;&#44;&#44;&#44;&#44;&#44;">
+		<INPUT type="hidden" id="Columns"    name="Columns"    value = "all&#44;FacilityName&#44;Documents&#44;Data&#44;riQuantity&#44;SDG&#32;Impact&#44;Project&#32;Developer&#44;Project&#32;Owner&#44;Project&#32;Listed&#32;Date&#44;Project&#32;Registered&#32;Date">
+		<INPUT type="hidden" id="Masks"      name="Masks"      value = "&#124;&#124;&#124;&#124;&#124;&#124;&#124;&#124;MM&#47;DD&#47;YYYY&#124;MM&#47;DD&#47;YYYY">
+		<INPUT type="hidden" id="ClassMasks" name="ClassMasks" value = "&#44;&#44;&#44;&#44;&#44;&#44;&#44;&#44;&#44;">
+		<INPUT type="hidden" id="Headings"   name="Headings"   value = "&#44;Project&#32;Name&#44;&#44;&#44;Total&#32;Number&#32;of&#32;Offset&#32;Credits&#32;Registered&#32;&#44;&#44;&#44;&#44;&#44;">
+		<INPUT type="hidden" id="Parameters"    name="Parameters"    value = "">
+		<INPUT type="hidden" id="ParametersOriginal"    name="ParametersOriginal"    value = "">
+		<INPUT type="hidden" id="SortOrder"  name="SortORder"  value = "">
+		<INPUT type="hidden" id="ReplaceExpression"	 name="ReplaceExpression"	value = "">
+		<INPUT type="hidden" id="ReplaceValue"	 name="ReplaceValue"	    value = "">
+
+		<INPUT type="hidden" id="GrandTotalSQL"  name="GrandTotalSQL"  value = "">
+		<INPUT type="hidden" id="GrandTotalExclude"  name="GrandTotalExclude"  value = "">
+		<INPUT type="hidden" id="GrandTotalText"  name="GrandTotalText"  value = "">
+
+		<INPUT type="hidden" id="PrintAlignment" name="PrintAlignment" value = "">		
+		<INPUT type="hidden" id="PrintColWidth"  name="PrintColWidth"  value = "">		
+		<INPUT type="hidden" id="PrintMasks"     name="PrintMasks"     value = "">		
+		<INPUT type="hidden" id="PrintHeadings"  name="PrintHeadings"  value = "">		
+		<INPUT type="hidden" id="Orientation"    name="Orientation"    value = "PORTRAIT">		
+		<INPUT type="hidden" id="WireInfo"      name="WireInfo"         value = "">		
+	</FORM>
+
+	<FORM id="frmDownload" name="frmDownload" ACTION="/myModule/include/rptdownload.asp" METHOD="POST">
+		<input type="hidden" name="c16e" value="cde72a6cfa7f72b986a8cba1aa01e181">
+		<INPUT type="hidden" name="myFilter" value="">			
+		<INPUT type="hidden" id="Data"       name="Data"       value = "Stamp&#95;0">
+		<INPUT type="hidden" id="Title"      name="Title"      value = "Projects">
+		<INPUT type="hidden" id="Exclude"    name="Exclude"    value = "&#44;fiID&#44;ahID&#44;Numberoffiles&#44;hasIssuance&#44;ProjectOwnerAhID&#44;ARB&#32;ID&#44;WA&#32;ECO&#44;ARB&#32;Project&#32;Status&#44;WA&#32;ECO&#32;Project&#32;Status&#44;">
+		<INPUT type="hidden" id="Columns"    name="Columns"    value = "all&#44;FacilityName&#44;Documents&#44;Data&#44;riQuantity&#44;SDG&#32;Impact&#44;Project&#32;Developer&#44;Project&#32;Owner&#44;Project&#32;Listed&#32;Date&#44;Project&#32;Registered&#32;Date">
+		<INPUT type="hidden" id="Masks"      name="Masks"      value = "&#124;&#124;&#124;&#124;&#124;&#124;&#124;&#124;MM&#47;DD&#47;YYYY&#124;MM&#47;DD&#47;YYYY">
+		<INPUT type="hidden" id="ClassMasks" name="ClassMasks" value = "&#44;&#44;&#44;&#44;&#44;&#44;&#44;&#44;&#44;">
+		<INPUT type="hidden" id="Headings"   name="Headings"   value = "&#44;Project&#32;Name&#44;&#44;&#44;Total&#32;Number&#32;of&#32;Offset&#32;Credits&#32;Registered&#32;&#44;&#44;&#44;&#44;&#44;">
+		<INPUT type="hidden" id="Parameters"    name="Parameters"    value = "">
+		<INPUT type="hidden" id="ParametersOriginal"    name="ParametersOriginal"    value = "">
+		<INPUT type="hidden" id="SortOrder"  name="SortORder"  value = "">
+		<INPUT type="hidden" id="FormatType"  name="FormatType"  value = "csv">
+		<INPUT type="hidden" id="ReplaceExpression"	 name="ReplaceExpression"	value = "">
+		<INPUT type="hidden" id="ReplaceValue"	 name="ReplaceValue"	    value = "">
+</FORM>
+
+
+	<TABLE  CELLSPACING=2 CELLPADDING="0" ALIGN="center" BGCOLOR="#FFFFFF">
+		<TR>
+			<TD  ALIGN="center" colspan=2>
+	<form id="xxxx2" name="xxxx2" action = "/myModule/rpt/myrpt.asp" method = "POST">
+<table  border="0" cellspacing="0" cellpadding="0"><tr bgcolor="#92b7d6" align="Center"><td><font face="verdana" size="3">	<Font Color='#ffffff'>                
+		<TABLE WIDTH='100%'>                                             
+			<TR>                                                         
+				<TD align='center'><font Color='#FFFFFF'><B>Projects</B></font></TD>             
+				<TD width='20' align='right'>                            
+					<A title='Advanced Search'      
+                    href ='javascript:searchnow();'>                   
+						<IMG name='SearchICon' id='SearchIcon' SRC='/images/search.gif'  BORDER='0'> 
+					</A>                                                 
+				</TD>                                                    
+				<TD width='20' align='right'>                            
+					<A title='Download this report in CSV format'      
+                    href ='javascript:downloadnow(1);'>                   
+						<IMG name='downloadICon' id='downloadIcon' SRC='/images/download.gif'  BORDER='0'> 
+					</A>                                                 
+				</TD>                                                    
+				<TD width='20' align='right'>                            
+					<A title='Download this report in TXT format'      
+                    href ='javascript:downloadnow(2);'>                   
+						<IMG name='downloadICon' id='downloadtxtIcon' SRC='/images/download2.gif'  BORDER='0'> 
+					</A>                                                 
+				</TD>                                                    
+				<TD width='20' align='right'>                            
+					<A title='Show printer friendly report preview'      
+                    href ='javascript:printnow();'>                   
+						<IMG SRC='/images/print.gif'  BORDER='0'> 
+					</A>                                                 
+				</TD>                                                    
+				<TD width='20' align='right'>                            
+					<A title='Download this report in PDF format'      
+                    href ='javascript:pdfnow();'>                   
+						<IMG SRC='/images/pdf_button.gif'  BORDER='0'> 
+					</A>                                                 
+				</TD>                                                    
+			</TR>                                                        
+		</TABLE>                                                         
+	</FONT>                                                              
+</font></td></tr><tr><td><table  width="100%"  cellspacing = "2" cellPadding = "5" bgcolor="#F3F3ED">
+<tr>
+<td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Project ID&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Project ID column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','Project ID','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Project ID column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','Project ID','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Compliance Program ID&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Compliance Program ID column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','Compliance Program ID','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Compliance Program ID column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','Compliance Program ID','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Cooperative/ Aggregate ID&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Cooperative/ Aggregate ID column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','Cooperative/ Aggregate ID','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Cooperative/ Aggregate ID column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','Cooperative/ Aggregate ID','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Project Developer&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Project Developer column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','Project Developer','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Project Developer column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','Project Developer','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Project Owner&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Project Owner column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','Project Owner','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Project Owner column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','Project Owner','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Project Name&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Project Name column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','FacilityName','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Project Name column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','FacilityName','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Offset Project Operator&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Offset Project Operator column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','Offset Project Operator','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Offset Project Operator column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','Offset Project Operator','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Authorized Project Designee&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Authorized Project Designee column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','Authorized Project Designee','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Authorized Project Designee column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','Authorized Project Designee','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Verification Body&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Verification Body column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','Verification Body','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Verification Body column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','Verification Body','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Project Type&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Project Type column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','Project Type','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Project Type column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','Project Type','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Status&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Status column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','Status','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Status column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','Status','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Compliance Program Status&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Compliance Program Status column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','Compliance Program Status','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Compliance Program Status column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','Compliance Program Status','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Project Site Location&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Project Site Location column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','Project Site Location','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Project Site Location column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','Project Site Location','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Project Site State&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Project Site State column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','Project Site State','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Project Site State column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','Project Site State','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Project Site Country&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Project Site Country column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','Project Site Country','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Project Site Country column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','Project Site Country','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Additional Certification(s)&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Additional Certification(s) column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','Additional Certification(s)','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Additional Certification(s) column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','Additional Certification(s)','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">SDG Impact&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort SDG Impact column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','SDG Impact','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort SDG Impact column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','SDG Impact','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Project Notes&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Project Notes column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','Project Notes','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Project Notes column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','Project Notes','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Total Number of Offset Credits Registered &nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Total Number of Offset Credits Registered  column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','riQuantity','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Total Number of Offset Credits Registered  column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','riQuantity','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Project Listed Date&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Project Listed Date column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','Project Listed Date','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Project Listed Date column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','Project Listed Date','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Project Registered Date&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Project Registered Date column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','Project Registered Date','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Project Registered Date column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','Project Registered Date','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Documents&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Documents column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','Documents','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Documents column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','Documents','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Data&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Data column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','Data','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Data column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','Data','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Project Website&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Project Website column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','Project Website','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Project Website column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','Project Website','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td></tr>
+<tr>
+<td bgcolor="FFFFFF">CAR1957</td>
+<td bgcolor="FFFFFF">CAFR6957</td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF"><a onmouseover="javascript:window.status='Click here to view information about the Sierra Pacific Industries account.'; return true;" onmouseout="javascript:window.status=''; return true;" href="/mymodule/reg/accview.asp?id1=494">Sierra Pacific Industries</a></td>
+<td bgcolor="FFFFFF"><a onmouseover="javascript:window.status='Click here to view information about the Sierra Pacific Industries account.'; return true;" onmouseout="javascript:window.status=''; return true;" href="/mymodule/reg/accview.asp?id1=494">Sierra Pacific Industries</a></td>
+<td bgcolor="FFFFFF"><a onmouseover="javascript:window.status='Click here to view information about the 2021 Fire Refo project.'; return true;" onmouseout="javascript:window.status=''; return true;" href="/mymodule/reg/prjView.asp?id1=1957">2021 Fire Refo</a></td>
+<td bgcolor="FFFFFF">Sierra Pacific Industries</td>
+<td bgcolor="FFFFFF">None</td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF">Reforestation - ARB Compliance</td>
+<td bgcolor="FFFFFF"><a title='The project’s submittal forms have been accepted by the Reserve and the project can proceed with reporting and verification.' href=javascript:fnProjectStatusTypes();>Listed</a></td>
+<td bgcolor="FFFFFF">Proposed Project</td>
+<td bgcolor="FFFFFF">Shasta, Siskiyou, and Trinity Counties</td>
+<td bgcolor="FFFFFF">CALIFORNIA</td>
+<td bgcolor="FFFFFF">US</td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF" nowrap></td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF" align="right"></td>
+<td bgcolor="FFFFFF">04/05/2024</td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF"><a onmouseover="javascript:window.status='Click here to view document (2).'; return true;" onmouseout="javascript:window.status=''; return true;" href="/mymodule/reg/TabDocuments.asp?r=111&ad=Prpt&act=update&type=PRO&aProj=pub&tablename=doc&id1=1957">View</a></td>
+<td bgcolor="FFFFFF">View</td>
+<td bgcolor="FFFFFF"></td>
+</tr><tr>
+<td bgcolor="eef6f9">CAR1460</td>
+<td bgcolor="eef6f9">N/A</td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9"><a onmouseover="javascript:window.status='Click here to view information about the The Climate Trust account.'; return true;" onmouseout="javascript:window.status=''; return true;"   href="/mymodule/reg/accview.asp?id1=212">The Climate Trust</a></td>
+<td bgcolor="eef6f9"><a onmouseover="javascript:window.status='Click here to view information about the The Nature Conservancy account.'; return true;" onmouseout="javascript:window.status=''; return true;"   href="/mymodule/reg/accview.asp?id1=507">The Nature Conservancy</a></td>
+<td bgcolor="eef6f9"><a onmouseover="javascript:window.status='Click here to view information about the 54 Ranch project.'; return true;" onmouseout="javascript:window.status=''; return true;"   href="/mymodule/reg/prjView.asp?id1=1460">54 Ranch</a></td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9">Avoided Grassland Conversion</td>
+<td bgcolor="eef6f9"><a title='The project was successfully registered but is no longer monitoring, reporting, or verifying emission reductions/removals with the Reserve. For early action forest projects that have converted all early action-eligible CRTs to ARB Offset Credits under the California Compliance Offset Program, completed indicates that the monitoring, reporting and verification (MRV) requirements under the Reserve’s program have been satisfied, and that the project will continue MRV requirements under the Compliance Offset Program.' href=javascript:fnProjectStatusTypes();>Completed</a></td>
+<td bgcolor="eef6f9">Not ARB or WA ECO Eligible</td>
+<td bgcolor="eef6f9">Mussellshell County, Montana</td>
+<td bgcolor="eef6f9">MONTANA</td>
+<td bgcolor="eef6f9">US</td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9" nowrap></td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9" align="right"></td>
+<td bgcolor="eef6f9">01/05/2021</td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9"><a onmouseover="javascript:window.status='Click here to view document (2).'; return true;" onmouseout="javascript:window.status=''; return true;"   href="/mymodule/reg/TabDocuments.asp?r=111&ad=Prpt&act=update&type=PRO&aProj=pub&tablename=doc&id1=1460">View</a></td>
+<td bgcolor="eef6f9">View</td>
+<td bgcolor="eef6f9"></td>
+</tr><tr>
+<td bgcolor="FFFFFF">CAR1458</td>
+<td bgcolor="FFFFFF">CAOD6458</td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF"><a onmouseover="javascript:window.status='Click here to view information about the Reclamation Technologies Inc. account.'; return true;" onmouseout="javascript:window.status=''; return true;"     href="/mymodule/reg/accview.asp?id1=377">Reclamation Technologies Inc.</a></td>
+<td bgcolor="FFFFFF"><a onmouseover="javascript:window.status='Click here to view information about the Reclamation Technologies Inc. account.'; return true;" onmouseout="javascript:window.status=''; return true;"     href="/mymodule/reg/accview.asp?id1=377">Reclamation Technologies Inc.</a></td>
+<td bgcolor="FFFFFF"><a onmouseover="javascript:window.status='Click here to view information about the A-Gas 1-2021 project.'; return true;" onmouseout="javascript:window.status=''; return true;"     href="/mymodule/reg/prjView.asp?id1=1458">A-Gas 1-2021</a></td>
+<td bgcolor="FFFFFF">Reclamation Technologies, Inc., dba A-Gas</td>
+<td bgcolor="FFFFFF">None</td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF">Ozone Depleting Substances - U.S. - ARB Compliance</td>
+<td bgcolor="FFFFFF"><a title='The project was successfully registered but is no longer monitoring, reporting, or verifying emission reductions/removals with the Reserve. For early action forest projects that have converted all early action-eligible CRTs to ARB Offset Credits under the California Compliance Offset Program, completed indicates that the monitoring, reporting and verification (MRV) requirements under the Reserve’s program have been satisfied, and that the project will continue MRV requirements under the Compliance Offset Program.' href=javascript:fnProjectStatusTypes();>Completed</a></td>
+<td bgcolor="FFFFFF">Active ARB Project</td>
+<td bgcolor="FFFFFF">Wood County, Bowling Green, Ohio</td>
+<td bgcolor="FFFFFF">OHIO</td>
+<td bgcolor="FFFFFF">US</td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF" nowrap></td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF" align="right">84267</td>
+<td bgcolor="FFFFFF">11/20/2020</td>
+<td bgcolor="FFFFFF">01/28/2021</td>
+<td bgcolor="FFFFFF"><a onmouseover="javascript:window.status='Click here to view document (3).'; return true;" onmouseout="javascript:window.status=''; return true;"     href="/mymodule/reg/TabDocuments.asp?r=111&ad=Prpt&act=update&type=PRO&aProj=pub&tablename=doc&id1=1458">View</a></td>
+<td bgcolor="FFFFFF"><a onmouseover="javascript:window.status='Click here to view Project Emissions/Reductions.'; return true;" onmouseout="javascript:window.status=''; return true;"     href="/mymodule/reg/TabProjectEmissions.asp?r=111&ad=Prpt&act=update&type=PRO&aProj=pub&tablename=cr&id1=1458">View</a></td>
+<td bgcolor="FFFFFF"><A target= "www.agasamericas.com" href="http://www.agasamericas.com">www.agasamericas.com</a></td>
+</tr><tr>
+<td bgcolor="eef6f9">CAR1560</td>
+<td bgcolor="eef6f9">CAOD6560</td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9"><a onmouseover="javascript:window.status='Click here to view information about the Reclamation Technologies Inc. account.'; return true;" onmouseout="javascript:window.status=''; return true;"       href="/mymodule/reg/accview.asp?id1=377">Reclamation Technologies Inc.</a></td>
+<td bgcolor="eef6f9"><a onmouseover="javascript:window.status='Click here to view information about the Reclamation Technologies Inc. account.'; return true;" onmouseout="javascript:window.status=''; return true;"       href="/mymodule/reg/accview.asp?id1=377">Reclamation Technologies Inc.</a></td>
+<td bgcolor="eef6f9"><a onmouseover="javascript:window.status='Click here to view information about the A-Gas 1-2022 project.'; return true;" onmouseout="javascript:window.status=''; return true;"       href="/mymodule/reg/prjView.asp?id1=1560">A-Gas 1-2022</a></td>
+<td bgcolor="eef6f9">A-Gas US Inc</td>
+<td bgcolor="eef6f9">None</td>
+<td bgcolor="eef6f9">GHD Services, Inc.</td>
+<td bgcolor="eef6f9">Ozone Depleting Substances - U.S. - ARB Compliance</td>
+<td bgcolor="eef6f9"><a title='The project was successfully registered but is no longer monitoring, reporting, or verifying emission reductions/removals with the Reserve. For early action forest projects that have converted all early action-eligible CRTs to ARB Offset Credits under the California Compliance Offset Program, completed indicates that the monitoring, reporting and verification (MRV) requirements under the Reserve’s program have been satisfied, and that the project will continue MRV requirements under the Compliance Offset Program.' href=javascript:fnProjectStatusTypes();>Completed</a></td>
+<td bgcolor="eef6f9">Proposed Project</td>
+<td bgcolor="eef6f9">Wood County, Bowling Green, Ohio</td>
+<td bgcolor="eef6f9">OHIO</td>
+<td bgcolor="eef6f9">US</td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9" nowrap></td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9" align="right">59147</td>
+<td bgcolor="eef6f9">02/17/2022</td>
+<td bgcolor="eef6f9">05/27/2022</td>
+<td bgcolor="eef6f9"><a onmouseover="javascript:window.status='Click here to view document (3).'; return true;" onmouseout="javascript:window.status=''; return true;"       href="/mymodule/reg/TabDocuments.asp?r=111&ad=Prpt&act=update&type=PRO&aProj=pub&tablename=doc&id1=1560">View</a></td>
+<td bgcolor="eef6f9"><a onmouseover="javascript:window.status='Click here to view Project Emissions/Reductions.'; return true;" onmouseout="javascript:window.status=''; return true;"       href="/mymodule/reg/TabProjectEmissions.asp?r=111&ad=Prpt&act=update&type=PRO&aProj=pub&tablename=cr&id1=1560">View</a></td>
+<td bgcolor="eef6f9"><A target= "www.agasamericas.com" href="http://www.agasamericas.com">www.agasamericas.com</a></td>
+</tr><tr>
+<td bgcolor="FFFFFF">CAR1662</td>
+<td bgcolor="FFFFFF">CAOD6662</td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF"><a onmouseover="javascript:window.status='Click here to view information about the Reclamation Technologies Inc. account.'; return true;" onmouseout="javascript:window.status=''; return true;"         href="/mymodule/reg/accview.asp?id1=377">Reclamation Technologies Inc.</a></td>
+<td bgcolor="FFFFFF"><a onmouseover="javascript:window.status='Click here to view information about the Reclamation Technologies Inc. account.'; return true;" onmouseout="javascript:window.status=''; return true;"         href="/mymodule/reg/accview.asp?id1=377">Reclamation Technologies Inc.</a></td>
+<td bgcolor="FFFFFF"><a onmouseover="javascript:window.status='Click here to view information about the A-Gas 1-2023 project.'; return true;" onmouseout="javascript:window.status=''; return true;"         href="/mymodule/reg/prjView.asp?id1=1662">A-Gas 1-2023</a></td>
+<td bgcolor="FFFFFF">A-Gas US Inc</td>
+<td bgcolor="FFFFFF">None</td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF">Ozone Depleting Substances - U.S. - ARB Compliance</td>
+<td bgcolor="FFFFFF"><a title='The project was successfully registered but is no longer monitoring, reporting, or verifying emission reductions/removals with the Reserve. For early action forest projects that have converted all early action-eligible CRTs to ARB Offset Credits under the California Compliance Offset Program, completed indicates that the monitoring, reporting and verification (MRV) requirements under the Reserve’s program have been satisfied, and that the project will continue MRV requirements under the Compliance Offset Program.' href=javascript:fnProjectStatusTypes();>Completed</a></td>
+<td bgcolor="FFFFFF">Active ARB Project</td>
+<td bgcolor="FFFFFF">Wood County, Bowling Green, Ohio</td>
+<td bgcolor="FFFFFF">OHIO</td>
+<td bgcolor="FFFFFF">US</td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF" nowrap></td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF" align="right">70833</td>
+<td bgcolor="FFFFFF">10/11/2022</td>
+<td bgcolor="FFFFFF">04/20/2023</td>
+<td bgcolor="FFFFFF"><a onmouseover="javascript:window.status='Click here to view document (4).'; return true;" onmouseout="javascript:window.status=''; return true;"         href="/mymodule/reg/TabDocuments.asp?r=111&ad=Prpt&act=update&type=PRO&aProj=pub&tablename=doc&id1=1662">View</a></td>
+<td bgcolor="FFFFFF"><a onmouseover="javascript:window.status='Click here to view Project Emissions/Reductions.'; return true;" onmouseout="javascript:window.status=''; return true;"         href="/mymodule/reg/TabProjectEmissions.asp?r=111&ad=Prpt&act=update&type=PRO&aProj=pub&tablename=cr&id1=1662">View</a></td>
+<td bgcolor="FFFFFF"><A target= "www.agasamericas.com" href="http://www.agasamericas.com">www.agasamericas.com</a></td>
+</tr><tr>
+<td bgcolor="eef6f9">CAR2278</td>
+<td bgcolor="eef6f9">ECYOD2278</td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9"><a onmouseover="javascript:window.status='Click here to view information about the Reclamation Technologies Inc. account.'; return true;" onmouseout="javascript:window.status=''; return true;"           href="/mymodule/reg/accview.asp?id1=377">Reclamation Technologies Inc.</a></td>
+<td bgcolor="eef6f9"><a onmouseover="javascript:window.status='Click here to view information about the Reclamation Technologies Inc. account.'; return true;" onmouseout="javascript:window.status=''; return true;"           href="/mymodule/reg/accview.asp?id1=377">Reclamation Technologies Inc.</a></td>
+<td bgcolor="eef6f9"><a onmouseover="javascript:window.status='Click here to view information about the A-Gas 1-2026 project.'; return true;" onmouseout="javascript:window.status=''; return true;"           href="/mymodule/reg/prjView.asp?id1=2278">A-Gas 1-2026</a></td>
+<td bgcolor="eef6f9">A-Gas US Inc.</td>
+<td bgcolor="eef6f9">None</td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9">Ozone Depleting Substances - U.S. - WA ECO Compliance</td>
+<td bgcolor="eef6f9"><a title='The project has successfully completed verification of at least one reporting period.' href=javascript:fnProjectStatusTypes();>Registered</a></td>
+<td bgcolor="eef6f9">Active Registry Project</td>
+<td bgcolor="eef6f9">Bowling Green</td>
+<td bgcolor="eef6f9">OHIO</td>
+<td bgcolor="eef6f9">US</td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9" nowrap></td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9" align="right">126429</td>
+<td bgcolor="eef6f9">01/30/2026</td>
+<td bgcolor="eef6f9">05/08/2026</td>
+<td bgcolor="eef6f9"><a onmouseover="javascript:window.status='Click here to view document (3).'; return true;" onmouseout="javascript:window.status=''; return true;"           href="/mymodule/reg/TabDocuments.asp?r=111&ad=Prpt&act=update&type=PRO&aProj=pub&tablename=doc&id1=2278">View</a></td>
+<td bgcolor="eef6f9"><a onmouseover="javascript:window.status='Click here to view Project Emissions/Reductions.'; return true;" onmouseout="javascript:window.status=''; return true;"           href="/mymodule/reg/TabProjectEmissions.asp?r=111&ad=Prpt&act=update&type=PRO&aProj=pub&tablename=cr&id1=2278">View</a></td>
+<td bgcolor="eef6f9"><A target= "www.agas.com" href="http://www.agas.com">www.agas.com</a></td>
+</tr><tr>
+<td bgcolor="FFFFFF">CAR1481</td>
+<td bgcolor="FFFFFF">CAOD6481</td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF"><a onmouseover="javascript:window.status='Click here to view information about the Reclamation Technologies Inc. account.'; return true;" onmouseout="javascript:window.status=''; return true;"             href="/mymodule/reg/accview.asp?id1=377">Reclamation Technologies Inc.</a></td>
+<td bgcolor="FFFFFF"><a onmouseover="javascript:window.status='Click here to view information about the Reclamation Technologies Inc. account.'; return true;" onmouseout="javascript:window.status=''; return true;"             href="/mymodule/reg/accview.asp?id1=377">Reclamation Technologies Inc.</a></td>
+<td bgcolor="FFFFFF"><a onmouseover="javascript:window.status='Click here to view information about the A-Gas 2-2021 project.'; return true;" onmouseout="javascript:window.status=''; return true;"             href="/mymodule/reg/prjView.asp?id1=1481">A-Gas 2-2021</a></td>
+<td bgcolor="FFFFFF">Reclamation Technologies, Inc., dba A-Gas</td>
+<td bgcolor="FFFFFF">None</td>
+<td bgcolor="FFFFFF">GHD Services, Inc.</td>
+<td bgcolor="FFFFFF">Ozone Depleting Substances - U.S. - ARB Compliance</td>
+<td bgcolor="FFFFFF"><a title='The project was successfully registered but is no longer monitoring, reporting, or verifying emission reductions/removals with the Reserve. For early action forest projects that have converted all early action-eligible CRTs to ARB Offset Credits under the California Compliance Offset Program, completed indicates that the monitoring, reporting and verification (MRV) requirements under the Reserve’s program have been satisfied, and that the project will continue MRV requirements under the Compliance Offset Program.' href=javascript:fnProjectStatusTypes();>Completed</a></td>
+<td bgcolor="FFFFFF">Proposed Project</td>
+<td bgcolor="FFFFFF">Wood County, Bowling Green, Ohio</td>
+<td bgcolor="FFFFFF">OHIO</td>
+<td bgcolor="FFFFFF">US</td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF" nowrap></td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF" align="right">56964</td>
+<td bgcolor="FFFFFF">03/16/2021</td>
+<td bgcolor="FFFFFF">06/09/2021</td>
+<td bgcolor="FFFFFF"><a onmouseover="javascript:window.status='Click here to view document (3).'; return true;" onmouseout="javascript:window.status=''; return true;"             href="/mymodule/reg/TabDocuments.asp?r=111&ad=Prpt&act=update&type=PRO&aProj=pub&tablename=doc&id1=1481">View</a></td>
+<td bgcolor="FFFFFF"><a onmouseover="javascript:window.status='Click here to view Project Emissions/Reductions.'; return true;" onmouseout="javascript:window.status=''; return true;"             href="/mymodule/reg/TabProjectEmissions.asp?r=111&ad=Prpt&act=update&type=PRO&aProj=pub&tablename=cr&id1=1481">View</a></td>
+<td bgcolor="FFFFFF"><A target= "www.agasamericas.com" href="http://www.agasamericas.com">www.agasamericas.com</a></td>
+</tr><tr>
+<td bgcolor="eef6f9">CAR1578</td>
+<td bgcolor="eef6f9">CAOD6578</td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9"><a onmouseover="javascript:window.status='Click here to view information about the Reclamation Technologies Inc. account.'; return true;" onmouseout="javascript:window.status=''; return true;"               href="/mymodule/reg/accview.asp?id1=377">Reclamation Technologies Inc.</a></td>
+<td bgcolor="eef6f9"><a onmouseover="javascript:window.status='Click here to view information about the Reclamation Technologies Inc. account.'; return true;" onmouseout="javascript:window.status=''; return true;"               href="/mymodule/reg/accview.asp?id1=377">Reclamation Technologies Inc.</a></td>
+<td bgcolor="eef6f9"><a onmouseover="javascript:window.status='Click here to view information about the A-Gas 2-2022 project.'; return true;" onmouseout="javascript:window.status=''; return true;"               href="/mymodule/reg/prjView.asp?id1=1578">A-Gas 2-2022</a></td>
+<td bgcolor="eef6f9">A-Gas US Inc</td>
+<td bgcolor="eef6f9">None</td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9">Ozone Depleting Substances - U.S. - ARB Compliance</td>
+<td bgcolor="eef6f9"><a title='The project was successfully registered but is no longer monitoring, reporting, or verifying emission reductions/removals with the Reserve. For early action forest projects that have converted all early action-eligible CRTs to ARB Offset Credits under the California Compliance Offset Program, completed indicates that the monitoring, reporting and verification (MRV) requirements under the Reserve’s program have been satisfied, and that the project will continue MRV requirements under the Compliance Offset Program.' href=javascript:fnProjectStatusTypes();>Completed</a></td>
+<td bgcolor="eef6f9">Active ARB Project</td>
+<td bgcolor="eef6f9">Wood County, Bowling Green, Ohio</td>
+<td bgcolor="eef6f9">OHIO</td>
+<td bgcolor="eef6f9">US</td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9" nowrap></td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9" align="right">102599</td>
+<td bgcolor="eef6f9">04/14/2022</td>
+<td bgcolor="eef6f9">07/29/2022</td>
+<td bgcolor="eef6f9"><a onmouseover="javascript:window.status='Click here to view document (4).'; return true;" onmouseout="javascript:window.status=''; return true;"               href="/mymodule/reg/TabDocuments.asp?r=111&ad=Prpt&act=update&type=PRO&aProj=pub&tablename=doc&id1=1578">View</a></td>
+<td bgcolor="eef6f9"><a onmouseover="javascript:window.status='Click here to view Project Emissions/Reductions.'; return true;" onmouseout="javascript:window.status=''; return true;"               href="/mymodule/reg/TabProjectEmissions.asp?r=111&ad=Prpt&act=update&type=PRO&aProj=pub&tablename=cr&id1=1578">View</a></td>
+<td bgcolor="eef6f9"><A target= "www.agasamericas.com" href="http://www.agasamericas.com">www.agasamericas.com</a></td>
+</tr><tr>
+<td bgcolor="FFFFFF">CAR2251</td>
+<td bgcolor="FFFFFF">ECYOD2251</td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF"><a onmouseover="javascript:window.status='Click here to view information about the Reclamation Technologies Inc. account.'; return true;" onmouseout="javascript:window.status=''; return true;"                 href="/mymodule/reg/accview.asp?id1=377">Reclamation Technologies Inc.</a></td>
+<td bgcolor="FFFFFF"><a onmouseover="javascript:window.status='Click here to view information about the Reclamation Technologies Inc. account.'; return true;" onmouseout="javascript:window.status=''; return true;"                 href="/mymodule/reg/accview.asp?id1=377">Reclamation Technologies Inc.</a></td>
+<td bgcolor="FFFFFF"><a onmouseover="javascript:window.status='Click here to view information about the A-Gas 2-2025 project.'; return true;" onmouseout="javascript:window.status=''; return true;"                 href="/mymodule/reg/prjView.asp?id1=2251">A-Gas 2-2025</a></td>
+<td bgcolor="FFFFFF">A-Gas US Inc.</td>
+<td bgcolor="FFFFFF">None</td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF">Ozone Depleting Substances - U.S. - WA ECO Compliance</td>
+<td bgcolor="FFFFFF"><a title='The project has successfully completed verification of at least one reporting period.' href=javascript:fnProjectStatusTypes();>Registered</a></td>
+<td bgcolor="FFFFFF">Active Registry Project</td>
+<td bgcolor="FFFFFF">Bowling Green</td>
+<td bgcolor="FFFFFF">OHIO</td>
+<td bgcolor="FFFFFF">US</td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF" nowrap></td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF" align="right">78861</td>
+<td bgcolor="FFFFFF">11/11/2025</td>
+<td bgcolor="FFFFFF">02/02/2026</td>
+<td bgcolor="FFFFFF"><a onmouseover="javascript:window.status='Click here to view document (3).'; return true;" onmouseout="javascript:window.status=''; return true;"                 href="/mymodule/reg/TabDocuments.asp?r=111&ad=Prpt&act=update&type=PRO&aProj=pub&tablename=doc&id1=2251">View</a></td>
+<td bgcolor="FFFFFF"><a onmouseover="javascript:window.status='Click here to view Project Emissions/Reductions.'; return true;" onmouseout="javascript:window.status=''; return true;"                 href="/mymodule/reg/TabProjectEmissions.asp?r=111&ad=Prpt&act=update&type=PRO&aProj=pub&tablename=cr&id1=2251">View</a></td>
+<td bgcolor="FFFFFF"><A target= "www.agas.com" href="http://www.agas.com">www.agas.com</a></td>
+</tr><tr>
+<td bgcolor="eef6f9">CAR2297</td>
+<td bgcolor="eef6f9">ECYOD2297</td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9"><a onmouseover="javascript:window.status='Click here to view information about the Reclamation Technologies Inc. account.'; return true;" onmouseout="javascript:window.status=''; return true;"                   href="/mymodule/reg/accview.asp?id1=377">Reclamation Technologies Inc.</a></td>
+<td bgcolor="eef6f9"><a onmouseover="javascript:window.status='Click here to view information about the Reclamation Technologies Inc. account.'; return true;" onmouseout="javascript:window.status=''; return true;"                   href="/mymodule/reg/accview.asp?id1=377">Reclamation Technologies Inc.</a></td>
+<td bgcolor="eef6f9"><a onmouseover="javascript:window.status='Click here to view information about the A-Gas 2-2026 project.'; return true;" onmouseout="javascript:window.status=''; return true;"                   href="/mymodule/reg/prjView.asp?id1=2297">A-Gas 2-2026</a></td>
+<td bgcolor="eef6f9">A-Gas US Inc.</td>
+<td bgcolor="eef6f9">None</td>
+<td bgcolor="eef6f9">SES, Inc.</td>
+<td bgcolor="eef6f9">Ozone Depleting Substances - U.S. - WA ECO Compliance</td>
+<td bgcolor="eef6f9"><a title='The project’s submittal forms have been accepted by the Reserve and the project can proceed with reporting and verification.' href=javascript:fnProjectStatusTypes();>Listed</a></td>
+<td bgcolor="eef6f9">Proposed Project</td>
+<td bgcolor="eef6f9">Bowling Green</td>
+<td bgcolor="eef6f9">OHIO</td>
+<td bgcolor="eef6f9">US</td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9" nowrap></td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9" align="right"></td>
+<td bgcolor="eef6f9">05/12/2026</td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9"><a onmouseover="javascript:window.status='Click here to view document (1).'; return true;" onmouseout="javascript:window.status=''; return true;"                   href="/mymodule/reg/TabDocuments.asp?r=111&ad=Prpt&act=update&type=PRO&aProj=pub&tablename=doc&id1=2297">View</a></td>
+<td bgcolor="eef6f9">View</td>
+<td bgcolor="eef6f9"><A target= "www.agas.com" href="http://www.agas.com">www.agas.com</a></td>
+</tr>name="r" value="111"/>
+</td></trf><tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr bgcolor="white"><td align="center">1 - 50 : 1277</td></tr></table></td></tr><tr bgcolor="#92b7d6"><td align="center"><p align="center">
+<table border="0" width="100%"><tr><td width="100%"  align="center" nowrap><a id="x999firstoff2"><img alt="move first" id="x999firstbutton2" src = "/ImgTable/first-off.gif" border = "0"></a>
+&nbsp;&nbsp;
+<a id="x999prevoff2"><img alt="move previous" id="x999prevbutton2" src = "/ImgTable/prev-off.gif" border = "0"></a>
+&nbsp;&nbsp;
+<script language = "javascript" type="text/javascript">
+function GotoPage() {
+   ThePage = window.prompt('please select another page:', '1');
+   if (! (isFinite(ThePage))) {
+      PageHolder = ThePage; 
+      ThePage = "" ;}
+   else {
+       if ((ThePage < 1) || (ThePage > 26)) {
+          PageHolder = ThePage;
+          ThePage = ""; }
+         }
+   if (ThePage != "") { // if the cancel button was not hit and it passed the criteria...
+       submitform2('','','On',ThePage,'','','');
+   } else { 
+      if (PageHolder != null) {
+             window.alert ('[' + PageHolder + '] is not a valid Page Number.' + '\n' + 'Please Enter a Page Number between 1 and 26 .');
+ }}   
+} 
+</script>
+<a onmouseover="javascript:window.status='Select a record page to view'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:GotoPage()"><img alt="goto" id="x999gotobutton2" src="/ImgTable/goto.gif" border = "0"></a>
+&nbsp;&nbsp;
+<a onmouseover="javascript:window.status='View next page of records'; return true;" onmouseout="javascript:window.status=''; return true;" href="javascript:submitform2('','','On','2','','','')"><img alt="move next" id="x999nextbutton2" src="/ImgTable/next.gif" border = "0"></a>
+&nbsp;&nbsp;
+<a onmouseover="javascript:window.status='View last page of records'; return true;" onmouseout="javascript:window.status=''; return true;" href="javascript:submitform2('','','On','26','','','')"><img alt="move last" id="x999lastbutton2" src="/ImgTable/last.gif" border = "0"></a>
+&nbsp;&nbsp;
+</td></tr></table>
+</td></tr></table><input type = "hidden" name = "X999myquery" value = "" />
+<input type = "hidden" name = "X999tablenumber" value = "2" />
+<input type = "hidden" name = "X999csv" value = "" />
+<input type = "hidden" name = "X999sort" value = "" />
+<input type = "hidden" name = "X999action" value = "" />
+<input type = "hidden" name = "X999actionfield" value = "" />
+<input type = "hidden" name = "X999field" value = "" />
+<input type = "hidden" name = "X999paging" value = "" />
+<input type = "hidden" name = "X999whichpage" value = "" />
+</form>
+<script language = "javascript" type="text/javascript">
+function submitform2(X999sort,X999field,X999paging,X999whichpage,X999csv,X999action,X999actionfield)
+     {
+          document.xxxx2.X999csv.value = X999csv;
+          document.xxxx2.X999action.value = X999action;
+          document.xxxx2.X999actionfield.value = X999actionfield;
+          document.xxxx2.X999sort.value = X999sort;
+          document.xxxx2.X999field.value = X999field;
+          document.xxxx2.X999paging.value = X999paging;
+          document.xxxx2.X999whichpage.value = X999whichpage;
+          document.xxxx2.submit();
+    }
+</script>
+<div id="overDiv" style="position:absolute; visibility:hide; z-index: 1;"></div>
+<script language="javascript" type="text/javascript">
+// Description area background color
+ if (typeof fcolor == 'undefined') { var fcolor = "#FFFFCC";}
+ if (typeof bdcolor == 'undefined') { var bdcolor = "#A0A2FE";}
+ if (typeof backcolor == 'undefined') { var backcolor = "#CCCCFF";}
+ if (typeof textcolor == 'undefined') { var textcolor = "#000000";}
+ if (typeof capcolor == 'undefined') { var capcolor = "#000000";}
+ if (typeof width == 'undefined') { var width = "300";}
+ if (typeof border == 'undefined') { var border = "1";}
+ if (typeof offsetx == 'undefined') { var offsetx = 30;}
+ if (typeof offsety == 'undefined') { var offsety = -80;}
+netscapeBrowser = (document.layers)? true:false
+internetExplorer = (document.all)? true:false
+if (internetExplorer) {
+ if (navigator.userAgent.indexOf('MSIE 5')>0) {
+     version5 = true;
+ } else {
+     version5 = false; }
+} else {
+ version5 = false;
+}
+var x = 0;
+var y = 0;
+if ( (netscapeBrowser) || (internetExplorer) ) {
+ if (netscapeBrowser) over = document.overDiv
+ if (internetExplorer) over = overDiv.style
+ document.onmousemove = mouseMove
+ if (netscapeBrowser) document.captureEvents(Event.MOUSEMOVE)
+}
+function showIt(d,text,title,bgcolor,titlebgcolor,fonttag,titlefonttag,bordersize,bordercolor,offsetx,offsety) {
+ txt = "<" + "table width="+width+" border=1 bordercolor="+bordercolor+" cellpadding="+border+" cellspacing=0 bgcolor=\""+titlebgcolor+"\">" + "<" + "tr" + ">" + "<" + "td" + ">" + "<" + "table width=100% border=0 cellpadding=0 cellspacing=0" + ">" + "<" + "tr" + ">" + "<" + "td align=center" + ">" + "<" + "b" + ">" + titlefonttag + title + "<" + "/font" + ">" + "<" + "/b" + ">" + "<" + "/td" + ">" + "<" + "/tr" + ">" + "<" + "/table" + ">" + "<" + "table width=100% border=0 cellpadding=2 cellspacing=0 bgcolor=\""+bgcolor+"\">" + "<" + "tr" + ">" + "<" + "td" + ">" + fonttag + text + "<" + "/font" + ">" + "<" + "/td" + ">" + "<" + "/tr" + ">" + "<" + "/table" + ">" + "<" + "/td" + ">" + "<" + "/tr" + ">" + "<" + "/table" + ">"
+ layerWrite(txt);
+ disp(offsetx,offsety);
+}
+function disp(offsetx,offsety) {
+ if ( (netscapeBrowser) || (internetExplorer) ) {
+     moveTo(over,x+offsetx,y+offsety);
+     showObject(over);
+ }
+}
+function mouseMove(e) {
+ if (netscapeBrowser) {x=e.pageX; y=e.pageY;}
+ if (internetExplorer) {x=event.x; y=event.y;}
+ if (version5) {x=event.x+document.body.scrollLeft; y=event.y+document.body.scrollTop;}
+}
+function dropIt() {
+ hideObject(over);
+}
+function layerWrite(txt) {
+        if (netscapeBrowser) {
+                var lyr = document.overDiv.document
+                lyr.write(txt)
+                lyr.close()
+        }
+        else if (internetExplorer) document.all["overDiv"].innerHTML = txt
+}
+function showObject(obj) {
+        if (netscapeBrowser) obj.visibility = "show"
+        else if (internetExplorer) obj.visibility = "visible"
+}
+function hideObject(obj) {
+        if (netscapeBrowser) obj.visibility = "hide"
+        else if (internetExplorer) obj.visibility = "hidden"
+}
+function moveTo(obj,xL,yL) {
+        obj.left = xL
+        obj.top = yL
+}
+</script>
+
+
+
+
+			</TD>
+		</TR>
+	</TABLE>
+
+<BR/>
+<FONT  size="1"><I>DISCLAIMER: NEITHER APX NOR THE CLIMATE ACTION RESERVE KNOWS OR ENDORSES THE CREDITWORTHINESS OR REPUTATION OF ANY CLIMATE ACTION RESERVE ACCOUNT HOLDER LISTED IN THIS DIRECTORY</I></FONT>
+
+<div class="spacer"/>
+<div id="version" align="right" >Version 40.0.0</div>
+<div class="footerSection">
+	<div class="left"><a href='#top'><img  src="/images/up_topofpage.gif">top of page</a> | <a href='/privacypolicy.asp'>Privacy Policy</a></div>
+	<div class="right">The Reserve - Powered by APX Technology</div>
+</div>
+
+</BODY>
+</HTML>
+
+<!-- FIXTURE NOTE: trimmed for the repo. The report grid's data rows were cut from 50 to 10; the printed record-count line, the column-header row, every <form>, every <script> and the pager markup are byte-identical to the live response. See docs/api-contract-car.md. -->

@@ -496,6 +496,192 @@ rules:
     match: [{ field: sectoral_scope, equals: "Transport / Fleet Efficiency" }]
     value: "Eficiência Energética no Transporte"
 
+  # --- Climate Action Reserve project types --------------------------------
+  # CAR states a `Project Type` from a list of **32 values**, which the adapter
+  # carries into `sectoral_scope` untranslated. Unlike ACR — where one
+  # `projectType` covered 352 forest projects and only the protocol name told
+  # them apart — CAR's own type is already the fine-grained vocabulary:
+  # "Improved Forest Management - ARB Compliance" and "Reforestation - ARB
+  # Compliance" are two of its values, not one.
+  #
+  # **That is why these key on the type and not on `Protocol and Version`.**
+  # The protocol name is the project type followed by the protocol document
+  # and its edition — "Forestry - MX - Version 2.0", "Mine Methane Capture -
+  # ARB Compliance - ARB Compliance Offset Protocol Mine Methane Capture,
+  # April 25, 2014" — so it restates the type and adds an edition, not a finer
+  # classification. And it is published on *issuance* rows, which 376 of the
+  # 1,277 projects do not have: a methodology-keyed rule would leave every one
+  # of those blank for a reason that has nothing to do with what they are.
+  #
+  # **They sit here, below the Plan Vivo V4 block, and that position was
+  # measured rather than chosen.** Every operator in this engine is
+  # case-insensitive, and Plan Vivo V4 publishes "Improved forest management"
+  # against CAR's "Improved Forest Management" — the two differ by case alone,
+  # so no pattern can tell them apart and only rule order can. Hoisting this
+  # block above the V4 rules was tried and re-attributed 8 Plan Vivo values to
+  # CAR rules: the same values, under the wrong rule name, which is precisely
+  # what `project_derived.rule_name` exists to prevent.
+  #
+  # The cost of sitting this low is one thing to check after the first full
+  # sync, not to assume: the ACR protocol rules above match
+  # "Compliance Offset Protocol: U.S. Forest Projects" and "Climate Action
+  # Reserve Forest Project Protocol", and CAR's own `Protocol and Version`
+  # strings name a compliance protocol too. None of the protocol strings in
+  # the fixtures collides, but the forest ones there use the short
+  # "- Version 3.1" form and the long form has not been seen. **Count
+  # `project_derived.rule_name` over CAR rows after the first sync**; any CAR
+  # row attributed to an `acr-` rule means the two vocabularies do overlap and
+  # this block has to move up — with the V4 collision solved first.
+  #
+  # The collision is symmetric and one CAR wording pays for it: a project whose
+  # type is the bare "Improved Forest Management" is answered by
+  # `pv4-improved-forest-management` above rather than by `car-improved-forest-
+  # management` here. **The value is identical** — both say IFM, deliberately,
+  # because an IFM project stores carbon the same way in either registry — so
+  # only `project_derived.rule_name` reads oddly. It is left alone rather than
+  # fixed by narrowing a working registry's rule for a cosmetic attribution,
+  # and it is recorded here so the next person does not read it as a bug.
+  #
+  # `regex` on stems rather than `equals`, because the same activity appears
+  # with three compliance suffixes (`- ARB Compliance`, `- WA ECO Compliance`,
+  # `- U.S.`) and the list is 32 values of which 13 are visible in the
+  # fixtures. Each pattern was checked against every existing registry's
+  # `sectoral_scope` on 2026-08-05 and reaches none of them.
+  #
+  # **The other 19 values are not here and their cells will be blank.** That is
+  # the correct failure, per the note at the top of this file — but it is a
+  # measurable one: run `verra coverage -r car` after the first full sync and
+  # add the wordings it shows, rather than guessing them now.
+  - name: car-forestry-mx
+    # Mexico's Forest Protocol, 485 projects and the registry's largest single
+    # type. It covers reforestation, improved management AND avoided conversion
+    # under one name and states nothing finer, which is the same position ACR's
+    # compliance forest protocol is in — so it gets the same honest answer
+    # rather than one of the three picked.
+    match: [{ field: sectoral_scope, regex: "^Forestry - MX" }]
+    value: "AFOLU (subtipo não informado)"
+
+  - name: car-improved-forest-management
+    match: [{ field: sectoral_scope, regex: "^Improved Forest Management" }]
+    value: "Manejo Florestal Melhorado (IFM)"
+
+  - name: car-reforestation
+    match: [{ field: sectoral_scope, regex: "^Reforestation" }]
+    value: "Florestamento, Reflorestamento e Revegetação (ARR)"
+
+  - name: car-avoided-grassland-conversion
+    match: [{ field: sectoral_scope, regex: "Avoided Grassland Conversion" }]
+    value: "Conservação de Pastagens e Campos (ACoGS)"
+
+  - name: car-avoided-conversion
+    # The bare wording, with no land type attached. It is avoided land-use
+    # change and the registry says nothing more, so neither does this.
+    match: [{ field: sectoral_scope, equals: "Avoided Conversion" }]
+    value: "AFOLU (subtipo não informado)"
+
+  - name: car-soil-enrichment
+    # CAR's Soil Enrichment Protocol: soil carbon on cropland and grazing land.
+    match: [{ field: sectoral_scope, equals: "Soil Enrichment" }]
+    value: "Manejo Agrícola de Terras (ALM)"
+
+  - name: car-ozone-depleting-substances
+    match: [{ field: sectoral_scope, regex: "^Ozone Depleting Substances" }]
+    value: "Destruição de Substâncias Destruidoras da Camada de Ozônio (ODS)"
+
+  - name: car-landfill-gas
+    match: [{ field: sectoral_scope, regex: "^Landfill Gas" }]
+    value: "Gás de Aterro Sanitário"
+
+  - name: car-mine-methane
+    match: [{ field: sectoral_scope, regex: "Mine Methane Capture" }]
+    value: "Metano de Minas de Carvão"
+
+  - name: car-nitric-and-adipic-acid
+    # Nitrous-oxide abatement in nitric and adipic acid manufacture. An
+    # industrial process emission, and the registry's own two wordings for it.
+    match:
+      - field: sectoral_scope
+        regex: "^Nitric Acid|^Adipic Acid"
+    value: "Emissões de Processos Industriais"
+
+  # Livestock is deliberately absent: "Livestock - ARB Compliance" and
+  # "Livestock Gas Capture/Combustion" are both answered by `scope-livestock`
+  # below, which already reads `contains: Livestock`. Adding a CAR rule for it
+  # would be a second place to change the same answer.
+
+  # --- the eleven wordings the first full sync named ----------------------
+  # The note above said to run `verra coverage -r car` after the first full
+  # sync and add what it showed rather than guessing now. It showed **52
+  # projects across 11 project types** with no Tipo Micro and no Durabilidade,
+  # and these are them. Every value is an existing one; nothing new was
+  # invented for a registry whose vocabulary happens to be worded differently.
+  #
+  # Three of the eleven are a rule above being **too narrow**, not a missing
+  # activity, and they are worth reading as a pattern: `equals` and `^`-anchored
+  # patterns both miss this registry's compliance suffixes and its country
+  # suffixes, which is the same shape as `afolu-generic` missing ACR.
+  - name: car-avoided-conversion-compliance
+    # `Avoided Conversion - ARB Compliance`. `car-avoided-conversion` above
+    # uses `equals`, so the compliance suffix missed it.
+    match: [{ field: sectoral_scope, regex: "^Avoided Conversion" }]
+    value: "AFOLU (subtipo não informado)"
+
+  - name: car-canada-grassland
+    # CAR's Canada Grassland Protocol — avoided conversion of native grassland
+    # to cropland, the same activity as `Avoided Grassland Conversion` with a
+    # country in the name instead of the activity. Same value, deliberately.
+    match: [{ field: sectoral_scope, equals: "Canada Grassland" }]
+    value: "Conservação de Pastagens e Campos (ACoGS)"
+
+  - name: car-conservation-based-forest-management
+    # Managing a working forest for higher standing stock. IFM under another
+    # name, and it gets IFM's value for the same reason `car-forest-stock`
+    # does: the carbon is stored the same way.
+    match: [{ field: sectoral_scope, equals: "Conservation-Based Forest Management" }]
+    value: "Manejo Florestal Melhorado (IFM)"
+
+  - name: car-coal-mine-methane
+    # `Coal Mine Methane - VAM` and `- Drainage`. `car-mine-methane` reads
+    # "Mine Methane Capture", which is a *different* wording of the same
+    # activity — this registry uses both.
+    match: [{ field: sectoral_scope, regex: "^Coal Mine Methane" }]
+    value: "Metano de Minas de Carvão"
+
+  - name: car-landfill-mx
+    # `Landfill - MX`, the Mexican landfill protocol. `car-landfill-gas` is
+    # anchored on "Landfill Gas" and this one does not say "Gas".
+    match: [{ field: sectoral_scope, equals: "Landfill - MX" }]
+    value: "Gás de Aterro Sanitário"
+
+  - name: car-biochar
+    match: [{ field: sectoral_scope, equals: "Biochar" }]
+    value: "Biochar"
+
+  - name: car-organic-waste-composting
+    match: [{ field: sectoral_scope, equals: "Organic Waste Composting" }]
+    value: "Compostagem e Tratamento de Resíduos"
+
+  - name: car-organic-waste-digestion
+    # Anaerobic digestion of food and organic waste. The gas is the product,
+    # which is what separates it from composting above.
+    match: [{ field: sectoral_scope, equals: "Organic Waste Digestion" }]
+    value: "Biogás"
+
+  - name: car-nitrogen-management
+    # Reduced nitrous oxide from fertiliser on cropland — an agricultural land
+    # management activity, and the same value CAR's Soil Enrichment gets.
+    match: [{ field: sectoral_scope, equals: "Nitrogen Management" }]
+    value: "Manejo Agrícola de Terras (ALM)"
+
+  - name: car-low-carbon-cement
+    # **Not "Materiais Carbonatados".** Puro's carbonated materials mineralise
+    # CO2 into the product and store it; CAR's Low Carbon Cement Protocol
+    # credits a cement made with less clinker, which is a process emission that
+    # never happened. Reusing the storage value would have said the opposite of
+    # what the project does.
+    match: [{ field: sectoral_scope, equals: "Low Carbon Cement" }]
+    value: "Emissões de Processos Industriais"
+
   # --- Sectoral-scope fallbacks -----------------------------------------
   - name: scope-energy-industries
     match: [{ field: sectoral_scope, contains: "Energy industries" }]

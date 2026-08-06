@@ -145,6 +145,24 @@ back. Paging is stable: 3,358 issuance rows over two pages and 10,724
 retirements over six came back **distinct, and their union equalled the stated
 total exactly**.
 
+**And that stability is the platform's, not ours: there is no sort key.**
+`/results` accepts none, `/criteria` publishes filters only, and nothing in the
+site's own bundle sends one. Verra's pager *must* sort by `entityId` — without
+it Elasticsearch reordered between pages and an early run silently lost 1,271
+of 5,244 projects — so an unsorted pager is worth naming rather than assuming
+is fine. Here the order held across every page of all four reports on
+2026-08-04, and the guard is that `iter_projects` reconciles **key sets** and
+not a row count: a reorder yields one project twice and drops another, which
+leaves the count unchanged and is invisible to anything that only counts.
+
+`offset` and `pageNumber` are both sent, because the site sends both and which
+one the service reads is not published. They must therefore describe the same
+window, which means `pageNumber` is derived from the page size the platform is
+actually **delivering** — learned from the first page — and not from the `max`
+that was asked for. Deriving it from the request is wrong the moment the clamp
+bites: a requested 20000 against a delivered 2000 walks `offset` 0, 2000,
+4000 while `pageNumber` stays at 1 for the whole ledger.
+
 ### 3b. Sustained reading earns a 429 first, then a blanket 401
 
 Two escalating refusals, both measured on 2026-08-04:

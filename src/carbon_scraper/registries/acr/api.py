@@ -97,6 +97,16 @@ PROJECTS_DATASET = "projects"
 #: word for it on `projectListingStatus`, and the CORSIA fields say it too.
 NOT_STATED = {"n/a", "na", "none", "null", "-", "--", "not applicable"}
 
+#: The same table with the one entry that is also a real ISO country code
+#: removed. **`NA` is Namibia**, and this registry states a country as a code
+#: and never as a name — so running the placeholder table over `country_code`
+#: would delete a Namibian project's only country field, and take its Continent
+#: with it. Puro met this exact trap and answers it by carrying no placeholder
+#: table at all; ACR does need one (`projectListingStatus` really does say
+#: `N/A`), so it drops the ambiguous entry instead. `n/a` stays: nothing
+#: spells a country that way.
+NOT_STATED_CODE = NOT_STATED - {"na"}
+
 #: ACR reference -> the Verra reference for the same physical project.
 #: **Measured, not published by either registry.** ACR states
 #: `hasAnotherCarbonProgram` on 16 of 994 projects without naming the
@@ -130,9 +140,32 @@ def _stated(value: Any) -> str | None:
     return stated(value, NOT_STATED)
 
 
+def _country_code(value: Any) -> str | None:
+    """An ISO country code, with `NA` left alone. See NOT_STATED_CODE."""
+    return stated(value, NOT_STATED_CODE)
+
+
 def _project_key(reference: Any) -> int | None:
     match = REFERENCE.match(str(reference or "").strip())
     return int(match.group(1)) if match else None
+
+
+def _worth_storing(value: Any) -> bool:
+    """Whether an `extra` value says anything, keeping numeric zero.
+
+    A false flag is dropped: `hasAnotherCarbonProgram` is false on 978 of 994
+    projects and storing it there says no more than its absence does. But
+    `0 == False` in Python, so a membership test that drops `False` also drops
+    `0` and `0.0` — which would delete a stated retired total of zero on a
+    project that has issued credits and retired none, leaving it
+    indistinguishable from a project the registry published no figure for.
+    That is the whole reason the stated totals are kept.
+    """
+    if value is None or isinstance(value, bool):
+        return value is True
+    if isinstance(value, (int, float)):
+        return True
+    return bool(value)
 
 
 class ACRAPI(GreenTraceAPI):
@@ -249,7 +282,10 @@ class ACRAPI(GreenTraceAPI):
         status, dataset = self._ledger(resource)
         criteria = {"holdingStatus": status}
         records = self.fetch(CREDITS_REPORT, dataset, criteria)
-        rows = (normalize_credit(resource, record) for record in records)
+        rows = (
+            normalize_credit(resource, record, index)
+            for index, record in enumerate(records)
+        )
         yield from reconciled(
             rows,
             expected=self.total(CREDITS_REPORT, dataset, criteria),
@@ -321,8 +357,9 @@ def normalize_project(
         ),
         "proponents": _stated(record.get("projectDeveloper"))
         or _stated(detail.get("owningProfileParticipantName")),
-        "country_code": _stated(record.get("country"))
-        or _stated(detail.get("projectSiteLocCountry")),
+        # `_country_code`, not `_stated`: `NA` is Namibia, not "not stated".
+        "country_code": _country_code(record.get("country"))
+        or _country_code(detail.get("projectSiteLocCountry")),
         # Two vocabularies in one field, and both are the registry's own:
         # `OHIO` beside `US-CA`, and a multi-state project joins them with
         # commas. Carried through as published.
@@ -394,9 +431,7 @@ def normalize_project(
             detail.get("projectHoldingsTotalReserveQuantity")
         ),
     }
-    row["extra"] = {
-        k: v for k, v in extra.items() if v not in (None, "", [], {}, False)
-    } or None
+    row["extra"] = {k: v for k, v in extra.items() if _worth_storing(v)} or None
     return row
 
 
@@ -410,19 +445,61 @@ CREDIT_FIELDS = {
 }
 
 
-def normalize_credit(resource: str, record: dict[str, Any]) -> dict[str, Any]:
+def _credit_key(resource: str, record: dict[str, Any], index: int) -> int:
+    """A ledger row's `entity_id`, from `holdingKey` where the platform sent one.
+
+    The key is stated on every one of the 15,440 rows measured, and is unique
+    within each ledger — 3,358, 10,724 and 1,358 distinct keys against the same
+    three row counts. But hashing it unguarded means an unkeyed row hashes to
+    `hashed_id(REGISTRY, resource, None)`, which is **one key for all of them**:
+    every such row would upsert over the last, and nothing would say so.
+    `reconciled()` counts rows *yielded*, not rows written, so it would pass —
+    and the sheet would simply be short.
+
+    So an unkeyed row falls back to its own values plus its position in the
+    feed, which is what `markit/api.py` does for a platform that publishes no
+    ids at all. Positional keys renumber if the registry inserts a row above,
+    which is why this is a fallback and not the scheme; the log line is what
+    says the fallback was needed.
+    """
+    if _stated(record.get("holdingKey")) is not None:
+        # The raw value, not the trimmed one, so every key already in the
+        # database keeps hashing to what it hashed to before this guard existed.
+        return hashed_id(REGISTRY, resource, record.get("holdingKey"))
+    log.error(
+        "An ACR %s row states no holdingKey; keying it on its own values and "
+        "position %s instead. Serial %r, project %r.",
+        resource,
+        index,
+        record.get("holdingSerialNumber"),
+        record.get("projectReferenceId"),
+    )
+    return hashed_id(
+        REGISTRY,
+        resource,
+        "unkeyed",
+        index,
+        record.get("projectReferenceId"),
+        record.get("holdingSerialNumber"),
+        record.get("holdingQuantity"),
+        record.get("vintage"),
+    )
+
+
+def normalize_credit(
+    resource: str, record: dict[str, Any], index: int = 0
+) -> dict[str, Any]:
     """One ledger row.
 
-    `entity_id` is hashed from `holdingKey`, which the platform states on every
-    row and which is unique within each ledger — 3,358, 10,724 and 1,358
-    distinct keys against the same three row counts. The resource is part of
-    the seed because an issuance block and the holding it later became are two
-    different records with two different keys, and nothing should depend on
-    that staying true.
+    `entity_id` is hashed from `holdingKey` — see `_credit_key` for what
+    happens when the platform states none. The resource is part of the seed
+    because an issuance block and the holding it later became are two different
+    records with two different keys, and nothing should depend on that staying
+    true.
     """
     date_field, reason_field = CREDIT_FIELDS[resource]
     return {
-        "entity_id": hashed_id(REGISTRY, resource, record.get("holdingKey")),
+        "entity_id": _credit_key(resource, record, index),
         "project_id": _project_key(record.get("projectReferenceId")),
         # **`holdingQuantity`, never `issuanceQuantity`.** The latter is the
         # parent issuance event's total and is repeated on every block of it:

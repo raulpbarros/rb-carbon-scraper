@@ -1,0 +1,259 @@
+
+<HTML>
+	
+<SCRIPT language="JavaScript">
+    function addhiddenCsrfInputToQTable() {
+        setTimeout(function () {
+            const elements = document.querySelectorAll("[id='xxxx2']");
+
+			for (var i = 0; i < elements.length; i++) {
+                if (elements[i].querySelectorAll(":scope > [name='c16e']").length == 0) {
+                    const hiddenInput = document.createElement('input');
+                    hiddenInput.setAttribute('type', "hidden");
+                    hiddenInput.setAttribute('name', "c16e");
+                    hiddenInput.setAttribute('value', '6338b3cd169ac123002683892d6d255e');
+                    elements[i].appendChild(hiddenInput);
+				}
+            }
+        }, 1000);		
+	}
+
+    window.addEventListener('load', function () {
+        addhiddenCsrfInputToQTable();
+    });
+
+</SCRIPT>
+
+
+
+
+
+<SCRIPT language="javascript">
+    //---timer start here
+    var timeInSecs
+    var timerID = null
+    var runningTimer = false
+    var delay = 1000
+
+    function InitializeScriptTimer(sec)
+    {
+        //--Set the timer in seconds--
+        timeInSecs = sec
+         StopPageClock()
+        StartPageTimer()
+    }
+
+    function StopPageClock()
+    {
+        if(runningTimer)
+            clearTimeout(timerID)
+        runningTimer = false
+    }
+
+    function StartPageTimer()
+    {
+        if (timeInSecs == 600)
+        {
+            StopPageClock()
+            modalWin(timeInSecs)
+            InitializeScriptTimer(1800);
+        }
+        else
+        {
+            timeInSecs = timeInSecs - 1
+            runningTimer = true
+            timerID = self.setTimeout("StartPageTimer()", delay)
+
+        }
+        return;
+    }
+
+    function modalWin(sec)
+    {
+        if (window.showModalDialog)
+        {
+           window.showModalDialog("/myModule/include/displayWarning.asp?t="+ timeInSecs,"Warning","dialogWidth:550px;dialogHeight:240px;status:no;center:yes;dialogTop:285;dialogLeft:275");
+        }
+        else
+        {
+           window.open('/myModule/include/displayWarning.asp?t="+ timeInSecs','Warning','width=550,height=240,toolbar=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,modal=yes');
+        }
+    }
+</script>
+
+
+<script language="javascript">
+function fieldFocus(field) 
+{
+	field.focus()
+	return
+}
+</script>
+
+<HEAD>
+<LINK rel="stylesheet" href="/Css/main.css" type="text/css">
+
+<TITLE>The Reserve</TITLE>
+</HEAD>
+<BODY   style="width:100%;overflow-x:hidden;overflow-y:scroll">
+
+
+	<div class="headerBarSection">
+		<div class="left">
+			&nbsp;&nbsp;&nbsp;<a href="/mymodule/mypage.asp" title="View Home Page"><img  src="/images/logo.gif"></a>
+		</div>
+		<div class="right">
+			&nbsp;
+		</div>
+	</div>
+
+    <div class="infoBarSection">
+	    <div class="left">
+		    <a href='/mymodule/mypage.asp' title="Home">Home</a></span>
+	    </div>
+	    <!--div class="right">
+		    <a href="/mymodule/myhelp.asp?id=/mymodule/reg/prjView.asp" target="myHelp" title="View Help">Help</a>
+	    </div-->
+    </div>
+	
+<form name=frmAW method="post" action="/mymodule/reg/accView.asp">
+    <input type="hidden" name="c16e" value="6338b3cd169ac123002683892d6d255e">
+	  <table  cellspacing=1 cellpadding="4" align="center">
+        <tr>
+          <td height="32" colspan="5" align="center" bgcolor=#92b7d6> 
+            <font size="4" color="#FFFFFF"><b>Project Information</b></font>
+          </td>
+        </tr>
+        <tr>
+          <td bgcolor="#F3F3ED" colspan="4"><b>Project ID:</b></td>
+          <td bgcolor="#F3F3ED" width="377" >CAR1957</td>
+        </tr>
+        <tr>
+          <td bgcolor="#F3F3ED" colspan="4"><b>ARB ID:</b></td>
+          <td bgcolor="#F3F3ED" width="377" >CAFR6957</td>
+        </tr>
+        
+        <tr>
+          <td bgcolor="#F3F3ED" colspan="4"><b>Offset Project Operator:</b></td>
+          <td bgcolor="#F3F3ED" width="377" >Sierra Pacific Industries</td>
+        </tr>
+        <tr>
+          <td bgcolor="#F3F3ED" colspan="4"><b>Authorized Project Designee:</b></td>
+          <td bgcolor="#F3F3ED" width="377" >None</td>
+        </tr>
+        
+        <tr> 
+          <td bgcolor="#F3F3ED" colspan="4"><b>Project Name:</b></td>
+			<td bgcolor="#F3F3ED" width="377">2021 Fire Refo</td>
+		</tr>    
+        <tr> 
+          <td bgcolor="#F3F3ED" colspan="4"><b>Project Description:</b></td>
+          <td bgcolor="#F3F3ED" width="377" >The project consists of areas that were significantly burned in the Salt, Antelope, Monument, and River Complex wildfires of 2021</td>
+        </tr>
+
+        <tr> 
+			
+			<td bgcolor="#F3F3ED" colspan="4"><b>Project is Being Transferred From Another Registry:</b></td>
+			
+          <td bgcolor="#F3F3ED" width="377" >No</td>
+        </tr>
+
+        <tr> 
+          <td bgcolor="#F3F3ED" colspan="4"><b>Crediting Period:</b></td>
+          <td bgcolor="#F3F3ED" width="377" >Initial</td>
+        </tr>
+
+        <tr> 
+          <td bgcolor="#F3F3ED" colspan="4"><b>Project Type:</b></td>
+          <td bgcolor="#F3F3ED" width="377" >Reforestation - ARB Compliance</td>
+        </tr>
+		
+        <tr> 
+          <td bgcolor="#F3F3ED" colspan="4"><b>Project Commencement Date:</b></td>
+          <td bgcolor="#F3F3ED" width="377" >2/8/2023</td>
+        </tr>
+		
+        <tr> 
+          <td bgcolor="#F3F3ED" colspan="4"><b>Project Reporting Start Date:</b></td>
+          <td bgcolor="#F3F3ED" width="377" >1/30/2027</td>
+        </tr>
+        <tr> 
+          <td bgcolor="#F3F3ED" colspan="4"><b>Project Website:</b></td>
+          <td bgcolor="#F3F3ED" width="377" ></td>
+        </tr>
+        <tr> 
+		
+          <td bgcolor="#F3F3ED" colspan="4"><b>Project Site Location:</b></td>
+        
+          <td bgcolor="#F3F3ED" width="377" >Shasta, Siskiyou, and Trinity Counties</td>
+        </tr>
+        <tr> 
+		
+          <td bgcolor="#F3F3ED" colspan="4"><b>State/Province/Department:</b></td>
+        
+          <td bgcolor="#F3F3ED" width="377" >CALIFORNIA</td>
+        </tr>
+        <tr> 
+          <td bgcolor="#F3F3ED" colspan="4"><b>Country:</b></td>
+          <td bgcolor="#F3F3ED" width="377" >US</td>
+        </tr>
+        <tr> 
+          <td bgcolor="#F3F3ED" colspan="4"><b>Project Status:</b></td>
+          <td bgcolor="#F3F3ED" width="377" >Listed</td>
+        </tr>
+        <tr> 
+          <td bgcolor="#F3F3ED" colspan="4"><b>Crediting Period Expires:</b></td>
+          <td bgcolor="#F3F3ED" width="377" >1/29/2053</td>
+        </tr>
+        <tr> 
+          <td bgcolor="#F3F3ED" colspan="4"><b>Project Listed Date:</b></td>
+          <td bgcolor="#F3F3ED" width="377" >04/05/2024</td>
+        </tr>
+        <tr> 
+          <td bgcolor="#F3F3ED" colspan="4"><b>Project Registered Date:</b></td>
+          <td bgcolor="#F3F3ED" width="377" ></td>
+        </tr>
+
+        <tr> 
+          <td bgcolor="#F3F3ED" colspan="4"><b>Verification Bodies:</b></td>
+          <td bgcolor="#F3F3ED" width="377" ></td>
+        </tr>
+        <!--tr> 
+          <td bgcolor="#F3F3ED" colspan="4"><b>Reporting Periods Eligible for Early Action:</b></td>
+          <td bgcolor="#F3F3ED" width="377" ></td>
+        </tr>
+        <tr> 
+          <td bgcolor="#F3F3ED" colspan="4"><b>Reporting Periods Approved for Early Action:</b></td>
+          <td bgcolor="#F3F3ED" width="377" ></td>
+        </tr>
+        <tr> 
+          <td bgcolor="#F3F3ED" colspan="4"><b>Early Action Offset Quantification Methodology:</b></td>
+          <td bgcolor="#F3F3ED" width="377" ></td>
+        </tr-->
+        
+        <tr> 
+          <td bgcolor="#F3F3ED" colspan="4"><b>Documents:</b></td>
+          
+          <td bgcolor="#F3F3ED" width="377" ><a href='/mymodule/reg/TabDocuments.asp?r=111&ad=Prpt&act=update&type=PRO&aProj=pub&tablename=doc&id1=1957'>View</a></td>
+          
+        </tr>
+        
+        <tr> 
+          <td bgcolor="#F3F3ED" colspan="5"> 
+            <div align="center">
+             <input type="button" name="Back"	value="Back"	onClick="javascript:window.history.back();">
+            </div>
+          </td>
+        </tr>
+      </table>
+    </form>
+
+<div class="spacer"/>
+<div id="version" align="right" >Version 40.0.0</div>
+<div class="footerSection">
+	<div class="left"><a href='#top'><img  src="/images/up_topofpage.gif">top of page</a> | <a href='/privacypolicy.asp'>Privacy Policy</a></div>
+	<div class="right">The Reserve - Powered by APX Technology</div>
+</div>
+
+</body>
+</HTML>

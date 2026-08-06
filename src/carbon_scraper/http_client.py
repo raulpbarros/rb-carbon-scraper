@@ -164,11 +164,22 @@ class RetryableStatus(Exception):
     Carries the server's own `Retry-After`, where it sent one. A 429 is the
     only response that knows how long to wait, and guessing shorter than it
     asked is how a rate-limited scrape turns into a banned one.
+
+    It carries `status` for the same reason. A 429 is raised here rather than
+    reaching `raise_for_status()`, so an adapter that turns a registry's
+    refusals into something readable never sees an `HTTPStatusError` for one
+    and has to recognise it from this exception instead.
     """
 
-    def __init__(self, message: str, retry_after: float | None = None) -> None:
+    def __init__(
+        self,
+        message: str,
+        retry_after: float | None = None,
+        status: int | None = None,
+    ) -> None:
         super().__init__(message)
         self.retry_after = retry_after
+        self.status = status
 
 
 def _retry_after_seconds(response: httpx.Response) -> float | None:
@@ -186,6 +197,60 @@ def _retry_after_seconds(response: httpx.Response) -> float | None:
         return max(0.0, float(raw.strip()))
     except ValueError:
         return None
+
+
+def decoded(response: httpx.Response, fallback: str | None = None) -> str:
+    """A response body as text, for a server that may not say what it sent.
+
+    **httpx assumes UTF-8 when nothing declares otherwise, and decodes with
+    `errors="replace"`** — so a legacy server sending Windows-1252 bytes
+    produces a body full of `U+FFFD` at HTTP 200, with nothing raised. It is
+    lossy in the direction that matters: every accented character in a registry
+    collapses onto the same replacement character, so `MÉXICO`, `MICHOACÁN` and
+    `Oaxaca de Juárez` all arrive damaged and none of them can be repaired
+    afterwards.
+
+    Xpansiv/APX is where this was measured (2026-08-05): classic ASP, no
+    `charset` in `Content-Type`, no `<meta charset>` in the markup, and
+    Windows-1252 on the wire. 491 Climate Action Reserve projects are Mexican
+    and their state names carry accents, as do project names, retirement
+    reasons and every apostrophe the site's own English text uses (`0x92`, a
+    curly quote, not ASCII).
+
+    The order is: what the server declared, then UTF-8 **strictly**, then the
+    caller's measured fallback. Strict is the point — UTF-8 is tried and
+    allowed to *fail*, rather than silently substituting, so a modern page
+    still decodes as UTF-8 and a legacy one falls through to the encoding the
+    platform was measured to use instead of to a row of question marks.
+    """
+    if response.charset_encoding or fallback is None:
+        return response.text
+    body = response.content
+    try:
+        return body.decode("utf-8")
+    except UnicodeDecodeError:
+        return body.decode(fallback, errors="replace")
+
+
+def _slowest_rate(requested: float | None, ceiling: float) -> float:
+    """The slower of an adapter's request rate and the global one.
+
+    Neither `requested or ceiling` nor `min(...)` says this correctly, because
+    **zero is a meaningful value on both sides**: `RateLimiter` reads a
+    non-positive rate as "no limit", and both numbers come from the
+    environment.
+
+    * `CARBON_ACR_RPS=0` made the truthiness fallback discard ACR's rate and
+      hand it the global 1/s — seven times the rate that registry bans at, out
+      of a variable whose only documented purpose is going slower.
+    * `VERRA_RPS=0` made `min()` return 0 and discard ACR's 0.14 the same way,
+      from the other side.
+
+    So the stated rates are ranked and the slowest wins; "no limit" is the
+    fastest thing there is and can only apply when nothing was stated at all.
+    """
+    stated = [rate for rate in (requested, ceiling) if rate is not None and rate > 0]
+    return min(stated) if stated else 0.0
 
 
 class RegistryClient:
@@ -210,8 +275,7 @@ class RegistryClient:
         # needs ~1,005 requests. Every other registry here is happy at 1/s and
         # keeps it. This is a limit an adapter may only lower.
         self._limiter = RateLimiter(
-            min(requests_per_second or settings.REQUESTS_PER_SECOND,
-                settings.REQUESTS_PER_SECOND),
+            _slowest_rate(requests_per_second, settings.REQUESTS_PER_SECOND),
             cancel,
         )
         self._client = httpx.Client(
@@ -438,9 +502,16 @@ class RegistryClient:
         # an adapter's `Origin`, sending two conflicting values. Cercarbono
         # rejects Verra's Origin with a generic HTTP 500, so an adapter that
         # overrides a shared header has to actually override it.
+        supplied = httpx.Headers(headers or {})
         merged = httpx.Headers(self._client.headers)
-        merged.update(headers or {})
-        if form_body is not None and not (headers or {}).get("Content-Type"):
+        merged.update(supplied)
+        # `supplied`, not `merged`: the shared client header always carries a
+        # content type, so asking the merged set whether one was stated always
+        # answers yes. And `httpx.Headers`, not the caller's dict, for the same
+        # reason the merge above uses it — a caller spelling the header
+        # `content-type` states it just as fully as `Content-Type`, and a plain
+        # `.get("Content-Type")` would not see it and would overwrite it here.
+        if form_body is not None and "content-type" not in supplied:
             # The shared client header says `application/json`, and it wins over
             # the one httpx would infer from `data=`. ICE GreenTrace answers a
             # form body sent under that content type with the same generic HTTP
@@ -459,6 +530,7 @@ class RegistryClient:
             raise RetryableStatus(
                 f"{response.status_code} from {url}",
                 _retry_after_seconds(response),
+                response.status_code,
             )
         return response
 
@@ -467,16 +539,21 @@ class RegistryClient:
         response.raise_for_status()
         return response.json()
 
-    def get_text(self, url: str, **kwargs: Any) -> str:
+    def get_text(
+        self, url: str, *, fallback_encoding: str | None = None, **kwargs: Any
+    ) -> str:
         """GET returning the body as text.
 
         For the registries that never learned to speak JSON: the legacy Markit
         public view is server-rendered JSP, so its adapter parses HTML. The
         cache stores the body as text either way, so this costs nothing extra.
+
+        `fallback_encoding` is for a server that declares no charset anywhere
+        and does not mean UTF-8. See `decoded()`.
         """
         response = self.request("GET", url, **kwargs)
         response.raise_for_status()
-        return response.text
+        return decoded(response, fallback_encoding)
 
     def get_json_with_headers(self, url: str, **kwargs: Any) -> tuple[Any, Any]:
         """GET returning (body, headers).

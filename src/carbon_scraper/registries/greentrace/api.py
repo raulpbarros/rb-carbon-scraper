@@ -53,7 +53,7 @@ from typing import Any
 import httpx
 
 from ... import settings
-from ...http_client import RegistryClient
+from ...http_client import RegistryClient, RetryableStatus
 from ..base import ClientOwner
 
 log = logging.getLogger(__name__)
@@ -79,14 +79,31 @@ class GreenTraceBlocked(RuntimeError):
     """
 
 
-def _blocked(exc: httpx.HTTPStatusError) -> Exception:
-    """Turn GreenTrace's refusals into something that says what happened."""
-    status = exc.response.status_code
+def _blocked(exc: httpx.HTTPStatusError | RetryableStatus) -> Exception:
+    """Turn GreenTrace's refusals into something that says what happened.
+
+    Both exception types have to be read, and the 429 is why. `http_client`
+    raises `RetryableStatus` for a 429 *before* the response ever reaches
+    `raise_for_status()`, so the rate-limit refusal — this registry's most
+    common one, and the one it documents with `Retry-After: 3600` — never
+    arrives as an `HTTPStatusError`. Catching only that left the whole 429 arm
+    below unreachable, and a Cloudflare block surfaced as a bare
+    `RetryableStatus: 429 from …`: a traceback in the GUI's error log rather
+    than the message saying the run is safe to resume from the cache.
+
+    A `RetryableStatus` that is not a 429 is a 5xx — the platform's generic
+    fault, which an unmapped path and a bad body both produce — and is
+    returned unchanged.
+    """
+    if isinstance(exc, RetryableStatus):
+        status, body = exc.status, str(exc)
+    else:
+        status, body = exc.response.status_code, exc.response.text[:120].strip()
     if status not in (401, 403, 429):
         return exc
     return GreenTraceBlocked(
         f"ICE GreenTrace refused this client with HTTP {status} "
-        f"({exc.response.text[:120].strip()!r}). Its public API needs no key — "
+        f"({body!r}). Its public API needs no key — "
         f"the site's own page sends none — so this is a block, not a missing "
         f"credential, and it clears with time. Re-run the sync later: the "
         f"response cache keeps what was already fetched and every write is an "
@@ -146,24 +163,43 @@ class GreenTraceAPI(ClientOwner):
         headers["Content-Type"] = "application/x-www-form-urlencoded"
         try:
             body = self.client.post_form(url, form, headers=headers)
-        except httpx.HTTPStatusError as exc:
+        except (httpx.HTTPStatusError, RetryableStatus) as exc:
             raise _blocked(exc) from exc
         if not isinstance(body, dict) or not isinstance(body.get("datasets"), dict):
             raise ValueError(f"{path} returned no datasets: {str(body)[:200]!r}")
         return body
 
     def _page(
-        self, path: str, dataset: str, criteria: dict[str, Any], offset: int
+        self,
+        path: str,
+        dataset: str,
+        criteria: dict[str, Any],
+        offset: int,
+        page_size: int = 0,
     ) -> tuple[list[dict[str, Any]], int]:
         """One page, and the total the platform states for the whole report.
 
         `pageNumber` is sent beside `offset` because the site sends both, and
         a report API that reads one and ignores the other is not a thing worth
-        discovering halfway through a 10,724-row ledger.
+        discovering halfway through a 10,724-row ledger. Which means the two
+        must describe **the same window**, and deriving the page number from
+        the size we *asked* for does not: `max` is clamped in silence, so a
+        platform handing over 2000 rows for a requested 20000 leaves `offset`
+        walking 0, 2000, 4000 while `pageNumber` stays at 1 for the whole
+        ledger. `page_size` is therefore the size the platform is actually
+        delivering, learned from the first page by `fetch`.
+
+        There is no sort key here, and none is published: `/criteria` offers
+        filters only. Verra lost 1,271 of 5,244 projects to exactly that, so
+        it is worth knowing that this platform's own order held across every
+        page of all four reports on 2026-08-04 — and that the guard is
+        `iter_projects` comparing key *sets* rather than a row count, which is
+        the only thing that can see a reorder. See docs/api-contract-acr.md.
         """
+        stride = page_size or settings.GREENTRACE_PAGE_SIZE
         form = {
             "offset": offset,
-            "pageNumber": offset // settings.GREENTRACE_PAGE_SIZE + 1,
+            "pageNumber": offset // stride + 1,
             "max": settings.GREENTRACE_PAGE_SIZE,
             **{k: v for k, v in criteria.items() if v is not None},
         }
@@ -203,10 +239,15 @@ class GreenTraceAPI(ClientOwner):
         rows: list[dict[str, Any]] = []
         total = 0
         offset = 0
+        # How many rows the platform actually hands over, learned from the
+        # first page rather than assumed from `max`. It is what keeps
+        # `pageNumber` describing the same window as `offset` — see `_page`.
+        page_size = 0
         while True:
-            page, total = self._page(path, dataset, criteria, offset)
+            page, total = self._page(path, dataset, criteria, offset, page_size)
             rows.extend(page)
             self._totals[key] = total
+            page_size = page_size or len(page)
             if len(rows) >= total:
                 break
             if not page:
@@ -217,6 +258,20 @@ class GreenTraceAPI(ClientOwner):
                     total,
                 )
                 break
+            if len(page) != page_size:
+                # Not fatal — `offset` is what this pager advances on and it
+                # stays right. But the two fields can no longer agree, and if
+                # the platform reads `pageNumber` this is where rows start
+                # being skipped or read twice, silently.
+                log.error(
+                    "%s returned %s rows at offset %s where every earlier page "
+                    "returned %s; `offset` and `pageNumber` can no longer "
+                    "describe the same window.",
+                    dataset,
+                    len(page),
+                    offset,
+                    page_size,
+                )
             offset += len(page)
 
         self._records[key] = rows
@@ -261,7 +316,7 @@ class GreenTraceAPI(ClientOwner):
         )
         try:
             body = self.client.get_json(url, headers=self._headers())
-        except httpx.HTTPStatusError as exc:
+        except (httpx.HTTPStatusError, RetryableStatus) as exc:
             raise _blocked(exc) from exc
         detail = (body or {}).get("projectDetail") if isinstance(body, dict) else None
         return detail if isinstance(detail, dict) else {}

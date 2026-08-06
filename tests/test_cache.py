@@ -64,6 +64,67 @@ def test_a_non_utf8_body_survives_the_round_trip(cache_dir):
     assert second == first
 
 
+def test_a_server_that_declares_no_charset_is_decoded_as_the_caller_measured(cache_dir):
+    """Xpansiv/APX sends Windows-1252 and says so nowhere.
+
+    No `charset` on `Content-Type`, no `<meta charset>`, no BOM — so httpx
+    falls back to UTF-8 and decodes with `errors="replace"`. That is HTTP 200
+    with every accent in the registry replaced: 491 of Climate Action
+    Reserve's projects are Mexican, and `STATE OF MÉXICO` arrived as
+    `STATE OF M�XICO` with nothing in the log. It cannot be repaired
+    afterwards — every accented character collapses onto one replacement
+    character — which is why the caller states the encoding it measured.
+    """
+    body = "STATE OF MÉXICO — Oaxaca de Juárez".encode("cp1252")
+    live = httpx.Response(200, content=body, headers={"content-type": "text/html"})
+    client = client_serving(live)
+    try:
+        assert client.get_text("https://example.invalid/r.asp") == (
+            "STATE OF M�XICO � Oaxaca de Ju�rez"
+        ), "without a fallback this is what httpx does, and it is why the flag exists"
+        assert (
+            client.get_text("https://example.invalid/r.asp", fallback_encoding="cp1252")
+            == "STATE OF MÉXICO — Oaxaca de Juárez"
+        )
+    finally:
+        client.close()
+
+
+def test_a_declared_charset_still_wins_over_the_fallback(cache_dir):
+    """The fallback is for a silent server, never an override of a stated one."""
+    body = "Scolel té".encode("iso-8859-1")
+    live = httpx.Response(
+        200, content=body, headers={"content-type": "text/html; charset=ISO-8859-1"}
+    )
+    client = client_serving(live)
+    try:
+        assert (
+            client.get_text("https://example.invalid/p.jsp", fallback_encoding="cp1252")
+            == "Scolel té"
+        )
+    finally:
+        client.close()
+
+
+def test_utf8_is_tried_first_so_a_newer_tenant_is_unaffected(cache_dir):
+    """APX is one module across many tenants and only one build was measured.
+
+    `decoded` tries UTF-8 **strictly** before the fallback, so a tenant whose
+    build sends UTF-8 without declaring it decodes correctly rather than being
+    mojibaked into `Ã©` by a platform constant measured somewhere else.
+    """
+    body = "Oaxaca de Juárez".encode("utf-8")
+    live = httpx.Response(200, content=body, headers={"content-type": "text/html"})
+    client = client_serving(live)
+    try:
+        assert (
+            client.get_text("https://example.invalid/q.asp", fallback_encoding="cp1252")
+            == "Oaxaca de Juárez"
+        )
+    finally:
+        client.close()
+
+
 def test_a_utf8_body_still_round_trips(cache_dir):
     live = httpx.Response(
         200, json={"name": "Café"}, headers={"content-type": "application/json"}
@@ -222,7 +283,59 @@ def test_a_form_post_sends_the_form_content_type(cache_dir):
     assert b"offset=0" in seen["body"]
 
 
+def test_a_callers_content_type_wins_however_it_is_spelled(cache_dir):
+    """Header names are case-insensitive and a plain dict read is not.
+
+    A caller stating `content-type` has stated it just as fully as one stating
+    `Content-Type`, and the merge below it already knows that — it goes through
+    `httpx.Headers` precisely because a dict merge sent Cercarbono two
+    conflicting `Origin` values. The default here has to read the caller's
+    headers the same way, or it overwrites a content type the caller chose.
+    """
+    seen: dict[str, object] = {}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        seen["content_type"] = request.headers.get("content-type")
+        return httpx.Response(200, json={})
+
+    for spelling in ("Content-Type", "content-type", "CONTENT-TYPE"):
+        client = http_client.RegistryClient()
+        client._client = httpx.Client(transport=httpx.MockTransport(handler))
+        try:
+            client.post_form(
+                f"https://example.invalid/{spelling}",
+                {"offset": 0},
+                headers={spelling: "multipart/form-data"},
+            )
+        finally:
+            client.close()
+        assert seen["content_type"] == "multipart/form-data", spelling
+
+
 # -- politeness ------------------------------------------------------------
+
+
+def test_a_stated_rate_of_zero_never_speeds_a_client_up(monkeypatch):
+    """Both rates come from the environment and both can be `0`.
+
+    `RateLimiter` reads a non-positive rate as "no limit", so neither
+    `requested or ceiling` nor `min()` says "the slower of the two": a
+    `CARBON_ACR_RPS=0` handed ACR the global 1/s — seven times the rate that
+    registry bans at — and a `VERRA_RPS=0` discarded ACR's 0.14 from the other
+    side. Only "no rate stated anywhere" may mean unlimited.
+    """
+    assert http_client._slowest_rate(0.0, 1.0) == 1.0
+    assert http_client._slowest_rate(0.14, 0.0) == 0.14
+    assert http_client._slowest_rate(25.0, 1.0) == 1.0
+    assert http_client._slowest_rate(None, 1.0) == 1.0
+    assert http_client._slowest_rate(None, 0.0) == 0.0
+
+    monkeypatch.setattr(http_client.settings, "REQUESTS_PER_SECOND", 1.0)
+    client = http_client.RegistryClient(requests_per_second=0.0)
+    try:
+        assert client._limiter._min_interval >= 1.0
+    finally:
+        client.close()
 
 
 def test_a_429_retry_after_is_honoured_up_to_the_cap(monkeypatch):

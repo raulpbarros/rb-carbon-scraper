@@ -1,10 +1,16 @@
-"""Read the legacy Markit public view's HTML tables.
+"""Read a server-rendered registry's HTML tables — shared by the adapters.
 
-The first adapter in this codebase that parses HTML rather than JSON, because
-`mer.markit.com/br-reg/public` is a server-rendered JSP application with no
-API behind it. Built on `html.parser` from the standard library: a parser is
-not worth a dependency in a bundle the business downloads, and this markup is
-simple enough that one is not needed.
+Heading-keyed and `rowspan`-aware, and nothing in it is specific to any one
+platform, which is why it lives here beside `text.py` rather than inside the
+adapter that happened to need it first. That was the legacy Markit public view
+(`mer.markit.com/br-reg/public`), a server-rendered JSP application with no API
+behind it — the first target here that had to be parsed rather than decoded.
+The APX registry software is the second, and a cross-platform import out of
+`markit/` would have been the wrong shape for a reader neither of them owns.
+
+Built on `html.parser` from the standard library: a parser is not worth a
+dependency in a bundle the business downloads, and this markup is simple
+enough that one is not needed.
 
 Two things here are load-bearing, and both are the same class of bug this
 codebase keeps meeting — output that looks right and is not.

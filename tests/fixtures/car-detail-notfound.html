@@ -1,0 +1,118 @@
+
+<HTML>
+	
+<SCRIPT language="JavaScript">
+    function addhiddenCsrfInputToQTable() {
+        setTimeout(function () {
+            const elements = document.querySelectorAll("[id='xxxx2']");
+
+			for (var i = 0; i < elements.length; i++) {
+                if (elements[i].querySelectorAll(":scope > [name='c16e']").length == 0) {
+                    const hiddenInput = document.createElement('input');
+                    hiddenInput.setAttribute('type', "hidden");
+                    hiddenInput.setAttribute('name', "c16e");
+                    hiddenInput.setAttribute('value', '6338b3cd169ac123002683892d6d255e');
+                    elements[i].appendChild(hiddenInput);
+				}
+            }
+        }, 1000);		
+	}
+
+    window.addEventListener('load', function () {
+        addhiddenCsrfInputToQTable();
+    });
+
+</SCRIPT>
+
+
+
+
+
+<SCRIPT language="javascript">
+    //---timer start here
+    var timeInSecs
+    var timerID = null
+    var runningTimer = false
+    var delay = 1000
+
+    function InitializeScriptTimer(sec)
+    {
+        //--Set the timer in seconds--
+        timeInSecs = sec
+         StopPageClock()
+        StartPageTimer()
+    }
+
+    function StopPageClock()
+    {
+        if(runningTimer)
+            clearTimeout(timerID)
+        runningTimer = false
+    }
+
+    function StartPageTimer()
+    {
+        if (timeInSecs == 600)
+        {
+            StopPageClock()
+            modalWin(timeInSecs)
+            InitializeScriptTimer(1800);
+        }
+        else
+        {
+            timeInSecs = timeInSecs - 1
+            runningTimer = true
+            timerID = self.setTimeout("StartPageTimer()", delay)
+
+        }
+        return;
+    }
+
+    function modalWin(sec)
+    {
+        if (window.showModalDialog)
+        {
+           window.showModalDialog("/myModule/include/displayWarning.asp?t="+ timeInSecs,"Warning","dialogWidth:550px;dialogHeight:240px;status:no;center:yes;dialogTop:285;dialogLeft:275");
+        }
+        else
+        {
+           window.open('/myModule/include/displayWarning.asp?t="+ timeInSecs','Warning','width=550,height=240,toolbar=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,modal=yes');
+        }
+    }
+</script>
+
+
+<script language="javascript">
+function fieldFocus(field) 
+{
+	field.focus()
+	return
+}
+</script>
+
+<HEAD>
+<LINK rel="stylesheet" href="/Css/main.css" type="text/css">
+
+<TITLE>The Reserve</TITLE>
+</HEAD>
+<BODY   style="width:100%;overflow-x:hidden;overflow-y:scroll">
+
+
+	<div class="headerBarSection">
+		<div class="left">
+			&nbsp;&nbsp;&nbsp;<a href="/mymodule/mypage.asp" title="View Home Page"><img  src="/images/logo.gif"></a>
+		</div>
+		<div class="right">
+			&nbsp;
+		</div>
+	</div>
+
+    <div class="infoBarSection">
+	    <div class="left">
+		    <a href='/mymodule/mypage.asp' title="Home">Home</a></span>
+	    </div>
+	    <!--div class="right">
+		    <a href="/mymodule/myhelp.asp?id=/mymodule/reg/prjView.asp" target="myHelp" title="View Help">Help</a>
+	    </div-->
+    </div>
+<BR>Invalid URL, the Reserve Administrator has been notified!

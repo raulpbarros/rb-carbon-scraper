@@ -252,6 +252,104 @@ rules:
           - "Fuel Switching"
     value: "Permanente — redução de emissões (sem estoque reversível)"
 
+  # --- Climate Action Reserve project types --------------------------------
+  # CAR states a `Project Type` from a list of 32 values, and a `Protocol and
+  # Version` that restates that type and adds the protocol document and its
+  # edition ("Forestry - MX - Version 2.0"). So the protocol says nothing here
+  # the type does not — and it is published on issuance rows, which 376 of the
+  # 1,277 projects do not have. These key on the type, which every project has,
+  # and sit below the Plan Vivo V4 block for the measured reason given in
+  # project_type.yaml — every operator here is case-insensitive, and V4's
+  # "Improved forest management" is CAR's "Improved Forest Management" in
+  # another case. The same post-sync rule-name count applies.
+  #
+  # The collision is symmetric and one CAR wording pays for it: a project whose
+  # type is the bare "Improved Forest Management" is answered by
+  # `pv4-improved-forest-management` above rather than by `car-improved-forest-
+  # management` here. **The value is identical** — both say IFM, deliberately,
+  # because an IFM project stores carbon the same way in either registry — so
+  # only `project_derived.rule_name` reads oddly. It is left alone rather than
+  # fixed by narrowing a working registry's rule for a cosmetic attribution,
+  # and it is recorded here so the next person does not read it as a bug.
+  #
+  # The values are the existing ones, reused deliberately: a CAR improved-
+  # management project and a Verra IFM project store carbon the same way, and
+  # a new wording must never quietly become a new band.
+  #
+  # Without them the registry is nearly a total blank — measured on
+  # 2026-08-05, "Forestry - MX" (485), "Improved Forest Management - ARB
+  # Compliance" (141), "Landfill Gas Capture/Combustion" (126) and the two
+  # Ozone Depleting Substances wordings (297) all reached **no rule at all**,
+  # because `afolu-generic` requires the acronym or "Agriculture Forestry" and
+  # this registry says neither. That is ACR's `afolu-generic` gap in a second
+  # registry, and it fails exactly as silently.
+  - name: car-forest-stock
+    match:
+      - field: sectoral_scope
+        regex: "^Forestry - MX|^Improved Forest Management"
+    value: "Média (25-100 anos) — estoque florestal, reversível"
+
+  - name: car-reforestation
+    match: [{ field: sectoral_scope, regex: "^Reforestation" }]
+    value: "Média (25-100 anos) — estoque biológico, reversível"
+
+  - name: car-avoided-conversion
+    match:
+      - field: sectoral_scope
+        regex: "Avoided Grassland Conversion|^Avoided Conversion$"
+    value: "Média — uso da terra, reversível"
+
+  - name: car-soil-enrichment
+    match: [{ field: sectoral_scope, equals: "Soil Enrichment" }]
+    value: "Curta (10-40 anos) — carbono no solo, reversível"
+
+  # Destroyed ODS banks, captured mine and landfill methane, and nitrous oxide
+  # abated in acid manufacture. Every one is an emission that never happened —
+  # there is no carbon store to reverse, which is what this band says.
+  - name: car-emission-reduction
+    match:
+      - field: sectoral_scope
+        regex: "^Ozone Depleting Substances|^Landfill Gas|Mine Methane Capture|^Nitric Acid|^Adipic Acid"
+    value: "Permanente — redução de emissões (sem estoque reversível)"
+
+  # --- the eleven wordings the first full sync named ----------------------
+  # `verra coverage -r car` after the first full sync showed 52 projects with
+  # no Durabilidade, across the same 11 project types that had no Tipo Micro.
+  # Values are the existing bands; see `project_type.yaml` for why each
+  # activity is grouped where it is, and note that three of them are a rule
+  # above being too narrow rather than an activity nobody covered.
+  - name: car-avoided-conversion-compliance
+    match: [{ field: sectoral_scope, regex: "^Avoided Conversion|^Canada Grassland" }]
+    value: "Média — uso da terra, reversível"
+
+  - name: car-conservation-based-forest-management
+    match: [{ field: sectoral_scope, equals: "Conservation-Based Forest Management" }]
+    value: "Média (25-100 anos) — estoque florestal, reversível"
+
+  - name: car-nitrogen-management
+    # Nitrous oxide that was never emitted from a fertilised field. Unlike
+    # Soil Enrichment above there is no soil carbon stock to lose again, so it
+    # is not that band.
+    match: [{ field: sectoral_scope, equals: "Nitrogen Management" }]
+    value: "Permanente — redução de emissões (sem estoque reversível)"
+
+  - name: car-emission-reduction-extra
+    # `Coal Mine Methane - VAM` / `- Drainage` and `Landfill - MX` are the same
+    # captured methane as the band above, under wordings its anchors miss.
+    # Low Carbon Cement is a process emission that never happened, and organic
+    # waste digestion and composting are methane that was never released.
+    match:
+      - field: sectoral_scope
+        regex: "^Coal Mine Methane|^Landfill - |^Low Carbon Cement|^Organic Waste"
+    value: "Permanente — redução de emissões (sem estoque reversível)"
+
+  - name: car-biochar
+    # Carbon locked into a stable solid. The same band Puro's biochar gets —
+    # where the registry publishes the figure and the band is *checked* rather
+    # than inferred, which is why this one reuses it rather than guessing.
+    match: [{ field: sectoral_scope, equals: "Biochar" }]
+    value: "Longa (100+ anos) — carbono mineralizado/estável"
+
   # --- Gold Standard project types ----------------------------------------
   # Gold Standard has no AFOLU sub-type codes, so its rows are read from the
   # `type` vocabulary instead. `equals` / `in` against that closed list cannot

@@ -814,6 +814,132 @@ methodologies, and nothing is merged.
 
 ---
 
+## Climate Action Reserve — the same 22 columns, different sources, added 2026-08-05
+
+**1,277 projects**, 5,173 issuance rows, 11,047 retirements and 2,277
+cancellations, on **Xpansiv/APX** (`thereserve2.apx.com`), all four reconciled
+against the registry's own printed counts on a full live sync, 2026-08-05.
+
+It is the second most US-centric registry here and the **most Mexican**: 774
+projects in the United States, **491 in Mexico**, 7 in Canada, 3 in China and 2
+in Argentina. Like ACR, a large share of the credits serve a **compliance**
+programme rather than the voluntary market — California's ARB above all.
+
+| Column | Source |
+|---|---|
+| `Project ID` | the published `CAR1957` reference. Unique across all 1,277 — checked against the registry's own export — and its numeric part is both the primary key and what the project's public URL is built from |
+| `Project Name` | project record |
+| `Standard` | **"Climate Action Reserve", asserted.** What the registry publishes per project is a *protocol* ("Forestry - MX - Version 2.0"), which is the methodology, not a standard name |
+| `Tipo Macro de Projeto` | `Project Type`, untranslated: "Forestry - MX" (485), "Improved Forest Management - ARB Compliance" (141), "Landfill Gas Capture/Combustion" (126), "Livestock - ARB Compliance" (108), "Ozone Depleting Substances - U.S. - ARB Compliance" (96), and 27 more |
+| `Metodologia` | the protocol name — **901 of 1,277, and see below.** It is published on *issuance* rows, not project rows, so a project that has never issued has no methodology published anywhere |
+| `Tipo Micro de Projeto` | derivation layer, keyed on the project type, **1,277 of 1,277** |
+| `Durabilidade` | derivation layer, **1,277 of 1,277** |
+| `Bioma` | derivation layer, 720 of 1,277 — see below |
+| `Continent` | derived from the ISO country code, published 1,277 of 1,277 — the Gold Standard path |
+| `País` | **not published — blank.** An ISO code and no name anywhere, exactly as at ACR. Same answer, same reason |
+| `Estado` | `Project Site State`, **1,277 of 1,277** — uppercase US and Mexican state names as the registry writes them |
+| `Cidade` | **not published — blank.** `Project Site Location` is a *county list* ("Shasta, Siskiyou, and Trinity Counties"), not a city; it is kept in `extra` whole |
+| `Data de Início` | the per-project detail page, **1,274 of 1,277** |
+| `Data de Término` | the same page, 829 of 1,277 — the registry states a crediting-period expiry only once a project has one |
+| `Yearly Ex Ante` / `Total Ex Ante` | **not published — blank.** No estimate appears on the report or the detail page; this registry certifies reductions that have already been verified |
+| `Total Credits Issued` | the issuance ledger, **268,335,202** units across 901 projects |
+| `Total Credits Retired` / `Sold` | the retirement ledger, **84,972,437** across 420 projects |
+| `Total Credits Cancelled` | the cancellation ledger, **124,235,312** across 398 projects — and mostly not what that word suggests. See below |
+| `Additional Certification` | **no equivalent — blank.** The column exists on every report and is empty on all 1,277 rows and every ledger row. The CORSIA and ICVCM columns beside it are market eligibility, not a co-certification, and are kept in `extra` |
+
+The issued figure is confirmed twice: summed from the ledger, and read from the
+project list's own `Total Number of Offset Credits Registered`. **They agree on
+all 901 projects that have issued anything, to the unit** — which is why this
+registry needs no `iter_credit_totals`.
+
+### `Total Credits Cancelled` here mostly means "moved to a compliance registry"
+
+| Reason the registry states | Rows |
+|---|---:|
+| ARB | 2,004 |
+| Canceled | 198 |
+| Canceled for ARB (five wordings) | 47 |
+| WA ECO | 8 |
+
+**2,056 of the 2,277 cancellations — 122,340,658 of the 124,235,312 units — are
+units leaving for California's ARB or Washington's Ecology programme**, where
+they continue to exist as compliance offsets. They are not destroyed credits.
+
+This is ACR's situation in a second registry and at a higher proportion (90%
+here against 86% there). The column reports the registry's own figure, as ACR's
+does, and the reason is stored on every row, so splitting "cancelled" from
+"converted out" stays a query rather than a re-scrape. **The business decided
+this for ACR on 2026-08-04; the same decision is assumed here and is worth
+confirming, because it is a larger share of a larger number.**
+
+### Two CAR projects are also Verra projects — and this pair is different
+
+The registry states the overlap itself: `Offset Credits Converted to VCUs` is
+populated on **2 of its 5,173 issuance rows** and names no registry. Both were
+found in the database:
+
+| CAR | Verra | CAR converted | Verra issued |
+|---|---|---:|---:|
+| `CAR400` South Jordan Landfill Gas, Utah | `VCS 1528` *Granger South Jordan … — CER Conversion* | 45,730 | **45,730** |
+| `CAR498` Wolf Creek Landfill, Georgia | `VCS 1527` *Wolf Creek Landfill — CER Conversion* | 4,270 | **4,270** |
+
+**These are the same units, and that makes this the third cross-registry
+overlap in the database and the first of its kind.** Cercarbono/BioCarbon and
+ACR/Verra are *different tranches* of one physical project — neither row
+restates the other's credits. Here Verra's entire issued total for both
+projects is exactly what CAR says it converted, at the same vintage (2014), and
+**CAR does not net them out**: neither project has a single cancellation row,
+so the units stay on CAR's book as issued as well.
+
+So `Total Credits Issued` counts 50,000 tCO2e twice across the two registries.
+Nothing has been subtracted — both registries' published figures stand, which
+is the rule everywhere else in this file — and the link is stored on the CAR
+row (`extra.also_registered_as`) so the double count is visible rather than
+hidden. **Whether the sheet should net it out is the business's call.** It is
+also a third reason "sum every registry's Total Credits Issued" is not a safe
+query.
+
+### `Metodologia` is blank for 376 projects, and is not inferred
+
+The protocol is published on issuance rows and nowhere else, so a project that
+has never issued a credit has no methodology anywhere in the registry. The
+protocol name is very nearly the project type plus a version — "Forestry - MX -
+Version 2.0" against a `Project Type` of "Forestry - MX" — so filling the blank
+from the type would look right and be an invention. The cell stays blank; the
+type is in `Tipo Macro` either way.
+
+### Bioma: Mexico is half the answer, on purpose
+
+720 of 1,277 rows get a biome:
+
+| | projects |
+|---|---:|
+| México (bioma não determinado) | 395 |
+| Floresta Temperada Norte-Americana | 189 |
+| Floresta Tropical Mesoamericana | 90 |
+| Pradarias Norte-Americanas (campos temperados) | 46 |
+
+Mexico is the largest group of land-use projects in the registry and the
+hardest to place, because CAR publishes an ISO **code** and a state, and every
+country band in `biome.yaml` matches a country *name*. Two bands were added:
+the Yucatán peninsula and the Gulf states are the Selva Maya and take an
+existing value, and the North American grassland projects are named by what
+they do rather than only where they are.
+
+**The remaining 395 are the Mexican highlands and stay "not determined"
+deliberately.** They are Sierra Madre pine-oak — a temperate conifer forest —
+and the only temperate value in the file is called *Norte-Americana*. Whether a
+Michoacán community forest should read that, or whether a Sierra Madre band
+should be added, is a question about the deliverable rather than something the
+registry published. **It is the first thing to agree about this registry's
+Bioma column.**
+
+The 557 rows with no biome at all are the non-land-use projects — landfill gas,
+ODS destruction, livestock, industrial process emissions — where the column is
+correctly blank.
+
+---
+
 ## Data-quality note: why retirement totals come from a different route
 
 Three of the four Units ledgers download completely and reconcile exactly

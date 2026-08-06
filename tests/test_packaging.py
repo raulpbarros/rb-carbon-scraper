@@ -109,6 +109,22 @@ def test_a_missing_seed_database_is_not_fatal(bundle, tmp_path):
     assert all("carbon-seed.db" not in source for source, _ in pairs)
 
 
+def test_the_icon_ships_where_the_window_looks_for_it(bundle, tmp_path):
+    """The EXE takes its icon at build time; the window reads the file at run
+    time. Bundled to the wrong folder, the second one silently falls back to
+    Tk's default while the first still looks right."""
+    assert bundle.ICON.exists(), "run `python packaging/make_icon.py`"
+    destination = dict(bundle.datas(seed=tmp_path / "absent.db"))[str(bundle.ICON)]
+    assert settings.APP_ICON == settings.RESOURCE_ROOT / destination / bundle.ICON.name
+
+
+def test_the_icon_is_a_real_multi_size_ico(bundle):
+    """A one-size icon is resampled by Windows for the taskbar and looks it."""
+    header = bundle.ICON.read_bytes()[:6]
+    assert header[:4] == b"\x00\x00\x01\x00", "not an ICO"
+    assert int.from_bytes(header[4:6], "little") >= 4
+
+
 # -- the entry point -------------------------------------------------------
 
 

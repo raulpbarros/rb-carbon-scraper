@@ -26,6 +26,7 @@ import pytest
 from carbon_scraper import db, excel, pipeline, settings
 from carbon_scraper.gui import app as gui_app
 from carbon_scraper.gui import state as gui_state
+from carbon_scraper.gui import theme
 from carbon_scraper.gui import worker as gui_worker
 from carbon_scraper.http_client import Cancelled
 
@@ -462,15 +463,20 @@ def test_a_registry_with_nothing_stored_says_so():
 
 
 def test_a_failed_last_attempt_is_visible_beside_the_checkbox():
-    line = gui_app.summary_line(
-        {
-            "projects": 231,
-            "last_sync": "2026-07-28T09:00:00+00:00",
-            "last_sync_ok": False,
-        }
-    )
-    assert "231 projects" in line
-    assert "did not finish" in line
+    entry = {
+        "projects": 231,
+        "last_sync": "2026-07-28T09:00:00+00:00",
+        "last_sync_ok": False,
+    }
+    # The count has a column of its own; the state text carries the rest.
+    assert gui_app.count_text(entry) == "231"
+    assert "did not finish" in gui_app.summary_line(entry)
+
+
+def test_a_registry_holding_nothing_shows_a_dash_not_a_zero():
+    """Nobody has asked is not the same claim as asked and found empty."""
+    assert gui_app.count_text({"projects": 0}) == "—"
+    assert gui_app.count_text({"projects": 5245}) == "5,245"
 
 
 def test_a_cancelled_first_attempt_does_not_look_like_a_fresh_install():
@@ -526,6 +532,65 @@ def test_data_as_of_ignores_registries_holding_nothing():
         GS: {"projects": 0, "last_sync": "2020-01-01T00:00:00+00:00"},
     }
     assert "2026-07-28" in gui_app.data_as_of(summary)
+
+
+def test_the_headline_counts_only_registries_that_hold_something():
+    summary = {
+        VERRA: {"projects": 5245, "last_sync": "2026-07-28T09:00:00+00:00"},
+        GS: {"projects": 4141, "last_sync": "2026-07-28T09:00:00+00:00"},
+        CERC: {"projects": 0},
+    }
+    assert gui_app.headline(summary) == "9,386 projects across 2 registries"
+
+
+def test_the_headline_on_a_machine_that_has_never_scraped():
+    """The installed database can be missing; the window has to say so."""
+    assert "Nothing stored yet" in gui_app.headline({VERRA: {"projects": 0}})
+
+
+# --- freshness, elapsed and remaining -------------------------------------
+
+
+def test_freshness_separates_never_from_stale_from_current():
+    now = datetime(2026, 8, 5, 12, 0, tzinfo=timezone.utc)
+    fresh = {"projects": 10, "last_sync": (now - timedelta(days=2)).isoformat()}
+    stale = {"projects": 10, "last_sync": (now - timedelta(days=200)).isoformat()}
+
+    assert gui_app.freshness(fresh, now=now) == (gui_app.MARK_FILLED, theme.PETROL)
+    assert gui_app.freshness(stale, now=now) == (gui_app.MARK_FILLED, theme.AMBER)
+    assert gui_app.freshness({"projects": 0}, now=now) == (
+        gui_app.MARK_HOLLOW,
+        theme.FAINT,
+    )
+
+
+def test_a_failed_attempt_marks_the_row_however_much_it_holds():
+    entry = {"projects": 994, "last_sync": None, "last_sync_ok": False}
+    assert gui_app.freshness(entry)[1] == theme.RED
+
+
+def test_the_marker_colours_are_the_log_panes_colours():
+    """One colour, one meaning. An amber row and an amber log line agree."""
+    assert (theme.AMBER, theme.RED) == ("#B06000", "#B00020")
+
+
+def test_elapsed_wording():
+    assert gui_app.format_clock(12) == "12 sec"
+    assert gui_app.format_clock(600) == "10 min"
+    assert gui_app.format_clock(4500) == "1 h 15 min"
+
+
+def test_remaining_counts_down_against_the_static_estimate():
+    assert gui_app.remaining_text(120, 60 * 60) == "about 1 h 00 min left"
+
+
+def test_overrunning_the_estimate_is_said_rather_than_hidden():
+    """Never a countdown that stops at zero and then lies for an hour."""
+    assert gui_app.remaining_text(10, 60 * 60) == "longer than estimated"
+
+
+def test_an_unknown_estimate_says_so():
+    assert gui_app.remaining_text(None, 30) == "time to finish unknown"
 
 
 # --- the poll loop --------------------------------------------------------
@@ -603,7 +668,9 @@ def test_the_end_of_a_run_refreshes_even_though_the_thread_is_still_alive(monkey
 
     class _Window:
         worker = type("W", (), {"busy": True})()
-        captions: dict = {}
+        rows: dict = {}
+        ticked: dict = {}
+        headline = _Caption()
         as_of = _Caption()
 
     @contextmanager
@@ -652,3 +719,37 @@ def test_the_gui_builds_its_registries_from_the_label_table():
     assert "settings.REGISTRY_LABELS.items()" in source
     for name in settings.REGISTRY_LABELS:
         assert f'"{name}"' not in source, f"{name} is hard-coded in the window"
+
+
+def test_a_warning_opens_the_details_pane_it_would_otherwise_hide():
+    """The log starts collapsed, and `INCOMPLETE` arrives in it.
+
+    A pane folded away by default is the right call for the user who only ever
+    presses Export Excel, and the wrong one for the run that reconciled short.
+    The branch that tags a line warn/error is the branch that has to open it.
+    """
+    source = Path(gui_app.__file__).read_text(encoding="utf-8")
+    _, _, after_tagging = source.partition("self._append(message.text, tag)")
+    opener = "self._toggle_details(open_it=True)"
+    assert opener in after_tagging.split("elif isinstance(message, Finished)")[0]
+
+
+def test_the_theme_never_fails_the_window():
+    """Every optional thing in theme.py has to fall back, not raise.
+
+    A missing font family, a Tk without `clam`, a Windows without `shcore`:
+    losing an accent colour is a nuisance, losing the window is a support call
+    from someone with no console to read.
+    """
+    source = Path(theme.__file__).read_text(encoding="utf-8")
+    for guarded in ("def enable_dpi_awareness", "def set_icon", "def _family"):
+        body = source.split(guarded)[1].split("\ndef ")[0]
+        assert "except" in body, f"{guarded} does not fall back"
+
+
+def test_dpi_awareness_is_set_before_the_window_exists():
+    """From the process, not a widget: after `tk.Tk()` it is already too late
+    and the whole app renders at 96 DPI and gets scaled up."""
+    source = Path(gui_app.__file__).read_text(encoding="utf-8")
+    main = source.split("def main()")[1]
+    assert main.index("enable_dpi_awareness") < main.index("root = tk.Tk()")

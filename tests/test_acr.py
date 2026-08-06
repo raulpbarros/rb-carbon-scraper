@@ -33,9 +33,11 @@ import pytest
 
 from carbon_scraper import db, derive, settings
 from carbon_scraper import registries
+from carbon_scraper.http_client import RetryableStatus
 from carbon_scraper.registries import base
 from carbon_scraper.registries.acr import api as acr
 from carbon_scraper.registries.greentrace import api as greentrace
+from carbon_scraper.registries.text import hashed_id
 
 from conftest import RecordingProgress, load_fixture as _load
 
@@ -187,6 +189,36 @@ def test_paging_advances_on_offset_not_on_the_row_count(adapter, client):
     assert offsets == list(range(0, COUNTS[acr.RETIREMENTS], FakeClient.CLAMP))
 
 
+def test_the_page_number_describes_the_same_window_as_the_offset(adapter, client):
+    """Both are sent, and which one the service reads is not published.
+
+    So they must agree. Deriving the page number from the size we *asked* for
+    does not: `max` is clamped in silence, so a requested 20000 against a
+    delivered 2000 walks `offset` 0, 2000, 4000 while `pageNumber` stays at 1
+    for the whole ledger. The fixture client clamps to 2 for the same reason
+    the live one clamps to 2000.
+    """
+    list(adapter.iter_credits(acr.RETIREMENTS))
+    forms = [f for _url, f in client.posts if "holdingStatus" in f]
+    assert len(forms) > 1
+    for form in forms:
+        assert form["pageNumber"] == form["offset"] // FakeClient.CLAMP + 1
+    assert [f["pageNumber"] for f in forms] == list(range(1, len(forms) + 1))
+
+
+def test_a_page_that_breaks_the_stride_is_reported(adapter, client, caplog):
+    """After a short page the two fields cannot describe one window any more.
+
+    `offset` stays right — it is what this pager advances on — but if the
+    platform reads `pageNumber` instead, this is where rows start being skipped
+    or read twice with nothing raised.
+    """
+    client.overstate = 5
+    with caplog.at_level("ERROR"):
+        list(adapter.iter_credits(acr.CANCELLATIONS))
+    assert "same window" in caplog.text
+
+
 def test_every_row_across_every_page_is_distinct(adapter):
     for resource, expected in COUNTS.items():
         rows = list(adapter.iter_credits(resource))
@@ -313,6 +345,50 @@ def test_a_reference_that_is_not_acr_shaped_is_dropped_loudly(adapter, client, c
     assert "no usable reference" in caplog.text
 
 
+def test_a_stated_holding_key_hashes_to_what_it_always_hashed_to():
+    """The guard below must not renumber a database that already exists."""
+    row = acr.normalize_credit(acr.ISSUANCES, {"holdingKey": "H-1"}, 7)
+    assert row["entity_id"] == hashed_id(REGISTRY, acr.ISSUANCES, "H-1")
+
+
+def test_rows_with_no_holding_key_do_not_collapse_into_one(caplog):
+    """`hashed_id(REGISTRY, resource, None)` is ONE key for all of them.
+
+    Every unkeyed row would upsert over the last, and nothing would say so:
+    `reconciled()` counts rows yielded, not rows written, so the run reconciles
+    and the sheet is simply short. The fallback is the Markit scheme — the
+    row's own values plus its position — and the log line is what says it was
+    needed.
+    """
+    records = [
+        {
+            "holdingKey": None,
+            "projectReferenceId": "ACR0885",
+            "holdingSerialNumber": "A",
+            "holdingQuantity": 10,
+        },
+        {
+            "holdingKey": "",
+            "projectReferenceId": "ACR0885",
+            "holdingSerialNumber": "B",
+            "holdingQuantity": 20,
+        },
+    ]
+    with caplog.at_level("ERROR"):
+        rows = [
+            acr.normalize_credit(acr.ISSUANCES, record, index)
+            for index, record in enumerate(records)
+        ]
+    assert rows[0]["entity_id"] != rows[1]["entity_id"]
+    assert rows[0]["entity_id"] != hashed_id(REGISTRY, acr.ISSUANCES, None)
+    assert "no holdingKey" in caplog.text
+    # Idempotent: the same row at the same position keys the same way, so a
+    # re-run repairs rather than duplicating.
+    assert acr.normalize_credit(acr.ISSUANCES, records[0], 0)["entity_id"] == (
+        rows[0]["entity_id"]
+    )
+
+
 def test_the_link_is_built_from_the_project_key_not_the_reference(by_reference):
     """`…/project/ACR1275` answers HTTP 200 with a shell that renders an error.
 
@@ -410,6 +486,32 @@ def test_no_country_name_is_published_and_none_is_invented(projects):
     assert all(row["country_code"] for row in projects)
 
 
+def test_the_namibian_country_code_survives_the_placeholder_table():
+    """`NA` is Namibia, and this registry states a country as a code only.
+
+    Three adapters here list `na` as "not stated" and Puro carries an empty
+    table on purpose for exactly this reason. ACR does need a table — its
+    `projectListingStatus` really does say `N/A` — so the ambiguous entry is
+    dropped for the country field alone, and running the full table over an
+    ISO code would delete a Namibian project's only country value and take its
+    Continent with it.
+    """
+    namibia = acr.normalize_project({"projectId": "ACR9999", "country": "NA"}, {})
+    assert namibia["country_code"] == "NA"
+
+    from_detail = acr.normalize_project(
+        {"projectId": "ACR9998"}, {"projectSiteLocCountry": "na"}
+    )
+    assert from_detail["country_code"] == "na"
+
+    # The unambiguous placeholder is still read as one, and the table still
+    # applies in full to every field that is not a country code.
+    blank = acr.normalize_project({"projectId": "ACR9997", "country": "N/A"}, {})
+    assert blank["country_code"] is None
+    assert acr._stated("NA") is None
+    assert "na" in acr.NOT_STATED and "na" not in acr.NOT_STATED_CODE
+
+
 def test_the_deliberate_blanks_stay_blank(projects):
     """Measured over the full 994-project index; see docs/field-mapping.md."""
     for row in projects:
@@ -448,6 +550,40 @@ def test_the_registrys_own_double_registration_flags_are_kept(adapter):
     """
     rows = [raw["detail"] for _row, raw in adapter.iter_projects()]
     assert all("hasAnotherCarbonProgram" in detail for detail in rows)
+
+
+def test_a_stated_total_of_zero_is_kept_and_a_false_flag_is_not(projects):
+    """`0 == False` in Python, and the extra filter used to drop both.
+
+    A project that has issued credits and retired none states
+    `projectHoldingsTotalRetiredQuantity: 0`. Dropping it makes that
+    indistinguishable from a project the registry published no figure for,
+    which defeats the reason the stated totals are stored at all — being able
+    to answer the day they disagree with the ledgers without re-scraping. The
+    false flag is still dropped: `hasAnotherCarbonProgram` is false on 978 of
+    994 projects and its absence says the same thing.
+    """
+    row = acr.normalize_project(
+        {"projectId": "ACR9999", "projectName": "Zero"},
+        {
+            "projectHoldingsTotalRetiredQuantity": 0,
+            "projectSiteLocLatitude": 0.0,
+            "hasAnotherCarbonProgram": False,
+            "hasAnotherEnvironmentalMarket": True,
+        },
+    )
+    assert row["extra"]["stated_retired_total"] == 0.0
+    assert row["extra"]["latitude"] == 0.0
+    assert "has_another_carbon_program" not in row["extra"]
+    assert row["extra"]["has_another_environmental_market"] is True
+
+
+def test_no_real_project_loses_a_value_to_the_extra_filter(projects):
+    """The fixtures' own rows, so the fix is checked against captured data too."""
+    assert any(row["extra"] for row in projects)
+    assert all(
+        "" not in (row["extra"] or {}).values() for row in projects
+    )
 
 
 def test_tipo_macro_carries_the_registrys_own_vocabulary(projects):
@@ -649,6 +785,40 @@ def test_an_ordinary_http_error_is_not_dressed_up_as_a_block(adapter, client):
 
     client.post_form = not_found
     with pytest.raises(httpx.HTTPStatusError):
+        adapter.project_total()
+
+
+def test_a_429_is_reported_as_a_block_too(adapter, client):
+    """The rate-limit refusal never arrives as an `HTTPStatusError`.
+
+    `http_client` raises `RetryableStatus` for a 429 before the response can
+    reach `raise_for_status()`, so catching only `HTTPStatusError` left the
+    429 arm of `_blocked` unreachable — and this is the refusal ACR actually
+    documents, at roughly 100 requests in ten minutes with
+    `Retry-After: 3600`. It surfaced as a bare `RetryableStatus: 429 from …`,
+    which in the window is a traceback file rather than the message saying the
+    run resumes from the cache.
+    """
+    def rate_limited(url, form_body, *, headers=None, **kwargs):
+        raise RetryableStatus(f"429 from {url}", 3600.0, 429)
+
+    client.post_form = rate_limited
+    with pytest.raises(greentrace.GreenTraceBlocked, match="block, not a missing"):
+        adapter.project_total()
+
+
+def test_a_retryable_500_is_not_dressed_up_as_a_block(adapter, client):
+    """The platform's generic fault is an unmapped path or a bad body.
+
+    Both answer HTTP 500, both reach here as `RetryableStatus`, and neither
+    clears by waiting — so telling the operator to re-run later would send
+    them away from the actual cause.
+    """
+    def faulted(url, form_body, *, headers=None, **kwargs):
+        raise RetryableStatus(f"500 from {url}", None, 500)
+
+    client.post_form = faulted
+    with pytest.raises(RetryableStatus):
         adapter.project_total()
 
 

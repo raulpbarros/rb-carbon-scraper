@@ -1,0 +1,120 @@
+Carbon Registry Scraper — install and run
+==========================================
+
+This is the whole app. No installer, no .exe — you run it from the
+downloaded folder. Takes about 5 minutes to set up.
+
+
+1) Install Python (skip if you already have it)
+-------------------------------------------------
+
+You need Python 3.11 or newer.
+
+  https://www.python.org/downloads/
+
+On the first install screen, TICK "Add python.exe to PATH" before
+clicking Install. If you miss this, the commands below won't work.
+
+Check it worked — open a terminal (search "PowerShell" in the Start
+menu) and type:
+
+  python --version
+
+Should print something like "Python 3.12.4". If it says "not
+recognized", Python isn't on PATH — reinstall and tick the box.
+
+
+2) Get the code
+-----------------
+
+Easiest way, no Git needed:
+
+  - Go to the GitHub repo page
+  - Click the green "Code" button -> "Download ZIP"
+  - Extract the ZIP somewhere (e.g. Documents\CarbonScraper)
+
+(If you have Git installed, `git clone <repo-url>` works too, and
+makes it easier to pull updates later.)
+
+
+3) Set up (one-time)
+-----------------------
+
+Open PowerShell, move into the extracted folder, then run these
+four commands one at a time:
+
+  cd path\to\CarbonScraper
+  python -m venv .venv
+  .venv\Scripts\activate
+  pip install -e .
+
+That last one downloads the app's dependencies. Takes a minute or
+two. You'll know it worked if it ends without red error text.
+
+If someone gave you a `carbon-seed.db` file (a starter database with
+all registries already scraped), put it here before continuing:
+
+  mkdir seed
+  (then copy carbon-seed.db into the new "seed" folder)
+
+Without it, the app starts with an empty database — you'd have to
+run a scrape yourself before there's anything to export (see step 5).
+
+
+4) Run it
+-----------
+
+Every time you want to open the app:
+
+  cd path\to\CarbonScraper
+  .venv\Scripts\activate
+  carbon-gui
+
+A window opens. Tick the registries you want, pick an output folder,
+and press a button:
+
+  - "Export Excel" — writes the next spreadsheet from data already
+    in the database. Seconds, no internet needed. Use this one.
+  - "Update registry data" — re-scrapes the registries from the
+    internet. Takes HOURS (some registries are slow on purpose, to
+    be polite to the site). You don't need this unless you want
+    fresher data than what's already there.
+
+Every export writes a NEW file (carbon-projects_v1.xlsx, _v2, _v3,
+...) and never overwrites an old one — so a spreadsheet you already
+sent someone stays exactly as it was.
+
+
+5) If you'd rather use the command line instead of the window
+-----------------------------------------------------------------
+
+Same setup as above, then:
+
+  verra sync        # scrape every registry (slow — hours)
+  verra totals       # exact Verra credit totals
+  verra derive       # apply classification rules
+  verra export       # write the next spreadsheet
+
+  verra status       # see row counts / when each registry was last scraped
+  verra --help        # everything else
+
+
+Troubleshooting
+------------------
+
+"python" / "carbon-gui" / "verra" not recognized
+  -> You forgot `.venv\Scripts\activate` in this terminal window.
+     Run it again (every new terminal needs it once).
+
+pip install fails
+  -> Check `python --version` is 3.11+. Older Python won't work.
+
+The app opens but the spreadsheet export is empty
+  -> No database yet. Either drop a carbon-seed.db into the `seed`
+     folder (step 3) or run a scrape first ("Update registry data"
+     in the window, or `verra sync` on the command line).
+
+Anything else
+  -> See README.md and CLAUDE.md in the repo folder — much more
+     detail on how each registry is scraped and what each column
+     in the spreadsheet means.

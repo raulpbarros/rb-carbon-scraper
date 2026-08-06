@@ -1,0 +1,806 @@
+	
+<SCRIPT language="JavaScript">
+    function addhiddenCsrfInputToQTable() {
+        setTimeout(function () {
+            const elements = document.querySelectorAll("[id='xxxx2']");
+
+			for (var i = 0; i < elements.length; i++) {
+                if (elements[i].querySelectorAll(":scope > [name='c16e']").length == 0) {
+                    const hiddenInput = document.createElement('input');
+                    hiddenInput.setAttribute('type', "hidden");
+                    hiddenInput.setAttribute('name', "c16e");
+                    hiddenInput.setAttribute('value', '4415d0302cb98e785834346d0f6d32f8');
+                    elements[i].appendChild(hiddenInput);
+				}
+            }
+        }, 1000);		
+	}
+
+    window.addEventListener('load', function () {
+        addhiddenCsrfInputToQTable();
+    });
+
+</SCRIPT>
+
+
+
+
+
+<SCRIPT language="javascript">
+    //---timer start here
+    var timeInSecs
+    var timerID = null
+    var runningTimer = false
+    var delay = 1000
+
+    function InitializeScriptTimer(sec)
+    {
+        //--Set the timer in seconds--
+        timeInSecs = sec
+         StopPageClock()
+        StartPageTimer()
+    }
+
+    function StopPageClock()
+    {
+        if(runningTimer)
+            clearTimeout(timerID)
+        runningTimer = false
+    }
+
+    function StartPageTimer()
+    {
+        if (timeInSecs == 600)
+        {
+            StopPageClock()
+            modalWin(timeInSecs)
+            InitializeScriptTimer(1800);
+        }
+        else
+        {
+            timeInSecs = timeInSecs - 1
+            runningTimer = true
+            timerID = self.setTimeout("StartPageTimer()", delay)
+
+        }
+        return;
+    }
+
+    function modalWin(sec)
+    {
+        if (window.showModalDialog)
+        {
+           window.showModalDialog("/myModule/include/displayWarning.asp?t="+ timeInSecs,"Warning","dialogWidth:550px;dialogHeight:240px;status:no;center:yes;dialogTop:285;dialogLeft:275");
+        }
+        else
+        {
+           window.open('/myModule/include/displayWarning.asp?t="+ timeInSecs','Warning','width=550,height=240,toolbar=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,modal=yes');
+        }
+    }
+</script>
+<script language="javascript">
+var defaultEmptyOK = false
+function isDigit (c)
+{   return ((c >= "0") && (c <= "9"))
+}
+
+function isEmpty(s)
+{   return ((s == null) || (s.length == 0))
+}
+
+function isInteger (s)
+
+{   var i;
+
+    if (isEmpty(s)) 
+       if (isInteger.arguments.length == 1) return defaultEmptyOK;
+       else return (isInteger.arguments[1] == true);
+
+    // Search through string's characters one by one
+    // until we find a non-numeric character.
+    // When we do, return false; if we don't, return true.
+
+    for (i = 0; i < s.length; i++)
+    {   
+        // Check that current character is number.
+        var c = s.charAt(i);
+
+        if (!isDigit(c)) return false;
+    }
+
+    // All characters are numbers.
+    return true;
+}
+
+function validate_input(total_column) {	
+	var str = document.form1.sortby.value;
+	while ( str != "") {
+		if ( str.indexOf(",") == -1 ) { 
+			if ( str > total_column || str <= 0 || isInteger(str) == false  ) {
+				alert("The column number " + str + " doesn't exist, please re-enter!")
+				return false
+			}	
+			else 
+				return true
+		}	
+		else {			
+			if ( str.substring(0,str.indexOf(",")) > total_column || str.substring(0,str.indexOf(",")) <= 0 || isInteger(str.substring(0,str.indexOf(","))) == false  )	{		
+				alert("The column number " +str.substring(0,str.indexOf(",")) + " doesn't exist, please re-enter!")
+				return false
+			}			
+			else 
+				str = str.substring(str.indexOf(",")+1)			
+		}			
+	}	
+    return false  
+}
+
+function PrintVersion(title) 
+{
+	document.xxxx2.action="rpt_prn.asp?title=" +title
+	document.xxxx2.submit();
+	return false;
+}
+</script>
+
+
+
+
+<SCRIPT language="javascript">
+function iUtils_onCancel(){
+	window.location = "/myModule/mypage.asp";
+}
+
+function iUtils_checkDblQuotes(element){
+	var allItem, i;
+	var a = '"';
+	allItem = element;
+	if (allItem != null){
+		if (allItem.length != null) {
+			for (i=0; i< allItem.length; i++){
+			var s = allItem[i].value;
+				if (s.indexOf(a) != -1){
+					alert("The input data can not contain the " + '"' + " character.");
+					return false;
+				}
+			}
+		}
+	}
+	return true;
+}
+</SCRIPT>
+
+
+<LINK rel="stylesheet" href="/Css/main.css" type="text/css">
+<HTML>
+
+<SCRIPT language="JavaScript">
+
+function onQuantityView(riid,peid,count)
+{
+  if (count == 1)
+    window.location = "/mymodule/rpt/CertificateInfo.asp?riId=" + riid;
+  else
+    window.location = "/myModule/rpt/myrpt.asp?r=203&peid=" + peid;
+}
+
+function fnProjectStatusTypes() {
+    window.open('ProjectStatusTypes.asp', 'ProjectStatusTypes', 'height=300px,width=750px,toolbar=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=no ,modal=yes');
+}
+
+</SCRIPT>
+
+<HEAD>
+
+</HEAD>
+<BODY>
+
+
+
+	<div class="headerBarSection">
+		<div class="left">
+			&nbsp;&nbsp;&nbsp;<a href="/mymodule/mypage.asp" title="View Home Page"><img  src="/images/logo.gif"></a>
+		</div>
+		<div class="right">
+			&nbsp;
+		</div>
+	</div>
+
+    <div class="infoBarSection">
+	    <div class="left">
+		    <a href='/mymodule/mypage.asp' title="Home">Home</a></span>
+	    </div>
+	    <!--div class="right">
+		    <a href="/mymodule/myhelp.asp?id=/myModule/rpt/myrpt.asp" target="myHelp" title="View Help">Help</a>
+	    </div-->
+    </div>
+
+	<script language="javascript">
+		function downloadnow(iFormatType) {
+			var hdnFormatType = eval("frmDownload.FormatType");
+			switch(iFormatType)
+			{
+				case 1: hdnFormatType.value = "csv"; break;
+				case 2: hdnFormatType.value = "txt"; break;
+				case 3: hdnFormatType.value = "pdf"; break;
+			}
+
+			frmDownload.submit ();
+		}
+
+		function printnow() {
+			window.open("","PrintPreview","width=800px, resizable=yes, height=300, top=" + (window.screenTop + 50) + ", scrollbars=yes, status=no"); 
+			frmPrint.target = "PrintPreview"    
+			frmPrint.action = "/myModule/include/print.asp?printid=" + 0;
+			frmPrint.submit ();
+		}
+
+		function pdfnow() {
+			frmPrint.action = "/myModule/include/print.asp?printid=" + 1;
+			frmPrint.target = ""    
+			frmPrint.submit ();
+		}
+
+		function ReportExportRequestnow() {
+			window.open("","PrintPreview","width=800px, resizable=yes, height=600, top=" + (window.screenTop + 50) + ", scrollbars=yes, status=no"); 
+		    frmPrint.target = "PrintPreview"
+			frmPrint.action = "/myModule/include/ReportExportRequest.asp";
+			frmPrint.submit ();
+		}
+	</script>
+	
+	<script language="javascript">
+		function requery() {
+			alert('requery');
+		}
+
+		function searchnow() {
+			window.open ("","SearchReport","height=100, width=345, top=" + (window.screenTop + 50) +", left=" + (window.screenLeft + window.document.body.clientWidth/2 - 150) + ", resizable=yes, scrollbars=yes, status=no "); 
+			
+			frmSearch.action = "/myModule/include/search.asp";
+			frmSearch.submit ();
+		}
+
+		function removesearch() {
+			frmRequery.X999mydata.value = "";
+			frmRequery.IsSearch.value    = "";
+			frmRequery.InProcess.value = "";
+			frmRequery.submit();
+		}
+		
+	</script>
+	<FORM id="frmRequery" name="frmRequery" METHOD="POST" onsubmit="requery();">
+		<input type="hidden" name="c16e" value="4415d0302cb98e785834346d0f6d32f8">
+	<INPUT type="hidden" id="ParametersOriginal"    name="ParametersOriginal"    value = "">
+	
+		<input type="hidden" name="Vintage" value="">
+		<input type="hidden" name="Offset&#32;Credit&#32;Serial&#32;Numbers" value="">
+		<input type="hidden" name="Quantity&#32;of&#32;Offset&#32;Credits" value="">
+		<input type="hidden" name="Status&#32;Effective" value="">
+		<input type="hidden" name="Project&#32;ID" value="">
+		<input type="hidden" name="FacilityName" value="">
+		<input type="hidden" name="Project&#32;Type" value="">
+		<input type="hidden" name="ftType" value="">
+		<input type="hidden" name="Reduction&#47;Removal" value="">
+		<input type="hidden" name="Reversible&#47;Non&#45;Reversible" value="">
+		<input type="hidden" name="Protocol&#32;and&#32;Version" value="">
+		<input type="hidden" name="Project&#32;Site&#32;Location" value="">
+		<input type="hidden" name="Project&#32;Site&#32;State" value="">
+		<input type="hidden" name="Project&#32;Site&#32;Country" value="">
+		<input type="hidden" name="Activity&#32;Area&#32;Type" value="">
+		<input type="hidden" name="Additional&#32;Certification&#40;s&#41;" value="">
+		<input type="hidden" name="Eligible&#32;for&#32;CORSIA&#32;2021&#45;2023&#32;Compliance&#32;Period" value="">
+		<input type="hidden" name="Eligible&#32;for&#32;CORSIA&#32;2024&#45;2026&#32;Compliance&#32;Period" value="">
+		<input type="hidden" name="Corresponding&#32;Adjustment" value="">
+		<input type="hidden" name="CCP&#32;Approved" value="">
+		<input type="hidden" name="Other&#32;Attributes&#32;here" value="">
+		<input type="hidden" name="ahid" value="">
+		<input type="hidden" name="Account&#32;Holder" value="">
+		<input type="hidden" name="Retirement&#32;Reason" value="">
+		<input type="hidden" name="Retirement&#32;Reason&#32;Details" value="">
+		<input type="hidden" name="Make&#32;Public" value="">
+		<input type="hidden" name="rhid" value="">
+		<input type = "hidden" name = "X999mydata"     value = "Stamp&#95;0" />
+		<input type = "hidden" name = "myWHERE"     value = "" />
+        <input type = "hidden" name = "myFilter"     value = "" />				
+		<input type = "hidden" name = "X999tablenumber" value = "2" />
+		<input type = "hidden" name = "X999csv"         value = "" />
+		<input type = "hidden" name = "X999sort"        value = "" />
+		<input type = "hidden" name = "X999action"      value = "search" />
+		<input type = "hidden" name = "X999actionfield" value = "" />
+		<input type = "hidden" name = "X999field"       value = "" />
+		<input type = "hidden" name = "X999paging"      value = "" />
+		<input type = "hidden" name = "X999whichpage"   value = "" />
+		<input type = "hidden" name = "InProcess"	    value = "" />
+		<input type = "hidden" name = "Length"          value = "7" />		
+		<INPUT type = "hidden" name = "IsSearch"        value = "Yes">
+	</FORM>
+	
+	<FORM id="frmSearch" name="frmSearch" Target="SearchReport"  ACTION="/myModule/include/search.asp" METHOD="POST">
+		<input type="hidden" name="c16e" value="4415d0302cb98e785834346d0f6d32f8">
+		<INPUT type="hidden" id="Data"          name="Data"          value = "Stamp&#95;0">
+		<INPUT type="hidden" id="Title"         name="Title"         value = "Retired&#32;Offset&#32;Credits">
+		<INPUT type="hidden" id="SortOrder"     name="SortOrder"     value = "">
+		<INPUT type="hidden" id="Exclude"       name="Exclude"       value = "&#44;rhid&#44;ftType&#44;Other&#32;Attributes&#32;here&#44;Make&#32;Public&#44;ahid&#44;">
+		<INPUT type="hidden" id="YesNo"         name="YesNo"         value = "">
+		<INPUT type="hidden" id="Columns"       name="Columns"       value = "all&#44;Account&#32;Holder&#44;Quantity&#32;of&#32;Offset&#32;Credits&#44;FacilityName&#44;Email&#44;Status&#32;Effective&#44;CCP&#32;Approved">
+		<INPUT type="hidden" id="Masks"         name="Masks"         value = "&#124;&#124;&#124;&#124;&#124;MM&#47;DD&#47;YYYY&#124;">
+		<INPUT type="hidden" id="SearchFields"  name="SearchFields"  value = "">
+		<INPUT type="hidden" id="ReplaceFields" name="ReplaceFields" value = "No">
+		<INPUT type="hidden" id="Headings"      name="Headings"      value = "&#44;&#44;&#44;Project&#32;Name&#44;&#44;&#44;ICVCM&#32;CCP&#32;Eligible">
+		<INPUT type="hidden" id="Parameters"    name="Parameters"    value = "">
+		<INPUT type="hidden" id="ParametersOriginal"    name="ParametersOriginal"    value = "">
+		
+	</FORM>
+	
+	<FORM id="frmPrint" name="frmPrint" ACTION="/myModule/include/print.asp" METHOD="POST">
+		<input type="hidden" name="c16e" value="4415d0302cb98e785834346d0f6d32f8">
+		<INPUT type="hidden" name="myFilter" value="">			
+		<INPUT type="hidden" id="FontSize"   name="FontSize"   value = "">
+		<INPUT type="hidden" id="Data"       name="Data"        value = "Stamp&#95;0">
+		<INPUT type="hidden" id="Title"      name="Title"      value = "Retired&#32;Offset&#32;Credits">
+		<INPUT type="hidden" id="Exclude"    name="Exclude"    value = "&#44;rhid&#44;ftType&#44;Other&#32;Attributes&#32;here&#44;Make&#32;Public&#44;ahid&#44;">
+		<INPUT type="hidden" id="Align"      name="Align"      value = "&#44;&#44;right&#44;&#44;&#44;&#44;">
+		<INPUT type="hidden" id="ColWidth"   name="ColWidth"   value = "&#44;&#44;&#44;&#44;&#44;&#44;">
+		<INPUT type="hidden" id="Columns"    name="Columns"    value = "all&#44;Account&#32;Holder&#44;Quantity&#32;of&#32;Offset&#32;Credits&#44;FacilityName&#44;Email&#44;Status&#32;Effective&#44;CCP&#32;Approved">
+		<INPUT type="hidden" id="Masks"      name="Masks"      value = "&#124;&#124;&#124;&#124;&#124;MM&#47;DD&#47;YYYY&#124;">
+		<INPUT type="hidden" id="ClassMasks" name="ClassMasks" value = "&#44;&#44;&#35;&#46;0&#44;&#44;&#44;&#44;">
+		<INPUT type="hidden" id="Headings"   name="Headings"   value = "&#44;&#44;&#44;Project&#32;Name&#44;&#44;&#44;ICVCM&#32;CCP&#32;Eligible">
+		<INPUT type="hidden" id="Parameters"    name="Parameters"    value = "">
+		<INPUT type="hidden" id="ParametersOriginal"    name="ParametersOriginal"    value = "">
+		<INPUT type="hidden" id="SortOrder"  name="SortORder"  value = "">
+		<INPUT type="hidden" id="ReplaceExpression"	 name="ReplaceExpression"	value = "">
+		<INPUT type="hidden" id="ReplaceValue"	 name="ReplaceValue"	    value = "">
+
+		<INPUT type="hidden" id="GrandTotalSQL"  name="GrandTotalSQL"  value = "">
+		<INPUT type="hidden" id="GrandTotalExclude"  name="GrandTotalExclude"  value = "">
+		<INPUT type="hidden" id="GrandTotalText"  name="GrandTotalText"  value = "">
+
+		<INPUT type="hidden" id="PrintAlignment" name="PrintAlignment" value = "">		
+		<INPUT type="hidden" id="PrintColWidth"  name="PrintColWidth"  value = "">		
+		<INPUT type="hidden" id="PrintMasks"     name="PrintMasks"     value = "">		
+		<INPUT type="hidden" id="PrintHeadings"  name="PrintHeadings"  value = "">		
+		<INPUT type="hidden" id="Orientation"    name="Orientation"    value = "">		
+		<INPUT type="hidden" id="WireInfo"      name="WireInfo"         value = "">		
+	</FORM>
+
+	<FORM id="frmDownload" name="frmDownload" ACTION="/myModule/include/rptdownload.asp" METHOD="POST">
+		<input type="hidden" name="c16e" value="4415d0302cb98e785834346d0f6d32f8">
+		<INPUT type="hidden" name="myFilter" value="">			
+		<INPUT type="hidden" id="Data"       name="Data"       value = "Stamp&#95;0">
+		<INPUT type="hidden" id="Title"      name="Title"      value = "Retired&#32;Offset&#32;Credits">
+		<INPUT type="hidden" id="Exclude"    name="Exclude"    value = "&#44;rhid&#44;ftType&#44;Other&#32;Attributes&#32;here&#44;Make&#32;Public&#44;ahid&#44;">
+		<INPUT type="hidden" id="Columns"    name="Columns"    value = "all&#44;Account&#32;Holder&#44;Quantity&#32;of&#32;Offset&#32;Credits&#44;FacilityName&#44;Email&#44;Status&#32;Effective&#44;CCP&#32;Approved">
+		<INPUT type="hidden" id="Masks"      name="Masks"      value = "&#124;&#124;&#124;&#124;&#124;MM&#47;DD&#47;YYYY&#124;">
+		<INPUT type="hidden" id="ClassMasks" name="ClassMasks" value = "&#44;&#44;&#35;&#46;0&#44;&#44;&#44;&#44;">
+		<INPUT type="hidden" id="Headings"   name="Headings"   value = "&#44;&#44;&#44;Project&#32;Name&#44;&#44;&#44;ICVCM&#32;CCP&#32;Eligible">
+		<INPUT type="hidden" id="Parameters"    name="Parameters"    value = "">
+		<INPUT type="hidden" id="ParametersOriginal"    name="ParametersOriginal"    value = "">
+		<INPUT type="hidden" id="SortOrder"  name="SortORder"  value = "">
+		<INPUT type="hidden" id="FormatType"  name="FormatType"  value = "csv">
+		<INPUT type="hidden" id="ReplaceExpression"	 name="ReplaceExpression"	value = "">
+		<INPUT type="hidden" id="ReplaceValue"	 name="ReplaceValue"	    value = "">
+</FORM>
+
+
+	<TABLE  CELLSPACING=2 CELLPADDING="0" ALIGN="center" BGCOLOR="#FFFFFF">
+		<TR>
+			<TD  ALIGN="center" colspan=2>
+	<form id="xxxx2" name="xxxx2" action = "/myModule/rpt/myrpt.asp" method = "POST">
+<table  border="0" cellspacing="0" cellpadding="0"><tr bgcolor="#92b7d6" align="Center"><td><font face="verdana" size="3">	<Font Color='#ffffff'>                
+		<TABLE WIDTH='100%'>                                             
+			<TR>                                                         
+				<TD align='center'><font Color='#FFFFFF'><B>Retired Offset Credits</B></font></TD>             
+				<TD width='20' align='right'>                            
+					<A title='Advanced Search'      
+                    href ='javascript:searchnow();'>                   
+						<IMG name='SearchICon' id='SearchIcon' SRC='/images/search.gif'  BORDER='0'> 
+					</A>                                                 
+				</TD>                                                    
+				<TD width='20' align='right'>                            
+					<A title='Download this report in CSV format'      
+                    href ='javascript:downloadnow(1);'>                   
+						<IMG name='downloadICon' id='downloadIcon' SRC='/images/download.gif'  BORDER='0'> 
+					</A>                                                 
+				</TD>                                                    
+				<TD width='20' align='right'>                            
+					<A title='Download this report in TXT format'      
+                    href ='javascript:downloadnow(2);'>                   
+						<IMG name='downloadICon' id='downloadtxtIcon' SRC='/images/download2.gif'  BORDER='0'> 
+					</A>                                                 
+				</TD>                                                    
+				<TD width='20' align='right'>                            
+					<A title='Show printer friendly report preview'      
+                    href ='javascript:printnow();'>                   
+						<IMG SRC='/images/print.gif'  BORDER='0'> 
+					</A>                                                 
+				</TD>                                                    
+				<TD width='20' align='right'>                            
+					<A title='Download this report in PDF format'      
+                    href ='javascript:pdfnow();'>                   
+						<IMG SRC='/images/pdf_button.gif'  BORDER='0'> 
+					</A>                                                 
+				</TD>                                                    
+			</TR>                                                        
+		</TABLE>                                                         
+	</FONT>                                                              
+</font></td></tr><tr><td><table  width="100%"  cellspacing = "2" cellPadding = "5" bgcolor="#F3F3ED">
+<tr>
+<td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Vintage&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Vintage column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','Vintage','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Vintage column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','Vintage','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Offset Credit Serial Numbers&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Offset Credit Serial Numbers column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','Offset Credit Serial Numbers','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Offset Credit Serial Numbers column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','Offset Credit Serial Numbers','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Quantity of Offset Credits&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Quantity of Offset Credits column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','Quantity of Offset Credits','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Quantity of Offset Credits column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','Quantity of Offset Credits','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Status Effective&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Status Effective column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','Status Effective','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Status Effective column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','Status Effective','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Project ID&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Project ID column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','Project ID','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Project ID column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','Project ID','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Project Name&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Project Name column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','FacilityName','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Project Name column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','FacilityName','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Project Type&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Project Type column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','Project Type','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Project Type column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','Project Type','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Reduction/Removal&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Reduction/Removal column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','Reduction/Removal','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Reduction/Removal column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','Reduction/Removal','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Reversible/Non-Reversible&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Reversible/Non-Reversible column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','Reversible/Non-Reversible','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Reversible/Non-Reversible column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','Reversible/Non-Reversible','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Protocol and Version&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Protocol and Version column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','Protocol and Version','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Protocol and Version column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','Protocol and Version','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Project Site Location&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Project Site Location column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','Project Site Location','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Project Site Location column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','Project Site Location','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Project Site State&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Project Site State column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','Project Site State','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Project Site State column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','Project Site State','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Project Site Country&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Project Site Country column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','Project Site Country','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Project Site Country column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','Project Site Country','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Activity Area Type&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Activity Area Type column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','Activity Area Type','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Activity Area Type column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','Activity Area Type','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Additional Certification(s)&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Additional Certification(s) column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','Additional Certification(s)','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Additional Certification(s) column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','Additional Certification(s)','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Eligible for CORSIA 2021-2023 Compliance Period&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Eligible for CORSIA 2021-2023 Compliance Period column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','Eligible for CORSIA 2021-2023 Compliance Period','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Eligible for CORSIA 2021-2023 Compliance Period column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','Eligible for CORSIA 2021-2023 Compliance Period','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Eligible for CORSIA 2024-2026 Compliance Period&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Eligible for CORSIA 2024-2026 Compliance Period column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','Eligible for CORSIA 2024-2026 Compliance Period','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Eligible for CORSIA 2024-2026 Compliance Period column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','Eligible for CORSIA 2024-2026 Compliance Period','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Corresponding Adjustment&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Corresponding Adjustment column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','Corresponding Adjustment','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Corresponding Adjustment column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','Corresponding Adjustment','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">ICVCM CCP Eligible&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort ICVCM CCP Eligible column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','CCP Approved','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort ICVCM CCP Eligible column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','CCP Approved','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Account Holder&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Account Holder column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','Account Holder','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Account Holder column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','Account Holder','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Retirement Reason&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Retirement Reason column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','Retirement Reason','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Retirement Reason column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','Retirement Reason','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td><td valign="middle"  align="center"  bgcolor="#92b7d6"  ><font style="font-size: 9pt;"  color="#FFFFFF">Retirement Reason Details&nbsp;&nbsp;<a  onmouseover="javascript:window.status='Sort Retirement Reason Details column ascending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Asc','Retirement Reason Details','','','','','')"><img alt="sort ascending" border = "0" src = "/ImgTable/up.gif"/></a><a  onmouseover="javascript:window.status='Sort Retirement Reason Details column descending'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:submitform2('Desc','Retirement Reason Details','','','','','')"><img alt="sort descending" border = "0" src = "/ImgTable/down.gif"/></a></font></td></tr>
+<tr>
+<td bgcolor="FFFFFF">2026</td>
+<td bgcolor="FFFFFF">CAR-1-US-1480-46-1156-FL-2026-10272-915425 to 915425</td>
+<td bgcolor="FFFFFF" align="right"><a href="/mymodule/rpt/CertificateInfo.asp?rhid=21068&ftType=PRO&r=206&ad=Prpt&act=update&type=PRO&aProj=icrt&tablename=doc">1</a></td>
+<td bgcolor="FFFFFF">07/31/2026</td>
+<td bgcolor="FFFFFF">CAR1480</td>
+<td bgcolor="FFFFFF">Phlogiston Phase I</td>
+<td bgcolor="FFFFFF">Adipic Acid</td>
+<td bgcolor="FFFFFF">Reduction</td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF">Adipic Acid - Version 1.0</td>
+<td bgcolor="FFFFFF">Cantonment, FL</td>
+<td bgcolor="FFFFFF">FLORIDA</td>
+<td bgcolor="FFFFFF">US</td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF">N/A</td>
+<td bgcolor="FFFFFF">N/A</td>
+<td bgcolor="FFFFFF">No</td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF"><a onmouseover="javascript:window.status='Click here to view information about the Ascend Performance Materials Operations LLC account.'; return true;" onmouseout="javascript:window.status=''; return true;" href="/mymodule/reg/accview.asp?id1=1156">Ascend Performance Materials Operations LLC</a></td>
+<td bgcolor="FFFFFF">Environmental Benefit</td>
+<td bgcolor="FFFFFF">Remove impact of generated credits on PCF disclosures</td>
+</tr><tr>
+<td bgcolor="eef6f9">2026</td>
+<td bgcolor="eef6f9">CAR-1-US-1480-46-1156-FL-2026-10272-852724 to 860723</td>
+<td bgcolor="eef6f9" align="right"><a href="/mymodule/rpt/CertificateInfo.asp?rhid=20427&ftType=PRO&r=206&ad=Prpt&act=update&type=PRO&aProj=icrt&tablename=doc">8,000</a></td>
+<td bgcolor="eef6f9">06/16/2026</td>
+<td bgcolor="eef6f9">CAR1480</td>
+<td bgcolor="eef6f9">Phlogiston Phase I</td>
+<td bgcolor="eef6f9">Adipic Acid</td>
+<td bgcolor="eef6f9">Reduction</td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9">Adipic Acid - Version 1.0</td>
+<td bgcolor="eef6f9">Cantonment, FL</td>
+<td bgcolor="eef6f9">FLORIDA</td>
+<td bgcolor="eef6f9">US</td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9">N/A</td>
+<td bgcolor="eef6f9">N/A</td>
+<td bgcolor="eef6f9">No</td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9"><a onmouseover="javascript:window.status='Click here to view information about the ClimeCo LLC account.'; return true;" onmouseout="javascript:window.status=''; return true;"   href="/mymodule/reg/accview.asp?id1=386">ClimeCo LLC</a></td>
+<td bgcolor="eef6f9">On Behalf of Third Party</td>
+<td bgcolor="eef6f9">On behalf of Allegheny College for 2026 emissions</td>
+</tr><tr>
+<td bgcolor="FFFFFF">2026</td>
+<td bgcolor="FFFFFF">CAR-1-US-1480-46-1156-FL-2026-10272-869623 to 915424</td>
+<td bgcolor="FFFFFF" align="right"><a href="/mymodule/rpt/CertificateInfo.asp?rhid=20470&ftType=PRO&r=206&ad=Prpt&act=update&type=PRO&aProj=icrt&tablename=doc">45,802</a></td>
+<td bgcolor="FFFFFF">07/31/2026</td>
+<td bgcolor="FFFFFF">CAR1480</td>
+<td bgcolor="FFFFFF">Phlogiston Phase I</td>
+<td bgcolor="FFFFFF">Adipic Acid</td>
+<td bgcolor="FFFFFF">Reduction</td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF">Adipic Acid - Version 1.0</td>
+<td bgcolor="FFFFFF">Cantonment, FL</td>
+<td bgcolor="FFFFFF">FLORIDA</td>
+<td bgcolor="FFFFFF">US</td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF">N/A</td>
+<td bgcolor="FFFFFF">N/A</td>
+<td bgcolor="FFFFFF">No</td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF"><a onmouseover="javascript:window.status='Click here to view information about the Ascend Performance Materials Operations LLC account.'; return true;" onmouseout="javascript:window.status=''; return true;"     href="/mymodule/reg/accview.asp?id1=1156">Ascend Performance Materials Operations LLC</a></td>
+<td bgcolor="FFFFFF">Environmental Benefit</td>
+<td bgcolor="FFFFFF">Remove impact of generated credits on PCF disclosures</td>
+</tr><tr>
+<td bgcolor="eef6f9">2025</td>
+<td bgcolor="eef6f9">CAR-1-US-1335-31-983-KS-2025-9659-73627 to 74197</td>
+<td bgcolor="eef6f9" align="right"><a href="/mymodule/rpt/CertificateInfo.asp?rhid=20785&ftType=PRO&r=206&ad=Prpt&act=update&type=PRO&aProj=icrt&tablename=doc">571</a></td>
+<td bgcolor="eef6f9">06/24/2026</td>
+<td bgcolor="eef6f9">CAR1335</td>
+<td bgcolor="eef6f9">Coffeyville NAP2</td>
+<td bgcolor="eef6f9">Nitric Acid N2O- Tertiary Catalyst</td>
+<td bgcolor="eef6f9">Reduction</td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9">Nitric Acid N2O- Tertiary Catalyst - Version 3.0</td>
+<td bgcolor="eef6f9">Coffeyville, Kansas</td>
+<td bgcolor="eef6f9">KANSAS</td>
+<td bgcolor="eef6f9">US</td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9">No</td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9"><a onmouseover="javascript:window.status='Click here to view information about the Maple Leaf Foods account.'; return true;" onmouseout="javascript:window.status=''; return true;"       href="/mymodule/reg/accview.asp?id1=1132">Maple Leaf Foods</a></td>
+<td bgcolor="eef6f9">Environmental Benefit</td>
+<td bgcolor="eef6f9">Maintain Carbon Neutrality (Greenleaf Foods SPC)</td>
+</tr><tr>
+<td bgcolor="FFFFFF">2025</td>
+<td bgcolor="FFFFFF">CAR-1-US-1335-31-983-KS-2025-9205-1 to 5000</td>
+<td bgcolor="FFFFFF" align="right"><a href="/mymodule/rpt/CertificateInfo.asp?rhid=17908&ftType=PRO&r=206&ad=Prpt&act=update&type=PRO&aProj=icrt&tablename=doc">5,000</a></td>
+<td bgcolor="FFFFFF">10/27/2025</td>
+<td bgcolor="FFFFFF">CAR1335</td>
+<td bgcolor="FFFFFF">Coffeyville NAP2</td>
+<td bgcolor="FFFFFF">Nitric Acid N2O- Tertiary Catalyst</td>
+<td bgcolor="FFFFFF">Reduction</td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF">Nitric Acid N2O- Tertiary Catalyst - Version 2.2</td>
+<td bgcolor="FFFFFF">Coffeyville, Kansas</td>
+<td bgcolor="FFFFFF">KANSAS</td>
+<td bgcolor="FFFFFF">US</td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF">No</td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF"><a onmouseover="javascript:window.status='Click here to view information about the ClimeCo Corp MCK NAP2, LLC. account.'; return true;" onmouseout="javascript:window.status=''; return true;"         href="/mymodule/reg/accview.asp?id1=983">ClimeCo Corp MCK NAP2, LLC.</a></td>
+<td bgcolor="FFFFFF">On Behalf of Third Party</td>
+<td bgcolor="FFFFFF">Retired on behalf of Kinaxis Inc. F2024 period</td>
+</tr><tr>
+<td bgcolor="eef6f9">2025</td>
+<td bgcolor="eef6f9">CAR-1-US-1335-31-983-KS-2025-9659-67627 to 73626</td>
+<td bgcolor="eef6f9" align="right"><a href="/mymodule/rpt/CertificateInfo.asp?rhid=20270&ftType=PRO&r=206&ad=Prpt&act=update&type=PRO&aProj=icrt&tablename=doc">6,000</a></td>
+<td bgcolor="eef6f9">06/24/2026</td>
+<td bgcolor="eef6f9">CAR1335</td>
+<td bgcolor="eef6f9">Coffeyville NAP2</td>
+<td bgcolor="eef6f9">Nitric Acid N2O- Tertiary Catalyst</td>
+<td bgcolor="eef6f9">Reduction</td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9">Nitric Acid N2O- Tertiary Catalyst - Version 3.0</td>
+<td bgcolor="eef6f9">Coffeyville, Kansas</td>
+<td bgcolor="eef6f9">KANSAS</td>
+<td bgcolor="eef6f9">US</td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9">No</td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9"><a onmouseover="javascript:window.status='Click here to view information about the Maple Leaf Foods account.'; return true;" onmouseout="javascript:window.status=''; return true;"           href="/mymodule/reg/accview.asp?id1=1132">Maple Leaf Foods</a></td>
+<td bgcolor="eef6f9">Environmental Benefit</td>
+<td bgcolor="eef6f9">Maintain Carbon Neutrality</td>
+</tr><tr>
+<td bgcolor="FFFFFF">2025</td>
+<td bgcolor="FFFFFF">CAR-1-US-1335-31-983-KS-2025-9659-43177 to 43276</td>
+<td bgcolor="FFFFFF" align="right"><a href="/mymodule/rpt/CertificateInfo.asp?rhid=19152&ftType=PRO&r=206&ad=Prpt&act=update&type=PRO&aProj=icrt&tablename=doc">100</a></td>
+<td bgcolor="FFFFFF">02/12/2026</td>
+<td bgcolor="FFFFFF">CAR1335</td>
+<td bgcolor="FFFFFF">Coffeyville NAP2</td>
+<td bgcolor="FFFFFF">Nitric Acid N2O- Tertiary Catalyst</td>
+<td bgcolor="FFFFFF">Reduction</td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF">Nitric Acid N2O- Tertiary Catalyst - Version 3.0</td>
+<td bgcolor="FFFFFF">Coffeyville, Kansas</td>
+<td bgcolor="FFFFFF">KANSAS</td>
+<td bgcolor="FFFFFF">US</td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF">No</td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF"><a onmouseover="javascript:window.status='Click here to view information about the ACT Commodities BV account.'; return true;" onmouseout="javascript:window.status=''; return true;"             href="/mymodule/reg/accview.asp?id1=1275">ACT Commodities BV</a></td>
+<td bgcolor="FFFFFF">On Behalf of Third Party</td>
+<td bgcolor="FFFFFF">These credits are redeemed on behalf of BFS Europe for their cradle to cradle certification needle felt carpet in 2025.</td>
+</tr><tr>
+<td bgcolor="eef6f9">2025</td>
+<td bgcolor="eef6f9">CAR-1-US-1335-31-983-KS-2025-9659-7276 to 30884</td>
+<td bgcolor="eef6f9" align="right"><a href="/mymodule/rpt/CertificateInfo.asp?rhid=19782&ftType=PRO&r=206&ad=Prpt&act=update&type=PRO&aProj=icrt&tablename=doc">23,609</a></td>
+<td bgcolor="eef6f9">03/25/2026</td>
+<td bgcolor="eef6f9">CAR1335</td>
+<td bgcolor="eef6f9">Coffeyville NAP2</td>
+<td bgcolor="eef6f9">Nitric Acid N2O- Tertiary Catalyst</td>
+<td bgcolor="eef6f9">Reduction</td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9">Nitric Acid N2O- Tertiary Catalyst - Version 3.0</td>
+<td bgcolor="eef6f9">Coffeyville, Kansas</td>
+<td bgcolor="eef6f9">KANSAS</td>
+<td bgcolor="eef6f9">US</td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9">No</td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9"><a onmouseover="javascript:window.status='Click here to view information about the Maple Leaf Foods account.'; return true;" onmouseout="javascript:window.status=''; return true;"               href="/mymodule/reg/accview.asp?id1=1132">Maple Leaf Foods</a></td>
+<td bgcolor="eef6f9">Environmental Benefit</td>
+<td bgcolor="eef6f9">Maintain Carbon Neutrality</td>
+</tr><tr>
+<td bgcolor="FFFFFF">2025</td>
+<td bgcolor="FFFFFF">CAR-1-US-1335-31-983-KS-2025-9659-30885 to 38694</td>
+<td bgcolor="FFFFFF" align="right"><a href="/mymodule/rpt/CertificateInfo.asp?rhid=19783&ftType=PRO&r=206&ad=Prpt&act=update&type=PRO&aProj=icrt&tablename=doc">7,810</a></td>
+<td bgcolor="FFFFFF">04/21/2026</td>
+<td bgcolor="FFFFFF">CAR1335</td>
+<td bgcolor="FFFFFF">Coffeyville NAP2</td>
+<td bgcolor="FFFFFF">Nitric Acid N2O- Tertiary Catalyst</td>
+<td bgcolor="FFFFFF">Reduction</td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF">Nitric Acid N2O- Tertiary Catalyst - Version 3.0</td>
+<td bgcolor="FFFFFF">Coffeyville, Kansas</td>
+<td bgcolor="FFFFFF">KANSAS</td>
+<td bgcolor="FFFFFF">US</td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF">No</td>
+<td bgcolor="FFFFFF"></td>
+<td bgcolor="FFFFFF"><a onmouseover="javascript:window.status='Click here to view information about the Maple Leaf Foods account.'; return true;" onmouseout="javascript:window.status=''; return true;"                 href="/mymodule/reg/accview.asp?id1=1132">Maple Leaf Foods</a></td>
+<td bgcolor="FFFFFF">Environmental Benefit</td>
+<td bgcolor="FFFFFF">Maintain 2026 Carbon Neutrality for Canada Packers</td>
+</tr><tr>
+<td bgcolor="eef6f9">2025</td>
+<td bgcolor="eef6f9">CAR-1-US-1335-31-983-KS-2025-9659-61556 to 67055</td>
+<td bgcolor="eef6f9" align="right"><a href="/mymodule/rpt/CertificateInfo.asp?rhid=19463&ftType=PRO&r=206&ad=Prpt&act=update&type=PRO&aProj=icrt&tablename=doc">5,500</a></td>
+<td bgcolor="eef6f9">04/21/2026</td>
+<td bgcolor="eef6f9">CAR1335</td>
+<td bgcolor="eef6f9">Coffeyville NAP2</td>
+<td bgcolor="eef6f9">Nitric Acid N2O- Tertiary Catalyst</td>
+<td bgcolor="eef6f9">Reduction</td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9">Nitric Acid N2O- Tertiary Catalyst - Version 3.0</td>
+<td bgcolor="eef6f9">Coffeyville, Kansas</td>
+<td bgcolor="eef6f9">KANSAS</td>
+<td bgcolor="eef6f9">US</td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9">No</td>
+<td bgcolor="eef6f9"></td>
+<td bgcolor="eef6f9"><a onmouseover="javascript:window.status='Click here to view information about the Maple Leaf Foods account.'; return true;" onmouseout="javascript:window.status=''; return true;"                   href="/mymodule/reg/accview.asp?id1=1132">Maple Leaf Foods</a></td>
+<td bgcolor="eef6f9">Environmental Benefit</td>
+<td bgcolor="eef6f9">Maintain Carbon Neutrality</td>
+</tr>name="r" value="206"/>
+</td></trf><tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr bgcolor="white"><td align="center">1 - 50 : 11044</td></tr></table></td></tr><tr bgcolor="#92b7d6"><td align="center"><p align="center">
+<table border="0" width="100%"><tr><td width="100%"  align="center" nowrap><a id="x999firstoff2"><img alt="move first" id="x999firstbutton2" src = "/ImgTable/first-off.gif" border = "0"></a>
+&nbsp;&nbsp;
+<a id="x999prevoff2"><img alt="move previous" id="x999prevbutton2" src = "/ImgTable/prev-off.gif" border = "0"></a>
+&nbsp;&nbsp;
+<script language = "javascript" type="text/javascript">
+function GotoPage() {
+   ThePage = window.prompt('please select another page:', '1');
+   if (! (isFinite(ThePage))) {
+      PageHolder = ThePage; 
+      ThePage = "" ;}
+   else {
+       if ((ThePage < 1) || (ThePage > 221)) {
+          PageHolder = ThePage;
+          ThePage = ""; }
+         }
+   if (ThePage != "") { // if the cancel button was not hit and it passed the criteria...
+       submitform2('','','On',ThePage,'','','');
+   } else { 
+      if (PageHolder != null) {
+             window.alert ('[' + PageHolder + '] is not a valid Page Number.' + '\n' + 'Please Enter a Page Number between 1 and 221 .');
+ }}   
+} 
+</script>
+<a onmouseover="javascript:window.status='Select a record page to view'; return true;" onmouseout="javascript:window.status=''; return true;" href = "javascript:GotoPage()"><img alt="goto" id="x999gotobutton2" src="/ImgTable/goto.gif" border = "0"></a>
+&nbsp;&nbsp;
+<a onmouseover="javascript:window.status='View next page of records'; return true;" onmouseout="javascript:window.status=''; return true;" href="javascript:submitform2('','','On','2','','','')"><img alt="move next" id="x999nextbutton2" src="/ImgTable/next.gif" border = "0"></a>
+&nbsp;&nbsp;
+<a onmouseover="javascript:window.status='View last page of records'; return true;" onmouseout="javascript:window.status=''; return true;" href="javascript:submitform2('','','On','221','','','')"><img alt="move last" id="x999lastbutton2" src="/ImgTable/last.gif" border = "0"></a>
+&nbsp;&nbsp;
+</td></tr></table>
+</td></tr></table><input type = "hidden" name = "X999myquery" value = "" />
+<input type = "hidden" name = "X999tablenumber" value = "2" />
+<input type = "hidden" name = "X999csv" value = "" />
+<input type = "hidden" name = "X999sort" value = "" />
+<input type = "hidden" name = "X999action" value = "" />
+<input type = "hidden" name = "X999actionfield" value = "" />
+<input type = "hidden" name = "X999field" value = "" />
+<input type = "hidden" name = "X999paging" value = "" />
+<input type = "hidden" name = "X999whichpage" value = "" />
+</form>
+<script language = "javascript" type="text/javascript">
+function submitform2(X999sort,X999field,X999paging,X999whichpage,X999csv,X999action,X999actionfield)
+     {
+          document.xxxx2.X999csv.value = X999csv;
+          document.xxxx2.X999action.value = X999action;
+          document.xxxx2.X999actionfield.value = X999actionfield;
+          document.xxxx2.X999sort.value = X999sort;
+          document.xxxx2.X999field.value = X999field;
+          document.xxxx2.X999paging.value = X999paging;
+          document.xxxx2.X999whichpage.value = X999whichpage;
+          document.xxxx2.submit();
+    }
+</script>
+<div id="overDiv" style="position:absolute; visibility:hide; z-index: 1;"></div>
+<script language="javascript" type="text/javascript">
+// Description area background color
+ if (typeof fcolor == 'undefined') { var fcolor = "#FFFFCC";}
+ if (typeof bdcolor == 'undefined') { var bdcolor = "#A0A2FE";}
+ if (typeof backcolor == 'undefined') { var backcolor = "#CCCCFF";}
+ if (typeof textcolor == 'undefined') { var textcolor = "#000000";}
+ if (typeof capcolor == 'undefined') { var capcolor = "#000000";}
+ if (typeof width == 'undefined') { var width = "300";}
+ if (typeof border == 'undefined') { var border = "1";}
+ if (typeof offsetx == 'undefined') { var offsetx = 30;}
+ if (typeof offsety == 'undefined') { var offsety = -80;}
+netscapeBrowser = (document.layers)? true:false
+internetExplorer = (document.all)? true:false
+if (internetExplorer) {
+ if (navigator.userAgent.indexOf('MSIE 5')>0) {
+     version5 = true;
+ } else {
+     version5 = false; }
+} else {
+ version5 = false;
+}
+var x = 0;
+var y = 0;
+if ( (netscapeBrowser) || (internetExplorer) ) {
+ if (netscapeBrowser) over = document.overDiv
+ if (internetExplorer) over = overDiv.style
+ document.onmousemove = mouseMove
+ if (netscapeBrowser) document.captureEvents(Event.MOUSEMOVE)
+}
+function showIt(d,text,title,bgcolor,titlebgcolor,fonttag,titlefonttag,bordersize,bordercolor,offsetx,offsety) {
+ txt = "<" + "table width="+width+" border=1 bordercolor="+bordercolor+" cellpadding="+border+" cellspacing=0 bgcolor=\""+titlebgcolor+"\">" + "<" + "tr" + ">" + "<" + "td" + ">" + "<" + "table width=100% border=0 cellpadding=0 cellspacing=0" + ">" + "<" + "tr" + ">" + "<" + "td align=center" + ">" + "<" + "b" + ">" + titlefonttag + title + "<" + "/font" + ">" + "<" + "/b" + ">" + "<" + "/td" + ">" + "<" + "/tr" + ">" + "<" + "/table" + ">" + "<" + "table width=100% border=0 cellpadding=2 cellspacing=0 bgcolor=\""+bgcolor+"\">" + "<" + "tr" + ">" + "<" + "td" + ">" + fonttag + text + "<" + "/font" + ">" + "<" + "/td" + ">" + "<" + "/tr" + ">" + "<" + "/table" + ">" + "<" + "/td" + ">" + "<" + "/tr" + ">" + "<" + "/table" + ">"
+ layerWrite(txt);
+ disp(offsetx,offsety);
+}
+function disp(offsetx,offsety) {
+ if ( (netscapeBrowser) || (internetExplorer) ) {
+     moveTo(over,x+offsetx,y+offsety);
+     showObject(over);
+ }
+}
+function mouseMove(e) {
+ if (netscapeBrowser) {x=e.pageX; y=e.pageY;}
+ if (internetExplorer) {x=event.x; y=event.y;}
+ if (version5) {x=event.x+document.body.scrollLeft; y=event.y+document.body.scrollTop;}
+}
+function dropIt() {
+ hideObject(over);
+}
+function layerWrite(txt) {
+        if (netscapeBrowser) {
+                var lyr = document.overDiv.document
+                lyr.write(txt)
+                lyr.close()
+        }
+        else if (internetExplorer) document.all["overDiv"].innerHTML = txt
+}
+function showObject(obj) {
+        if (netscapeBrowser) obj.visibility = "show"
+        else if (internetExplorer) obj.visibility = "visible"
+}
+function hideObject(obj) {
+        if (netscapeBrowser) obj.visibility = "hide"
+        else if (internetExplorer) obj.visibility = "hidden"
+}
+function moveTo(obj,xL,yL) {
+        obj.left = xL
+        obj.top = yL
+}
+</script>
+
+
+
+
+			</TD>
+		</TR>
+	</TABLE>
+
+<BR/>
+<FONT  size="1"><I>DISCLAIMER: NEITHER APX NOR THE CLIMATE ACTION RESERVE KNOWS OR ENDORSES THE CREDITWORTHINESS OR REPUTATION OF ANY CLIMATE ACTION RESERVE ACCOUNT HOLDER LISTED IN THIS DIRECTORY</I></FONT>
+
+<div class="spacer"/>
+<div id="version" align="right" >Version 40.0.0</div>
+<div class="footerSection">
+	<div class="left"><a href='#top'><img  src="/images/up_topofpage.gif">top of page</a> | <a href='/privacypolicy.asp'>Privacy Policy</a></div>
+	<div class="right">The Reserve - Powered by APX Technology</div>
+</div>
+
+</BODY>
+</HTML>
+
+<!-- FIXTURE NOTE: trimmed for the repo. The report grid's data rows were cut from 50 to 10; the printed record-count line, the column-header row, every <form>, every <script> and the pager markup are byte-identical to the live response. See docs/api-contract-car.md. -->

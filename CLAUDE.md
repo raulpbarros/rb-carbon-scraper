@@ -8,10 +8,11 @@
 
 A scraper that builds a database of every carbon project across public
 registries and exports one formatted Excel sheet for the business team.
-Eight registries are live: **Verra** (VCS **and** JNR), **Gold Standard**,
+Nine registries are live: **Verra** (VCS **and** JNR), **Gold Standard**,
 **Cercarbono**, **Plan Vivo** (**V5 and V4**, on two different platforms),
-**SocialCarbon**, **BioCarbon**, **Puro.earth** and **ACR** (the American
-Carbon Registry). That is every registry on the original list.
+**SocialCarbon**, **BioCarbon**, **Puro.earth**, **ACR** (the American
+Carbon Registry) and **CAR** (the Climate Action Reserve). That is every
+registry on the original list, plus CAR.
 Adding one means writing an adapter, not touching the pipeline.
 
 **A registry is not always one system, and not always one standard.**
@@ -20,10 +21,14 @@ reason: Plan Vivo publishes V5 on S&P Platts and V4 on the legacy Markit
 registry, and Verra publishes VCS and JNR as two standards on one tenant. Both
 cases store under one `registry` value, one checkbox, one row set.
 
-It is becoming an **installed Windows application**, not just a CLI: the
-business team ticks registries, picks a folder and presses a button. `PLAN.md`
-tracks that work phase by phase and is the file to read before starting
-anything on it.
+**The installed-Windows-app plan is abandoned (2026-08-05).** Distribution is
+the GitHub repo itself, not an installer: a colleague clones it and runs it
+from source — see README, "Run it from the source". The GUI stays and is the
+everyday way to run this (`pip install -e .` then `carbon-gui`: tick
+registries, pick a folder, press a button); building and shipping a signed
+PyInstaller/Inno Setup `.exe` does not. `PLAN.md` still tracks phase history —
+Phase 4/4b are closed as superseded, not deleted, because the code still works
+and nothing forces its removal.
 
 Two outputs, deliberately separate:
 
@@ -105,8 +110,19 @@ flag.
 | Contract doc | `docs/api-contract-acr.md` |
 | `discover` needed | no — the site's own CMS config and one JS chunk are the contract |
 
+| | CAR |
+|---|---|
+| Front end | `thereserve2.apx.com` |
+| Backend | **the same host** — **Xpansiv/APX**, a classic-ASP platform serving CAR, Climate Forward and the renewable-certificate registries |
+| Shape | one report module: `GET myrpt.asp?r=<id>`, then a form POST that returns **the whole report as CSV** |
+| Projects | 1,277 |
+| Credit records | 5,173 issuance rows + 11,047 retirements + 2,277 cancellations |
+| Requests per sync | ~1,285 — **8 of them are every credit record in the registry**; the other 1,277 are detail pages |
+| Contract doc | `docs/api-contract-car.md` |
+| `discover` needed | no — the page's own forms and JS are the contract |
+
 All read via
-`--registry verra|planvivo|gs|cercarbono|socialcarbon|biocarbon|puro|acr|all`.
+`--registry verra|planvivo|gs|cercarbono|socialcarbon|biocarbon|puro|acr|car|all`.
 Verra
 and Plan Vivo share `registries/platts/api.py`; the others have their own
 sections and contract docs.
@@ -119,7 +135,16 @@ above are only the S&P half:
 | Verra | `verra/jnr.py` — JNR, a second standard on the same S&P tenant | 5 projects, **no credits at all** |
 | Plan Vivo | `planvivo/v4.py` — V4, on the **legacy Markit registry** | 30 projects, 411 issuances, 442 holdings, **5,034 retirements** |
 
-Nothing is planned: ACR was the last name on the original list.
+Nothing is planned: ACR was the last name on the original list, and CAR was
+added after it because ACR's old host pointed straight at the platform CAR is
+still on.
+
+**CAR is the cheapest large registry here, and the reason is a bulk CSV.**
+`POST rptdownload.asp` returns an entire report in one request, so all three
+ledgers — 18,497 rows — cost **8 requests**. What makes a sync ~1,285 anyway is
+that the crediting period is published **only** on the per-project page, so the
+fan-out is 1,277 GETs and 99.4% of the cost. `--projects-only` therefore saves
+almost nothing here; it is the opposite shape from every other registry.
 
 **ACR is the only registry here that bans rather than throttles.** GreenTrace
 sits behind a Cloudflare rate-limiting rule — roughly 100 requests in ten
@@ -358,6 +383,16 @@ these was a real afternoon:
 | ACR | a country column | an ISO code and **no name anywhere**: not in the list, not on the detail, not in the report's own filters |
 | ACR | 1 req/s, the setting every other registry is happy with | a Cloudflare 429 at ~100 requests per ten minutes, with `Retry-After: 3600` |
 | ACR | `401 "Invalid API Key"` on every route, mid-sync | **not a key we are missing.** The site's page is byte-identical and carries none; it is the platform declining to answer us, and it clears with time |
+| CAR | a POST returning HTTP 200 and a page | the site's **home page**, because `c16e` — a CSRF token the form's markup does not contain — was missing or from another session. It parses as an empty report |
+| CAR | `X999whichpage=27` on a 26-page report | **page 26 again.** A pager that stops on an empty page never stops; one that stops on a short page stops early |
+| CAR | six plausible page-size parameters at once | all ignored, HTTP 200, 50 rows. Sixth registry to ignore a page size — and the first where it does not matter, because the CSV route does not page |
+| CAR | a CSV, so `csv.reader` | its embedded quotes are not doubled: **13 retirement rows split into an extra field**, and nothing raises |
+| CAR | `Crediting Period` on the issuance report | a **label** — `Initial`, `Renewed-Second` — blank on 4,848 of 5,170 rows. The column name is the trap; the dates are on the detail page only |
+| CAR | `prjView.asp?id1=999999` | HTTP 200 and "Invalid URL, the Reserve Administrator has been notified!" — a soft 404, the EcoRegistry shape |
+| CAR | text that reads fine in ASCII | **Windows-1252 with no charset declared anywhere**, so httpx assumes UTF-8 and replaces every accent: `STATE OF M<?>XICO` at HTTP 200. 491 of 1,277 projects are Mexican and it cannot be repaired after the fact |
+| CAR | `Account Holder` on every retirement | the **holder**, not the beneficiary. 5,894 rows read "On Behalf of Third Party" and name that party only in free text |
+| CAR | 2,277 cancellations | 2,035 are **conversions** to ARB or WA Ecology — ACR's trap in a second registry, at a higher proportion |
+| CAR | 2 issuance rows stating credits converted to VCUs | the registry naming a **Verra overlap itself** — and the first one here where both registries count the *same* units |
 
 Four rules for every new adapter, before writing a line of paging code:
 
@@ -777,7 +812,7 @@ Three requests are the whole registry. A sync is ~121 because one detail page
 per project is read too, and about 120 MB because the pages are large — the
 retirement feed alone is 5.2 MB and a detail page is ~900 KB.
 
-`registries/puro/flight.py` is the Puro equivalent of `markit/tables.py`: the
+`registries/puro/flight.py` is the Puro equivalent of `registries/tables.py`: the
 part that knows the delivery format, kept away from the part that knows what
 the fields mean.
 
@@ -849,6 +884,9 @@ verra sync -r puro                # 118 projects + both ledgers, ~4 min (121 req
 verra sync -r acr                 # 994 projects + three ledgers, ~2 h — 1,005
                                   # requests at ONE PER SEVEN SECONDS, because
                                   # this registry bans rather than throttles
+verra sync -r car                 # 1,277 projects + three ledgers, ~25 min —
+                                  # 8 requests carry every credit record, and
+                                  # the other 1,277 are crediting periods
 verra sync                        # every registry (-r defaults to `all`)
 verra totals                      # EXACT per-project Verra retirement totals
 verra derive                      # apply YAML rules -> derived columns
@@ -868,12 +906,12 @@ cd docker; docker compose run --rm publish   # the container's DB -> data/verra.
 ```
 
 `-r` / `--registry` takes `verra`, `gs`, `cercarbono`, `planvivo`,
-`socialcarbon`, `biocarbon`, `puro`, `acr` or `all`.
+`socialcarbon`, `biocarbon`, `puro`, `acr`, `car` or `all`.
 `totals` is Verra-only — Gold Standard's whole credit stream pages cleanly,
 Cercarbono, SocialCarbon, BioCarbon and Puro pick up their exact totals during
-`sync` through `iter_credit_totals`, ACR's ledgers agree with its own
-per-project figures on all 994 projects, and Plan Vivo's ledgers each fit in
-one request.
+`sync` through `iter_credit_totals`, ACR's and CAR's ledgers each agree with
+their registry's own per-project figures on every project, and Plan Vivo's
+ledgers each fit in one request.
 `discover` and `standards` are S&P-only and refuse anything else.
 
 `sync`, `derive` and `export` are separate on purpose: fixing a classification rule must never require re-scraping a registry.
@@ -957,6 +995,33 @@ matches are ACR's US and Canadian forests. That is the pattern for the next
 registry that publishes a code and no name — a band at the end, and a
 before/after count on the real database, never a guess about who else it
 touches.
+
+**CAR is that next registry, and it shows what the pattern costs.** It also
+states a code and no name, and it is **38% Mexican** — 491 projects, 485 of
+them `Forestry - MX`, the largest single group of land-use projects it has —
+so an ISO-code band answering only `US|CA` would have left them blank for the
+same wrong reason. Three things follow, all measured against the real database
+before the change:
+
+- **A gate word without a band that answers it is worse than the blank.**
+  `Avoided Grassland Conversion` (39 projects) is land use and matched no
+  alternative in `applies_when`. Widening the gate alone would have sent all 39
+  to `north-america-temperate-by-code` and called a Montana prairie a temperate
+  forest, so `Grassland` and the `na-grassland` band were added **together**.
+- **A rule may read what a project does, not only where it is** — once. That
+  grassland band is keyed on the activity *and* the country code, because
+  "grassland" outside North America is a different biome.
+- **Half a split is an answer.** Mexico's tropical states take an existing
+  value (`Floresta Tropical Mesoamericana`, 90 rows) and the highlands stay
+  "not determined": pine-oak is a temperate conifer forest and the only
+  temperate value here says "Norte-Americana". That is a question for the
+  business, not a wording to invent — and `Soil Enrichment` and the bare
+  `Avoided Conversion` stay out of the gate for the same reason.
+
+Blast radii, each measured before the change: `Grassland` **0 existing rows**,
+`mexico-by-code` **3 added, 0 changed**, the Mexican split **90 changed, all
+CAR's**, and the eleven type bands the first sync's `coverage` named **104
+added, 0 changed**.
 
 **Plan Vivo V4 sources differently from V5**, because it is a different
 platform. Measured over the full 30-project index on 2026-07-29:
@@ -1124,6 +1189,55 @@ GHG index on 2026-08-04:
   *forest*; labelling a restored wetland as temperate forest is worse than the
   blank.
 
+**CAR sources differently again**, measured over its full 1,277-project index
+on 2026-08-05:
+
+| Column | CAR |
+|---|---|
+| `Project ID` | the published `CAR1957` reference, unique across all 1,277 — checked against the registry's own export — and its **numeric part** is both the primary key and what the public URL takes (`prjView.asp?id1=1957`) |
+| `Standard` | **"Climate Action Reserve", asserted.** What is published per project is a *protocol* ("Forestry - MX - Version 2.0"), which is the methodology, not a standard |
+| `Tipo Macro de Projeto` | `Project Type`, untranslated: "Forestry - MX" (485), "Improved Forest Management - ARB Compliance" (141), "Landfill Gas Capture/Combustion" (126), "Livestock - ARB Compliance" (108), and 28 more |
+| `Metodologia` | the protocol name — **published on issuance rows, not project rows**, so 901 of 1,277. The 376 projects that have never issued have no methodology anywhere, and it is **not** inferred from the type even though the protocol name is that type plus a version |
+| `Tipo Micro` / `Durabilidade` | derivation layer, keyed on the **project type**, 1,277 of 1,277 — CAR's own type vocabulary is already 32 values deep, so unlike ACR the protocol is not needed to tell forest projects apart |
+| `Estado` | `Project Site State`, 1,277 of 1,277 — uppercase US and Mexican state names as published |
+| `Continent` | derived from the ISO country code, 1,277 of 1,277 — the Gold Standard path |
+| `Data de Início` | the per-project detail page, 1,274 of 1,277 — and the only reason a sync is ~1,285 requests rather than 8 |
+| `Total Credits Issued` | the issuance ledger, 268,335,202 — agreeing with the project list's own stated figure on **all 901 projects that have issued anything** |
+| `Total Credits Cancelled` | the cancellation ledger, 124,235,312 — of which **2,056 rows of 2,277 are conversions** to ARB or WA Ecology. ACR's situation at a higher proportion; the column reports the registry's own figure and the reason is on every row |
+
+**Deliberate blanks for CAR**, same index:
+
+- `País` — **no country name is published anywhere**, only an ISO code. ACR's
+  gap in a second registry, and the same answer: blank, with the code stored so
+  a later change of mind is a `derive` change.
+- `Cidade` — `Project Site Location` is a **county list** ("Shasta, Siskiyou,
+  and Trinity Counties"), not a city. It goes to `extra` whole.
+- `Yearly Ex Ante` / `Total Ex Ante` — no estimate is published at all.
+- `Additional Certification` — the column exists on every report and is empty
+  on all 1,277 projects and every ledger row. The CORSIA and ICVCM columns
+  beside it are market eligibility, exactly like Cercarbono's `elegible` list.
+- `Data de Término` for 448 projects — the registry states an expiry only once
+  a project has a crediting period; 252 are `Registered` and 183 `Listed`.
+- `region_name`, `afolu_names` — not published.
+- `Bioma` for the 395 Mexican highland projects — Sierra Madre pine-oak is a
+  *temperate conifer* biome and the only temperate band here is named
+  "Norte-Americana". Whether a Michoacán community forest should read that is a
+  question about the deliverable, and it is the first thing to agree about this
+  registry. The Yucatán peninsula and Gulf states (90) do get a band, because
+  the Selva Maya is unambiguous and already in the file's vocabulary.
+
+**A date format is part of the contract, and CAR is the one registry that does
+not write ISO.** It publishes `10/7/2018`, and `db.parse_date` — which both
+`excel` and `derive` read — accepts ISO only. Stored as published, that left
+`Data de Início`, `Data de Término` **and `Duração`** blank on all 1,277 rows
+while the database looked fully populated, the sync reconciled perfectly and
+nothing reached the log. `car._date` converts it, and the month-first reading
+is measured (across 2,103 dates the first component never exceeds 12 and the
+second reaches 31) rather than assumed — it is deliberately **not** added to
+`db.DATE_FORMATS`, because a global `%m/%d/%Y` would silently misread the first
+registry that writes day-first. It was caught by `verra coverage`, which is the
+argument for running it at the end of every registry.
+
 **Known wrinkle:** under "retired = sold", `Total Credits Sold` and `Total Credits Retired` are the same number. Retirement beneficiary is stored anyway, and `config/credits.yaml` has a `sold_equals_retired` toggle that flips to a beneficiary-based split (retired for a named third party = sold) if the business confirms that is wanted. Do not change the default without being asked.
 
 ## Rules for working in this repo
@@ -1159,6 +1273,10 @@ src/carbon_scraper/
     text.py                    stated() / joined() / hashed_id(), shared by the
                                adapters. The placeholder TABLES stay per
                                registry; the code applying them does not
+    tables.py                  rowspan-aware, heading-keyed HTML table reader
+                               (stdlib only). Shared: Markit was its first
+                               user, APX is the second. Rows are read by
+                               column HEADING, never by position
     platts/api.py              the S&P PLATFORM: POST search API, paging,
                                partitioning, reconciliation, normalisation.
                                Shared by every registry hosted on it
@@ -1167,7 +1285,6 @@ src/carbon_scraper/
     markit/api.py              the LEGACY MARKIT PLATFORM: HTML paging, the
                                standard re-check, merged-row handling.
                                21 programmes behind one standardId
-    markit/tables.py           rowspan-aware HTML table reader (stdlib only)
     verra/api.py               Verra VCS's identity only — a PlattsAPI subclass
     verra/jnr.py               Verra JNR — same tenant, second standard
     planvivo/api.py            Plan Vivo V5's identity, plus its two field diffs
@@ -1189,18 +1306,32 @@ src/carbon_scraper/
                                Serves ACR and ART
     acr/api.py                 ACR's identity, the fields it populates, and
                                the rate this registry has to be read at
+    apx/api.py                 the XPANSIV/APX PLATFORM: classic-ASP report
+                               module — the CSRF token that is not in the
+                               form, the session the GET mints, the bulk CSV
+                               that is not correctly quoted, the pager that
+                               clamps past the end, and the Windows-1252 it
+                               declares nowhere. Serves CAR and Climate Forward
+    car/api.py                 Climate Action Reserve's identity: the fields
+                               it populates, the methodology that is published
+                               on issuance rows rather than project rows, and
+                               the two projects Verra also publishes
     puro/flight.py             the Next.js RSC payload reader — joins the
                                `__next_f.push` stream, then decodes. Stdlib
-                               only, and the Puro half of markit/tables.py
+                               only, and the Puro half of registries/tables.py
   gui/
     state.py                   what the window remembers. No Tk, no pipeline
     worker.py                  thread + queue + logging bridge. NO Tk import
+    theme.py                   palette, fonts, ttk styles, DPI awareness and
+                               the window icon. No widget, no decision
     app.py                     the window; the only module touching a widget
 
 build.ps1                      clean -> pytest -> slim-db -> EXE -> ZIP -> installer
 packaging/
   bundle.py                    what goes in the frozen build, DERIVED from
                                settings.SEEDED_FILES and registries.ADAPTERS
+  make_icon.py                 generates assets/app.ico — the ledger mark, in
+                               the palette's petrol. Stdlib only
   carbon_gui.py                the frozen entry point; calls gui.app.main()
   carbon-registry.spec         PyInstaller one-folder, --noconsole
   carbon-registry.iss          Inno Setup, per-user, keeps %LOCALAPPDATA% data
@@ -1227,11 +1358,21 @@ checkboxes from `REGISTRY_LABELS`.
 
 **Check the platform tables first.** `verra standards -r all` names every S&P
 tenant in eight GETs, `docs/api-contract-markit.md` lists the 21 programmes on
-the legacy Markit view, and `docs/api-contract-acr.md` lists the two ICE
+the legacy Markit view, `docs/api-contract-acr.md` lists the two ICE
 GreenTrace tenants — ACR, which has an adapter, and **ART** (Architecture for
-REDD+ Transactions, 30 projects), which does not and is one subclass away.
-Between them that is 31 registries reachable by subclassing something that
-already works. Cracking a new site is the last resort, not the first move.
+REDD+ Transactions, 30 projects), which does not and is one subclass away — and
+`docs/api-contract-car.md` lists the Xpansiv/APX tenants, of which
+**Climate Forward** (36 projects) is the only other offset one and is also a
+subclass away. Between them that is 32 registries reachable by subclassing
+something that already works. Cracking a new site is the last resort, not the
+first move.
+
+**A tenant that is one subclass away is still a business decision.** Climate
+Forward was checked rather than assumed — identical module, identical forms,
+identical field names — and is *not* ingested, because its units are **ex-ante
+forecast** credits rather than issued offsets. That is a different unit, not a
+harder scrape. Same call as Cercarbono's non-CO2 standards and BioCarbon's
+non-GHG categories.
 
 **And check that the site an older note names is still the site.** ACR was
 filed for a year as "APX ASP platform, form posts and HTML tables". `acr2.apx.com`
@@ -1287,9 +1428,27 @@ periods are *consecutive* rather than concurrent — Verra 2008-2018, ACR
 2018-2027 — so the tranches are disjoint, neither row restates the other, and
 both ship cross-linked through `acr.ALSO_REGISTERED_AS`.
 
-Two known duplicates now, and together they are what stops "sum every
-registry's `Total Credits Issued`" being a safe query. Both were found by
-asking the question before scraping rather than after.
+**And a third, 2026-08-05 — the first where the units are the same units.** CAR
+publishes `Offset Credits Converted to VCUs` on **2 of its 5,173 issuance
+rows**, naming no registry, and both turned out to be in the database already:
+`CAR400` is `VCS 1528` and `CAR498` is `VCS 1527`, each named
+"… - CER Conversion", each with status *Units transferred from approved GHG
+program*, and each issuing **one** VCU block of exactly the converted quantity
+at the same vintage — 45,730 and 4,270.
+
+That is what makes this pair different from the other two. Cercarbono/BioCarbon
+and ACR/Verra are disjoint tranches: neither row restates the other's credits.
+Here Verra's whole issued figure *is* CAR's converted figure, and **CAR does
+not net it out** — neither project has a cancellation row, so the units stay on
+its book as issued too. Nothing is subtracted, both registries' published
+figures stand, and `car.ALSO_REGISTERED_AS` is what makes the 50,000-tonne
+double count visible instead of hidden. Raised in `docs/field-mapping.md`.
+
+Three known duplicates now, and together they are what stops "sum every
+registry's `Total Credits Issued`" being a safe query. All three were found by
+asking the question before scraping rather than after — and two of the three
+were found because the registry states a flag or a column saying *some* other
+programme is involved and never says which. **Read that column.**
 
 **A published human reference is not a primary key until it is proven unique.**
 SocialCarbon publishes `SOCIALCARBON-N` on every project and repeats one across
@@ -1302,12 +1461,13 @@ first index you download.
 
 `PLAN.md` is the phase tracker; read it before touching this area.
 
-Three modules, split by **what is allowed to touch a widget**:
+Four modules, split by **what is allowed to touch a widget**:
 
 | | |
 |---|---|
 | `gui/state.py` | what the window remembers: ticked registries, output folder. No Tk, no pipeline |
 | `gui/worker.py` | the thread, the queue, the logging bridge. **Imports no Tk, and a test asserts it** |
+| `gui/theme.py` | colours, fonts, ttk styles, and the DPI call. Creates no widget and makes no decision |
 | `gui/app.py` | the window. The only module that reads or creates a widget |
 
 Tkinter is not thread-safe, and the failure is not immediate or reproducible.
@@ -1354,7 +1514,62 @@ Other things that are load-bearing:
   from `settings.REGISTRY_LABELS`, and a test fails if any registry identifier
   is hard-coded in `app.py`.
 
+### How it looks, and why each part of that is load-bearing
+
+The window is a **ledger**: what is held, how old it is, and where the scrape
+has got to — one list doing all three. Everything below was measured on the
+real window, not chosen from a mockup.
+
+- **`theme.enable_dpi_awareness()` runs before `tk.Tk()` exists**, from the
+  process rather than a widget. Without it Windows renders the whole app at 96
+  DPI and scales the bitmap up: a permanently blurry window on any laptop above
+  100%, invisible on a development box at 100%, and unfixable afterwards. A
+  test pins the ordering inside `main()`.
+- **The palette needs `clam`.** `vista` draws buttons, checkboxes and progress
+  bars as OS bitmaps that ignore every colour asked of them. Six colours, and
+  two of them — `AMBER`, `RED` — are the log pane's existing tags, reused so a
+  stale registry's marker and an `INCOMPLETE` line are the same colour.
+- **The ledger row is also the progress display.** `Progress` names its
+  registry, so that row shows the resource and the position and the other seven
+  stay still. There is no single 0-100% bar across a run: the hairline under the
+  header advances **one step per registry and never goes backwards**, because a
+  registry is several resources and each counts from zero — a fraction-driven
+  bar would walk backwards several times per registry.
+- **The tick is a `☑` glyph, and clam's own indicator is taken out of the
+  layout.** `indicatorsize` is a fixed pixel count that does not follow the
+  screen, so at 150% the box is a third of the size it looks; and clam draws a
+  *cross* in a ticked box, which is the wrong word for "selected".
+- **Only `Export Excel` gets the accent colour.** Ranking the two buttons is
+  the same decision as separating them: the everyday one is the saturated one,
+  the two-hour one is quiet and keeps its `…`.
+- **The log pane starts collapsed and opens itself on the first warning.** Most
+  sessions are one press of Export; a wall of log text is noise for that user.
+  `INCOMPLETE` must never land in a pane nobody opened, so the branch that tags
+  a line warn/error is the branch that opens it, and a test pins that.
+- **`_fit()` sizes the window to the layout but never past the screen.** Both
+  halves are real bugs met here: Tk will open a window *smaller* than its own
+  layout asks for, clipping the right of every row; and opening the log adds
+  enough height to push the buttons off a 1080-line screen. The disclosure
+  button lives in the body and only the log carries the row weight, so a
+  clamped window shortens the log rather than swallowing the control that
+  closes it.
+- **Elapsed and remaining come from the static estimate**, same rule as the
+  pre-flight dialog, and overrunning says *"longer than estimated"* rather than
+  counting to zero and lying.
+- `assets/app.ico` is generated by `python packaging/make_icon.py` and used
+  twice: `theme.set_icon()` at run time and `icon=` in the `.spec` at build
+  time. It is **not** in `SEEDED_FILES` — nobody edits it, so it stays in the
+  bundle instead of being copied into the user's profile.
+
 ## Packaging
+
+**Abandoned 2026-08-05 — not the distribution path anymore.** The user
+decided against shipping a signed installer; a colleague now gets this by
+cloning the repo and running it from source (README, "Run it from the
+source"). The code below still exists, still builds, still passes its tests —
+nothing here was deleted — but do not invest further in it (SmartScreen,
+signing, installer polish) unless the user explicitly reopens it. `PLAN.md`
+Phase 4 / 4b are marked superseded, not reworked toward this.
 
 `.\build.ps1` — clean → pytest → `slim-db` → PyInstaller → ZIP → Inno Setup.
 Two artifacts: `dist/portable/CarbonRegistryScraper-<version>-portable.zip` and
